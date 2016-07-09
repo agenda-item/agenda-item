@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160709204632) do
+ActiveRecord::Schema.define(version: 20160709204638) do
+
+  create_table "meetings", force: :cascade do |t|
+    t.datetime "meeting_date", default: '2016-07-09 23:27:54'
+    t.integer  "template_id"
+    t.string   "title"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "organizations", force: :cascade do |t|
     t.string   "name"
