@@ -1,6 +1,7 @@
 class AddUsers < ActiveRecord::Migration
   def change
     create_table "users", force: :cascade do |t|
+      t.references :organization
       t.string "first_name"
       t.string "last_name"
       t.string "email"

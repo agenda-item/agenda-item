@@ -14,6 +14,7 @@
 ActiveRecord::Schema.define(version: 20160709204617) do
 
   create_table "users", force: :cascade do |t|
+    t.integer  "organization_id"
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
