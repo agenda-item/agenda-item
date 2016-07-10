@@ -11,10 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160709204638) do
+ActiveRecord::Schema.define(version: 20160709204722) do
+
+  create_table "meeting_permissions", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "meeting_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "meetings", force: :cascade do |t|
-    t.datetime "meeting_date", default: '2016-07-09 23:27:54'
+    t.datetime "meeting_date"
     t.integer  "template_id"
     t.string   "title"
     t.string   "status"
