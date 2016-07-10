@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 20160709204722) do
   create_table "meeting_permissions", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "meeting_id"
+    t.string   "meeting_permissions", default: "false"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -47,7 +48,6 @@ ActiveRecord::Schema.define(version: 20160709204722) do
     t.string   "last_name"
     t.string   "email"
     t.string   "type"
-    t.string   "permissions",                default: "false"
     t.string   "org_title"
     t.string   "password_digest"
     t.string   "phone"

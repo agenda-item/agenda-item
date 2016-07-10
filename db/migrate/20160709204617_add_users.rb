@@ -6,7 +6,6 @@ class AddUsers < ActiveRecord::Migration
       t.string "last_name"
       t.string "email"
       t.string "type"
-      t.string "permissions",                 default: "false"
       t.string "org_title"
       t.string "password_digest"
       t.string "phone"
