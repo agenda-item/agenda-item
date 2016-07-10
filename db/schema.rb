@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160710203256) do
+ActiveRecord::Schema.define(version: 20160710212219) do
 
   create_table "agenda_items", force: :cascade do |t|
     t.string   "tags"
@@ -66,6 +66,13 @@ ActiveRecord::Schema.define(version: 20160710203256) do
     t.string   "address"
     t.string   "website"
     t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "templates", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
