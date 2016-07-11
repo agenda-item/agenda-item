@@ -9,7 +9,6 @@
   .ai-user > div > i {
     border: 1px solid grey;
     border-radius: 15px;
-    margin: 10px 5px;
     padding: 10px;
     background: white;
   }
@@ -18,16 +17,22 @@
     border: 1px solid grey;
     border-radius: 15px;
     padding: 12px;
-    margin: 5px 0;
     background: white;
+  }
+
+  .style-element > .box {
+    width: 80%;
+  }
+  .style-element > p {
+    margin: 0 0 15px 0;
   }
  </style>
 
 
 <div class="container">
-* custom elements * <br/>
+  * custom elements *<br/>
   <div class="style-element ai-template">
-    minutes template<br/>
+    <p>minutes template</p>
     <div class="card has-text-centered">
       
       <div class="card-content">
@@ -43,16 +48,51 @@
   </div>
     
   <div class="style-element ai-user">
-    user<br/>
+    <p>user</p>
     <div><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div>
   </div>  
 
   <div class="style-element ai-motion">
-    agenda item: motion<br/>
+    <p>agenda item: motion</p>
+    <div class="box">
+      <h2 class="subtitle is-3">Motion</h2>
+      <!-- <div class="control">
+        <label class="label">Title</label>
+        <input class="input" type="text" placeholder="{{ agenda_item.title }}">
+      </div>
+      <div class="ai-description">
+        <label class="label">Description</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="{{ agenda_item.description }}"></textarea>
+        </div>
+      </div>      
+      <div class="ai-responsible">
+        <label class="label">Responsible Person</label>
+        <input class="input" type="text" placeholder="{{ agenda_item.user_id }}">
+      </div>
+      <div class="ai-status">
+        <label class="label">Status</label>
+        <p class="control">
+          <span class="select">
+            <select>
+              <option>Select dropdown</option>
+              <option>With options</option>
+            </select>
+          </span>
+        </p>
+      </div>
+      <div class="ai-minutes">
+        <label class="label">Minutes</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="Textarea"></textarea>
+        </div>
+      </div>
+    </div> -->
+  </div>
   </div>
 
   <div class="style-element ai-business">
-    agenda item: business<br/>
+    <p>agenda item: business</p>
     <div class="box">
       <h2 class="subtitle is-3">Business</h2>
       <div class="control">
@@ -86,23 +126,126 @@
           <textarea class="textarea" placeholder="Textarea"></textarea>
         </div>
       </div>
-    </article>
+    </div>
   </div>
 
   <div class="style-element ai-details">
-    agenda item: meeting details<br/>
+    <p>agenda item: meeting details</p>
+    <div class="box">
+      <h2 class="subtitle is-3">Meeting Details</h2>
+      <!-- <div class="control">
+        <label class="label">Title</label>
+        <input class="input" type="text" placeholder="{{ agenda_item.title }}">
+      </div>
+      <div class="ai-description">
+        <label class="label">Description</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="{{ agenda_item.description }}"></textarea>
+        </div>
+      </div>      
+      <div class="ai-responsible">
+        <label class="label">Responsible Person</label>
+        <input class="input" type="text" placeholder="{{ agenda_item.user_id }}">
+      </div>
+      <div class="ai-status">
+        <label class="label">Status</label>
+        <p class="control">
+          <span class="select">
+            <select>
+              <option>Select dropdown</option>
+              <option>With options</option>
+            </select>
+          </span>
+        </p>
+      </div>
+      <div class="ai-minutes">
+        <label class="label">Minutes</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="Textarea"></textarea>
+        </div>
+      </div> -->
+    </div>
   </div>
   
   <div class="style-element ai-document">
-    agenda item: document<br/>
-  </div> 
-
-  <div class="style-element ai-election">
-    agenda item: election<br/>
+    <p>agenda item: document</p>
+    <div class="box">
+      <h2 class="subtitle is-3">Document</h2>
+      <!-- <div class="control">
+        <label class="label">Title</label>
+        <input class="input" type="text" placeholder="{{ agenda_item.title }}">
+      </div>
+      <div class="ai-description">
+        <label class="label">Description</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="{{ agenda_item.description }}"></textarea>
+        </div>
+      </div>      
+      <div class="ai-responsible">
+        <label class="label">Responsible Person</label>
+        <input class="input" type="text" placeholder="{{ agenda_item.user_id }}">
+      </div>
+      <div class="ai-status">
+        <label class="label">Status</label>
+        <p class="control">
+          <span class="select">
+            <select>
+              <option>Select dropdown</option>
+              <option>With options</option>
+            </select>
+          </span>
+        </p>
+      </div>
+      <div class="ai-minutes">
+        <label class="label">Minutes</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="Textarea"></textarea>
+        </div>
+      </div> -->
+    </div>
   </div>
 
+  <div class="style-element ai-election">
+    <p>agenda item: election</p>
+    <div class="box">
+      <h2 class="subtitle is-3">Election</h2>
+      <!-- <div class="control">
+        <label class="label">Title</label>
+        <input class="input" type="text" placeholder="{{ agenda_item.title }}">
+      </div>
+      <div class="ai-description">
+        <label class="label">Description</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="{{ agenda_item.description }}"></textarea>
+        </div>
+      </div>      
+      <div class="ai-responsible">
+        <label class="label">Responsible Person</label>
+        <input class="input" type="text" placeholder="{{ agenda_item.user_id }}">
+      </div>
+      <div class="ai-status">
+        <label class="label">Status</label>
+        <p class="control">
+          <span class="select">
+            <select>
+              <option>Select dropdown</option>
+              <option>With options</option>
+            </select>
+          </span>
+        </p>
+      </div>
+      <div class="ai-minutes">
+        <label class="label">Minutes</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="Textarea"></textarea>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>
+
   <div class="style-element ai-navbar">
-    navbar<br/>
+    <p>navbar</p>
     <nav class="nav">
       <div class="nav-left">
         <a class="nav-item" href="#">
@@ -160,51 +303,51 @@
   
 
   <div class="style-element ai-count">
-    count<br/>
+    <p>count</p>
     <i class="has-text-centered">10</i>
   </div>
 
   <div class="style-element ai-quick-select">
-    quick select<br/>
+   <p>quick select</p>
   </div>
   
 
   <div class="style-element ai-logo">
-    logo<br/>
+    <p>logo</p>
   </div>
   
 
   <div class="style-element ai-symbol">
-    symbolic element<br/>
+    <p>symbolic element</p>
     <i class="fa fa-hand-spock-o fa-lg" aria-hidden="true"></i>
   </div>
 
   <hr>
   * text and form inputs *<br/>
   <div class="style-element">
-    h1<br/>
+    <p>h1</p>
     <h1 class="title is-1">This is title text</h1>
   </div>
   
   <div class="style-element">
-    h2<br/>
+    <p>h2</p>
     <h2 class="subtitle is-1">This is subtitle text</h2>
   </div>
 
   <div class="style-element">
-    h3<br/>
+    <p>h3</p>
     <h3 class="title is-3">This is section header text</h3>
   </div>
   
 
   <div class="style-element">
-    p<br/>
+    <p>p</p>p>
     <p>This is paragraph text</p>
   </div>
   
 
   <div class="style-element">
-    ul<br/>
+    <p>ul</p>
     <ul>
       <li>This</li>
       <li>is</li>
@@ -216,13 +359,13 @@
   
 
   <div class="style-element">
-    input label<br/>
+    <p>input label</p>
     <label class="label">This is label text</label>
   </div>
   
 
   <div class="style-element">
-    select<br/>
+    <p>select</p>
     <p class="control">
       <span class="select">
         <select>
@@ -237,7 +380,7 @@
   <hr>
   * basic page elements *<br/>
   <div class="style-element">
-    box<br/>
+    <p>box</p>
     <div class="box">
       <article class="media">
         <div class="media-left">
@@ -273,13 +416,13 @@
   
 
   <div class="style-element">
-    image<br/>
+    <p>image</p>
     <img src="https://support.files.wordpress.com/2009/07/pigeony.jpg?w=688">
   </div>
   
 
   <div class="style-element">
-    text input<br/>
+    <p>text input</p>
     <p class="control">
       <input class="input" type="text" placeholder="Text input">
     </p>
@@ -287,7 +430,7 @@
   
 
   <div class="style-element">
-    text area input<br/>
+    <p>text area input</p>
     <p class="control">
       <textarea class="textarea" placeholder="Textarea"></textarea>
     </p>
@@ -295,7 +438,7 @@
   
 
   <div class="style-element">
-    button<br/>
+    <p>button</p>
     <a class="button">
       Button
     </a>
@@ -303,7 +446,7 @@
   
 
   <div class="style-element">
-    table<br/>
+    <p>table</p>
     <table class="table">
       <thead>
         <tr>
@@ -384,7 +527,7 @@
   
 
   <div class="style-element">
-    left menu<br/>
+    <p>left menu</p>
     <aside class="menu">
       <p class="menu-label">
         General
