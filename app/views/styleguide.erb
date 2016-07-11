@@ -24,9 +24,28 @@
   .style-element > .box {
     width: 80%;
   }
+
   .style-element > p {
     margin: 0 0 15px 0;
   }
+
+  .selection-box-wrapper {
+    display: inline-block;
+  }
+
+  .selection-box {
+    border: 1px solid grey;
+    background: white;
+    padding: 15px;
+    width: 315px;
+    height: 200px;
+    overflow-y: scroll
+  }
+
+  .ai-selection-arrows {
+    display: inline-block;
+  }
+
  </style>
 
 
@@ -48,7 +67,7 @@
     </div>
   </div>
     
-  <div class="style-element ai-user">
+  <div class="style-element ai-user-display">
     <p>user</p>
     <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div>
   </div>  
@@ -429,10 +448,53 @@
     <i class="has-text-centered">10</i>
   </div>
 
-  <div class="style-element ai-quick-select">
-   <p>quick select</p>
+  <div class="style-element ai-log-attendees">
+    <p>quick select box log atendees</p>
   </div>
-  
+
+  <div class="style-element ai-log-votes">
+    <p>quick select box log votes</p>
+    <div class="selection-box-wrapper">
+      <h2 class="subtitle is-4">For</h2>
+      <div class="selection-box">
+        <ul>
+          <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+          <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+          <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+          <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+          <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="ai-selection-arrows">
+      >
+      <br>
+      <
+    </div>
+    <div class="selection-box-wrapper">
+      <h2 class="subtitle is-4">Against</h2>
+      <div class="selection-box">
+        <ul>
+          <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+          <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="style-element ai-selection-box">
+   <p>quick select box</p>
+   <div class="selection-box">
+    <ul>
+      <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+      <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+      <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+      <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+      <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+    </ul>
+   </div>
+  </div>  
 
   <div class="style-element ai-logo">
     <p>logo</p>
@@ -463,7 +525,7 @@
   
 
   <div class="style-element">
-    <p>p</p>p>
+    <p>p</p>
     <p>This is paragraph text</p>
   </div>
   
@@ -490,6 +552,13 @@
     <p>text input</p>
     <p class="control">
       <input class="input" type="text" placeholder="Text input">
+    </p>
+  </div>
+
+  <div class="style-element">
+    <p>date time input</p>
+    <p class="control">
+      <input class="input" type="datetime-local">
     </p>
   </div>
   
