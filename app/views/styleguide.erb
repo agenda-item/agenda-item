@@ -285,7 +285,7 @@
     <p>agenda item: election</p>
     <div class="box">
       <h2 class="subtitle is-3">Election</h2>
-      <!--       <div class="ai-title">
+      <!-- <div class="ai-title">
         <div class="control">
           <label class="label">Title</label>
           <input class="input" type="text" placeholder="{{ agenda_item.title }}">
@@ -296,31 +296,75 @@
         <div class="control">
           <textarea class="textarea" placeholder="{{ agenda_item.description }}"></textarea>
         </div>
-      </div>      
+      </div> -->
+      <div class="ai-motion">
+        <label class="label">Motion to Nominate</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="{{ agenda_item.description }}"></textarea>
+        </div>
+      </div>       
       <div class="ai-responsible">
-        <label class="label">Responsible Person</label>
+        <label class="label">Nominee</label>
         <input class="input" type="text" placeholder="{{ agenda_item.user_id }}">
       </div>
-      <div class="ai-status">
-        <label class="label">Status</label>
-        <p class="control">
-          <span class="select">
-            <select>
-              <option>Select dropdown</option>
-              <option>With options</option>
-            </select>
-          </span>
-        </p>
+      <div class="ai-responsible">
+        <label class="label">Mover</label>
+        <input class="input" type="text" placeholder="{{ agenda_item.user_id }}">
       </div>
+      <div class="ai-responsible">
+        <label class="label">Seconder</label>
+        <input class="input" type="text" placeholder="{{ agenda_item.user_id }}">
+      </div>
+      <div class="ai-vote">
+        <p>** if not logged</p>
+        <a class="button">
+          Log Votes
+        </a>
+        <p>** if logged</p>
+        <article class="message">
+            <div class="message-header">
+              In Favour
+            </div>
+            <div class="message-body">
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            </div>              
+          </article>
+          <article class="message">
+            <div class="message-header">
+              Opposed
+            </div>
+            <div class="message-body">
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            </div>
+          </article>
+          <article class="message">
+            <div class="message-header">
+              Abstained
+            </div>
+            <div class="message-body">
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            </div>
+          </article>
+          <a class="button">
+            Adjust Votes
+          </a>
+        </div>
       <div class="ai-minutes">
         <label class="label">Minutes</label>
         <div class="control">
           <textarea class="textarea" placeholder="Textarea"></textarea>
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
-</div>
 
   <div class="style-element ai-navbar">
     <p>navbar</p>
