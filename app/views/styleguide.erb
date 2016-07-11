@@ -3,6 +3,23 @@
     border: 1px dotted grey;
     padding: 20px;
     margin: 7px 0;
+    background: #ccc;
+  }
+
+  .ai-user > div > i {
+    border: 1px solid grey;
+    border-radius: 15px;
+    margin: 10px 5px;
+    padding: 10px;
+    background: white;
+  }
+
+  .ai-count > i, .ai-symbol > i {
+    border: 1px solid grey;
+    border-radius: 15px;
+    padding: 12px;
+    margin: 5px 0;
+    background: white;
   }
  </style>
 
@@ -27,13 +44,8 @@
     
   <div class="style-element ai-user">
     user<br/>
-  </div>
-  
-
-  <div class="style-element ai-quick-select">
-    quick select<br/>
-  </div>
-  
+    <div><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div>
+  </div>  
 
   <div class="style-element ai-motion">
     agenda item: motion<br/>
@@ -115,6 +127,11 @@
 
   <div class="style-element ai-count">
     count<br/>
+    <i class="has-text-centered">10</i>
+  </div>
+
+  <div class="style-element ai-quick-select">
+    quick select<br/>
   </div>
   
 
@@ -125,7 +142,7 @@
 
   <div class="style-element ai-symbol">
     symbolic element<br/>
-    <i class="fa fa-hand-spock-o fa-2x" aria-hidden="true"></i>
+    <i class="fa fa-hand-spock-o fa-lg" aria-hidden="true"></i>
   </div>
 
   <hr>
