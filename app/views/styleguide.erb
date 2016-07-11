@@ -6,11 +6,12 @@
     background: #ccc;
   }
 
-  .ai-user > div > i {
+  .ai-user {
     border: 1px solid grey;
     border-radius: 15px;
     padding: 10px;
     background: white;
+    display: inline-block;
   }
 
   .ai-count > i, .ai-symbol > i {
@@ -49,16 +50,18 @@
     
   <div class="style-element ai-user">
     <p>user</p>
-    <div><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div>
+    <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div>
   </div>  
 
   <div class="style-element ai-motion">
     <p>agenda item: motion</p>
     <div class="box">
       <h2 class="subtitle is-3">Motion</h2>
-      <!-- <div class="control">
-        <label class="label">Title</label>
-        <input class="input" type="text" placeholder="{{ agenda_item.title }}">
+      <!--       <div class="ai-title">
+        <div class="control">
+          <label class="label">Title</label>
+          <input class="input" type="text" placeholder="{{ agenda_item.title }}">
+        </div>
       </div>
       <div class="ai-description">
         <label class="label">Description</label>
@@ -95,9 +98,11 @@
     <p>agenda item: business</p>
     <div class="box">
       <h2 class="subtitle is-3">Business</h2>
-      <div class="control">
-        <label class="label">Title</label>
-        <input class="input" type="text" placeholder="{{ agenda_item.title }}">
+      <div class="ai-title">
+        <div class="control">
+          <label class="label">Title</label>
+          <input class="input" type="text" placeholder="{{ agenda_item.title }}">
+        </div>
       </div>
       <div class="ai-description">
         <label class="label">Description</label>
@@ -133,9 +138,17 @@
     <p>agenda item: meeting details</p>
     <div class="box">
       <h2 class="subtitle is-3">Meeting Details</h2>
-      <!-- <div class="control">
-        <label class="label">Title</label>
-        <input class="input" type="text" placeholder="{{ agenda_item.title }}">
+      <div class="ai-location">
+        <div class="control">
+          <label class="label">Location</label>
+          <input class="input" type="text" placeholder="{{ agenda_item.title }}">
+        </div>
+      </div>
+      <div class="ai-date-time">
+        <div class="control">
+          <label class="label">Date & Time</label>
+          <input class="input" type="text" placeholder="{{ agenda_item.title }}">
+        </div>
       </div>
       <div class="ai-description">
         <label class="label">Description</label>
@@ -144,26 +157,50 @@
         </div>
       </div>      
       <div class="ai-responsible">
-        <label class="label">Responsible Person</label>
+        <label class="label">Chair</label>
         <input class="input" type="text" placeholder="{{ agenda_item.user_id }}">
       </div>
-      <div class="ai-status">
-        <label class="label">Status</label>
-        <p class="control">
-          <span class="select">
-            <select>
-              <option>Select dropdown</option>
-              <option>With options</option>
-            </select>
-          </span>
-        </p>
+      <div class="ai-attendees">
+        <label class="label">Attendees</label>
+        <p>** if not logged</p>
+        <a class="button">
+          Log Attendees
+        </a>
+        <br/><br/>
+        <p>** if logged</p>
+        <article class="message">
+          <div class="message-header">
+            Present
+          </div>
+          <div class="message-body">
+            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+          </div>              
+        </article>
+        <article class="message">
+          <div class="message-header">
+            Absent
+          </div>
+          <div class="message-body">
+            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+          </div>
+        </article>
+        <a class="button">
+          Adjust Attendees
+        </a>
       </div>
       <div class="ai-minutes">
         <label class="label">Minutes</label>
         <div class="control">
           <textarea class="textarea" placeholder="Textarea"></textarea>
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
   
@@ -171,9 +208,11 @@
     <p>agenda item: document</p>
     <div class="box">
       <h2 class="subtitle is-3">Document</h2>
-      <!-- <div class="control">
-        <label class="label">Title</label>
-        <input class="input" type="text" placeholder="{{ agenda_item.title }}">
+      <!--       <div class="ai-title">
+        <div class="control">
+          <label class="label">Title</label>
+          <input class="input" type="text" placeholder="{{ agenda_item.title }}">
+        </div>
       </div>
       <div class="ai-description">
         <label class="label">Description</label>
@@ -209,9 +248,11 @@
     <p>agenda item: election</p>
     <div class="box">
       <h2 class="subtitle is-3">Election</h2>
-      <!-- <div class="control">
-        <label class="label">Title</label>
-        <input class="input" type="text" placeholder="{{ agenda_item.title }}">
+      <!--       <div class="ai-title">
+        <div class="control">
+          <label class="label">Title</label>
+          <input class="input" type="text" placeholder="{{ agenda_item.title }}">
+        </div>
       </div>
       <div class="ai-description">
         <label class="label">Description</label>
@@ -362,7 +403,7 @@
     <p>input label</p>
     <label class="label">This is label text</label>
   </div>
-  
+
 
   <div class="style-element">
     <p>text input</p>
