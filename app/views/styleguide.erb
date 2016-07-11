@@ -53,6 +53,40 @@
 
   <div class="style-element ai-business">
     agenda item: business<br/>
+    <div class="box">
+      <h2 class="subtitle is-3">Business</h2>
+      <div class="control">
+        <label class="label">Title</label>
+        <input class="input" type="text" placeholder="{{ agenda_item.title }}">
+      </div>
+      <div class="ai-description">
+        <label class="label">Description</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="{{ agenda_item.description }}"></textarea>
+        </div>
+      </div>      
+      <div class="ai-responsible">
+        <label class="label">Responsible Person</label>
+        <input class="input" type="text" placeholder="{{ agenda_item.user_id }}">
+      </div>
+      <div class="ai-status">
+        <label class="label">Status</label>
+        <p class="control">
+          <span class="select">
+            <select>
+              <option>Select dropdown</option>
+              <option>With options</option>
+            </select>
+          </span>
+        </p>
+      </div>
+      <div class="ai-minutes">
+        <label class="label">Minutes</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="Textarea"></textarea>
+        </div>
+      </div>
+    </article>
   </div>
 
   <div class="style-element ai-details">
