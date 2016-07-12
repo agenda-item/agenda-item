@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160712001205) do
+ActiveRecord::Schema.define(version: 20160712001255) do
 
   create_table "agenda_items", force: :cascade do |t|
     t.string   "tags"
@@ -111,6 +111,16 @@ ActiveRecord::Schema.define(version: 20160712001205) do
     t.boolean  "mail_permission",            default: false
     t.boolean  "meeting_email_permission",   default: false
     t.boolean  "reminders_email_permission", default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.integer  "agenda_item_id"
+    t.integer  "voting_user_id"
+    t.integer  "proxy_user_id"
+    t.boolean  "proxy",          default: false
+    t.string   "vote_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
