@@ -4,10 +4,7 @@ configure :development do
 end
 
 configure :development, :test do
-  set :database, {
-    adapter: 'sqlite3',
-    database: APP_ROOT.join('db', "#{Sinatra::Application.environment}.sqlite3")
-  }
+  
 end
 
 configure :production do
