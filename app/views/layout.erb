@@ -1,23 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!--
-    normalize.css removes cross-browser differences in defaults, e.g.,
-    differences in how form elements appear between Firefox and IE
-    See: http://necolas.github.com/normalize.css/
-  -->
-  <link rel="stylesheet" href="/stylesheets/normalize.css">
-  <!--
-    application.css is where you put your styles
-  -->
+  <!-- rich text editor -->
+  <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+
+  <!-- bulma -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.1.0/css/bulma.min.css"></script>
+
+  <!-- fort awesome -->
+  <script src="https://use.fortawesome.com/967a382e.js"></script>
+
+  <!-- application.css -->
   <link rel="stylesheet" href="/stylesheets/application.css">
 
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <!-- jQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+  <!-- application.js -->
   <script src="/javascript/application.js"></script>
 
   <title></title>
 </head>
 <body>
+  <!-- vue.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.js"></script>
   <%= yield %>
 </body>
 </html>
