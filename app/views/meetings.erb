@@ -38,9 +38,8 @@
       <div v-if="agendaItem.creator"><strong>Creator:</strong> {{agendaItem.creator}}<br/></div>
       <hr>
     </div>
-    <div v-for="vote in votes">
-      <div  v-text="vote | inFavour"><p>Vote: {{vote.voting_user_id}}</p></div>
-
+    <div v-for="voter in voters">
+      <div  v-text="vote | inFavour"><p>Vote: {{vote.voting_user_id}} {{voter.first_name}}</p></div>
     </div>
   </div>
 </template>
@@ -55,9 +54,9 @@
 
 <script>
 
-  Vue.filter('inFavour', function (vote) {
+  Vue.filter('inFavour', function (vote, voter) {
     if (vote.vote_type === "In Favour") {
-      return vote.voting_user_id
+      return voter.first_name
     }
   });
 
@@ -80,7 +79,8 @@
     data: function() {
       return {
         agendaItems: [],
-        votes: []
+        votes: [],
+        voters: []
       }
     },
     created: function() {
@@ -90,6 +90,10 @@
 
       this.$http.get('/api/votes').then(function(response){
         this.votes = response.json();
+      }.bind(this));
+
+      this.$http.get('/api/users/:id').then(function(response){
+        this.voters = response.json();
       }.bind(this));
     }
   });
