@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160711234440) do
+ActiveRecord::Schema.define(version: 20160712001205) do
 
   create_table "agenda_items", force: :cascade do |t|
     t.string   "tags"
@@ -77,6 +77,13 @@ ActiveRecord::Schema.define(version: 20160711234440) do
     t.string   "email"
     t.string   "address"
     t.string   "website"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "responsible_users", force: :cascade do |t|
+    t.integer  "agenda_item_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
