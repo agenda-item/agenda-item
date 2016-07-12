@@ -26,19 +26,21 @@
 <template id="agenda-items-template">
   <div class="container box"> 
     <div v-for="agendaItem in agendaItems">
-      <strong>Type:</strong> {{agendaItem.type}}<br/>
-      <strong>ID:</strong> {{agendaItem.id}}<br/>
-      <strong>Meeting ID:</strong> {{agendaItem.meeting_id}}<br/>
-      <strong>Title:</strong> {{agendaItem.title}}<br/>
-      <strong>Discussion:</strong> {{agendaItem.discussion}}<br/>
-      <strong>File Path:</strong> {{agendaItem.file_path}}<br/>
-      <strong>Mover:</strong> {{agendaItem.mover}}<br/>
-      <strong>Seconder:</strong> {{agendaItem.seconder}}<br/>
-      <strong>Due Date:</strong> {{agendaItem.due_date}}<br/>
-      <strong>Status:</strong> {{agendaItem.status}}<br/>
-      <strong>Position:</strong> {{agendaItem.position}}<br/>
-      <strong>Creator:</strong> {{agendaItem.creator}}<br/>
+      <div v-if="agendaItem.meeting_id"><strong>Meeting ID:</strong> {{agendaItem.meeting_id}}<br/></div>
+      <h1 class="subtitle is-5" v-if="agendaItem.title"><i class="fa fa-hand-spock-o" aria-hidden="true"></i> {{agendaItem.title}}</h1>
+      <div v-if="agendaItem.discussion"><strong>Discussion:</strong> {{agendaItem.discussion}}<br/></div>
+      <div v-if="agendaItem.file_path"><strong>File Path:</strong> {{agendaItem.file_path}}<br/></div>
+      <div v-if="agendaItem.mover"><strong>Mover:</strong> {{agendaItem.mover}}<br/></div>
+      <div v-if="agendaItem.seconder"><strong>Seconder:</strong> {{agendaItem.seconder}}<br/></div>
+      <div v-if="agendaItem.due_date"><strong>Due Date:</strong> {{agendaItem.due_date}}<br/></div>
+      <div v-if="agendaItem.status"><strong>Status:</strong> {{agendaItem.status}}<br/></div>
+      <div v-if="agendaItem.position"><strong>Position:</strong> {{agendaItem.position}}<br/></div>
+      <div v-if="agendaItem.creator"><strong>Creator:</strong> {{agendaItem.creator}}<br/></div>
       <hr>
+    </div>
+    <div v-for="vote in votes">
+      <div  v-text="vote | inFavour"><p>Vote: {{vote.voting_user_id}}</p></div>
+
     </div>
   </div>
 </template>
@@ -52,6 +54,12 @@
 </template>
 
 <script>
+
+  Vue.filter('inFavour', function (vote) {
+    if (vote.vote_type === "In Favour") {
+      return vote.voting_user_id
+    }
+  });
 
   Vue.component('meetings-header', {
     template: '#meetings-header-template',
@@ -67,17 +75,21 @@
     }
   });
 
-  Vue.component('agenda-items',{
+  Vue.component('agenda-items', {
     template: '#agenda-items-template',
     data: function() {
       return {
-        agendaItems: []
+        agendaItems: [],
+        votes: []
       }
     },
     created: function() {
       this.$http.get('/api/agenda-items').then(function(response){
-        console.log(response.json())
         this.agendaItems = response.json();
+      }.bind(this));
+
+      this.$http.get('/api/votes').then(function(response){
+        this.votes = response.json();
       }.bind(this));
     }
   });

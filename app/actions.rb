@@ -22,3 +22,8 @@ get '/api/agenda-items' do
  content_type :json
  AgendaItem.all.to_json
 end
+
+get '/api/votes' do
+ content_type :json
+ Vote.all.to_json
+end
