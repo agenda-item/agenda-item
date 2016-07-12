@@ -26,20 +26,20 @@
 @attendee4 = MeetingAttendee.create!(meeting_id: 1, user_id: 4, attendance_type: "present")
 
 # Agenda Items
-@meeting_details = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "meeting_details", title:"Details", description: "Annual AGM of The Society for the Preservation of the Wild Mammoth", discussion:"The meeting started at quarter to 4. Afterwards, Bob Smith, Previous President of the Society, welcomed
+@meeting_details = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "Meeting Details", title:"Details", description: "Annual AGM of The Society for the Preservation of the Wild Mammoth", discussion:"The meeting started at quarter to 4. Afterwards, Bob Smith, Previous President of the Society, welcomed
 everyone. Each person introduced himself/herself. Recital of the Mammoth Pledge held by all present.", status: "active", creator_id: 1)
 
-@business = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "business", title: "approval of agenda", description: "Agenda was circulated prior to meeting, agenda was approved", discussion: "Agenda approved", mover_id: 2, seconder_id: 3, status: "passed", creator_id: 1)
+@business = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "Business", title: "approval of agenda", description: "Agenda was circulated prior to meeting, agenda was approved", discussion: "Agenda approved", mover_id: 2, seconder_id: 3, status: "passed", creator_id: 1)
 
-@document = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "document", title: "Minutes from previous AGM", description: "Previous minutes presented and approved.", file_path: "/minutes2013.pdf", mover_id: 2, seconder_id: 4, status: "passed", creator_id: 2)
+@document = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "Document", title: "Minutes from previous AGM", description: "Previous minutes presented and approved.", file_path: "/minutes2013.pdf", mover_id: 2, seconder_id: 4, status: "passed", creator_id: 2)
 
-@action_item = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "action_item", title: "Permanent Location", description: "Obtain office space for a permanent location of the society", discussion: "Bob Smith discussed the option of finding a permanent location. He proposed he would begin the search after the meeting and bring forth options for locations to the next meeting of the society", mover_id: 2, seconder_id: 4,  status: "Active", creator_id: 4)
+@action_item = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "Action Items", title: "Permanent Location", description: "Obtain office space for a permanent location of the society", discussion: "Bob Smith discussed the option of finding a permanent location. He proposed he would begin the search after the meeting and bring forth options for locations to the next meeting of the society", mover_id: 2, seconder_id: 4,  status: "Active", creator_id: 4)
 
-@motion = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "motion", title: "Approval of official logo", description: "Sylvia presented a new logo (attached) for the society", discussion: "Sylvia's new logo is that of a wild Mammoth running free through fields of green with a Kingfisher bird perched upon it. Logo was voted upon and approved.", file_path: "/syvia_logo.jpg", mover_id: 1, seconder_id: 3, status: "passed", creator_id: 3)
+@motion = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "Motion", title: "Approval of official logo", description: "Sylvia presented a new logo (attached) for the society", discussion: "Sylvia's new logo is that of a wild Mammoth running free through fields of green with a Kingfisher bird perched upon it. Logo was voted upon and approved.", file_path: "/syvia_logo.jpg", mover_id: 1, seconder_id: 3, status: "passed", creator_id: 3)
 
-@election1 = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "action_item", title: "Election of President 2014", description: "Board elections held, Bob Smith re-elected to President, Sylvia to Secretary.", discussion: "Vote held for President, Bob Smith elected.", mover_id: 2, seconder_id: 3, status: "passed", creator_id: 4)
+@election1 = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "Election", title: "Election of President 2014", description: "Board elections held, Bob Smith re-elected to President, Sylvia to Secretary.", discussion: "Vote held for President, Bob Smith elected.", mover_id: 2, seconder_id: 3, status: "passed", creator_id: 4)
 
-@election2 = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "action_item", title: "Election of Secretary 2014", description: "Board elections held, Bob Smith re-elected to President, Sylvia to Secretary.", discussion: "Vote held for secretary all members approved, Sylvia Doe elected", mover_id: 2, seconder_id: 3, status: "passed", creator_id: 3)
+@election2 = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "Election", title: "Election of Secretary 2014", description: "Board elections held, Bob Smith re-elected to President, Sylvia to Secretary.", discussion: "Vote held for secretary all members approved, Sylvia Doe elected", mover_id: 2, seconder_id: 3, status: "passed", creator_id: 3)
 
 # Responsible Users
 @resp_user1 = ResponsibleUser.create!(agenda_item_id: 1, user_id: 1)

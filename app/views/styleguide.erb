@@ -54,23 +54,23 @@
   <div class="style-element section ai-template">
     <p>minutes template</p>
     <div class="card has-text-centered">
-      
+
       <div class="card-content">
         <div class="content">
           <h2 class="title is-1">{{meetings. title}}</h2>
           <i class="fa fa-hand-spock-o fa-2x" aria-hidden="true"></i>
           <h2 class="subtitle is-6">{{ meetings.meeting_date }}</h2>
           {{ meetings.description }} Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Phasellus nec iaculis mauris. 
+          Phasellus nec iaculis mauris.
         </div>
       </div>
     </div>
   </div>
-    
+
   <div class="style-element section ai-user-display">
     <p>user</p>
-    <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div>
-  </div>  
+    <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name user.last_name }}</i></div>
+  </div>
 
   <div class="style-element section ai-motion">
     <p>agenda item: motion</p>
@@ -87,7 +87,7 @@
         <div class="control">
           <textarea class="textarea" placeholder="{{ agenda_item.description }}"></textarea>
         </div>
-      </div>       
+      </div>
       <div class="ai-responsible">
         <label class="label">Mover</label>
         <input class="input" type="text" placeholder="{{ agenda_item.mover }}">
@@ -107,22 +107,22 @@
               In Favour
             </div>
             <div class="message-body">
-              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-            </div>              
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            </div>
           </article>
           <article class="message">
             <div class="message-header">
               Opposed
             </div>
             <div class="message-body">
-              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
             </div>
           </article>
           <article class="message">
@@ -130,8 +130,8 @@
               Abstain
             </div>
             <div class="message-body">
-              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
             </div>
           </article>
           <a class="button">
@@ -162,7 +162,7 @@
         <div class="control">
           <textarea class="textarea" placeholder="{{ agenda_item.description }}"></textarea>
         </div>
-      </div>      
+      </div>
       <div class="ai-responsible">
         <label class="label">Presenter(s)</label>
         <input class="input" type="text" placeholder="{{ agenda_item_responsible_user.user_id }}">
@@ -210,7 +210,7 @@
         <div class="control">
           <textarea class="textarea" placeholder="{{ meetings.description }}"></textarea>
         </div>
-      </div>      
+      </div>
       <div class="ai-responsible">
         <label class="label">Chair of Meeting</label>
         <input class="input" type="text" placeholder="{{ meetings.chair }}">
@@ -228,22 +228,22 @@
             Present
           </div>
           <div class="message-body">
-            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-          </div>              
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+          </div>
         </article>
         <article class="message">
           <div class="message-header">
             Absent
           </div>
           <div class="message-body">
-            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
           </div>
         </article>
         <a class="button">
@@ -258,7 +258,7 @@
       </div>
     </div>
   </div>
-  
+
   <div class="style-element section ai-document">
     <p>agenda item: document</p>
     <div class="box">
@@ -274,7 +274,7 @@
         <div class="control">
           <textarea class="textarea" placeholder="{{ agenda_item.description }}"></textarea>
         </div>
-      </div>      
+      </div>
       <div class="ai-responsible">
         <label class="label">Presenter(s)</label>
         <input class="input" type="text" placeholder="{{ responsible_person_user_id.user_id }}">
@@ -317,7 +317,7 @@
         <div class="control">
           <textarea class="textarea" placeholder="{{ agenda_item.description }}"></textarea>
         </div>
-      </div>       
+      </div>
       <div class="ai-responsible">
         <label class="label">Nominee</label>
         <input class="input" type="text" placeholder="{{ agenda_item.user_id }}">
@@ -341,22 +341,22 @@
               In Favour
             </div>
             <div class="message-body">
-              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-            </div>              
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            </div>
           </article>
           <article class="message">
             <div class="message-header">
               Opposed
             </div>
             <div class="message-body">
-              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
             </div>
           </article>
           <article class="message">
@@ -364,8 +364,8 @@
               Abstained
             </div>
             <div class="message-body">
-              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
-              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
             </div>
           </article>
           <a class="button">
@@ -437,7 +437,7 @@
       </div>
     </nav>
   </div>
-  
+
 
   <div class="style-element section ai-count">
     <p>count</p>
@@ -454,15 +454,15 @@
       <h2 class="subtitle is-4">For</h2>
       <div class="selection-box">
         <ul>
-          <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
-          <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
-          <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
-          <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
-          <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+          <li><div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+          <li><div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+          <li><div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+          <li><div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+          <li><div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
         </ul>
       </div>
     </div>
-    
+
     <div class="ai-selection-arrows">
       >
       <br>
@@ -472,8 +472,8 @@
       <h2 class="subtitle is-4">Against</h2>
       <div class="selection-box">
         <ul>
-          <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
-          <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+          <li><div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+          <li><div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
         </ul>
       </div>
     </div>
@@ -483,19 +483,19 @@
    <p>quick select box</p>
    <div class="selection-box">
     <ul>
-      <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
-      <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
-      <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
-      <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
-      <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+      <li><div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+      <li><div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+      <li><div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+      <li><div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+      <li><div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
     </ul>
    </div>
-  </div>  
+  </div>
 
   <div class="style-element section ai-logo">
     <p>logo</p>
   </div>
-  
+
 
   <div class="style-element section ai-symbol">
     <p>symbolic element</p>
@@ -508,7 +508,7 @@
     <p>h1</p>
     <h1 class="title is-1">This is title text</h1>
   </div>
-  
+
   <div class="style-element section">
     <p>h2</p>
     <h2 class="subtitle is-1">This is subtitle text</h2>
@@ -518,13 +518,13 @@
     <p>h3</p>
     <h3 class="title is-3">This is section header text</h3>
   </div>
-  
+
 
   <div class="style-element section">
     <p>p</p>
     <p>This is paragraph text</p>
   </div>
-  
+
 
   <div class="style-element section">
     <p>ul</p>
@@ -536,7 +536,7 @@
       <li>list</li>
     </ul>
   </div>
-  
+
 
   <div class="style-element section">
     <p>input label</p>
@@ -557,7 +557,7 @@
       <input class="input" type="datetime-local">
     </p>
   </div>
-  
+
 
   <div class="style-element section">
     <p>text area input</p>
@@ -565,7 +565,7 @@
       <textarea class="textarea" placeholder="{{ agenda_item.discussion }}"></textarea>
     </p>
   </div>
-  
+
 
   <div class="style-element section">
     <p>select</p>
@@ -578,7 +578,7 @@
       </span>
     </p>
   </div>
-  
+
 
   <hr>
   * basic page elements *<br/>
@@ -616,13 +616,13 @@
       </article>
     </div>
   </div>
-  
+
 
   <div class="style-element section">
     <p>image</p>
     <img src="https://support.files.wordpress.com/2009/07/pigeony.jpg?w=688">
   </div>
-  
+
 
   <div class="style-element section">
     <p>button</p>
@@ -630,7 +630,7 @@
       Button
     </a>
   </div>
-  
+
 
   <div class="style-element section">
     <p>table</p>
@@ -711,7 +711,7 @@
       </tbody>
     </table>
   </div>
-  
+
 
   <div class="style-element section">
     <p>left menu</p>
@@ -762,6 +762,5 @@
       <button class="modal-close"></button>
     </div>
   </div>
-  
- </div>
 
+ </div>
