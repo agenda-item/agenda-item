@@ -1,5 +1,5 @@
  <style>
-  .style-element {
+  .style-element section {
     border: 1px dotted grey;
     padding: 20px;
     margin: 7px 0;
@@ -21,11 +21,11 @@
     background: white;
   }
 
-  .style-element > .box {
+  .style-element section > .box {
     width: 80%;
   }
 
-  .style-element > p {
+  .style-element section > p {
     margin: 0 0 15px 0;
   }
 
@@ -51,7 +51,7 @@
 
 <div class="container">
   * custom elements *<br/>
-  <div class="style-element ai-template">
+  <div class="style-element section ai-template">
     <p>minutes template</p>
     <div class="card has-text-centered">
       
@@ -67,12 +67,12 @@
     </div>
   </div>
     
-  <div class="style-element ai-user-display">
+  <div class="style-element section ai-user-display">
     <p>user</p>
     <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div>
   </div>  
 
-  <div class="style-element ai-motion">
+  <div class="style-element section ai-motion">
     <p>agenda item: motion</p>
     <div class="box">
       <h2 class="subtitle is-3">Motion</h2>
@@ -83,12 +83,6 @@
         </div>
       </div>
       <div class="ai-description">
-        <label class="label">Description</label>
-        <div class="control">
-          <textarea class="textarea" placeholder="{{ agenda_item.description }}"></textarea>
-        </div>
-      </div>
-      <div class="ai-motion">
         <label class="label">Motion</label>
         <div class="control">
           <textarea class="textarea" placeholder="{{ agenda_item.description }}"></textarea>
@@ -96,11 +90,11 @@
       </div>       
       <div class="ai-responsible">
         <label class="label">Mover</label>
-        <input class="input" type="text" placeholder="{{ agenda_item.user_id }}">
+        <input class="input" type="text" placeholder="{{ agenda_item.mover }}">
       </div>
       <div class="ai-responsible">
         <label class="label">Seconder</label>
-        <input class="input" type="text" placeholder="{{ agenda_item.user_id }}">
+        <input class="input" type="text" placeholder="{{ agenda_item.seconder }}">
       </div>
       <div class="ai-vote">
         <p>** if not logged</p>
@@ -110,7 +104,7 @@
         <p>** if logged</p>
         <article class="message">
             <div class="message-header">
-              For
+              In Favour
             </div>
             <div class="message-body">
               <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
@@ -124,7 +118,7 @@
           </article>
           <article class="message">
             <div class="message-header">
-              Against
+              Opposed
             </div>
             <div class="message-body">
               <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
@@ -145,15 +139,15 @@
           </a>
         </div>
       <div class="ai-minutes">
-        <label class="label">Minutes</label>
+        <label class="label">Discussion</label>
         <div class="control">
-          <textarea class="textarea" placeholder="Textarea"></textarea>
+          <textarea class="textarea" placeholder="{{ agenda_item.discussion }}"></textarea>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="style-element ai-business">
+  <div class="style-element section ai-business">
     <p>agenda item: business</p>
     <div class="box">
       <h2 class="subtitle is-3">Business</h2>
@@ -170,54 +164,56 @@
         </div>
       </div>      
       <div class="ai-responsible">
-        <label class="label">Responsible Person</label>
-        <input class="input" type="text" placeholder="{{ agenda_item.user_id }}">
+        <label class="label">Presenter(s)</label>
+        <input class="input" type="text" placeholder="{{ agenda_item_responsible_user.user_id }}">
       </div>
       <div class="ai-status">
         <label class="label">Status</label>
         <p class="control">
           <span class="select">
             <select>
-              <option>Select dropdown</option>
-              <option>With options</option>
+              <option>Select status</option>
+              <option>Active</option>
+              <option>Carried Forward</option>
+              <option>Completed</option>
             </select>
           </span>
         </p>
       </div>
       <div class="ai-minutes">
-        <label class="label">Minutes</label>
+        <label class="label">Discussion</label>
         <div class="control">
-          <textarea class="textarea" placeholder="Textarea"></textarea>
+          <textarea class="textarea" placeholder="{{ agenda_item.discussion }}"></textarea>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="style-element ai-details">
+  <div class="style-element section ai-details">
     <p>agenda item: meeting details</p>
     <div class="box">
       <h2 class="subtitle is-3">Meeting Details</h2>
       <div class="ai-location">
         <div class="control">
           <label class="label">Location</label>
-          <input class="input" type="text" placeholder="{{ agenda_item.title }}">
+          <input class="input" type="text" placeholder="{{ meetings.title }}">
         </div>
       </div>
       <div class="ai-date-time">
         <div class="control">
           <label class="label">Date & Time</label>
-          <input class="input" type="text" placeholder="{{ agenda_item.title }}">
+          <input class="input" type="text" placeholder="{{ meetings.meeting_date }}">
         </div>
       </div>
       <div class="ai-description">
         <label class="label">Description</label>
         <div class="control">
-          <textarea class="textarea" placeholder="{{ agenda_item.description }}"></textarea>
+          <textarea class="textarea" placeholder="{{ meetings.description }}"></textarea>
         </div>
       </div>      
       <div class="ai-responsible">
-        <label class="label">Chair</label>
-        <input class="input" type="text" placeholder="{{ agenda_item.user_id }}">
+        <label class="label">Chair of Meeting</label>
+        <input class="input" type="text" placeholder="{{ meetings.chair }}">
       </div>
       <div class="ai-attendees">
         <label class="label">Attendees</label>
@@ -255,15 +251,15 @@
         </a>
       </div>
       <div class="ai-minutes">
-        <label class="label">Minutes</label>
+        <label class="label">Discussion</label>
         <div class="control">
-          <textarea class="textarea" placeholder="Textarea"></textarea>
+          <textarea class="textarea" placeholder="{{ agenda_item.discussion }}"></textarea>
         </div>
       </div>
     </div>
   </div>
   
-  <div class="style-element ai-document">
+  <div class="style-element section ai-document">
     <p>agenda item: document</p>
     <div class="box">
       <h2 class="subtitle is-3">Document</h2>
@@ -280,11 +276,11 @@
         </div>
       </div>      
       <div class="ai-responsible">
-        <label class="label">Responsible Person</label>
-        <input class="input" type="text" placeholder="{{ agenda_item.user_id }}">
+        <label class="label">Presenter(s)</label>
+        <input class="input" type="text" placeholder="{{ responsible_person_user_id.user_id }}">
       </div>
       <div class="ai-upload">
-        <label class="label">Status</label>
+        <label class="label">Upload Document</label>
         <a class="button">
           Upload
         </a>
@@ -292,15 +288,15 @@
         {{ agenda_item.filename }}</p>
       </div>
       <div class="ai-minutes">
-        <label class="label">Minutes</label>
+        <label class="label">Discussion</label>
         <div class="control">
-          <textarea class="textarea" placeholder="Textarea"></textarea>
+          <textarea class="textarea" placeholder="{{ agenda_item.discussion }}"></textarea>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="style-element ai-election">
+  <div class="style-element section ai-election">
     <p>agenda item: election</p>
     <div class="box">
       <h2 class="subtitle is-3">Election</h2>
@@ -377,15 +373,15 @@
           </a>
         </div>
       <div class="ai-minutes">
-        <label class="label">Minutes</label>
+        <label class="label">Discussion</label>
         <div class="control">
-          <textarea class="textarea" placeholder="Textarea"></textarea>
+          <textarea class="textarea" placeholder="{{ agenda_item.discussion }}"></textarea>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="style-element ai-navbar">
+  <div class="style-element section ai-navbar">
     <p>navbar</p>
     <nav class="nav">
       <div class="nav-left">
@@ -443,16 +439,16 @@
   </div>
   
 
-  <div class="style-element ai-count">
+  <div class="style-element section ai-count">
     <p>count</p>
     <i class="has-text-centered">10</i>
   </div>
 
-  <div class="style-element ai-log-attendees">
+  <div class="style-element section ai-log-attendees">
     <p>quick select box log atendees</p>
   </div>
 
-  <div class="style-element ai-log-votes">
+  <div class="style-element section ai-log-votes">
     <p>quick select box log votes</p>
     <div class="selection-box-wrapper">
       <h2 class="subtitle is-4">For</h2>
@@ -483,7 +479,7 @@
     </div>
   </div>
 
-  <div class="style-element ai-selection-box">
+  <div class="style-element section ai-selection-box">
    <p>quick select box</p>
    <div class="selection-box">
     <ul>
@@ -496,41 +492,41 @@
    </div>
   </div>  
 
-  <div class="style-element ai-logo">
+  <div class="style-element section ai-logo">
     <p>logo</p>
   </div>
   
 
-  <div class="style-element ai-symbol">
+  <div class="style-element section ai-symbol">
     <p>symbolic element</p>
     <i class="fa fa-hand-spock-o fa-lg" aria-hidden="true"></i>
   </div>
 
   <hr>
   * text and form inputs *<br/>
-  <div class="style-element">
+  <div class="style-element section">
     <p>h1</p>
     <h1 class="title is-1">This is title text</h1>
   </div>
   
-  <div class="style-element">
+  <div class="style-element section">
     <p>h2</p>
     <h2 class="subtitle is-1">This is subtitle text</h2>
   </div>
 
-  <div class="style-element">
+  <div class="style-element section">
     <p>h3</p>
     <h3 class="title is-3">This is section header text</h3>
   </div>
   
 
-  <div class="style-element">
+  <div class="style-element section">
     <p>p</p>
     <p>This is paragraph text</p>
   </div>
   
 
-  <div class="style-element">
+  <div class="style-element section">
     <p>ul</p>
     <ul>
       <li>This</li>
@@ -542,20 +538,20 @@
   </div>
   
 
-  <div class="style-element">
+  <div class="style-element section">
     <p>input label</p>
     <label class="label">This is label text</label>
   </div>
 
 
-  <div class="style-element">
+  <div class="style-element section">
     <p>text input</p>
     <p class="control">
-      <input class="input" type="text" placeholder="Text input">
+      <input class="input" type="text" placeholder="{{ agenda_item.discussion }}">
     </p>
   </div>
 
-  <div class="style-element">
+  <div class="style-element section">
     <p>date time input</p>
     <p class="control">
       <input class="input" type="datetime-local">
@@ -563,15 +559,15 @@
   </div>
   
 
-  <div class="style-element">
+  <div class="style-element section">
     <p>text area input</p>
     <p class="control">
-      <textarea class="textarea" placeholder="Textarea"></textarea>
+      <textarea class="textarea" placeholder="{{ agenda_item.discussion }}"></textarea>
     </p>
   </div>
   
 
-  <div class="style-element">
+  <div class="style-element section">
     <p>select</p>
     <p class="control">
       <span class="select">
@@ -586,7 +582,7 @@
 
   <hr>
   * basic page elements *<br/>
-  <div class="style-element">
+  <div class="style-element section">
     <p>box</p>
     <div class="box">
       <article class="media">
@@ -622,13 +618,13 @@
   </div>
   
 
-  <div class="style-element">
+  <div class="style-element section">
     <p>image</p>
     <img src="https://support.files.wordpress.com/2009/07/pigeony.jpg?w=688">
   </div>
   
 
-  <div class="style-element">
+  <div class="style-element section">
     <p>button</p>
     <a class="button">
       Button
@@ -636,7 +632,7 @@
   </div>
   
 
-  <div class="style-element">
+  <div class="style-element section">
     <p>table</p>
     <table class="table">
       <thead>
@@ -717,7 +713,7 @@
   </div>
   
 
-  <div class="style-element">
+  <div class="style-element section">
     <p>left menu</p>
     <aside class="menu">
       <p class="menu-label">
