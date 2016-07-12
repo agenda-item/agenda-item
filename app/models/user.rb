@@ -18,6 +18,10 @@ class User < ActiveRecord::Base
             class_name: "Meeting", 
             foreign_key: "chair_id"
 
+  has_many :creator_agenda_items, 
+            class_name: "AgendaItem", 
+            foreign_key: "creator_id"
+
   has_many :votes
 
   has_secure_password

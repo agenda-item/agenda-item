@@ -17,4 +17,7 @@ class AgendaItem < ActiveRecord::Base
               
   belongs_to :seconder, 
               class_name: "User"
+
+  belongs_to :creator, 
+              class_name: "User"
 end
