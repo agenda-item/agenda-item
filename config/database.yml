@@ -1,0 +1,3 @@
+development:
+  adapter: postgresql
+  database: action_item_development
