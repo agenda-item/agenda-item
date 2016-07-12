@@ -1,50 +1,98 @@
 
 <div id="app">
-  <meetings><meetings>
+  <meetings-header></meetings-header>
+  <agenda-items></agenda-items>
+  <meetings-footer></meetings-footer>
 </div>
 
-<template id="meetings-template">
-  <div class="container box" v-for="meeting in meetings">
-    <h1 class="title is-1">{{meeting.title}}</h1>
-    <p><strong>Minutes Status:</strong> {{ meeting.status }}</p>
+<template id="meetings-header-template">
+  <div class="container box" v-for="meetingDetail in meetingDetails">
+    <h1 class="title is-1">{{meetingDetail.title}}</h1>
+    <p><strong>Minutes Status:</strong> {{ meetingDetail.status }}</p>
     <hr>
-    <p>{{ meeting.description }}</p>
-    <strong>Meeting Date:</strong> {{ meeting.meeting_date }}<br/>
-    <strong>Meeting Location:</strong> {{ meeting.location }}<br/>
-    <strong>Discussion:</strong> {{ meeting.discussion }}<br/>
+    <p>{{ meetingDetail.description }}</p>
+    <strong>Meeting Date:</strong> {{ meetingDetail.meeting_date }}<br/>
+    <strong>Meeting Location:</strong> {{ meetingDetail.location }}<br/>
+    <strong>Discussion:</strong> {{ meetingDetail.discussion }}<br/>
     <br/>
     
-    <strong>Meeting Chair ID:</strong> {{ meeting.chair_id }}<br/>
-    <strong>Meeting Organization ID:</strong> {{ meeting.org_id }}<br/>
-    <strong>Meeting Template:</strong> {{ meeting.template_id }}<br/>
-    <br/>
+    <strong>Meeting Chair ID:</strong> {{ meetingDetail.chair_id }}<br/>
+    <strong>Meeting Organization ID:</strong> {{ meetingDetail.org_id }}<br/>
+    <strong>Meeting Template:</strong> {{ meetingDetail.template_id }}<br/>
     <hr>
-    <strong>Meeting Adjournment Time:</strong> {{ meeting.adjournment_time }}<br/>
-    <strong>Next Meeting:</strong> {{ meeting.next_meeting_date }}<br/>
   </div>
 </template>
 
 <template id="agenda-items-template">
-  <div class="container box" v-for="agenda-item in agenda-items">
+  <div class="container box"> 
+    <div v-for="agendaItem in agendaItems">
+      <strong>Type:</strong> {{agendaItem.type}}<br/>
+      <strong>ID:</strong> {{agendaItem.id}}<br/>
+      <strong>Meeting ID:</strong> {{agendaItem.meeting_id}}<br/>
+      <strong>Title:</strong> {{agendaItem.title}}<br/>
+      <strong>Discussion:</strong> {{agendaItem.discussion}}<br/>
+      <strong>File Path:</strong> {{agendaItem.file_path}}<br/>
+      <strong>Mover:</strong> {{agendaItem.mover}}<br/>
+      <strong>Seconder:</strong> {{agendaItem.seconder}}<br/>
+      <strong>Due Date:</strong> {{agendaItem.due_date}}<br/>
+      <strong>Status:</strong> {{agendaItem.status}}<br/>
+      <strong>Position:</strong> {{agendaItem.position}}<br/>
+      <strong>Creator:</strong> {{agendaItem.creator}}<br/>
+      <hr>
+    </div>
+  </div>
+</template>
+
+<template id="meetings-footer-template">
+  <div class="box container" v-for="meetingFooterDetail in meetingFooterDetails">
+    <hr>
+    <strong>Meeting Adjournment Time:</strong> {{ meetingFooterDetail.adjournment_time }}<br/>
+    <strong>Next Meeting:</strong> {{ meetingFooterDetail.next_meeting_date }}<br/>
   </div>
 </template>
 
 <script>
 
-  Vue.component('meetings', {
-    template: '#meetings-template',
+  Vue.component('meetings-header', {
+    template: '#meetings-header-template',
     data: function() {
       return {
-        meetings: []
+        meetingDetails: []
       }
     },
     created: function() {
       this.$http.get('/api/meetings').then(function(response){
-        this.meetings = response.json();
-        // console.log(response.json());
-        console.log(this);
+        this.meetingDetails = response.json();
       }.bind(this));
+    }
+  });
 
+  Vue.component('agenda-items',{
+    template: '#agenda-items-template',
+    data: function() {
+      return {
+        agendaItems: []
+      }
+    },
+    created: function() {
+      this.$http.get('/api/agenda-items').then(function(response){
+        console.log(response.json())
+        this.agendaItems = response.json();
+      }.bind(this));
+    }
+  });
+
+  Vue.component('meetings-footer', {
+    template: '#meetings-footer-template',
+    data: function() {
+      return {
+        meetingFooterDetails: []
+      }
+    },
+    created: function() {
+      this.$http.get('/api/meetings').then(function(response){
+        this.meetingFooterDetails = response.json();
+      }.bind(this));
     }
   });
 
