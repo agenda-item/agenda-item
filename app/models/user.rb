@@ -3,9 +3,8 @@ class User < ActiveRecord::Base
   has_many :meeting_permissions
   has_many :meetings, through: :meeting_permissions
 
-  has_many :responsible_user_agenda_items, 
-            class_name: "AgendaItem", 
-            foreign_key: "responsible_user_id"
+  has_many :responsible_users
+  has_many :agenda_items, through: :responsible_users
 
   has_many :mover_agenda_items, 
             class_name: "AgendaItem", 
@@ -14,6 +13,12 @@ class User < ActiveRecord::Base
   has_many :seconder_agenda_items, 
             class_name: "AgendaItem", 
             foreign_key: "seconder_id"
+
+  has_many :chaired_meetings, 
+            class_name: "Meeting", 
+            foreign_key: "chair_id"
+
+  has_many :votes
 
   has_secure_password
 
