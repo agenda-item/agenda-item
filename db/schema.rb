@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160712003958) do
+ActiveRecord::Schema.define(version: 20160712015254) do
 
   create_table "agenda_items", force: :cascade do |t|
     t.string   "tags"
@@ -28,7 +28,10 @@ ActiveRecord::Schema.define(version: 20160712003958) do
     t.datetime "updated_at"
     t.integer  "meeting_id"
     t.integer  "position"
+    t.integer  "creator_id"
   end
+
+  add_index "agenda_items", ["creator_id"], name: "index_agenda_items_on_creator_id"
 
   create_table "comments", force: :cascade do |t|
     t.integer "agenda_item_id"
