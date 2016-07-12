@@ -1,0 +1,767 @@
+ <style>
+  .style-element section {
+    border: 1px dotted grey;
+    padding: 20px;
+    margin: 7px 0;
+    background: #ccc;
+  }
+
+  .ai-user {
+    border: 1px solid grey;
+    border-radius: 15px;
+    padding: 10px;
+    background: white;
+    display: inline-block;
+  }
+
+  .ai-count > i, .ai-symbol > i {
+    border: 1px solid grey;
+    border-radius: 15px;
+    padding: 12px;
+    background: white;
+  }
+
+  .style-element section > .box {
+    width: 80%;
+  }
+
+  .style-element section > p {
+    margin: 0 0 15px 0;
+  }
+
+  .selection-box-wrapper {
+    display: inline-block;
+  }
+
+  .selection-box {
+    border: 1px solid grey;
+    background: white;
+    padding: 15px;
+    width: 315px;
+    height: 200px;
+    overflow-y: scroll
+  }
+
+  .ai-selection-arrows {
+    display: inline-block;
+  }
+
+ </style>
+
+
+<div class="container">
+  * custom elements *<br/>
+  <div class="style-element section ai-template">
+    <p>minutes template</p>
+    <div class="card has-text-centered">
+      
+      <div class="card-content">
+        <div class="content">
+          <h2 class="title is-1">{{meetings. title}}</h2>
+          <i class="fa fa-hand-spock-o fa-2x" aria-hidden="true"></i>
+          <h2 class="subtitle is-6">{{ meetings.meeting_date }}</h2>
+          {{ meetings.description }} Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Phasellus nec iaculis mauris. 
+        </div>
+      </div>
+    </div>
+  </div>
+    
+  <div class="style-element section ai-user-display">
+    <p>user</p>
+    <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div>
+  </div>  
+
+  <div class="style-element section ai-motion">
+    <p>agenda item: motion</p>
+    <div class="box">
+      <h2 class="subtitle is-3">Motion</h2>
+      <div class="ai-title">
+        <div class="control">
+          <label class="label">Title</label>
+          <input class="input" type="text" placeholder="{{ agenda_item.title }}">
+        </div>
+      </div>
+      <div class="ai-description">
+        <label class="label">Motion</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="{{ agenda_item.description }}"></textarea>
+        </div>
+      </div>       
+      <div class="ai-responsible">
+        <label class="label">Mover</label>
+        <input class="input" type="text" placeholder="{{ agenda_item.mover }}">
+      </div>
+      <div class="ai-responsible">
+        <label class="label">Seconder</label>
+        <input class="input" type="text" placeholder="{{ agenda_item.seconder }}">
+      </div>
+      <div class="ai-vote">
+        <p>** if not logged</p>
+        <a class="button">
+          Log Votes
+        </a>
+        <p>** if logged</p>
+        <article class="message">
+            <div class="message-header">
+              In Favour
+            </div>
+            <div class="message-body">
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            </div>              
+          </article>
+          <article class="message">
+            <div class="message-header">
+              Opposed
+            </div>
+            <div class="message-body">
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            </div>
+          </article>
+          <article class="message">
+            <div class="message-header">
+              Abstain
+            </div>
+            <div class="message-body">
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            </div>
+          </article>
+          <a class="button">
+            Adjust Votes
+          </a>
+        </div>
+      <div class="ai-minutes">
+        <label class="label">Discussion</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="{{ agenda_item.discussion }}"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="style-element section ai-business">
+    <p>agenda item: business</p>
+    <div class="box">
+      <h2 class="subtitle is-3">Business</h2>
+      <div class="ai-title">
+        <div class="control">
+          <label class="label">Title</label>
+          <input class="input" type="text" placeholder="{{ agenda_item.title }}">
+        </div>
+      </div>
+      <div class="ai-description">
+        <label class="label">Description</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="{{ agenda_item.description }}"></textarea>
+        </div>
+      </div>      
+      <div class="ai-responsible">
+        <label class="label">Presenter(s)</label>
+        <input class="input" type="text" placeholder="{{ agenda_item_responsible_user.user_id }}">
+      </div>
+      <div class="ai-status">
+        <label class="label">Status</label>
+        <p class="control">
+          <span class="select">
+            <select>
+              <option>Select status</option>
+              <option>Active</option>
+              <option>Carried Forward</option>
+              <option>Completed</option>
+            </select>
+          </span>
+        </p>
+      </div>
+      <div class="ai-minutes">
+        <label class="label">Discussion</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="{{ agenda_item.discussion }}"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="style-element section ai-details">
+    <p>agenda item: meeting details</p>
+    <div class="box">
+      <h2 class="subtitle is-3">Meeting Details</h2>
+      <div class="ai-location">
+        <div class="control">
+          <label class="label">Location</label>
+          <input class="input" type="text" placeholder="{{ meetings.title }}">
+        </div>
+      </div>
+      <div class="ai-date-time">
+        <div class="control">
+          <label class="label">Date & Time</label>
+          <input class="input" type="text" placeholder="{{ meetings.meeting_date }}">
+        </div>
+      </div>
+      <div class="ai-description">
+        <label class="label">Description</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="{{ meetings.description }}"></textarea>
+        </div>
+      </div>      
+      <div class="ai-responsible">
+        <label class="label">Chair of Meeting</label>
+        <input class="input" type="text" placeholder="{{ meetings.chair }}">
+      </div>
+      <div class="ai-attendees">
+        <label class="label">Attendees</label>
+        <p>** if not logged</p>
+        <a class="button">
+          Log Attendees
+        </a>
+        <br/><br/>
+        <p>** if logged</p>
+        <article class="message">
+          <div class="message-header">
+            Present
+          </div>
+          <div class="message-body">
+            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+          </div>              
+        </article>
+        <article class="message">
+          <div class="message-header">
+            Absent
+          </div>
+          <div class="message-body">
+            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+          </div>
+        </article>
+        <a class="button">
+          Adjust Attendees
+        </a>
+      </div>
+      <div class="ai-minutes">
+        <label class="label">Discussion</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="{{ agenda_item.discussion }}"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="style-element section ai-document">
+    <p>agenda item: document</p>
+    <div class="box">
+      <h2 class="subtitle is-3">Document</h2>
+      <div class="ai-title">
+        <div class="control">
+          <label class="label">Title</label>
+          <input class="input" type="text" placeholder="{{ agenda_item.title }}">
+        </div>
+      </div>
+      <div class="ai-description">
+        <label class="label">Description</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="{{ agenda_item.description }}"></textarea>
+        </div>
+      </div>      
+      <div class="ai-responsible">
+        <label class="label">Presenter(s)</label>
+        <input class="input" type="text" placeholder="{{ responsible_person_user_id.user_id }}">
+      </div>
+      <div class="ai-upload">
+        <label class="label">Upload Document</label>
+        <a class="button">
+          Upload
+        </a>
+        <p>* if uploaded
+        {{ agenda_item.filename }}</p>
+      </div>
+      <div class="ai-minutes">
+        <label class="label">Discussion</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="{{ agenda_item.discussion }}"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="style-element section ai-election">
+    <p>agenda item: election</p>
+    <div class="box">
+      <h2 class="subtitle is-3">Election</h2>
+      <!-- <div class="ai-title">
+        <div class="control">
+          <label class="label">Title</label>
+          <input class="input" type="text" placeholder="{{ agenda_item.title }}">
+        </div>
+      </div>
+      <div class="ai-description">
+        <label class="label">Description</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="{{ agenda_item.description }}"></textarea>
+        </div>
+      </div> -->
+      <div class="ai-motion">
+        <label class="label">Motion to Nominate</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="{{ agenda_item.description }}"></textarea>
+        </div>
+      </div>       
+      <div class="ai-responsible">
+        <label class="label">Nominee</label>
+        <input class="input" type="text" placeholder="{{ agenda_item.user_id }}">
+      </div>
+      <div class="ai-responsible">
+        <label class="label">Mover</label>
+        <input class="input" type="text" placeholder="{{ agenda_item.user_id }}">
+      </div>
+      <div class="ai-responsible">
+        <label class="label">Seconder</label>
+        <input class="input" type="text" placeholder="{{ agenda_item.user_id }}">
+      </div>
+      <div class="ai-vote">
+        <p>** if not logged</p>
+        <a class="button">
+          Log Votes
+        </a>
+        <p>** if logged</p>
+        <article class="message">
+            <div class="message-header">
+              In Favour
+            </div>
+            <div class="message-body">
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            </div>              
+          </article>
+          <article class="message">
+            <div class="message-header">
+              Opposed
+            </div>
+            <div class="message-body">
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            </div>
+          </article>
+          <article class="message">
+            <div class="message-header">
+              Abstained
+            </div>
+            <div class="message-body">
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name }}</i></div>
+            </div>
+          </article>
+          <a class="button">
+            Adjust Votes
+          </a>
+        </div>
+      <div class="ai-minutes">
+        <label class="label">Discussion</label>
+        <div class="control">
+          <textarea class="textarea" placeholder="{{ agenda_item.discussion }}"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="style-element section ai-navbar">
+    <p>navbar</p>
+    <nav class="nav">
+      <div class="nav-left">
+        <a class="nav-item" href="#">
+          <img src="/images/bulma.png" alt="Bulma logo}">
+        </a>
+      </div>
+
+      <div class="nav-center">
+        <a class="nav-item" href="#">
+          <span class="icon">
+            <i class="fa fa-github"></i>
+          </span>
+        </a>
+        <a class="nav-item" href="#">
+          <span class="icon">
+            <i class="fa fa-twitter"></i>
+          </span>
+        </a>
+      </div>
+
+      <span class="nav-toggle ">
+        <span></span>
+        <span></span>
+        <span></span>
+      </span>
+
+      <div class="nav-right nav-menu">
+        <a class="nav-item" href="#">
+          Home
+        </a>
+        <a class="nav-item" href="#">
+          Documentation
+        </a>
+        <a class="nav-item" href="#">
+          Blog
+        </a>
+
+        <span class="nav-item">
+          <a class="button" >
+            <span class="icon">
+              <i class="fa fa-twitter"></i>
+            </span>
+            <span>Tweet</span>
+          </a>
+          <a class="button is-primary" href="#">
+            <span class="icon">
+              <i class="fa fa-download"></i>
+            </span>
+            <span>Download</span>
+          </a>
+        </span>
+      </div>
+    </nav>
+  </div>
+  
+
+  <div class="style-element section ai-count">
+    <p>count</p>
+    <i class="has-text-centered">10</i>
+  </div>
+
+  <div class="style-element section ai-log-attendees">
+    <p>quick select box log atendees</p>
+  </div>
+
+  <div class="style-element section ai-log-votes">
+    <p>quick select box log votes</p>
+    <div class="selection-box-wrapper">
+      <h2 class="subtitle is-4">For</h2>
+      <div class="selection-box">
+        <ul>
+          <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+          <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+          <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+          <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+          <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="ai-selection-arrows">
+      >
+      <br>
+      <
+    </div>
+    <div class="selection-box-wrapper">
+      <h2 class="subtitle is-4">Against</h2>
+      <div class="selection-box">
+        <ul>
+          <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+          <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="style-element section ai-selection-box">
+   <p>quick select box</p>
+   <div class="selection-box">
+    <ul>
+      <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+      <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+      <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+      <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+      <li><div class="ai-user"><i class="fa fa-hand-spock-o aria-hidden="true">{{ user.first_name user.last_name }}</i></div></li>
+    </ul>
+   </div>
+  </div>  
+
+  <div class="style-element section ai-logo">
+    <p>logo</p>
+  </div>
+  
+
+  <div class="style-element section ai-symbol">
+    <p>symbolic element</p>
+    <i class="fa fa-hand-spock-o fa-lg" aria-hidden="true"></i>
+  </div>
+
+  <hr>
+  * text and form inputs *<br/>
+  <div class="style-element section">
+    <p>h1</p>
+    <h1 class="title is-1">This is title text</h1>
+  </div>
+  
+  <div class="style-element section">
+    <p>h2</p>
+    <h2 class="subtitle is-1">This is subtitle text</h2>
+  </div>
+
+  <div class="style-element section">
+    <p>h3</p>
+    <h3 class="title is-3">This is section header text</h3>
+  </div>
+  
+
+  <div class="style-element section">
+    <p>p</p>
+    <p>This is paragraph text</p>
+  </div>
+  
+
+  <div class="style-element section">
+    <p>ul</p>
+    <ul>
+      <li>This</li>
+      <li>is</li>
+      <li>an</li>
+      <li>unordered</li>
+      <li>list</li>
+    </ul>
+  </div>
+  
+
+  <div class="style-element section">
+    <p>input label</p>
+    <label class="label">This is label text</label>
+  </div>
+
+
+  <div class="style-element section">
+    <p>text input</p>
+    <p class="control">
+      <input class="input" type="text" placeholder="{{ agenda_item.discussion }}">
+    </p>
+  </div>
+
+  <div class="style-element section">
+    <p>date time input</p>
+    <p class="control">
+      <input class="input" type="datetime-local">
+    </p>
+  </div>
+  
+
+  <div class="style-element section">
+    <p>text area input</p>
+    <p class="control">
+      <textarea class="textarea" placeholder="{{ agenda_item.discussion }}"></textarea>
+    </p>
+  </div>
+  
+
+  <div class="style-element section">
+    <p>select</p>
+    <p class="control">
+      <span class="select">
+        <select>
+          <option>Select dropdown</option>
+          <option>With options</option>
+        </select>
+      </span>
+    </p>
+  </div>
+  
+
+  <hr>
+  * basic page elements *<br/>
+  <div class="style-element section">
+    <p>box</p>
+    <div class="box">
+      <article class="media">
+        <div class="media-left">
+          <figure class="image is-64x64">
+            <img src="http://placehold.it/128x128" alt="Image">
+          </figure>
+        </div>
+        <div class="media-content">
+          <div class="content">
+            <p>
+              <strong>John Smith</strong> <small>@johnsmith</small> <small>31m</small>
+              <br>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
+            </p>
+          </div>
+          <nav class="level">
+            <div class="level-left">
+              <a class="level-item">
+                <span class="icon is-small"><i class="fa fa-reply"></i></span>
+              </a>
+              <a class="level-item">
+                <span class="icon is-small"><i class="fa fa-retweet"></i></span>
+              </a>
+              <a class="level-item">
+                <span class="icon is-small"><i class="fa fa-heart"></i></span>
+              </a>
+            </div>
+          </nav>
+        </div>
+      </article>
+    </div>
+  </div>
+  
+
+  <div class="style-element section">
+    <p>image</p>
+    <img src="https://support.files.wordpress.com/2009/07/pigeony.jpg?w=688">
+  </div>
+  
+
+  <div class="style-element section">
+    <p>button</p>
+    <a class="button">
+      Button
+    </a>
+  </div>
+  
+
+  <div class="style-element section">
+    <p>table</p>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Instrument</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <th>Name</th>
+          <th>Instrument</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </tfoot>
+      <tbody>
+        <tr>
+          <td>Misty Abbott</td>
+          <td>Bass Guitar</td>
+          <td class="is-icon">
+            <a href="#">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </td>
+          <td class="is-icon">
+            <a href="#">
+              <i class="fa fa-instagram"></i>
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td>John Smith</td>
+          <td>Rhythm Guitar</td>
+          <td class="is-icon">
+            <a href="#">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </td>
+          <td class="is-icon">
+            <a href="#">
+              <i class="fa fa-instagram"></i>
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td>Robert Mikels</td>
+          <td>Lead Guitar</td>
+          <td class="is-icon">
+            <a href="#">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </td>
+          <td class="is-icon">
+            <a href="#">
+              <i class="fa fa-instagram"></i>
+            </a>
+          </td>
+        </tr>
+        <tr>
+          <td>Karyn Holmberg</td>
+          <td>Drums</td>
+          <td class="is-icon">
+            <a href="#">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </td>
+          <td class="is-icon">
+            <a href="#">
+              <i class="fa fa-instagram"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+
+  <div class="style-element section">
+    <p>left menu</p>
+    <aside class="menu">
+      <p class="menu-label">
+        General
+      </p>
+      <ul class="menu-list">
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="#">Customers</a></li>
+      </ul>
+      <p class="menu-label">
+        Administration
+      </p>
+      <ul class="menu-list">
+        <li><a href="#">Team Settings</a></li>
+        <li>
+          <a class="is-active" href="#">Manage Your Team</a>
+          <ul>
+            <li><a href="#">Members</a></li>
+            <li><a href="#">Plugins</a></li>
+            <li><a href="#">Add a member</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Invitations</a></li>
+        <li><a href="#">Authentication</a></li>
+      </ul>
+      <p class="menu-label">
+        Transactions
+      </p>
+      <ul class="menu-list">
+        <li><a href="#">Payments</a></li>
+        <li><a href="#">Transfers</a></li>
+        <li><a href="#">Balance</a></li>
+      </ul>
+    </aside>
+
+    <div>
+    </div>
+    modal<br/>
+    <div class="modal">
+      <div class="modal-background"></div>
+      <div class="modal-container">
+        <div class="modal-content">
+          <!-- Any other Bulma elements you want -->
+        </div>
+      </div>
+      <button class="modal-close"></button>
+    </div>
+  </div>
+  
+ </div>
+
