@@ -1,0 +1,55 @@
+
+<div id="app">
+  <meetings><meetings>
+</div>
+
+<template id="meetings-template">
+  <div class="container box" v-for="meeting in meetings">
+    <h1 class="title is-1">{{meeting.title}}</h1>
+    <p><strong>Minutes Status:</strong> {{ meeting.status }}</p>
+    <hr>
+    <p>{{ meeting.description }}</p>
+    <strong>Meeting Date:</strong> {{ meeting.meeting_date }}<br/>
+    <strong>Meeting Location:</strong> {{ meeting.location }}<br/>
+    <strong>Discussion:</strong> {{ meeting.discussion }}<br/>
+    <br/>
+    
+    <strong>Meeting Chair ID:</strong> {{ meeting.chair_id }}<br/>
+    <strong>Meeting Organization ID:</strong> {{ meeting.org_id }}<br/>
+    <strong>Meeting Template:</strong> {{ meeting.template_id }}<br/>
+    <br/>
+    <hr>
+    <strong>Meeting Adjournment Time:</strong> {{ meeting.adjournment_time }}<br/>
+    <strong>Next Meeting:</strong> {{ meeting.next_meeting_date }}<br/>
+  </div>
+</template>
+
+<template id="agenda-items-template">
+  <div class="container box" v-for="agenda-item in agenda-items">
+  </div>
+</template>
+
+<script>
+
+  Vue.component('meetings', {
+    template: '#meetings-template',
+    data: function() {
+      return {
+        meetings: []
+      }
+    },
+    created: function() {
+      this.$http.get('/api/meetings').then(function(response){
+        this.meetings = response.json();
+        // console.log(response.json());
+        console.log(this);
+      }.bind(this));
+
+    }
+  });
+
+
+  new Vue({
+      el: '#app'
+    });
+</script>
