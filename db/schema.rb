@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160712015254) do
+ActiveRecord::Schema.define(version: 20160712025225) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "agenda_items", force: :cascade do |t|
     t.string   "tags"
@@ -31,7 +34,7 @@ ActiveRecord::Schema.define(version: 20160712015254) do
     t.integer  "creator_id"
   end
 
-  add_index "agenda_items", ["creator_id"], name: "index_agenda_items_on_creator_id"
+  add_index "agenda_items", ["creator_id"], name: "index_agenda_items_on_creator_id", using: :btree
 
   create_table "comments", force: :cascade do |t|
     t.integer "agenda_item_id"
@@ -67,7 +70,7 @@ ActiveRecord::Schema.define(version: 20160712015254) do
     t.integer  "chair_id"
     t.text     "description"
     t.text     "discussion"
-    t.datetime "ajournment_time"
+    t.datetime "adjournment_time"
     t.datetime "next_meeting_date"
   end
 
@@ -135,4 +138,6 @@ ActiveRecord::Schema.define(version: 20160712015254) do
     t.datetime "updated_at"
   end
 
+  add_foreign_key "agenda_items", "meetings"
+  add_foreign_key "meetings", "organizations"
 end
