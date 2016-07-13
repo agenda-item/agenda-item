@@ -1,0 +1,46 @@
+ .style-element section {
+    border: 1px dotted grey;
+    padding: 20px;
+    margin: 7px 0;
+    background: #ccc;
+  }
+
+  .ai-user {
+    border: 1px solid grey;
+    border-radius: 15px;
+    padding: 10px;
+    background: white;
+    display: inline-block;
+  }
+
+  .ai-count > i, .ai-symbol > i {
+    border: 1px solid grey;
+    border-radius: 15px;
+    padding: 12px;
+    background: white;
+  }
+
+  .style-element section > .box {
+    width: 80%;
+  }
+
+  .style-element section > p {
+    margin: 0 0 15px 0;
+  }
+
+  .selection-box-wrapper {
+    display: inline-block;
+  }
+
+  .selection-box {
+    border: 1px solid grey;
+    background: white;
+    padding: 15px;
+    width: 315px;
+    height: 200px;
+    overflow-y: scroll
+  }
+
+  .ai-selection-arrows {
+    display: inline-block;
+  }
