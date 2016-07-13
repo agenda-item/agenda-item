@@ -38,8 +38,8 @@
       <div v-if="agendaItem.creator"><strong>Creator:</strong> {{agendaItem.creator}}<br/></div>
       <hr>
     </div>
-    <div v-for="voter in voters">
-      <div  v-text="vote | inFavour"><p>Vote: {{vote.voting_user_id}} {{voter.first_name}}</p></div>
+    <div v-for="vote in votesFor">
+        <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{vote | inFavour}}</i></div>
     </div>
   </div>
 </template>
@@ -54,10 +54,9 @@
 
 <script>
 
-  Vue.filter('inFavour', function (vote, voter) {
-    if (vote.vote_type === "In Favour") {
-      return voter.first_name
-    }
+  Vue.filter('inFavour', function (vote) {
+    console.log(vote.voting_user)
+      return vote.voting_user.first_name
   });
 
   Vue.component('meetings-header', {
@@ -78,9 +77,7 @@
     template: '#agenda-items-template',
     data: function() {
       return {
-        agendaItems: [],
-        votes: [],
-        voters: []
+        agendaItems: []
       }
     },
     created: function() {
@@ -88,13 +85,16 @@
         this.agendaItems = response.json();
       }.bind(this));
 
-      this.$http.get('/api/votes').then(function(response){
-        this.votes = response.json();
+      this.$http.get('/api/users/1').then(function(response){
+        this.voter = response.json();
       }.bind(this));
-
-      this.$http.get('/api/users/:id').then(function(response){
-        this.voters = response.json();
-      }.bind(this));
+    },
+    computed: {
+      votesFor: function () {
+        return this.votes.filter(function(vote){
+          return vote.vote_type === "In Favour"
+        })
+      }
     }
   });
 
