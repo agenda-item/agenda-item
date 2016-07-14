@@ -26,92 +26,106 @@
 <body>
   <!-- vue.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.js"></script>
-<!-- navbar will become a header template -->
-<!-- navbar starts here -->
-  <div class="container is-fluid">
-  	<div id="header" class="columns">
-  		<div class="column">
-  			<nav class="nav">
-  			  <div class="nav-left">
-  			    <a class="nav-item" href="#">
-  			      <img src="/images/bulma.png" alt="Bulma logo}">
-  			    </a>
-  			  </div>
 
-  			  <div class="nav-center">
-  			  	<a class="nav-item" href="#">
-  			  	  <span class="icon">
-  			  	    <i class="fa fa-view-comfy"></i>
-  			  	  </span>
-  			  	</a>
-  			    <a class="nav-item" href="#">
-  			      <span class="icon">
-  			        <i class="fa fa-settings"></i>
-  			      </span>
-  			    </a>
-  			    <a class="nav-item" href="#">
-  			      <span class="icon">
-  			      	<i class="fa fa-logout"></i>
-  			        
-  			      </span>
-  			    </a>
-  			  </div>
-  			</nav>
-  		</div>
-  	</div>
-<!-- navbar ends here -->
+  <section id="main-hero" class="hero is-info is-medium">
+    <div class="hero-body">
+      <div class="container">
+        <div id="title" class="columns">
+          <div class="column">
+            <h1 class="title is-1 center-element" style="color: black;">Taking Minutes Made Easy</h1>
+          </div> 
+        </div>
+        <div id="sign-up" class="columns">
+          <div class="column">
+            <!-- <p class="notification is-warning">Auto</p> -->
+          </div>
+          <div class="column is-two-thirds">
+            <div class="columns center-element">
+              
+              <div class="notification content">
+                <h4>Sign Up</h4>
+                <div class="control is-grouped">
 
-  	<div id="body" class="columns">
-  		<div class="column">
-  			<!-- <p class="notification is-warning">Auto</p> -->
-  		</div>
+                  <div class="control has-icon is-expanded">
+                    <input class="input" type="email" placeholder="email address"/>    
+                      <i class="fa fa-email"></i>
+                  </div>
+                     <p class="control">
+                      <a class="button" href="#">
+                       <span class="icon">
+                           <i class="fa fa-account-multiple"></i>
+                       </span>
+                       <span>Create New Team</span>
+                      </a> 
+                     </p>
+                </div>
+              </div>                
+            </div>
 
-  		<div class="column is-three-quarters">
-  			<div class="columns">
-  				<div class="column">
-  				    <!-- <p class="notification is-warning">Auto</p> -->
-  				</div>
+          </div>
+          <div class="column">
+            <!-- <p class="notification is-warning">Auto</p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  				<div class="column is-half">
-					  <div class="signup-form">
-						  <div class="style-element section">
-						    <p>SIGN UP</p>
-						    <label class="label">First Name</label>
-						    <p class="control has-icon">
-						      <input class="input" type="text" placeholder="First Name">
-						      <i class="fa fa-person"></i>
-						    </p>
-						    <label class="label">Last Name</label>
-						    <p class="control has-icon">
-						      <input class="input" type="text" placeholder="Last Name">
-						      
-						      	<i class="fa fa-person"></i>
-						    </p>
-						    <label class="label">Password</label>
-						    <p class="control has-icon">
-						      <input class="input" type="password" placeholder="Password">
-						      <i class="fa fa-lock"></i>
-						    </p>
-						    </p>
-						    <p class="control">
-						      <button class="button is-primary">Continue</button>
-						    </p>
-						  </div>
-						</div>
-  				</div>
+  <section id="1-2-3" class="hero is-small">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns">
+          <div class="column has-text-centered">
+           
+            <h1 class="title is-1">1</h1>
+            
+            <h3 class="title">Simple</h3>
+            <p class="subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas id risus turpis. Proin ut eleifend ligula.</p>
+          </div>
+          <div class="column has-text-centered">
+            <h1 class="title is-1">2</h1>
+            <h3 class="title">Powerful</h3>
+            <p class="subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas id risus turpis. Proin ut eleifend ligula.</p>
+          </div>
+          <div class="column has-text-centered">
+            <h1 class="title is-1">3</h1>
+            <h3 class="title">Secure</h3>
+            <p class="subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas id risus turpis. Proin ut eleifend ligula.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  				<div class="column">
-  				    <!-- <p class="notification is-danger">Auto</p> -->
-  				</div>
-  			</div>
-
-  		</div>
-
-  		<div class="column">
-  		  <!-- <p class="notification is-warning">Auto</p> -->
-  		</div>
-  	</div>
-  </div>
+  <section id="bottom-hero" class="hero is-medium">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-vcentered">
+          <div class="column is-6">
+            <h1 class="title is-2">
+              Business
+            </h1>
+            <h2 class="subtitle is-4">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas id risus turpis. Proin ut eleifend ligula. Cras euismod erat ullamcorper, condimentum tortor eget, gravida lacus.
+            </h2>
+            <!-- <p class="control is-grouped">
+              <a class="button is-large">
+                Get started
+              </a>
+              <a class="button is-large">
+                Learn more
+              </a>
+            </p> -->
+          </div>
+          <div class="column is-5 is-offset-1">
+            <figure class="image is-4by3">
+              <img src="https://static.pexels.com/photos/28756/pexels-photo.jpg" alt="Description">
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
 </body>
 </html>

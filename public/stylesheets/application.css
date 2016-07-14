@@ -1,4 +1,6 @@
+
  .style-element section {
+
     border: 1px dotted grey;
     padding: 20px;
     margin: 7px 0;
@@ -43,4 +45,20 @@
 
   .ai-selection-arrows {
     display: inline-block;
+
+  }
+
+  .center-element {
+    display: flex;
+    text-align:center;
+    justify-content:center;
+  } 
+
+  #main-hero {
+    background-color: #7CAFA6;
+  }
+
+  #bottom-hero {
+    background-color: #E1DFE0;
+
   }
