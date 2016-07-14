@@ -44,3 +44,7 @@
   .ai-selection-arrows {
     display: inline-block;
   }
+
+  .center-element {
+    text-align:center;
+  } 
