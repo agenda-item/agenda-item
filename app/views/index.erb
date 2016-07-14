@@ -26,47 +26,12 @@
 <body>
   <!-- vue.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.js"></script>
-<!-- navbar will become a header template -->
-<!-- navbar starts here -->
-  <div class="container is-fluid">
-    <div id="header" class="columns">
-      <div class="column">
-        <nav class="nav">
-          <div class="nav-left">
-            <a class="nav-item" href="#">
-              <img src="/images/bulma.png" alt="Bulma logo}">
-            </a>
-          </div>
-
-          <div class="nav-center">
-            <a class="nav-item" href="#">
-              <span class="icon">
-                <i class="fa fa-view-comfy"></i>
-              </span>
-            </a>
-            <a class="nav-item" href="#">
-              <span class="icon">
-                <i class="fa fa-settings"></i>
-              </span>
-            </a>
-            <a class="nav-item" href="#">
-              <span class="icon">
-                <i class="fa fa-logout"></i>
-                
-              </span>
-            </a>
-          </div>
-        </nav>
-      </div>
-    </div>
-<!-- navbar ends here -->
 
     <div id="title" class="columns">
       <div class="column">
-        <h1 class="notification is-warning center-element">Taking Minutes Made Easy</h1>
+        <h2 class="notification is-warning center-element">Taking Minutes Made Easy</h2>
       </div> 
     </div>
-
 
     <div id="1-2-3" class="columns">
       <div class="column is-1">
@@ -110,12 +75,11 @@
       <div class="column is-two-thirds">
         <div class="columns center-element">
           <div class="control is-grouped">
-              <input class="input" type="email" placeholder="Email"/>
-            <p class="control">
-             <a class="button is-primary" href="#">
-               <span class="icon">
-                   <i class="fa fa-account-multiple"></i>
-               </span>
+            <div class="control has-icon is-expanded">
+
+              <input class="input" type="email" placeholder="email address"/>    
+                <i class="fa fa-email"></i>
+             </div>
                <span>Create New Team</span>
              </a> 
             </p>
