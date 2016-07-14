@@ -58,3 +58,11 @@
   #bottom-hero {
     background-color: #E1DFE0;
   }
+
+  #sign-up {
+    padding: 100px;
+  }
+
+  #sign-up-text {
+    text-align: left;
+  }
