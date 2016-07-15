@@ -1,7 +1,7 @@
 ActionItem
 =============
 
-Brought to you by Cort Hertay, Olga Liberchuk, Monica Mow and Jen Reiher 
+Brought to you by Cort Hertay, Olga Liberchuk, Monica Mow, Jen Reiher and Jason Lee.
 
 For boards that want to be able to take great minutes (without having to read a manual about how to write board meeting minutes) ActionItem is a meeting minutes taking app that provides easy to use templates for common meeting agenda items, and simplifies the feedback loop between minute takers and board members.
 
