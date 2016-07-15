@@ -1,22 +1,23 @@
 # seeding data
 require "pry"
-# Users
-@bob = User.create!(first_name: "Bob", last_name: "Smith", email: "bob_smith@email.com", type: "Board", org_title: "Chair", password: "password1" , phone: "250-555-5555", phone_permission: true, mobile: "778-555-5555", address: "4851 Skyline Dr", mail_permission: true, meeting_email_permission: true, reminders_email_permission: true)
-
-@sylvia = User.create!(first_name: "Sylvia", last_name: "Doe", email: "minute_hater@email.com", type: "Board", org_title: "Secretary", password: "password2", phone: "250-333-3333", phone_permission: false, mobile: "778-333-3333", address: "486 Bayhill Pl", mail_permission: true, meeting_email_permission: true, reminders_email_permission: false)
-
-@jason = User.create!(first_name: "Jason", last_name: "Bourne", email: "who_am_i@mystery.ca", type: "attendee", org_title: "n/a", password: "password3", phone: "250-867-5309", phone_permission: false, mobile: "778-867-5309", address: "1122 Kyndree Crt", mail_permission: false, meeting_email_permission: false, reminders_email_permission: false)
-
-@milly = User.create!(first_name: "Mildred", last_name: "Pennywise", email: "scorpio94@yahoo.ca", type: "attendee", org_title: "n/a", password: "password4", phone: "250-444-4444", phone_permission: false, mobile: "778-444-4444", address: "616 Cassiar Dr", mail_permission: false, meeting_email_permission: true, reminders_email_permission: false)
-
 # Organizations
-@test_org = Organization.create!(name: "Test Organization", logo: "logo.jpg", phone: "250-250-2500", email: "testorg@email.ca", address: "123 Main St", website: "www.testorg.com", user_id: @sylvia.id)
+@test_org = Organization.create!(name: "Test Organization", logo: "logo.jpg", phone: "250-250-2500", email: "testorg@email.ca", address: "123 Main St", website: "www.testorg.com")
+# Users
+@bob = User.create!(organization_id: @test_org.id, first_name: "Bob", last_name: "Smith", email: "bob_smith@email.com", type: "Board", org_title: "Chair", password: "password1" , phone: "250-555-5555", phone_permission: true, mobile: "778-555-5555", address: "4851 Skyline Dr", mail_permission: true, meeting_email_permission: true, reminders_email_permission: true)
 
+@sylvia = User.create!(organization_id: @test_org.id,first_name: "Sylvia", last_name: "Doe", email: "minute_hater@email.com", type: "Board", org_title: "Secretary", password: "password2", phone: "250-333-3333", phone_permission: false, mobile: "778-333-3333", address: "486 Bayhill Pl", mail_permission: true, meeting_email_permission: true, reminders_email_permission: false)
+
+@jason = User.create!(organization_id: @test_org.id,first_name: "Jason", last_name: "Bourne", email: "who_am_i@mystery.ca", type: "attendee", org_title: "n/a", password: "password3", phone: "250-867-5309", phone_permission: false, mobile: "778-867-5309", address: "1122 Kyndree Crt", mail_permission: false, meeting_email_permission: false, reminders_email_permission: false)
+
+@milly = User.create!(organization_id: @test_org.id,first_name: "Mildred", last_name: "Pennywise", email: "scorpio94@yahoo.ca", type: "attendee", org_title: "n/a", password: "password4", phone: "250-444-4444", phone_permission: false, mobile: "778-444-4444", address: "616 Cassiar Dr", mail_permission: false, meeting_email_permission: true, reminders_email_permission: false)
+
+#getting org to recognize its owner
+@test_org.user_id = @sylvia.id
 # Meetings
-@agm = Meeting.create!(meeting_date: DateTime.strptime("02/02/2014 15:47", "%m/%d/%Y %H:%M"), title: "Annual AGM - SPWM", status: "draft", location: "123 Main St", chair_id: @bob.id, description: "This the the 2nd AGM for the Society for the Preservation of the Wild Mammoth", discussion: "The meeting started at quarter to 4. Afterwards, Bob Smith, Previous President of the Society, welcomed everyone. Each person introduced himself/herself. Recital of the Mammoth Pledge held by all present.", adjournment_time: DateTime.strptime("02/02/2014 18:00", "%m/%d/%Y %H:%M"), next_meeting_date: DateTime.strptime("05/01/2014 18:00", "%m/%d/%Y %H:%M"))
+@agm = Meeting.create!(meeting_date: DateTime.strptime("02/02/2014 15:47", "%m/%d/%Y %H:%M"), title: "Annual AGM - SPWM", status: "draft", organization_id: @test_org.id, location: "123 Main St", chair_id: @bob.id, description: "This the the 2nd AGM for the Society for the Preservation of the Wild Mammoth", discussion: "The meeting started at quarter to 4. Afterwards, Bob Smith, Previous President of the Society, welcomed everyone. Each person introduced himself/herself. Recital of the Mammoth Pledge held by all present.", adjournment_time: DateTime.strptime("02/02/2014 18:00", "%m/%d/%Y %H:%M"), next_meeting_date: DateTime.strptime("05/01/2014 18:00", "%m/%d/%Y %H:%M"))
 
 # MeetingPermissions
-@meeting_permissions = MeetingPermission.create!(user_id: @bob.id, meeting_id: @agm.id, meeting_permissions: true)
+@meeting_permissions = MeetingPermission.create!(user_id: @bob.id, meeting_id: @agm.id, meeting_permissions: "true")
 
 # Meeting_Attendees
 @attendee1 = MeetingAttendee.create!(meeting_id: @agm.id, user_id: @bob.id, attendance_type: "present")
@@ -34,9 +35,9 @@ require "pry"
 
 @motion = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "Motion", title: "Approval of official logo", description: "Sylvia presented a new logo (attached) for the society", discussion: "Sylvia's new logo is that of a wild Mammoth running free through fields of green with a Kingfisher bird perched upon it. Logo was voted upon and approved.", file_path: "/syvia_logo.jpg", mover_id: @bob.id, seconder_id: @milly.id, status: "passed", meeting_id: @agm.id, creator_id: @sylvia.id)
 
-@election1 = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "Election", title: "Election of President 2014", description: "Board elections held, Bob Smith re-elected to President, Sylvia to Secretary.", discussion: "Vote held for President, Bob Smith elected.", mover_id: @sylvia.id, seconder_id: @jason.id, status: "passed", meeting_id: @agm.id, creator_id: @milly.id)
+@election1 = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "Election", title: "Election of President 2014", description: "Board election for President.", discussion: "Vote held for President, all members approved, Bob Smith re-elected.", mover_id: @sylvia.id, seconder_id: @jason.id, status: "passed", meeting_id: @agm.id, creator_id: @milly.id)
 
-@election2 = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "Election", title: "Election of Secretary 2014", description: "Board elections held, Bob Smith re-elected to President, Sylvia to Secretary.", discussion: "Vote held for secretary all members approved, Sylvia Doe elected", mover_id: @sylvia.id, seconder_id: @jason.id, status: "passed", meeting_id: @agm.id, creator_id: @bob.id)
+@election2 = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "Election", title: "Election of Secretary 2014", description: "Board election for Secretary.", discussion: "Vote held for secretary, all members approved, Sylvia Doe re-elected", mover_id: @milly.id, seconder_id: @jason.id, status: "passed", meeting_id: @agm.id, creator_id: @bob.id)
 
 # Responsible Users
 
