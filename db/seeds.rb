@@ -13,6 +13,7 @@ require "pry"
 
 #getting org to recognize its owner
 @test_org.user_id = @sylvia.id
+
 # Meetings
 @agm = Meeting.create!(meeting_date: DateTime.strptime("02/02/2014 15:47", "%m/%d/%Y %H:%M"), title: "Annual AGM - SPWM", status: "draft", organization_id: @test_org.id, location: "123 Main St", chair_id: @bob.id, description: "This the the 2nd AGM for the Society for the Preservation of the Wild Mammoth", discussion: "The meeting started at quarter to 4. Afterwards, Bob Smith, Previous President of the Society, welcomed everyone. Each person introduced himself/herself. Recital of the Mammoth Pledge held by all present.", adjournment_time: DateTime.strptime("02/02/2014 18:00", "%m/%d/%Y %H:%M"), next_meeting_date: DateTime.strptime("05/01/2014 18:00", "%m/%d/%Y %H:%M"))
 
