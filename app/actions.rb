@@ -1,6 +1,7 @@
 # Landing Page
 get '/' do
   erb :index
+  # redirect '/organizations/new'
 end
 
 # Style Guide
@@ -9,7 +10,11 @@ get '/styleguide' do
 end
 
 get '/organizations/new' do
-  erb :signup
+	erb :signup
+end
+
+get '/test' do
+  erb :motion
 end
 
 #################
