@@ -88,3 +88,24 @@ post '/api/agenda-items/:id' do |id|
     @agenda_item.to_json(include: { :votes => {:include =>:voting_user} })
   end  
 end
+
+#########
+# USERS #
+#########
+
+# list all organizations
+get '/users' do
+  erb :users 
+end
+
+# get all users
+get '/api/users' do
+ content_type :json
+ User.all.to_json(include: { :meetings => {:include =>:agenda_items} })
+end
+
+# get user by id
+get '/api/users/:id' do |id|
+  content_type :json
+  User.find(id).to_json(include: { :meetings => {:include =>:agenda_items} })
+end
