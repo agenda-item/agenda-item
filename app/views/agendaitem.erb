@@ -8,14 +8,39 @@
  <form @submit.prevent="postData">
     <textarea id="description" v-model="agendaItem.description"  name="description"></textarea>
     <textarea id="title" v-model="agendaItem.title" name="title"></textarea>
+    <textarea id="discussion" v-model="agendaItem.discussion" name="discussion" class="mceEditor"></textarea>
+    <button type="submit" @click="tinyMCE">Edit</button>
     <button type="submit">submit</button>
   </form>
 </template>
 
-<script>
+<script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
 
+<script>
   Vue.component('agendaItem', {
     template: '#agenda-item-template',
+    // created: function() {
+    //   tinymce.init({
+    //     // General options
+    //     mode : "exact",
+    //     elements : "1,2",
+    //     height: 200,
+    //     width: 500, 
+    //     plugins: [
+    //       'advlist autolink lists link image charmap print preview anchor',
+    //       'searchreplace visualblocks code fullscreen',
+    //       'insertdatetime media table contextmenu paste code',
+    //       'textcolor save'
+    //     ],
+    //     toolbar: 'insertfile undo redo | styleselect | bold italic forecolor | backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | image | file | save',
+    //     content_css: [
+    //       '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
+    //       '//www.tinymce.com/css/codepen.min.css'
+    //     ]
+    //   });
+
+
+    // },
     props: ['agendaItem'],
     methods: {
       postData: function() {
@@ -26,7 +51,27 @@
           console.log(error);
           console.log("erroring");
         }.bind(this));
-      }
+      },
+      tinyMCE: function() {
+      tinymce.init({
+        // General options
+  mode : "specific_textareas",
+  editor_selector : "mceEditor",
+        height: 200,
+        width: 500, 
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table contextmenu paste code',
+          'textcolor save'
+        ],
+        toolbar: 'insertfile undo redo | styleselect | bold italic forecolor | backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | image | file | save',
+        content_css: [
+          '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
+          '//www.tinymce.com/css/codepen.min.css'
+        ]
+      });
+    }
     }
   });
 
