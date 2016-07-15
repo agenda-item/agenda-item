@@ -1,5 +1,5 @@
 # seeding data
-
+require "pry"
 # Users
 @bob = User.create!(first_name: "Bob", last_name: "Smith", email: "bob_smith@email.com", type: "Board", org_title: "Chair", password: "pass123", phone: "250-555-5555", phone_permission: true, mobile: "778-555-5555", address: "4851 Skyline Dr", mail_permission: true, meeting_email_permission: true, reminders_email_permission: true)
 
@@ -13,8 +13,7 @@
 @test_org = Organization.create!(name: "Test Organization", logo: "logo.jpg", phone: "250-250-2500", email: "testorg@email.ca", address: "123 Main St", website: "www.testorg.com", user_id: @sylvia.id)
 
 # Meetings
-@agm = Meeting.create!(meeting_date: DateTime.strptime("02/02/2014 15:47", "%m/%d/%Y %H:%M"), title: "Annual AGM - SPWM", status: "draft", location: "123 Main St", chair_id: @bob.id, description: "This the the 2nd AGM for the Society for the Preservation of the Wild Mammoth", adjournment_time: DateTime.strptime("02/02/2014 18:00", "%m/%d/%Y %H:%M"), next_meeting_date: DateTime.strptime("05/01/2014
-18:00", "%m/%d/%Y %H:%M"))
+@agm = Meeting.create!(meeting_date: DateTime.strptime("02/02/2014 15:47", "%m/%d/%Y %H:%M"), title: "Annual AGM - SPWM", status: "draft", location: "123 Main St", chair_id: @bob.id, description: "This the the 2nd AGM for the Society for the Preservation of the Wild Mammoth", discussion: "The meeting started at quarter to 4. Afterwards, Bob Smith, Previous President of the Society, welcomed everyone. Each person introduced himself/herself. Recital of the Mammoth Pledge held by all present.", adjournment_time: DateTime.strptime("02/02/2014 18:00", "%m/%d/%Y %H:%M"), next_meeting_date: DateTime.strptime("05/01/2014 18:00", "%m/%d/%Y %H:%M"))
 
 # MeetingPermissions
 @meeting_permissions = MeetingPermission.create!(user_id: @bob.id, meeting_id: @agm.id, meeting_permissions: true)
@@ -26,12 +25,10 @@
 @attendee4 = MeetingAttendee.create!(meeting_id: @agm.id, user_id: @milly.id, attendance_type: "present")
 
 # Agenda Items
-@meeting_details = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "Meeting Details", title:"Details", description: "Annual AGM of The Society for the Preservation of the Wild Mammoth", discussion:"The meeting started at quarter to 4. Afterwards, Bob Smith, Previous President of the Society, welcomed
-everyone. Each person introduced himself/herself. Recital of the Mammoth Pledge held by all present.", status: "active", meeting_id: @agm.id, creator_id: @bob.id)
 
 @business = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "Business", title: "approval of agenda", description: "Agenda was circulated prior to meeting, agenda was approved", discussion: "Agenda approved", mover_id: @sylvia.id, seconder_id: @jason.id, status: "passed", meeting_id: @agm.id, creator_id: @bob.id)
 
-@document = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "Document", title: "Minutes from previous AGM", description: "Previous minutes presented and approved.", file_path: "/minutes2013.pdf", mover_id: @jason.id, seconder_id: @milly.id, status: "passed", meeting_id: @agm.id, creator_id: @sylvia.id)
+@document = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "Document", title: "Minutes from previous AGM", description: "Previous minutes presented and approved.", discussion: "The previous AGM minutes were presented and all present approved", file_path: "/minutes2013.pdf", mover_id: @jason.id, seconder_id: @milly.id, status: "passed", meeting_id: @agm.id, creator_id: @sylvia.id)
 
 @action_item = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "Action Items", title: "Permanent Location", description: "Obtain office space for a permanent location of the society", discussion: "Bob Smith discussed the option of finding a permanent location. He proposed he would begin the search after the meeting and bring forth options for locations to the next meeting of the society", mover_id: @sylvia.id, seconder_id: @milly.id,  status: "Active", meeting_id: @agm.id, creator_id: @bob.id)
 
@@ -42,13 +39,13 @@ everyone. Each person introduced himself/herself. Recital of the Mammoth Pledge 
 @election2 = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "Election", title: "Election of Secretary 2014", description: "Board elections held, Bob Smith re-elected to President, Sylvia to Secretary.", discussion: "Vote held for secretary all members approved, Sylvia Doe elected", mover_id: @sylvia.id, seconder_id: @jason.id, status: "passed", meeting_id: @agm.id, creator_id: @bob.id)
 
 # Responsible Users
-@resp_user1 = ResponsibleUser.create!(agenda_item_id: @meeting_details.id, user_id: @bob.id)
-@resp_user2 = ResponsibleUser.create!(agenda_item_id: @business.id, user_id: @jason.id)
-@resp_user3 = ResponsibleUser.create!(agenda_item_id: @document.id, user_id: @sylvia.id)
-@resp_user4 = ResponsibleUser.create!(agenda_item_id: @action_item.id, user_id: @milly.id)
-@resp_user5 = ResponsibleUser.create!(agenda_item_id: @motion.id, user_id: @sylvia.id)
-@resp_user6 = ResponsibleUser.create!(agenda_item_id: @election1.id, user_id: @jason.id)
-@resp_user7 = ResponsibleUser.create!(agenda_item_id: @election2.id, user_id: @jason.id)
+
+@resp_user1 = ResponsibleUser.create!(agenda_item_id: @business.id, user_id: @jason.id)
+@resp_user2 = ResponsibleUser.create!(agenda_item_id: @document.id, user_id: @sylvia.id)
+@resp_user3 = ResponsibleUser.create!(agenda_item_id: @action_item.id, user_id: @milly.id)
+@resp_user4 = ResponsibleUser.create!(agenda_item_id: @motion.id, user_id: @sylvia.id)
+@resp_user5 = ResponsibleUser.create!(agenda_item_id: @election1.id, user_id: @jason.id)
+@resp_user6 = ResponsibleUser.create!(agenda_item_id: @election2.id, user_id: @jason.id)
 
 # Votes
 
@@ -102,6 +99,7 @@ everyone. Each person introduced himself/herself. Recital of the Mammoth Pledge 
 # User:Milly
 @secretary_vote4 = Vote.create!(agenda_item_id: @election2.id, voting_user_id: @milly.id, vote_type: "In Favour")
 
+binding.pry
 # Templates
 # @new_template = Template.create!(title: "AGM", description: "Template for a standard AGM")
 

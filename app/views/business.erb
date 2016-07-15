@@ -1,0 +1,55 @@
+<div class="style-element section ai-business">
+  <div class="box">
+    <h2 class="subtitle is-3">Business</h2>
+    <div class="ai-title">
+      <div class="control">
+        <label class="label">Title</label>
+        <input class="input" type="text" placeholder="{{ @business.title }}">
+      </div>
+    </div>
+    <div class="ai-description">
+      <label class="label">Description</label>
+      <div class="control">
+        <textarea class="textarea" placeholder="{{ @business.description }}"></textarea>
+      </div>
+    </div>
+    <div class="ai-responsible">
+      <label class="label">Presenter(s)</label>
+      <input class="input" type="text" placeholder="{{ @resp_user2.user_id }}">
+    </div>
+    <div class="ai-status">
+      <label class="label">Status</label>
+      <p class="control">
+        <span class="select">
+          <select>
+            <option>Select status</option>
+            <option>Active</option>
+            <option>Carried Forward</option>
+            <option>Completed</option>
+          </select>
+        </span>
+      </p>
+    </div>
+    <div class="ai-minutes">
+      <label class="label">Discussion</label>
+      <div class="control">
+        <textarea class="textarea" placeholder="{{ @business.discussion }}"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="style-element section">
+    <aside class="menu">
+      <p class="menu-label">
+        Agenda Items
+      </p>
+      <ul class="menu-list">
+        <li><a href="#"> [+] Business</a></li>
+        <li><a href="#"> [+] Action Item</a></li>
+        <li><a href="#"> [+] Motion</a></li>
+        <li><a href="#"> [+] Election</a></li>
+        <li><a href="#"> [+] Document</a></li>
+      </ul>
+    </aside>
+  </div>
+</div>
