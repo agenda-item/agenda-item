@@ -8,11 +8,12 @@
   }
 
   .ai-user {
-    border: 1px solid grey;
+    /*border: 1px solid grey;
     border-radius: 15px;
     padding: 10px;
     background: white;
-    display: inline-block;
+    display: inline-block;*/
+    background-color: #CEE7EF;
   }
 
   .ai-count > i, .ai-symbol > i {
@@ -81,5 +82,21 @@
 #signup-bg-img {
   background:transparent url(http://marketingland.com/wp-content/ml-loads/2014/09/tablet-calendar-coffee-desk-ss-1920-800x571.jpg) no-repeat center center;
    background-size: cover;
-  
+}
+
+.inline {
+  display: block;
+
+}
+
+.in-favour {
+  background-color: #26495C;
+}
+
+.opposed {
+  background-color: #C2A563;
+}
+
+.abstain {
+  background-color: gray;
 }

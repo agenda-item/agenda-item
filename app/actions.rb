@@ -12,3 +12,6 @@ get '/organizations/new' do
 	erb :signup
 end
 
+get '/test' do
+  erb :motion
+end
