@@ -109,3 +109,24 @@ get '/api/users/:id' do |id|
   content_type :json
   User.find(id).to_json(include: { :meetings => {:include =>:agenda_items} })
 end
+
+#########
+# VOTES #
+#########
+
+# list all organizations
+get '/votes' do
+  erb :votes 
+end
+
+# get all votes
+get '/api/votes' do
+  content_type :json
+  Vote.all.to_json
+end
+
+# get vote by id
+get '/api/votes/:id' do |id|
+  content_type :json
+  Vote.find(id).to_json
+end
