@@ -1,13 +1,13 @@
 # seeding data
 require "pry"
 # Users
-@bob = User.create!(first_name: "Bob", last_name: "Smith", email: "bob_smith@email.com", type: "Board", org_title: "Chair", phone: "250-555-5555", phone_permission: true, mobile: "778-555-5555", address: "4851 Skyline Dr", mail_permission: true, meeting_email_permission: true, reminders_email_permission: true)
+@bob = User.create!(first_name: "Bob", last_name: "Smith", email: "bob_smith@email.com", type: "Board", org_title: "Chair", password: "password1" , phone: "250-555-5555", phone_permission: true, mobile: "778-555-5555", address: "4851 Skyline Dr", mail_permission: true, meeting_email_permission: true, reminders_email_permission: true)
 
-@sylvia = User.create!(first_name: "Sylvia", last_name: "Doe", email: "minute_hater@email.com", type: "Board", org_title: "Secretary", phone: "250-333-3333", phone_permission: false, mobile: "778-333-3333", address: "486 Bayhill Pl", mail_permission: true, meeting_email_permission: true, reminders_email_permission: false)
+@sylvia = User.create!(first_name: "Sylvia", last_name: "Doe", email: "minute_hater@email.com", type: "Board", org_title: "Secretary", password: "password2", phone: "250-333-3333", phone_permission: false, mobile: "778-333-3333", address: "486 Bayhill Pl", mail_permission: true, meeting_email_permission: true, reminders_email_permission: false)
 
-@jason = User.create!(first_name: "Jason", last_name: "Bourne", email: "who_am_i@mystery.ca", type: "attendee", org_title: "n/a", phone: "250-867-5309", phone_permission: false, mobile: "778-867-5309", address: "1122 Kyndree Crt", mail_permission: false, meeting_email_permission: false, reminders_email_permission: false)
+@jason = User.create!(first_name: "Jason", last_name: "Bourne", email: "who_am_i@mystery.ca", type: "attendee", org_title: "n/a", password: "password3", phone: "250-867-5309", phone_permission: false, mobile: "778-867-5309", address: "1122 Kyndree Crt", mail_permission: false, meeting_email_permission: false, reminders_email_permission: false)
 
-@milly = User.create!(first_name: "Mildred", last_name: "Pennywise", email: "scorpio94@yahoo.ca", type: "attendee", org_title: "n/a", phone: "250-444-4444", phone_permission: false, mobile: "778-444-4444", address: "616 Cassiar Dr", mail_permission: false, meeting_email_permission: true, reminders_email_permission: false)
+@milly = User.create!(first_name: "Mildred", last_name: "Pennywise", email: "scorpio94@yahoo.ca", type: "attendee", org_title: "n/a", password: "password4", phone: "250-444-4444", phone_permission: false, mobile: "778-444-4444", address: "616 Cassiar Dr", mail_permission: false, meeting_email_permission: true, reminders_email_permission: false)
 
 # Organizations
 @test_org = Organization.create!(name: "Test Organization", logo: "logo.jpg", phone: "250-250-2500", email: "testorg@email.ca", address: "123 Main St", website: "www.testorg.com", user_id: @sylvia.id)
