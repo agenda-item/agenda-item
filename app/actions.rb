@@ -16,9 +16,23 @@ get '/api/meetings' do
  Meeting.all.to_json
 end
 
+get '/agendaitem' do 
+  erb :agendaitem
+end
+
 get '/api/agenda-items' do
  content_type :json
  AgendaItem.all.to_json(include: :votes)
+end
+
+post '/api/agenda-items/:id' do
+ content_type :json
+ @agenda_item = AgendaItem.find(params[:id])
+ @agenda_item.title = params[:title]
+ if @agenda_item.save
+   puts @agenda_item.title
+   @agenda_item.to_json
+ end
 end
 
 get '/api/users' do
