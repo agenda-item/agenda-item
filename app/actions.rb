@@ -54,3 +54,37 @@ get '/api/meetings/:id' do |id|
   Meeting.find(id).to_json
 end
 
+################
+# AGENDA ITEMS #
+################
+
+# list all organizations
+get '/agenda-items' do
+  erb :agenda_items 
+end
+
+# list all agenda items
+get '/api/agenda-items' do
+ content_type :json
+ AgendaItem.all.to_json(include: { :votes => {:include =>:voting_user} })
+end
+
+# get agenda item by id
+get '/api/agenda-items/:id' do |id|
+  content_type :json
+  AgendaItem.find(id).to_json(include: { :votes => {:include =>:voting_user} })
+end
+
+# create new agenda item by id
+
+# update/edit item by id
+post '/api/agenda-items/:id' do |id|
+  content_type :json
+  @agenda_item = AgendaItem.find(id)
+  @agenda_item.discussion = params[:discussion]
+  if @agenda_item.save
+    puts params[:discussion]
+    puts "inside save"
+    @agenda_item.to_json(include: { :votes => {:include =>:voting_user} })
+  end  
+end
