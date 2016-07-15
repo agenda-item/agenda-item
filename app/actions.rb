@@ -32,3 +32,25 @@ get '/api/organizations/:id' do |id|
   content_type :json
   Organization.find(id).to_json
 end
+
+############
+# MEETINGS #
+############
+
+# list all meetings
+get '/meetings' do
+  erb :meetings
+end
+
+# get all meetings
+get '/api/meetings' do
+  content_type :json
+  Meeting.all.to_json
+end
+
+# get meeting by id
+get '/api/meetings/:id' do |id|
+  content_type :json
+  Meeting.find(id).to_json
+end
+
