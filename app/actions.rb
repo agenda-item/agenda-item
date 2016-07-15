@@ -25,6 +25,11 @@ get '/api/agenda-items' do
  AgendaItem.all.to_json(include: :votes)
 end
 
+get '/api/agenda-items/:id' do |id|
+  content_type :json
+  AgendaItem.find(id).to_json
+end
+
 post '/api/agenda-items/:id' do
  content_type :json
  @agenda_item = AgendaItem.find(params[:id])
