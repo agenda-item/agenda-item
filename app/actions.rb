@@ -130,3 +130,24 @@ get '/api/votes/:id' do |id|
   content_type :json
   Vote.find(id).to_json
 end
+
+#####################
+# MEETING ATTENDEES #
+#####################
+
+# list all organizations
+get '/meeting-attendees' do
+  erb :meeting_attendees 
+end
+
+# get all meeting attendees
+get '/api/meeting-attendees' do
+  content_type :json
+  MeetingAttendee.all.to_json
+end
+
+# get meeting attendee by id
+get '/api/meeting-attendees/:id' do |id|
+  content_type :json
+  MeetingAttendee.find(id).to_json
+end
