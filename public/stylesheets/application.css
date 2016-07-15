@@ -94,11 +94,19 @@
 }
 
 .opposed {
-  background-color: #C2A563;
+  background-color: #F0CC7F;
 }
 
 .abstain {
-  background-color: gray;
+  background-color: #E4A97B;
 }
 
+.button {
+  background-color: #60425A;
+  color: white;
+}
 
+.message-header {
+  font-size: 16px;
+  font-weight: bold;
+}
