@@ -9,15 +9,25 @@
         <p class="menu-label">
           Agenda Items
         </p>
-        <div class="center-element">
-          <span class="icon">  
-            <i class="fa fa-plus-square"></i>
-          </span>
-        </div>
+        <ul id="ai-new-agenda-item">
+         <li><span><i class="fa fa-plus-square"></i> Add Agenda Item</span>
+           <ul class="drop">
+             <li><i class="fa fa-exclamation-circle-btb" aria-hidden="true"></i> Action Item</li>
+             <li><i class="fa fa-briefcase" aria-hidden="true"></i> Business</li>
+             <li><i class="fa fa-file-document" aria-hidden="true"></i> Document</li>
+             <li><i class="fa fa-checkbox-multiple-marked-outline" aria-hidden="true"></i> Election</li>
+             <li><i class="fa fa-gavel" aria-hidden="true"></i> Motion</li>
+           </ul>
+         </li>
+        <hr>
         <ul>
+          <!-- TODO on click loads a template for the meeting details instead of an agenda item -->
+          <li><i class="fa fa-library-books" aria-hidden="true"></i> Meeting Details</li>
           <div v-for="agendaItem in agendaItems">
             <li><icon :agenda-item="agendaItem"></icon> {{agendaItem.title}}</li>
           </div>
+          <!-- TODO on click loads a template for the meeting details instead of an agenda item -->
+          <li><i class="fa fa-library-books" aria-hidden="true"></i> Meeting Closing</li>
         </ul>
       </aside>
     </div>
@@ -180,7 +190,6 @@
   <i v-if="agendaItem.type === 'Business'" class="fa fa-briefcase" aria-hidden="true"></i>
   <i v-if="agendaItem.type === 'Document'" class="fa fa-file-document" aria-hidden="true"></i>
   <i v-if="agendaItem.type === 'Action Items'" class="fa fa-exclamation-circle-btb" aria-hidden="true"></i>
-  <i v-if="agendaItem.type === 'Meeting Details'" class="fa fa-library-books" aria-hidden="true"></i>
   <i v-if="agendaItem.type === 'Motion'" class="fa fa-gavel" aria-hidden="true"></i>
   <i v-if="agendaItem.type === 'Election'" class="fa fa-checkbox-multiple-marked-outline" aria-hidden="true"></i>
 </template>
