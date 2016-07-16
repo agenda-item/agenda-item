@@ -9,6 +9,12 @@
         Status
       </a>
     </div>
+    <div class="ai-description">
+      <label class="label">Description</label>
+      <div class="control">
+        <textarea class="textarea" placeholder="{{ @agm.description }}"></textarea>
+      </div>
+    </div>
     <div class="ai-location">
       <div class="control">
         <label class="label">Location</label>
@@ -19,12 +25,6 @@
       <div class="control">
         <label class="label">Date & Time</label>
         <input class="input" type="text" placeholder="{{ @agm.meeting_date }}">
-      </div>
-    </div>
-    <div class="ai-description">
-      <label class="label">Description</label>
-      <div class="control">
-        <textarea class="textarea" placeholder="{{ @agm.description }}"></textarea>
       </div>
     </div>
     <div class="ai-responsible">
@@ -72,19 +72,5 @@
         <textarea class="textarea" placeholder="{{ @agm.discussion }}"></textarea>
       </div>
     </div>
-  </div>
-  <div class="style-element section">
-    <aside class="menu">
-      <p class="menu-label">
-        Agenda Items
-      </p>
-      <ul class="menu-list">
-        <li><a href="#"> [+] Business</a></li>
-        <li><a href="#"> [+] Action Item</a></li>
-        <li><a href="#"> [+] Motion</a></li>
-        <li><a href="#"> [+] Election</a></li>
-        <li><a href="#"> [+] Document</a></li>
-      </ul>
-    </aside>
   </div>
 </div>
