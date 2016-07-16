@@ -17,6 +17,11 @@ get '/select' do
   erb :select_status
 end
 
+get '/cort' do
+  # @meeting = Meeting.all
+  erb :test
+end
+
 #################
 # FILE UPLOADER #
 #################

@@ -1,0 +1,82 @@
+<div id="app">
+
+  <h1 class="title is-1"><input type="text" name="meeting_title" placeholder="Meeting Title" v-model= "meeting.title"></h1>
+  <p><strong>Minutes Status:</strong><input type="text" name="meeting_status" placeholder="Meeting Status" v-model= "meeting.status"></p>
+  <hr>
+  <p></p>
+  <strong>Meeting Date:</strong><input type="text" name="meeting_date" placeholder="Meeting Date" v-model= "meeting.date">
+  <br/>
+  <strong>Meeting Location:</strong><input type="text" name="meeting_location" placeholder="Meeting Location" v-model="meeting.location"><br/>
+  <strong>Discussion:</strong><input type="text" name="meeting.discussion" placeholder="Meeting Discussion" v-model="meeting.discussion"><br/>
+  <br/>
+  <strong>Meeting Chair ID:</strong><input type="text" name="meeting.chair" placeholder="Meeting Chair" v-model="meeting.chair"><br/>
+  <strong>Meeting Organization:</strong><input type="text" name="meeting.organization" placeholder="Organization" v-model="meeting.organization"><br/>
+  <strong>Meeting Template:</strong><input type="text" name="meeting.template" placeholder="Meeting Template" v-model="meeting.template"><br/>
+  <hr>
+  <button @submit="addMeeting">Submit</button>
+
+  <div class="new-meeting">
+    <a href="#" class="new-meeting-item" v-for="meeting in meetings">
+      <p v-if="meeting.title"> {{meeting.title}} </p>
+      <p> {{meeting.status}} </p>
+      <p> {{meeting.date}} </p>
+      <p> {{meeting.location}} </p>
+      <p> {{meeting.discussion}} </p>
+      <p> {{meeting.chair}} </p>
+      <p> {{meeting.organization}} </p>
+      <p> {{meeting.template}} </p>
+    </a>
+  </div>
+
+</div>
+<script>
+
+new Vue({
+    el: '#app',
+
+    props: ["meeting"],
+    data: {
+      meeting: {
+        title: "",
+        status: "",
+        date: "",
+        location: "",
+        discussion: "",
+        chair: "",
+        organization: "",
+        template: ""
+      },
+      meetings: []
+    },
+
+    ready: function(){
+      this.fetchMeetings();
+    },
+
+    methods: {
+      fetchMeetings: function(){
+        var meetings= [{}];
+        this.$set("meetings", meetings)
+    },
+    addMeeting: function(){
+      if(this.meeting.name) {
+        this.$http.post('/test', this.meeting)
+        .success(function(res){
+          this.meetings.push(this.meeting);
+
+        })
+        // this.meeting =  {
+        //   title: "",
+        //   status: "",
+        //   date: "",
+        //   location: "",
+        //   discussion: "",
+        //   chair: "",
+        //   organization: "",
+        //   template: ""
+        // }
+      }
+    }
+  }
+});
+</script>
