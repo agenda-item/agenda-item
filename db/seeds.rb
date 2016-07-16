@@ -1,5 +1,5 @@
 # seeding data
-require "pry"
+
 # Organizations
 @test_org = Organization.create!(name: "Test Organization", logo: "logo.jpg", phone: "250-250-2500", email: "testorg@email.ca", address: "123 Main St", website: "www.testorg.com")
 # Users
@@ -98,7 +98,7 @@ require "pry"
 @secretary_vote3 = Vote.create!(agenda_item_id: @election2.id, voting_user_id: @jason.id, vote_type: "In Favour")
 # User:Milly
 @secretary_vote4 = Vote.create!(agenda_item_id: @election2.id, voting_user_id: @milly.id, vote_type: "In Favour")
-binding.pry
+
 # Templates
 # @new_template = Template.create!(title: "AGM", description: "Template for a standard AGM")
 

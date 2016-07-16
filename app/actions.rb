@@ -13,11 +13,12 @@ get '/organizations/new' do
 	erb :signup
 end
 
+#below used for testing purposes, remove before final push to 
 get '/test' do
   erb :agendaitem
 end
 
-get '/select' do 
+get '/select' do
   erb :select_status
 end
 
@@ -29,7 +30,7 @@ get "/files-upload" do
   @files = Dir["./public/files/*"]
   erb :file_upload
 end
- 
+
 post '/agenda-items/3/save_file' do
   @filename = params[:file][:filename]
   file = params[:file][:tempfile]
@@ -41,7 +42,7 @@ post '/agenda-items/3/save_file' do
     if @agenda_item.save
       puts @agenda_item.file_path
       puts "inside save"
-    end  
+    end
     File.open("./public/files/#{@filename}", 'wb') do |f|
       f.write(file.read)
     end
