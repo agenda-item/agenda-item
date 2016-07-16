@@ -24,11 +24,9 @@
         <ul id="ai-new-agenda-item">
          <li><span><i class="fa fa-plus-square"></i> Add Agenda Item</span>
            <ul class="drop">
-             <li><i class="fa fa-exclamation-circle-btb" aria-hidden="true"></i> Action Item</li>
-             <li><i class="fa fa-briefcase" aria-hidden="true"></i> Business</li>
-             <li><i class="fa fa-file-document" aria-hidden="true"></i> Document</li>
-             <li><i class="fa fa-checkbox-multiple-marked-outline" aria-hidden="true"></i> Election</li>
-             <li><i class="fa fa-gavel" aria-hidden="true"></i> Motion</li>
+            <div v-for="newItem in newItems">
+             <li><i class="fa fa-{{newItem.icon}}" aria-hidden="true"></i> {{newItem.type}}</li>
+            </div>
            </ul>
          </li>
         </ul>
@@ -202,7 +200,7 @@
 <template id="icons-template">
   <i v-if="agendaItem.type === 'Business'" class="fa fa-briefcase" aria-hidden="true"></i>
   <i v-if="agendaItem.type === 'Document'" class="fa fa-file-document" aria-hidden="true"></i>
-  <i v-if="agendaItem.type === 'Action Items'" class="fa fa-exclamation-circle-btb" aria-hidden="true"></i>
+  <i v-if="agendaItem.type === 'Action Item'" class="fa fa-exclamation-circle-btb" aria-hidden="true"></i>
   <i v-if="agendaItem.type === 'Motion'" class="fa fa-gavel" aria-hidden="true"></i>
   <i v-if="agendaItem.type === 'Election'" class="fa fa-checkbox-multiple-marked-outline" aria-hidden="true"></i>
 </template>
@@ -243,7 +241,14 @@
     data: function() {
       return {
         agendaItems: [],
-        currentAgendaItem: { id: 1 }
+        currentAgendaItem: { id: 1 },
+        newItems: [
+          { type: 'Action Item', icon: 'exclamation-circle-btb' },
+          { type: 'Business', icon: 'briefcase' },
+          { type: 'Document', icon: 'file-document'},
+          { type: 'Election', icon: 'checkbox-multiple-marked-outline'},
+          { type: 'Motion', icon: 'gavel'}
+        ]
       }
     },
     created: function() {
