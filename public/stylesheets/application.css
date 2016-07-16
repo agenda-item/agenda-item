@@ -14,6 +14,19 @@
     background: white;
     display: inline-block;*/
     background-color: #CEE7EF;
+    font-size: 14px;
+    height: 35px;
+    padding: 14px 14px 14px 14px;
+    margin: 5px;
+    font-size: 14px;
+    vertical-align: top;
+
+    line-height: 1.428571428571429;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    color: black;
+    display: inline-block;
+    border-radius: 25px;
+
   }
 
   .ai-count > i, .ai-symbol > i {
@@ -86,18 +99,23 @@
 
 .inline {
   display: block;
+  color: white;
 
 }
 
-.in-favour {
+.message-header {
   background-color: #26495C;
 }
 
-.opposed {
+ai-user is-medium > in-favour {
+  background-color: #26495C;
+}
+
+ .ai-user.is-medium.opposed {
   background-color: #F0CC7F;
 }
 
-.abstain {
+.ai-user.is-medium.abstain {
   background-color: #E4A97B;
 }
 
