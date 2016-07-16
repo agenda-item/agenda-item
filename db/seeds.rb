@@ -1,5 +1,5 @@
 # seeding data
-require "pry"
+
 # Organizations
 @test_org = Organization.create!(name: "Test Organization", logo: "logo.jpg", phone: "250-250-2500", email: "testorg@email.ca", address: "123 Main St", website: "www.testorg.com")
 # Users
@@ -27,7 +27,6 @@ require "pry"
 @attendee4 = MeetingAttendee.create!(meeting_id: @agm.id, user_id: @milly.id, attendance_type: "present")
 
 # Agenda Items
-
 @business = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "Business", title: "approval of agenda", description: "Agenda was circulated prior to meeting, agenda was approved", discussion: "Agenda approved", mover_id: @sylvia.id, seconder_id: @jason.id, status: "passed", meeting_id: @agm.id, position: 1, creator_id: @bob.id)
 
 @document = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "Document", title: "Minutes from previous AGM", description: "Previous minutes presented and approved.", discussion: "The previous AGM minutes were presented and all present approved", file_path: "/minutes2013.pdf", mover_id: @jason.id, seconder_id: @milly.id, status: "passed", meeting_id: @agm.id, position: 2, creator_id: @sylvia.id)
@@ -41,7 +40,6 @@ require "pry"
 @election2 = AgendaItem.create!(tags: ["agm", 2014, "mammoth", "icetown"], type: "Election", title: "Election of Secretary 2014", description: "Board election for Secretary.", discussion: "Vote held for secretary, all members approved, Sylvia Doe re-elected", mover_id: @milly.id, seconder_id: @jason.id, status: "passed", meeting_id: @agm.id, position: 6, creator_id: @bob.id)
 
 # Responsible Users
-
 @resp_user1 = ResponsibleUser.create!(agenda_item_id: @business.id, user_id: @jason.id)
 @resp_user2 = ResponsibleUser.create!(agenda_item_id: @document.id, user_id: @sylvia.id)
 @resp_user3 = ResponsibleUser.create!(agenda_item_id: @action_item.id, user_id: @milly.id)
@@ -51,7 +49,7 @@ require "pry"
 
 # Votes
 
-#previous agenda approval
+#Previous Agenda Approval
 # User:Bob
 @prev_agenda_vote1 = Vote.create!(agenda_item_id: @business.id, voting_user_id: @bob.id, vote_type: "In Favour")
 # User:Sylvia
@@ -61,7 +59,7 @@ require "pry"
 # User:Milly
 @prev_agenda_vote4 = Vote.create!(agenda_item_id: @business.id, voting_user_id: @milly.id, vote_type: "In Favour")
 
-#previous minutes approval
+#Previous Meeting Approval
 # User:Bob
 @prev_minutes_vote1 = Vote.create!(agenda_item_id: @document.id, voting_user_id: @bob.id, vote_type: "In Favour")
 # User:Sylvia
@@ -71,7 +69,7 @@ require "pry"
 # User:Milly
 @prev_minutes_vote4 = Vote.create!(agenda_item_id: @document.id, voting_user_id: @milly.id, vote_type: "In Favour")
 
-#logo approval
+#Logo Approval
 # User:Bob
 @motion_logo_vote1 = Vote.create!(agenda_item_id: @motion.id, voting_user_id: @bob.id, vote_type: "In Favour")
 # User:Sylvia
@@ -81,7 +79,7 @@ require "pry"
 # User:Milly
 @motion_logo_vote4 = Vote.create!(agenda_item_id: @motion.id, voting_user_id: @milly.id, vote_type: "Opposed")
 
-#president elect
+#President Election
 # User:Bob
 @president_vote1 = Vote.create!(agenda_item_id: @election1.id, voting_user_id: @bob.id, vote_type: "Abstain")
 # User:Sylvia
@@ -91,7 +89,7 @@ require "pry"
 # User:Milly
 @president_vote4 = Vote.create!(agenda_item_id: @election1.id, voting_user_id: @milly.id, vote_type: "In Favour")
 
-#secretary elect
+#Secretary Election
 # User:Bob
 @secretary_vote1 = Vote.create!(agenda_item_id: @election2.id, voting_user_id: @bob.id, vote_type: "In Favour")
 # User:Sylvia
@@ -101,7 +99,6 @@ require "pry"
 # User:Milly
 @secretary_vote4 = Vote.create!(agenda_item_id: @election2.id, voting_user_id: @milly.id, vote_type: "In Favour")
 
-binding.pry
 # Templates
 # @new_template = Template.create!(title: "AGM", description: "Template for a standard AGM")
 

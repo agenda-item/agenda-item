@@ -1,0 +1,77 @@
+<div class="style-element section ai-election">
+  <div class="box">
+    <h2 class="subtitle is-3">Election</h2>
+    <div class="ai-title">
+      <div class="control">
+        <label class="label">Title</label>
+        <input class="input" type="text" placeholder="{{ @election1.title }}">
+      </div>
+    </div>
+    <div class="ai-motion">
+      <label class="label">Motion to Nominate</label>
+      <div class="control">
+        <textarea class="textarea" placeholder="{{ @election1.description }}"></textarea>
+      </div>
+    </div>
+    <div class="ai-responsible">
+      <label class="label">Nominee</label>
+      <input class="input" type="text" placeholder="{{ agenda_item.user_id }}">
+    </div>
+    <div class="ai-responsible">
+      <label class="label">Mover</label>
+      <input class="input" type="text" placeholder="{{ @election1.mover.first_name }}">
+    </div>
+    <div class="ai-responsible">
+      <label class="label">Seconder</label>
+      <input class="input" type="text" placeholder="{{ @election1.seconder.first_name }}">
+    </div>
+    <div class="ai-vote">
+      <p>** if not logged</p>
+      <a class="button">
+        Log Votes
+      </a>
+      <p>** if logged</p>
+      <article class="message">
+          <div class="message-header">
+            In Favour
+          </div>
+          <div class="message-body">
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+          </div>
+        </article>
+        <article class="message">
+          <div class="message-header">
+            Opposed
+          </div>
+          <div class="message-body">
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+          </div>
+        </article>
+        <article class="message">
+          <div class="message-header">
+            Abstained
+          </div>
+          <div class="message-body">
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+          </div>
+        </article>
+        <a class="button">
+          Adjust Votes
+        </a>
+      </div>
+    <div class="ai-minutes">
+      <label class="label">Discussion</label>
+      <div class="control">
+        <textarea class="textarea" placeholder="{{ @election1.discussion }}"></textarea>
+      </div>
+    </div>
+  </div>
+</div>

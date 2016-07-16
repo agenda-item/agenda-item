@@ -13,11 +13,7 @@ get '/organizations/new' do
 	erb :signup
 end
 
-get '/test' do
-  erb :motion
-end
-
-get '/select' do 
+get '/select' do
   erb :select_status
 end
 
@@ -29,7 +25,7 @@ get "/files-upload" do
   @files = Dir["./public/files/*"]
   erb :file_upload
 end
- 
+
 post '/agenda-items/3/save_file' do
   @filename = params[:file][:filename]
   file = params[:file][:tempfile]
@@ -41,7 +37,7 @@ post '/agenda-items/3/save_file' do
     if @agenda_item.save
       puts @agenda_item.file_path
       puts "inside save"
-    end  
+    end
     File.open("./public/files/#{@filename}", 'wb') do |f|
       f.write(file.read)
     end
@@ -59,11 +55,11 @@ end
 
 # list all organizations
 get '/organizations' do
-  erb :organizations 
+  erb :organizations
 end
 
 # get all organizations
-get '/api/organizations' do 
+get '/api/organizations' do
   content_type :json
   Organization.all.to_json
 end
@@ -101,7 +97,7 @@ end
 
 # list all organizations
 get '/agenda-items' do
-  erb :agenda_items 
+  erb :agenda_items
 end
 
 # list all agenda items
@@ -130,7 +126,7 @@ post '/api/agenda-items/:id' do |id|
     puts params[:discussion]
     puts "inside save"
     @agenda_item.to_json(include: { :votes => {:include =>:voting_user} })
-  end  
+  end
 end
 
 #########
@@ -139,7 +135,7 @@ end
 
 # list all organizations
 get '/users' do
-  erb :users 
+  erb :users
 end
 
 # get all users
@@ -160,7 +156,7 @@ end
 
 # list all organizations
 get '/votes' do
-  erb :votes 
+  erb :votes
 end
 
 # get all votes
@@ -181,7 +177,7 @@ end
 
 # list all organizations
 get '/meeting-attendees' do
-  erb :meeting_attendees 
+  erb :meeting_attendees
 end
 
 # get all meeting attendees
