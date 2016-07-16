@@ -1,16 +1,16 @@
 $(document).ready(function() {
   // start of code for adding hover over pop up navbar
 
-  //  $(function() {
-  //    $('nav li ul').hide().removeClass('drop');
-  //      $('nav li').hover(function () {
-  //        $('ul', this).stop().slideDown(100);
-  //  },
-  //  function () {
-  //    $('ul', this).stop().slideUp(100);
-  //  }
-  // );
-  //  });
+   $(function() {
+     $('#ai-new-agenda-item li ul').hide().removeClass('drop');
+       $('#ai-new-agenda-item li').hover(function () {
+         $('ul', this).stop().slideDown(100);
+   },
+   function () {
+     $('ul', this).stop().slideUp(100);
+   }
+  );
+   });
 
   // end of code for adding hover over pop up navbar
 
