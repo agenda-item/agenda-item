@@ -1,13 +1,12 @@
 <div id="app">
     <agenda-item :agenda-item="agendaItem" :selected="selected" :options="options"></agenda-item>
-  <button id="show-modal" @click="showModal = true">Show Modal</button>
+  <button id="show-modal" @click="showModal = true" class="button is-primary modal-button">Change Mover</button>
   <!-- use the modal component, pass in the prop -->
   <modal :show.sync="showModal">
     <!--
       you can use custom content here to overwrite
       default content
     -->
-    <h3 slot="header">custom header</h3>
   </modal>
 </div>
 
@@ -33,7 +32,6 @@
     <br>
     <textarea id="mover_id" v-model="agendaItem.mover_id" name="mover_id"></textarea>
     <div id="mover_first_name">{{agendaItem.mover.first_name}}</div>
-    <a class="button is-primary is-large modal-button" data-target="#modal-ter">Change Mover</a>    <br>
     <select v-model="agendaItem.status">
       <option v-for="option in options" v-bind:value="option.value">
         {{ option.text }}
@@ -52,22 +50,24 @@
 
         <div class="modal-header">
           <slot name="header">
-            default header
+            Select a new mover:
           </slot>
         </div>
         
         <div class="modal-body">
           <slot name="body">
-            default body
+            <div v-for="user in userList">
+              <span class="tag" v-bind:class="{ 'is-primary': isPrimary }"><i class="fa fa-checkbox-marked-circle-outline fa-lg" aria-hidden="true" @click="selectMover" :user="user">{{ user.first_name }}</i></span>
+            </div>
           </slot>
         </div>
 
         <div class="modal-footer">
           <slot name="footer">
-            default footer
-            <button class="modal-default-button"
+            Are you sure?
+            <button class="button is-primary modal-button"
               @click="show = false">
-              OK
+              Yes
             </button>
           </slot>
         </div>
@@ -96,11 +96,29 @@
 
   Vue.component('modal', {
     template: '#modal-template',
+    data: function() {
+      return {
+        userList: [],
+        isPrimary: false
+      }
+    },
     props: {
+      user: ['user'],
       show: {
         type: Boolean,
         required: true,
         twoWay: true    
+      }
+    },
+    created: function() {
+      this.$http.get('/api/users').then(function(response){
+        this.userList = response.json();
+        console.log(this.userList)
+      }.bind(this));
+    },
+    methods: {
+      selectMover: function() {
+        this.isPrimary = !this.isPrimary;
       }
     }
   })

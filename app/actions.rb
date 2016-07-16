@@ -165,13 +165,13 @@ end
 # get all users
 get '/api/users' do
  content_type :json
- User.all.to_json(include: { :meetings => {:include =>:agenda_items} })
+ User.all.to_json(include: :meetings)
 end
 
 # get user by id
 get '/api/users/:id' do |id|
   content_type :json
-  User.find(id).to_json(include: { :meetings => {:include =>:agenda_items} })
+  User.find(id).to_json(include: :meetings)
 end
 
 #########
