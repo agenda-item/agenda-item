@@ -17,6 +17,10 @@ get '/test' do
   erb :motion
 end
 
+get '/select' do 
+  erb :select_status
+end
+
 #################
 # ORGANIZATIONS #
 #################
@@ -86,7 +90,10 @@ end
 post '/api/agenda-items/:id' do |id|
   content_type :json
   @agenda_item = AgendaItem.find(id)
+  @agenda_item.title = params[:title]
+  @agenda_item.description = params[:description]
   @agenda_item.discussion = params[:discussion]
+  @agenda_item.status = params[:status]
   if @agenda_item.save
     puts params[:discussion]
     puts "inside save"
