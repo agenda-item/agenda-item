@@ -17,6 +17,42 @@ get '/test' do
   erb :edit_meeting
 end
 
+get '/select' do 
+  erb :select_status
+end
+
+#################
+# FILE UPLOADER #
+#################
+
+get "/files-upload" do
+  @files = Dir["./public/files/*"]
+  erb :file_upload
+end
+ 
+post '/agenda-items/3/save_file' do
+  @filename = params[:file][:filename]
+  file = params[:file][:tempfile]
+  if File.exists? "./public/files/#{@filename}" then
+    "File with this name exists already!"
+  else
+    @agenda_item = AgendaItem.find(3)
+    @agenda_item.file_path = @filename
+    if @agenda_item.save
+      puts @agenda_item.file_path
+      puts "inside save"
+    end  
+    File.open("./public/files/#{@filename}", 'wb') do |f|
+      f.write(file.read)
+    end
+    "File uploaded"
+  end
+end
+
+get "/public/files/:file" do
+  send_file File.open("./public/files/#{params[:file]}")
+end
+
 #################
 # ORGANIZATIONS #
 #################
@@ -86,7 +122,10 @@ end
 post '/api/agenda-items/:id' do |id|
   content_type :json
   @agenda_item = AgendaItem.find(id)
+  @agenda_item.title = params[:title]
+  @agenda_item.description = params[:description]
   @agenda_item.discussion = params[:discussion]
+  @agenda_item.status = params[:status]
   if @agenda_item.save
     puts params[:discussion]
     puts "inside save"
