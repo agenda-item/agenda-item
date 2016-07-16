@@ -118,7 +118,21 @@ get '/api/agenda-items/:id' do |id|
   AgendaItem.find(id).to_json(include: { :votes => {:include =>:voting_user} })
 end
 
-# create new agenda item by id
+# create new agenda item
+post '/api/agenda-items/new' do
+  content_type :json
+  type = params[:type]
+
+  @agenda_item = AgendaItem.new(
+    type: "Business",
+    creator_id: 1,  #params[current_user.id]
+    meeting_id: 1  #params[current_meeting.id]
+    )
+  if @agenda_item.save
+    puts "the type is #{type}"
+    @agenda_item.to_json
+  end
+end
 
 # update/edit item by id
 post '/api/agenda-items/:id' do |id|

@@ -25,7 +25,7 @@
          <li><span><i class="fa fa-plus-square"></i> Add Agenda Item</span>
            <ul class="drop">
             <div v-for="newItem in newItems">
-             <li><i class="fa fa-{{newItem.icon}}" aria-hidden="true"></i> {{newItem.type}}</li>
+              <new-item :new-item="newItem" :agenda-items="agendaItems"></new-item>
             </div>
            </ul>
          </li>
@@ -205,11 +205,31 @@
   <i v-if="agendaItem.type === 'Election'" class="fa fa-checkbox-multiple-marked-outline" aria-hidden="true"></i>
 </template>
 
+<template id="new-item-template"> 
+   <li @click="addAgendaItem"><i class="fa fa-{{newItem.icon}}" aria-hidden="true"></i> {{newItem.type}}</li>
+</template>
+
 <!-- <template id="agenda-menu-li-template">
   <li>{{ agendaItem.title }}</li>
 </template> -->
 
 <script>
+  Vue.component('new-item', {
+    template: "#new-item-template",
+    props: ['newItem', 'agendaItems'],
+    methods: {
+      addAgendaItem: function() {
+        console.log("clicked to add new item")
+        this.$http.post('/api/agenda-items/new', this.newItem.type, {emulateJSON:true}).then(function(response) {
+          console.log(response.json())
+          this.agendaItems.push(response.json())
+        }).error(function(error) {
+          console.log(error);
+        }.bind(this));
+      }
+    }
+  });
+
   Vue.component('icon', {
     template: "#icons-template",
     props: ['agendaItem']
@@ -230,7 +250,6 @@
     props: ['currentAgendaItem'],
     created: function() {
       this.$http.get('/api/agenda-items/' + this.currentAgendaItem.id).then(function(response){
-        console.log("successfully got a single agenda item")
         this.currentAgendaItem = response.json();
       }.bind(this));
     }
