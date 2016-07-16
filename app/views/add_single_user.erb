@@ -1,17 +1,6 @@
-<div id="app">
-    <agenda-item :agenda-item="agendaItem" :selected="selected" :options="options"></agenda-item>
-  <button id="show-modal" @click="showModal = true" class="button is-primary modal-button">Change Mover</button>
-  <!-- use the modal component, pass in the prop -->
-  <modal :show.sync="showModal">
-    <!--
-      you can use custom content here to overwrite
-      default content
-    -->
-  </modal>
-</div>
+<div id="agenda-item-template" :agenda-item="agendaItem" :selected="selected" :options="options">
 
-<template id="agenda-item-template" >
- <form @submit.prevent="postData">
+  <form @submit.prevent="postData">
     <label>Title:</label>
     <br>
     <textarea id="title" v-model="agendaItem.title" name="title"></textarea>
@@ -40,7 +29,11 @@
     <br>
     <button type="submit">submit</button>
   </form>
-</template>
+
+  <button id="show-modal" @click="showModal = true" class="button is-primary modal-button">Change Mover</button>
+  <!-- use the modal component, pass in the prop -->
+  <modal :show.sync="showModal" :agenda-item.sync="agendaItem"></modal>
+</div>
 
 <!-- template for the modal component -->
 <template id="modal-template">
@@ -57,7 +50,10 @@
         <div class="modal-body">
           <slot name="body">
             <div v-for="user in userList">
-              <span class="tag" v-bind:class="{ 'is-primary': isPrimary }"><i class="fa fa-checkbox-marked-circle-outline fa-lg" aria-hidden="true" @click="selectMover" :user="user">{{ user.first_name }}</i></span>
+              <input type="radio" id="{{user.id}}" name="mover_id"
+                     v-bind:value="user.id"
+                     v-model="agendaItem.mover_id"
+              <label for="{{user.id}}">{{user.first_name}}</label>
             </div>
           </slot>
         </div>
@@ -77,22 +73,6 @@
 </template>
 
 <script>
-  Vue.component('agendaItem', {
-    template: '#agenda-item-template',
-    props: ['agendaItem', 'selected', 'options'],
-    methods: {
-      postData: function() {
-        console.log(this)
-        this.$http.post('/api/mover/' + this.agendaItem.id, this.agendaItem, {emulateJSON:true}).then(function(response) {
-          console.log("agenda item updated");
-        }).error(function(error) {
-          console.log(error);
-          console.log("erroring");
-        }.bind(this));
-      }
-    }
-  });
-
 
   Vue.component('modal', {
     template: '#modal-template',
@@ -103,7 +83,7 @@
       }
     },
     props: {
-      user: ['user'],
+      agendaItem: ['agendaItem'],
       show: {
         type: Boolean,
         required: true,
@@ -117,14 +97,14 @@
       }.bind(this));
     },
     methods: {
-      selectMover: function() {
-        this.isPrimary = !this.isPrimary;
+      updateMover: function() {
+        this.$parent.postData()      
       }
     }
   })
 
-  new Vue({
-    el: '#app',
+  var parent = new Vue({
+    el: '#agenda-item-template',
     data: {
       agendaItem: {},
       selected: '--',
@@ -142,6 +122,14 @@
       this.$http.get('/api/mover/5').then(function(response){
         this.agendaItem = response.json();
       }.bind(this));
-    }
+    },
+    methods: {
+      postData: function() {
+        console.log(this)
+        this.$http.post('/api/mover/' + this.agendaItem.id, this.agendaItem, {emulateJSON:true}).then(function(response) {
+          console.log("agenda item updated");
+        }.bind(this));
+      }
+    }    
   });
 </script>
