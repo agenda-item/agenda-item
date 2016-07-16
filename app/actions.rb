@@ -26,12 +26,18 @@ get "/files-upload" do
   erb :file_upload
 end
  
-post '/save_file' do
+post '/agenda-items/3/save_file' do
   @filename = params[:file][:filename]
   file = params[:file][:tempfile]
   if File.exists? "./public/files/#{@filename}" then
     "File with this name exists already!"
   else
+    @agenda_item = AgendaItem.find(3)
+    @agenda_item.file_path = @filename
+    if @agenda_item.save
+      puts @agenda_item.file_path
+      puts "inside save"
+    end  
     File.open("./public/files/#{@filename}", 'wb') do |f|
       f.write(file.read)
     end
