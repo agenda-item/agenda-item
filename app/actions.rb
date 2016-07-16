@@ -14,7 +14,7 @@ get '/organizations/new' do
 end
 
 get '/test' do
-  erb :motion
+  erb :edit_meeting
 end
 
 #################

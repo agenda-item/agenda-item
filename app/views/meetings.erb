@@ -52,7 +52,7 @@
     </div>
     <div class="message-body">
       <div v-for="vote in allVotes | filterBy 'In Favour' in 'vote_type'">
-        <div class="ai-user"><i class="fa fa-checkbox-marked-circle-outline fa-lg" aria-hidden="true">{{ vote.voting_user.first_name }}</i></div>
+        <div class="ai-user tag"><i class="fa fa-checkbox-marked-circle-outline fa-lg" aria-hidden="true">{{ vote.voting_user.first_name }}</i></div>
       </div>
     </div>
     <div class="message-header">

@@ -5,7 +5,7 @@
 </div>
 
 <template id="agenda-item-template" >
- <form @submit.prevent="postData">
+  <form @submit.prevent="postData">
     <textarea id="description" v-model="agendaItem.description"  name="description"></textarea>
     <textarea id="title" v-model="agendaItem.title" name="title"></textarea>
     <button type="submit">submit</button>
