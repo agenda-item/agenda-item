@@ -1,177 +1,175 @@
 <div id="app" class="container">
-<div class="columns">
-  <div class="column is-one-quarter">
-    <div class="">
+  <agenda-items></agenda-items>
+</div>
+
+<template id="agenda-items-template">
+  <div class="columns">
+    <div class="column is-one-quarter">
       <aside class="menu">
         <p class="menu-label">
           Agenda Items
         </p>
-          <div class="center-element">
-            <span class="icon">  
-              <i class="fa fa-plus-square"></i>
-            </span>
-          </div>
-
+        <div class="center-element">
+          <span class="icon">  
+            <i class="fa fa-plus-square"></i>
+          </span>
+        </div>
         <ul>
-          <agenda-menu></agenda-menu>
+          <div v-for="agendaItem in agendaItems">
+            <li>{{agendaItem.title}}</li>
+          </div>
         </ul>
       </aside>
     </div>
-  </div>
   
-  <div class="column">
-    <div class="section ai-agenda-item">
-        <div class="box">
-          <h2 class="subtitle is-3"><icon></icon> {{#type}}</h2>
-          <div class="ai-title">
-            <div class="control">
-
-              <label class="label">Title</label>
-              <input class="input" type="text" placeholder="{{ @motion.title }}">
-            </div>
-          </div>
-          <div class="ai-description">
-            <label class="label">Motion</label>
-            <div class="control">
-              <textarea class="textarea" placeholder="{{ @motion.description }}"></textarea>
-            </div>
-          </div>
-          <div class="ai-responsible">
-            <label class="label">Mover</label>
-            <input class="input" type="text" placeholder="{{ @motion.mover.first_name }}">
-          </div>
-          <div class="ai-responsible">
-            <label class="label">Seconder</label>
-            <input class="input" type="text" placeholder="{{ @motion.seconder.first_name }}">
-          </div>
-          <div class="ai-vote">
-            <p>** if not logged</p>
-            <a class="button">
-              Log Votes
-            </a>
-            <p>** if logged</p>
-            <article class="message">
-                <div class="message-header in-favour" >
-                  <span class="icon">  
-                    <i class="fa fa-checkbox-marked-circle-outline"></i>
-                  </span>
-                  In Favour
-                </div>
-                <div class="message-body">
-                  <span class="ai-user tag is-medium">
-                    <span class="icon">
-                        <i class="fa fa-person"></i>
-                      </span>
-                    {{ user.first_name }}
-                  </span>
-                  
-                  <span class="ai-user tag is-medium">
-                    <span class="icon">
-                        <i class="fa fa-person"></i>
-                      </span>
-                    {{ user.first_name }}
-                  </span>
-                  
-                  <span class="ai-user tag is-medium">
-                    <span class="icon">
-                        <i class="fa fa-person"></i>
-                      </span>
-                    {{ user.first_name }}
-                  </span>
-                  
-                  <span class="ai-user tag is-medium">
-                    <span class="icon">
-                        <i class="fa fa-person"></i>
-                      </span>
-                    {{ user.first_name }}
-                  </span>
-                  
-                  <span class="ai-user tag is-medium">
-                    <span class="icon">
-                        <i class="fa fa-person"></i>
-                      </span>
-                    {{ user.first_name }}
-                  </span>
-                  
-                  <span class="ai-user tag is-medium">
-                    <span class="icon">
-                        <i class="fa fa-person"></i>
-                      </span>
-                    {{ user.first_name }}
-                  </span>
-        
-                </div>
-              </article>
-              <article class="message">
-                <div class="message-header opposed">
-                 <span class="icon">  
-                   <i class="fa fa-close-circle-outline"></i>
-                 </span>
-                  Opposed
-                </div>
-                <div class="message-body">
-                 <span class="ai-user tag is-medium opposed">
-                   <span class="icon">
-                       <i class="fa fa-person"></i>
-                     </span>
-                   {{ user.first_name }}
-                 </span><span class="ai-user tag is-medium opposed">
-                    <span class="icon">
-                        <i class="fa fa-person"></i>
-                      </span>
-                    {{ user.first_name }}
-                  </span><span class="ai-user tag is-medium opposed">
-                    <span class="icon">
-                        <i class="fa fa-person"></i>
-                      </span>
-                    {{ user.first_name }}
-                  </span>
-                </div>
-              </article>
-              <article class="message">
-                <div class="message-header abstain">
-                  <span class="icon">  
-                    <i class="fa fa-checkbox-blank-circle-outline"></i>
-                  </span>
-                  Abstain
-                </div>
-                <div class="message-body">
-                  <span class="ai-user tag is-medium abstain">
-                    <span class="icon">
-                        <i class="fa fa-person"></i>
-                      </span>
-                    {{ user.first_name }}
-                  </span>
-                  <span class="ai-user tag is-medium abstain">
-                    <span class="icon">
-                        <i class="fa fa-person"></i>
-                      </span>
-                    {{ user.first_name }}
-                  </span>     
-                </div>
-              </article>
-              <a class="button">
-                Adjust Votes
-              </a>
-            </div>
-          <div class="ai-minutes">
-            <label class="label">Discussion</label>
-            <div class="control">
-              <textarea class="textarea" placeholder="{{ @motion.discussion }}"></textarea>
-            </div>
-          </div>
-        </div>
+    <div class="column">
+      <div class="section ai-agenda-item">
+        <agenda-item :current-agenda-item="currentAgendaItem"></agenda-item>
       </div>
     </div>
-</div>
+  </div>
+</template>
 
-<template id="agenda-menu-template">
-
-  <ul>
-    <div v-for="agendaItem in agendaItems">
-      <li>{{agendaItem.title}}</li>
+<template id="agenda-item-template">
+  <div class="box">
+    <h2 class="subtitle is-3">(icon) Motion</h2>
+    <div class="ai-title">
+      <div class="control">
+        <label class="label">Title</label>
+        <input class="input" type="text" v-model="currentAgendaItem.title">
+      </div>
     </div>
-  </ul>
+    <div class="ai-description">
+      <label class="label">Motion</label>
+      <div class="control">
+        <textarea class="textarea" v-model="currentAgendaItem.description"></textarea>
+      </div>
+    </div>
+    <div class="ai-responsible">
+      <label class="label">Mover</label>
+      <input class="input" type="text" v-model="currentAgendaItem.mover.first_name">
+    </div>
+    <div class="ai-responsible">
+      <label class="label">Seconder</label>
+      <input class="input" type="text" v-model="currentAgendaItem.seconder.first_name">
+    </div>
+    <div class="ai-vote">
+      <p>** if not logged</p>
+      <a class="button">
+        Log Votes
+      </a>
+      <p>** if logged</p>
+      <article class="message">
+          <div class="message-header in-favour" >
+            <span class="icon">  
+              <i class="fa fa-checkbox-marked-circle-outline"></i>
+            </span>
+            In Favour
+          </div>
+          <div class="message-body">
+            <span class="ai-user tag is-medium">
+              <span class="icon">
+                  <i class="fa fa-person"></i>
+                </span>
+              {{ user.first_name }}
+            </span>
+            
+            <span class="ai-user tag is-medium">
+              <span class="icon">
+                  <i class="fa fa-person"></i>
+                </span>
+              {{ user.first_name }}
+            </span>
+            
+            <span class="ai-user tag is-medium">
+              <span class="icon">
+                  <i class="fa fa-person"></i>
+                </span>
+              {{ user.first_name }}
+            </span>
+            
+            <span class="ai-user tag is-medium">
+              <span class="icon">
+                  <i class="fa fa-person"></i>
+                </span>
+              {{ user.first_name }}
+            </span>
+            
+            <span class="ai-user tag is-medium">
+              <span class="icon">
+                  <i class="fa fa-person"></i>
+                </span>
+              {{ user.first_name }}
+            </span>
+            
+            <span class="ai-user tag is-medium">
+              <span class="icon">
+                  <i class="fa fa-person"></i>
+                </span>
+              {{ user.first_name }}
+            </span>
+
+          </div>
+        </article>
+        <article class="message">
+          <div class="message-header opposed">
+           <span class="icon">  
+             <i class="fa fa-close-circle-outline"></i>
+           </span>
+            Opposed
+          </div>
+          <div class="message-body">
+           <span class="ai-user tag is-medium opposed">
+             <span class="icon">
+                 <i class="fa fa-person"></i>
+               </span>
+             {{ user.first_name }}
+           </span><span class="ai-user tag is-medium opposed">
+              <span class="icon">
+                  <i class="fa fa-person"></i>
+                </span>
+              {{ user.first_name }}
+            </span><span class="ai-user tag is-medium opposed">
+              <span class="icon">
+                  <i class="fa fa-person"></i>
+                </span>
+              {{ user.first_name }}
+            </span>
+          </div>
+        </article>
+        <article class="message">
+          <div class="message-header abstain">
+            <span class="icon">  
+              <i class="fa fa-checkbox-blank-circle-outline"></i>
+            </span>
+            Abstain
+          </div>
+          <div class="message-body">
+            <span class="ai-user tag is-medium abstain">
+              <span class="icon">
+                  <i class="fa fa-person"></i>
+                </span>
+              {{ user.first_name }}
+            </span>
+            <span class="ai-user tag is-medium abstain">
+              <span class="icon">
+                  <i class="fa fa-person"></i>
+                </span>
+              {{ user.first_name }}
+            </span>     
+          </div>
+        </article>
+        <a class="button">
+          Adjust Votes
+        </a>
+      </div>
+    <div class="ai-minutes">
+      <label class="label">Discussion</label>
+      <div class="control">
+        <textarea class="textarea" v-model="currentAgendaItem.discussion"></textarea>
+      </div>
+    </div>
+  </div>
 </template>
 
 <!-- <template id="agenda-menu-li-template">
@@ -182,9 +180,26 @@
 
   Vue.component('agenda-menu', {
     template: '#agenda-menu-template',
+    props: ['agendaItems']
+  });  
+
+  Vue.component('agenda-item', {
+    template: '#agenda-item-template',
+    props: ['currentAgendaItem'],
+    created: function() {
+      this.$http.get('/api/agenda-items/' + this.currentAgendaItem.id).then(function(response){
+        console.log("successfully got a single agenda item")
+        this.currentAgendaItem = response.json();
+      }.bind(this));
+    }
+  });
+
+  Vue.component('agenda-items', {
+    template: '#agenda-items-template',
     data: function() {
       return {
-        agendaItems: []
+        agendaItems: [],
+        currentAgendaItem: { id: 1 }
       }
     },
     created: function() {
@@ -192,15 +207,10 @@
         this.agendaItems = response.json();
       }.bind(this));
     }
-  });  
-
-  // Vue.component('agenda-menu-li', {
-  //   template: 'agenda-menu-li-template',
-  //   props: ['agendaItem']
-  // });
+  });
 
   new Vue({
-    el: '#app'
+    el: '#app',
   });
 
 </script>
