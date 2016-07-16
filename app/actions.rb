@@ -14,7 +14,7 @@ get '/organizations/new' do
 end
 
 get '/test' do
-  erb :test
+  erb :agendaitem
 end
 
 #################

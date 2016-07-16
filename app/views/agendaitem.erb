@@ -8,6 +8,9 @@
  <form @submit.prevent="postData">
     <textarea id="description" v-model="agendaItem.description"  name="description"></textarea>
     <textarea id="title" v-model="agendaItem.title" name="title"></textarea>
+    <v-if= "title" === "business" i class="fa fa-briefcase" aria-hidden="false">
+      <!-- <v-if= ("title" === "document")
+      <i class="fa fa-file-document" aria-hidden="false"> -->
     <button type="submit">submit</button>
   </form>
 </template>
