@@ -14,7 +14,7 @@ get '/organizations/new' do
 end
 
 get '/test' do
-  erb :motion
+  erb :test
 end
 
 #################
@@ -23,11 +23,11 @@ end
 
 # list all organizations
 get '/organizations' do
-  erb :organizations 
+  erb :organizations
 end
 
 # get all organizations
-get '/api/organizations' do 
+get '/api/organizations' do
   content_type :json
   Organization.all.to_json
 end
@@ -65,7 +65,7 @@ end
 
 # list all organizations
 get '/agenda-items' do
-  erb :agenda_items 
+  erb :agenda_items
 end
 
 # list all agenda items
@@ -91,7 +91,7 @@ post '/api/agenda-items/:id' do |id|
     puts params[:discussion]
     puts "inside save"
     @agenda_item.to_json(include: { :votes => {:include =>:voting_user} })
-  end  
+  end
 end
 
 #########
@@ -100,7 +100,7 @@ end
 
 # list all organizations
 get '/users' do
-  erb :users 
+  erb :users
 end
 
 # get all users
@@ -121,7 +121,7 @@ end
 
 # list all organizations
 get '/votes' do
-  erb :votes 
+  erb :votes
 end
 
 # get all votes
@@ -142,7 +142,7 @@ end
 
 # list all organizations
 get '/meeting-attendees' do
-  erb :meeting_attendees 
+  erb :meeting_attendees
 end
 
 # get all meeting attendees
