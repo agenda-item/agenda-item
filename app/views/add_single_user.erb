@@ -1,5 +1,14 @@
 <div id="app">
     <agenda-item :agenda-item="agendaItem" :selected="selected" :options="options"></agenda-item>
+  <button id="show-modal" @click="showModal = true">Show Modal</button>
+  <!-- use the modal component, pass in the prop -->
+  <modal :show.sync="showModal">
+    <!--
+      you can use custom content here to overwrite
+      default content
+    -->
+    <h3 slot="header">custom header</h3>
+  </modal>
 </div>
 
 <template id="agenda-item-template" >
@@ -23,8 +32,8 @@
     <label>Mover:</label>
     <br>
     <textarea id="mover_id" v-model="agendaItem.mover_id" name="mover_id"></textarea>
-    <p id="mover_first_name">{{agendaItem.mover.first_name}}</p>
-    <br>
+    <div id="mover_first_name">{{agendaItem.mover.first_name}}</div>
+    <a class="button is-primary is-large modal-button" data-target="#modal-ter">Change Mover</a>    <br>
     <select v-model="agendaItem.status">
       <option v-for="option in options" v-bind:value="option.value">
         {{ option.text }}
@@ -33,6 +42,38 @@
     <br>
     <button type="submit">submit</button>
   </form>
+</template>
+
+<!-- template for the modal component -->
+<template id="modal-template">
+  <div class="modal-mask" v-show="show" transition="modal">
+    <div class="modal-wrapper">
+      <div class="modal-container">
+
+        <div class="modal-header">
+          <slot name="header">
+            default header
+          </slot>
+        </div>
+        
+        <div class="modal-body">
+          <slot name="body">
+            default body
+          </slot>
+        </div>
+
+        <div class="modal-footer">
+          <slot name="footer">
+            default footer
+            <button class="modal-default-button"
+              @click="show = false">
+              OK
+            </button>
+          </slot>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -51,20 +92,34 @@
       }
     }
   });
+
+
+  Vue.component('modal', {
+    template: '#modal-template',
+    props: {
+      show: {
+        type: Boolean,
+        required: true,
+        twoWay: true    
+      }
+    }
+  })
+
   new Vue({
     el: '#app',
     data: {
       agendaItem: {},
       selected: '--',
       options: [
-        { status: 'passed', value: 'passed' },
+        { text: 'passed', value: 'passed' },
         { text: 'defeated', value: 'defeated' },
         { text: 'amended', value: 'amended' },
         { text: 'active', value: 'active' },
         { text: 'carried forward', value: 'carried forward' },
         { text: 'completed', value: 'completed' }
-      ]      
-    },
+      ],
+      showModal: false
+     },
     created: function() {
       this.$http.get('/api/mover/5').then(function(response){
         this.agendaItem = response.json();
