@@ -16,7 +16,7 @@
         </div>
         <ul>
           <div v-for="agendaItem in agendaItems">
-            <li>{{agendaItem.title}}</li>
+            <li><icon :agenda-item="agendaItem"></icon> {{agendaItem.title}}</li>
           </div>
         </ul>
       </aside>
@@ -32,10 +32,10 @@
 
 <template id="agenda-item-template">
   <div class="box">
-    <h2 class="subtitle is-3">(icon) {{currentAgendaItem.type}}</h2>
+    <h2 class="subtitle is-3"><icon :agenda-item="currentAgendaItem"></icon> {{currentAgendaItem.type}}</h2>
     <div class="ai-title">
       <div class="control">
-        <label class="label">Title</label>
+        <label class="label"> Title</label>
         <input class="input" type="text" v-model="currentAgendaItem.title">
       </div>
     </div>
@@ -176,11 +176,24 @@
     </div>
 </template>
 
+<template id="icons-template">
+  <i v-if="agendaItem.type === 'Business'" class="fa fa-briefcase" aria-hidden="true"></i>
+  <i v-if="agendaItem.type === 'Document'" class="fa fa-file-document" aria-hidden="true"></i>
+  <i v-if="agendaItem.type === 'Action Items'" class="fa fa-exclamation-circle-btb" aria-hidden="true"></i>
+  <i v-if="agendaItem.type === 'Meeting Details'" class="fa fa-library-books" aria-hidden="true"></i>
+  <i v-if="agendaItem.type === 'Motion'" class="fa fa-gavel" aria-hidden="true"></i>
+  <i v-if="agendaItem.type === 'Election'" class="fa fa-checkbox-multiple-marked-outline" aria-hidden="true"></i>
+</template>
+
 <!-- <template id="agenda-menu-li-template">
   <li>{{ agendaItem.title }}</li>
 </template> -->
 
 <script>
+  Vue.component('icon', {
+    template: "#icons-template",
+    props: ['agendaItem']
+  });
 
   Vue.component('motion', {
     template: "#motion-type",
