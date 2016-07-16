@@ -21,6 +21,26 @@ get '/select' do
   erb :select_status
 end
 
+get '/add-single-user' do 
+  erb :add_single_user
+end
+
+get '/api/mover/:id' do |id|
+  content_type :json
+  AgendaItem.find(id).to_json(include: :mover)
+end
+
+post '/api/mover/:id' do |id|
+  content_type :json
+  @agenda_item = AgendaItem.find(id).to_json(include: :mover)
+  @agenda_item.mover = User.find(params[:mover_id])
+  if @agenda_item.save
+    puts params[:mover_id]
+    puts "saved new mover"
+    @agenda_item.to_json(include: :mover)
+  end 
+end
+
 #################
 # FILE UPLOADER #
 #################
@@ -126,9 +146,9 @@ post '/api/agenda-items/:id' do |id|
   @agenda_item.description = params[:description]
   @agenda_item.discussion = params[:discussion]
   @agenda_item.status = params[:status]
+  @agenda_item.mover = params[:mover]
+  @agenda_item.seconder = params[:seconder]
   if @agenda_item.save
-    puts params[:discussion]
-    puts "inside save"
     @agenda_item.to_json(include: { :votes => {:include =>:voting_user} })
   end  
 end
