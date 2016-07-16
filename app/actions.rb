@@ -18,6 +18,32 @@ get '/test' do
 end
 
 #################
+# FILE UPLOADER #
+#################
+
+get "/" do
+  @files = Dir["./public/*"]
+  erb :form
+end
+ 
+post '/save_file' do
+  @filename = params[:file][:filename]
+  file = params[:file][:tempfile]
+  if File.exists? "./public/#{@filename}" then
+    "File with this name exists already!"
+  else
+    File.open("./public/#{@filename}", 'wb') do |f|
+      f.write(file.read)
+    end
+    "File uploaded"
+  end
+end
+
+get "/public/:file" do
+  send_file File.open("./public/#{params[:file]}")
+end
+
+#################
 # ORGANIZATIONS #
 #################
 
