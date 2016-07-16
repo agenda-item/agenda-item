@@ -13,11 +13,6 @@ get '/organizations/new' do
 	erb :signup
 end
 
-#below used for testing purposes, remove before final push to 
-get '/test' do
-  erb :agendaitem
-end
-
 get '/select' do
   erb :select_status
 end
