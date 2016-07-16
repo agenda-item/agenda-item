@@ -25,26 +25,26 @@ end
 # FILE UPLOADER #
 #################
 
-get "/" do
-  @files = Dir["./public/*"]
-  erb :form
+get "/files-upload" do
+  @files = Dir["./public/files/*"]
+  erb :file_upload
 end
  
 post '/save_file' do
   @filename = params[:file][:filename]
   file = params[:file][:tempfile]
-  if File.exists? "./public/#{@filename}" then
+  if File.exists? "./public/files/#{@filename}" then
     "File with this name exists already!"
   else
-    File.open("./public/#{@filename}", 'wb') do |f|
+    File.open("./public/files/#{@filename}", 'wb') do |f|
       f.write(file.read)
     end
     "File uploaded"
   end
 end
 
-get "/public/:file" do
-  send_file File.open("./public/#{params[:file]}")
+get "/public/files/:file" do
+  send_file File.open("./public/files/#{params[:file]}")
 end
 
 #################
