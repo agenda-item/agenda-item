@@ -20,7 +20,6 @@
     margin: 5px;
     font-size: 14px;
     vertical-align: top;
-
     line-height: 1.428571428571429;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     color: black;
@@ -73,7 +72,6 @@
 
   #bottom-hero {
     background-color: #E1DFE0;
-
   }
 
   #sign-up {
@@ -93,22 +91,14 @@
 }
 
 #signup-bg-img {
-  background:transparent url(http://marketingland.com/wp-content/ml-loads/2014/09/tablet-calendar-coffee-desk-ss-1920-800x571.jpg) no-repeat center center;
-   background-size: cover;
+  background:transparent url(http://marketingland.com/wp-content/ml-loads/2014/09/tablet-calendar-coffee-desk-ss-1920-800x571.jpg) 
+  no-repeat center center;
+  background-size: cover;
 }
 
 .inline {
   display: block;
   color: white;
-
-}
-
-.message-header {
-  background-color: #26495C;
-}
-
-ai-user is-medium > in-favour {
-  background-color: #26495C;
 }
 
  .ai-user.is-medium.opposed {
@@ -119,7 +109,7 @@ ai-user is-medium > in-favour {
   background-color: #E4A97B;
 }
 
-.button {
+/*.button {
   margin: 10px 0 40px 0;
   background-color: #7AB0A3;
   color: white;
@@ -129,11 +119,37 @@ ai-user is-medium > in-favour {
   padding-left: 18px;
   padding-right: 18px;
   border-radius: 5px;
-}
+}*/
 
+/*.button-index {
+  background-color: #60425A;
+  font-size: 14px;
+  color: white;
+
+  -webkit-box-align: center;
+  align-items: center;
+  border: 1px solid #d3d6db;
+  border: 1px solid #d3d6db;
+  
+  height: 32px;
+  line-height: 24px;
+  position: relative;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+  
+  white-space: nowrap;
+  vertical-align: top;
+  vertical-align: top;
+
+}
+*/
 .message-header {
   font-size: 16px;
   font-weight: bold;
+  background-color: #26495C;
 }
 
 .label {
