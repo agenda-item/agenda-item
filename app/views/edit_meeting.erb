@@ -32,7 +32,7 @@
 
 <template id="agenda-item-template">
   <div class="box">
-    <h2 class="subtitle is-3">(icon) Motion</h2>
+    <h2 class="subtitle is-3">(icon) {{currentAgendaItem.type}}</h2>
     <div class="ai-title">
       <div class="control">
         <label class="label">Title</label>
@@ -40,129 +40,12 @@
       </div>
     </div>
     <div class="ai-description">
-      <label class="label">Motion</label>
+      <label class="label">Description</label>
       <div class="control">
         <textarea class="textarea" v-model="currentAgendaItem.description"></textarea>
       </div>
     </div>
-    <div class="ai-responsible">
-      <label class="label">Mover</label>
-      <input class="input" type="text" v-model="currentAgendaItem.mover.first_name">
-    </div>
-    <div class="ai-responsible">
-      <label class="label">Seconder</label>
-      <input class="input" type="text" v-model="currentAgendaItem.seconder.first_name">
-    </div>
-    <div class="ai-vote">
-      <p>** if not logged</p>
-      <a class="button">
-        Log Votes
-      </a>
-      <p>** if logged</p>
-      <article class="message">
-          <div class="message-header in-favour" >
-            <span class="icon">  
-              <i class="fa fa-checkbox-marked-circle-outline"></i>
-            </span>
-            In Favour
-          </div>
-          <div class="message-body">
-            <span class="ai-user tag is-medium">
-              <span class="icon">
-                  <i class="fa fa-person"></i>
-                </span>
-              {{ user.first_name }}
-            </span>
-            
-            <span class="ai-user tag is-medium">
-              <span class="icon">
-                  <i class="fa fa-person"></i>
-                </span>
-              {{ user.first_name }}
-            </span>
-            
-            <span class="ai-user tag is-medium">
-              <span class="icon">
-                  <i class="fa fa-person"></i>
-                </span>
-              {{ user.first_name }}
-            </span>
-            
-            <span class="ai-user tag is-medium">
-              <span class="icon">
-                  <i class="fa fa-person"></i>
-                </span>
-              {{ user.first_name }}
-            </span>
-            
-            <span class="ai-user tag is-medium">
-              <span class="icon">
-                  <i class="fa fa-person"></i>
-                </span>
-              {{ user.first_name }}
-            </span>
-            
-            <span class="ai-user tag is-medium">
-              <span class="icon">
-                  <i class="fa fa-person"></i>
-                </span>
-              {{ user.first_name }}
-            </span>
-
-          </div>
-        </article>
-        <article class="message">
-          <div class="message-header opposed">
-           <span class="icon">  
-             <i class="fa fa-close-circle-outline"></i>
-           </span>
-            Opposed
-          </div>
-          <div class="message-body">
-           <span class="ai-user tag is-medium opposed">
-             <span class="icon">
-                 <i class="fa fa-person"></i>
-               </span>
-             {{ user.first_name }}
-           </span><span class="ai-user tag is-medium opposed">
-              <span class="icon">
-                  <i class="fa fa-person"></i>
-                </span>
-              {{ user.first_name }}
-            </span><span class="ai-user tag is-medium opposed">
-              <span class="icon">
-                  <i class="fa fa-person"></i>
-                </span>
-              {{ user.first_name }}
-            </span>
-          </div>
-        </article>
-        <article class="message">
-          <div class="message-header abstain">
-            <span class="icon">  
-              <i class="fa fa-checkbox-blank-circle-outline"></i>
-            </span>
-            Abstain
-          </div>
-          <div class="message-body">
-            <span class="ai-user tag is-medium abstain">
-              <span class="icon">
-                  <i class="fa fa-person"></i>
-                </span>
-              {{ user.first_name }}
-            </span>
-            <span class="ai-user tag is-medium abstain">
-              <span class="icon">
-                  <i class="fa fa-person"></i>
-                </span>
-              {{ user.first_name }}
-            </span>     
-          </div>
-        </article>
-        <a class="button">
-          Adjust Votes
-        </a>
-      </div>
+    <motion v-if="currentAgendaItem.type === 'Motion'" :agenda-item="agendaItem"></motion>
     <div class="ai-minutes">
       <label class="label">Discussion</label>
       <div class="control">
@@ -172,11 +55,137 @@
   </div>
 </template>
 
+<template id="motion-template">
+  <div class="ai-responsible">
+    <label class="label">Mover</label>
+    <input class="input" type="text" v-model="currentAgendaItem.mover.first_name">
+  </div>
+  <div class="ai-responsible">
+    <label class="label">Seconder</label>
+    <input class="input" type="text" v-model="currentAgendaItem.seconder.first_name">
+  </div>
+  <div class="ai-vote">
+    <p>** if not logged</p>
+    <a class="button">
+      Log Votes
+    </a>
+    <p>** if logged</p>
+    <article class="message">
+        <div class="message-header in-favour" >
+          <span class="icon">  
+            <i class="fa fa-checkbox-marked-circle-outline"></i>
+          </span>
+          In Favour
+        </div>
+        <div class="message-body">
+          <span class="ai-user tag is-medium">
+            <span class="icon">
+                <i class="fa fa-person"></i>
+              </span>
+            {{ user.first_name }}
+          </span>
+          
+          <span class="ai-user tag is-medium">
+            <span class="icon">
+                <i class="fa fa-person"></i>
+              </span>
+            {{ user.first_name }}
+          </span>
+          
+          <span class="ai-user tag is-medium">
+            <span class="icon">
+                <i class="fa fa-person"></i>
+              </span>
+            {{ user.first_name }}
+          </span>
+          
+          <span class="ai-user tag is-medium">
+            <span class="icon">
+                <i class="fa fa-person"></i>
+              </span>
+            {{ user.first_name }}
+          </span>
+          
+          <span class="ai-user tag is-medium">
+            <span class="icon">
+                <i class="fa fa-person"></i>
+              </span>
+            {{ user.first_name }}
+          </span>
+          
+          <span class="ai-user tag is-medium">
+            <span class="icon">
+                <i class="fa fa-person"></i>
+              </span>
+            {{ user.first_name }}
+          </span>
+
+        </div>
+      </article>
+      <article class="message">
+        <div class="message-header opposed">
+         <span class="icon">  
+           <i class="fa fa-close-circle-outline"></i>
+         </span>
+          Opposed
+        </div>
+        <div class="message-body">
+         <span class="ai-user tag is-medium opposed">
+           <span class="icon">
+               <i class="fa fa-person"></i>
+             </span>
+           {{ user.first_name }}
+         </span><span class="ai-user tag is-medium opposed">
+            <span class="icon">
+                <i class="fa fa-person"></i>
+              </span>
+            {{ user.first_name }}
+          </span><span class="ai-user tag is-medium opposed">
+            <span class="icon">
+                <i class="fa fa-person"></i>
+              </span>
+            {{ user.first_name }}
+          </span>
+        </div>
+      </article>
+      <article class="message">
+        <div class="message-header abstain">
+          <span class="icon">  
+            <i class="fa fa-checkbox-blank-circle-outline"></i>
+          </span>
+          Abstain
+        </div>
+        <div class="message-body">
+          <span class="ai-user tag is-medium abstain">
+            <span class="icon">
+                <i class="fa fa-person"></i>
+              </span>
+            {{ user.first_name }}
+          </span>
+          <span class="ai-user tag is-medium abstain">
+            <span class="icon">
+                <i class="fa fa-person"></i>
+              </span>
+            {{ user.first_name }}
+          </span>     
+        </div>
+      </article>
+      <a class="button">
+        Adjust Votes
+      </a>
+    </div>
+</template>
+
 <!-- <template id="agenda-menu-li-template">
   <li>{{ agendaItem.title }}</li>
 </template> -->
 
 <script>
+
+  Vue.component('motion', {
+    template: "#motion-type",
+    props: ['agendaItem']
+  }); 
 
   Vue.component('agenda-menu', {
     template: '#agenda-menu-template',

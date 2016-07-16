@@ -13,7 +13,7 @@ get '/organizations/new' do
 	erb :signup
 end
 
-get '/test' do
+get '/edit-meeting' do
   erb :edit_meeting
 end
 
