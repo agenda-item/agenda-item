@@ -13,10 +13,8 @@
     <i v-if="agendaItem.type === 'Meeting Details'" class="fa fa-library-books" aria-hidden="true"></i>
     <i v-if="agendaItem.type === 'Motion'" class="fa fa-gavel" aria-hidden="true"></i>
     <i v-if="agendaItem.type === 'Election'" class="fa fa-checkbox-multiple-marked-outline" aria-hidden="true"></i>
-    <textarea id="description" v-model="agendaItem.description"  name="description"></textarea>
     <textarea id="title" v-model="agendaItem.title" name="title"></textarea>
     <textarea id="description" v-model="agendaItem.description"  name="description"></textarea>
-    <textarea id="title" v-model="agendaItem.title" name="title"></textarea>
     <textarea id="discussion" v-model="agendaItem.discussion" name="discussion" class="mceEditor" v-on:focus="tinyMCE()"></textarea>
     <button type="submit">submit</button>
   </form>
