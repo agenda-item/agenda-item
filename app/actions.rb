@@ -23,6 +23,26 @@ get '/select' do
   erb :select_status
 end
 
+get '/motion' do
+  erb :motion
+end
+
+get '/election' do
+  erb :election
+end
+
+get '/business' do
+  erb :business
+end
+
+get '/document' do
+  erb :document
+end
+
+get '/meeting-details' do
+  erb :meeting_details
+end
+
 #################
 # FILE UPLOADER #
 #################
@@ -124,7 +144,7 @@ post '/api/agenda-items/new' do
   type = params[:type]
 
   @agenda_item = AgendaItem.new(
-    type: "Business",
+    type: params[:type],
     creator_id: 1,  #params[current_user.id]
     meeting_id: 1  #params[current_meeting.id]
     )
