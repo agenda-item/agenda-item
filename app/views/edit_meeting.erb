@@ -37,7 +37,7 @@
           <!-- TODO on click loads a template for the meeting details instead of an agenda item -->
           <li><i class="fa fa-library-books" aria-hidden="true"></i> Meeting Details</li>
           <div v-for="agendaItem in agendaItems">     
-              <agenda-item-selection :agenda-item="agendaItem" :current-agenda-item.sync="currentAgendaItem"></agenda-item-selection>
+              <agenda-item-selection :agenda-item="agendaItem" :current-item-index.sync="currentItemIndex"></agenda-item-selection>
           </div>
           <!-- TODO on click loads a template for the meeting details instead of an agenda item -->
           <li><i class="fa fa-library-books" aria-hidden="true"></i> Meeting Closing</li>
@@ -47,8 +47,8 @@
   
     <div class="column">
       <div class="section ai-agenda-item">
-        <!-- sets the current agenda item loaded into the side with the currentAgendaItem of the agendaItems list stored on the root instance data -->
-        <agenda-item :agenda-item="agendaItems[currentAgendaItem]"></agenda-item>
+        <!-- sets the current agenda item loaded into the side with the currentItemIndex of the agendaItems list stored on the root instance data -->
+        <agenda-item :agenda-item="agendaItems[currentItemIndex]"></agenda-item>
       </div>
     </div>
   </div>
@@ -97,11 +97,11 @@
 <template id="motion-template">
   <div class="ai-responsible">
     <label class="label">Mover</label>
-    <input class="input" type="text" v-model="currentAgendaItem.mover.first_name">
+    <input class="input" type="text" v-model="agendaItem.mover.first_name">
   </div>
   <div class="ai-responsible">
     <label class="label">Seconder</label>
-    <input class="input" type="text" v-model="currentAgendaItem.seconder.first_name">
+    <input class="input" type="text" v-model="agendaItem.seconder.first_name">
   </div>
   <div class="ai-vote">
     <p>** if not logged</p>
@@ -239,7 +239,11 @@
       addAgendaItem: function() {
         console.log("clicked to add new item")
         this.$http.post('/api/agenda-items/new', {'type': this.newItem.type}, {emulateJSON:true}).then(function(response) {
-          this.agendaItems.push(response.json())
+          newAgendaItem = response.json()
+          console.log(this.agendaItems.length)
+          this.agendaItems.push(newAgendaItem)
+          console.log(this.agendaItems.length)
+          this.currentItemIndex = (this.agendaItems.length)
         }).error(function(error) {
           console.log(error);
         }.bind(this));
@@ -249,10 +253,10 @@
 
   Vue.component('agenda-item-selection', {
     template: "#agenda-item-selection-template",
-    props: ['agendaItem','currentAgendaItem'],
+    props: ['agendaItem','currentItemIndex'],
     methods: {
       setCurrentAgendaItem: function() {
-        this.currentAgendaItem = this.agendaItem.id
+        this.currentItemIndex = this.agendaItem.id
         // this.$dispatch('new-current-agenda-item', this.agendaItem.id)
       }
     }
@@ -270,7 +274,7 @@
 
   Vue.component('agenda-menu', {
     template: '#agenda-menu-template',
-    props: ['agendaItems','currentAgendaItem']
+    props: ['agendaItems','currentItemIndex']
   });  
 
   Vue.component('agenda-item', {
@@ -283,7 +287,7 @@
     data: function() {
       return {
         agendaItems: [],
-        currentAgendaItem: 1,
+        currentItemIndex: 1,
         newItems: [
           { type: 'Action Item', icon: 'exclamation-circle-btb' },
           { type: 'Business', icon: 'briefcase' },
@@ -298,18 +302,8 @@
         this.agendaItems = response.json();
       }.bind(this));
     }
-    // ,
-    // events: {
-    //   'new-current-agenda-item' : function (data) {
-    //     this.currentAgendaItem = data
-    //     console.log("in the list the id is " + this.currentAgendaItem)
-    //   }
-    // }
   });
 
-  // Vue.nextTick(function () {
-  //   vm.$el.textContent === 'new message' // true
-  // })
 
   new Vue({
     el: '#app',
