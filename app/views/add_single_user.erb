@@ -19,7 +19,7 @@
     <br>
     <label>Mover:</label>
     <br>
-    <textarea id="mover_id" v-model="agendaItem.mover_id" name="mover_id"></textarea>
+    <textarea id="mover_id" v-model="agendaItem.mover.id" name="mover_id"></textarea>
     <div id="mover_first_name">{{agendaItem.mover.first_name}}</div>
     <select v-model="agendaItem.status">
       <option v-for="option in options" v-bind:value="option.value">
@@ -51,8 +51,8 @@
           <slot name="body">
             <div v-for="user in userList">
               <input type="radio" id="{{user.id}}" name="mover_id"
-                     v-bind:value="user.id"
-                     v-model="agendaItem.mover_id"
+                     v-bind:value="user"
+                     v-model="agendaItem.mover"
                      v-on:change="updateMover">
               <label for="{{user.id}}">{{user.first_name}}</label>
             </div>
