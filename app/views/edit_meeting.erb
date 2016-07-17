@@ -3,8 +3,13 @@
    background: white;
    border: 1px solid;
    border-radius: 10px;
-   padding: 10px 20px;
+   padding: 10px 15px;
    margin: 3px;
+  }
+
+  #ai-new-agenda-item > div > li > span:first-child {
+    padding-right: 15px;
+    color: blue;
   }
 
 </style>
@@ -20,7 +25,7 @@
         <p class="menu-label">
           Agenda Items
         </p>
-        <p class="subtitle"><span><i class="fa fa-plus-square"></i> Add Agenda Item</span></p>
+        <p class="subtitle text-is-centered">New Agenda Item</p>
         <ul id="ai-new-agenda-item">
           <div v-for="newItem in newItems">
             <!-- populates choices with list of agenda item types ('newItem') from root instance data -->
@@ -219,7 +224,7 @@
 </template>
 
 <template id="new-item-template">
-   <li @click="addAgendaItem"><i class="fa fa-{{newItem.icon}}" aria-hidden="true"></i> {{newItem.type}}</li>
+   <li @click="addAgendaItem"><span><i class="fa fa-plus-square fa-lg"></i></span><span><i class="fa fa-{{newItem.icon}}" aria-hidden="true"></i></span> {{newItem.type}}</li>
 </template>
 
 <!-- <template id="agenda-menu-li-template">
