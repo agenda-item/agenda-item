@@ -52,13 +52,13 @@ get "/files-upload" do
   erb :file_upload
 end
 
-post '/agenda-items/3/save_file' do
+post '/agenda-items/:id/save_file' do
   @filename = params[:file][:filename]
   file = params[:file][:tempfile]
   if File.exists? "./public/files/#{@filename}" then
     "File with this name exists already!"
   else
-    @agenda_item = AgendaItem.find(3)
+    @agenda_item = AgendaItem.find(params[:id])
     @agenda_item.file_path = @filename
     if @agenda_item.save
       puts @agenda_item.file_path
