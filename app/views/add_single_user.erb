@@ -1,36 +1,35 @@
 <div id="agenda-item-template" :agenda-item="agendaItem" :selected="selected" :options="options">
 
   <form @submit.prevent="postData">
-    <label>Title:</label>
-    <br>
+    <div>
+    <label>Title:</label><br>
     <textarea id="title" v-model="agendaItem.title" name="title"></textarea>
-    <br>
-    <label>Description:</label>
-    <br>
+    </div>
+    <div>
+    <label>Description:</label><br>
     <textarea id="description" v-model="agendaItem.description"  name="description"></textarea>
-    <br>
-    <label>Discussion:</label>
-    <br>
+    </div>
+    <div>
+    <label>Discussion:</label><br>
     <textarea id="discussion" v-model="agendaItem.discussion" name="discussion"></textarea>
-    <br>
-    <label>Status:</label>
-    <br>
-    <textarea id="status" v-model="agendaItem.status" name="status"></textarea>
-    <br>
-    <label>Mover:</label>
-    <br>
-    <textarea id="mover_id" v-model="agendaItem.mover.id" name="mover_id"></textarea>
-    <div id="mover_first_name">{{agendaItem.mover.first_name}}</div>
+    </div>
+    <div>
+    <label>Status:</label><br>
     <select v-model="agendaItem.status">
       <option v-for="option in options" v-bind:value="option.value">
         {{ option.text }}
       </option>
     </select>
-    <br>
+    <textarea id="status" v-model="agendaItem.status" name="status" style="display: none"></textarea>
+    </div>
+    <div>
+    <label>Mover:</label>
+    <textarea id="mover_id" v-model="agendaItem.mover.id" name="mover_id" style="display: none"></textarea>
+    {{agendaItem.mover.first_name}}
+  <div><button id="show-modal" @click="showModal = true" class="button is-primary modal-button">Change Mover</button></div> 
+    </div>   
     <button type="submit">submit</button>
   </form>
-
-  <button id="show-modal" @click="showModal = true" class="button is-primary modal-button">Change Mover</button>
   <!-- use the modal component, pass in the prop -->
   <modal :show.sync="showModal" :agenda-item.sync="agendaItem"></modal>
 </div>
