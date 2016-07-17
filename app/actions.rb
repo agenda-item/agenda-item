@@ -34,8 +34,11 @@ post '/api/agenda-items/:id' do
  content_type :json
  @agenda_item = AgendaItem.find(params[:id])
  @agenda_item.title = params[:title]
+ @agenda_item.description = params[:description]
+ @agenda_item.discussion = params[:discussion]
+
  if @agenda_item.save
-   puts @agenda_item.title
+   puts @agenda_item.discussion
    @agenda_item.to_json
  end
 end
