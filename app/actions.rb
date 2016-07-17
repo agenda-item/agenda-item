@@ -32,12 +32,11 @@ end
 
 post '/api/mover/:id' do |id|
   content_type :json
-  @agenda_item = AgendaItem.find(id).to_json(include: :mover)
+  @agenda_item = AgendaItem.find(id)
   @agenda_item.mover = User.find(params[:mover_id])
   if @agenda_item.save
     puts params[:mover_id]
     puts "saved new mover"
-    @agenda_item.to_json(include: :mover)
   end 
 end
 

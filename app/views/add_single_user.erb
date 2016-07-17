@@ -53,6 +53,7 @@
               <input type="radio" id="{{user.id}}" name="mover_id"
                      v-bind:value="user.id"
                      v-model="agendaItem.mover_id"
+                     v-on:change="updateMover">
               <label for="{{user.id}}">{{user.first_name}}</label>
             </div>
           </slot>
@@ -98,7 +99,7 @@
     },
     methods: {
       updateMover: function() {
-        this.$parent.postData()      
+        this.$parent.postData()     
       }
     }
   })
