@@ -1,10 +1,9 @@
 <style>
   #ai-new-agenda-item > div > li {
    background: white;
-   color: black;
    border: 1px solid;
    border-radius: 10px;
-   padding: 5px;
+   padding: 10px 20px;
    margin: 3px;
   }
 
@@ -24,7 +23,7 @@
         <p class="subtitle"><span><i class="fa fa-plus-square"></i> Add Agenda Item</span></p>
         <ul id="ai-new-agenda-item">
           <div v-for="newItem in newItems">
-            <!-- populates choices with list of agenda item types from root instance data -->
+            <!-- populates choices with list of agenda item types ('newItem') from root instance data -->
             <new-item :new-item="newItem" :agenda-items="agendaItems"></new-item>
           </div>
         </ul>
@@ -33,7 +32,7 @@
           <!-- TODO on click loads a template for the meeting details instead of an agenda item -->
           <li><i class="fa fa-library-books" aria-hidden="true"></i> Meeting Details</li>
           <div v-for="agendaItem in agendaItems">     
-              <agenda-item-selection :agenda-item="agendaItem" :current-item-index.sync="currentItemIndex"></agenda-item-selection>
+              <agenda-item-selection :agenda-item="agendaItem" :current-agenda-item.sync="currentAgendaItem"></agenda-item-selection>
           </div>
           <!-- TODO on click loads a template for the meeting details instead of an agenda item -->
           <li><i class="fa fa-library-books" aria-hidden="true"></i> Meeting Closing</li>
@@ -43,8 +42,8 @@
   
     <div class="column">
       <div class="section ai-agenda-item">
-        <!-- sets the current agenda item loaded into the side with the currentItemIndex of the agendaItems list stored on the root instance data -->
-        <agenda-item :current-agenda-item="agendaItems[currentItemIndex]"></agenda-item>
+        <!-- sets the current agenda item loaded into the side with the currentAgendaItem of the agendaItems list stored on the root instance data -->
+        <agenda-item :agenda-item="agendaItems[currentAgendaItem]"></agenda-item>
       </div>
     </div>
   </div>
@@ -62,24 +61,29 @@
 
 <template id="agenda-item-template">
   <div class="box">
-    <h2 class="subtitle is-3"><icon :current-agenda-item="agendaItems[currentItemIndex]"></icon> {{currentAgendaItem.type}}</h2>
+    <h2 class="subtitle is-3">
+      <icon :agenda-item="agendaItem"></icon> 
+      {{agendaItem.type}}
+    </h2>
     <div class="ai-title">
       <div class="control">
         <label class="label"> Title</label>
-        <input class="input" type="text" v-model="currentAgendaItem.title">
+        <input class="input" type="text" v-model="agendaItem.title">
       </div>
     </div>
     <div class="ai-description">
       <label class="label">Description</label>
       <div class="control">
-        <textarea class="textarea" v-model="currentAgendaItem.description"></textarea>
+        <textarea class="textarea" v-model="agendaItem.description"></textarea>
       </div>
     </div>
-    <motion v-if="currentAgendaItem.type === 'Motion'" :agenda-item="agendaItem"></motion>
+    <!-- motion -->
+    <motion v-if="agendaItem.type === 'Motion'"></motion>
+    <!-- /motion -->
     <div class="ai-minutes">
       <label class="label">Discussion</label>
       <div class="control">
-        <textarea class="textarea" v-model="currentAgendaItem.discussion"></textarea>
+        <textarea class="textarea" v-model="agendaItem.discussion"></textarea>
       </div>
     </div>
   </div>
@@ -240,10 +244,10 @@
 
   Vue.component('agenda-item-selection', {
     template: "#agenda-item-selection-template",
-    props: ['agendaItem','currentItemIndex'],
+    props: ['agendaItem','currentAgendaItem'],
     methods: {
       setCurrentAgendaItem: function() {
-        this.currentItemIndex = this.agendaItem.id
+        this.currentAgendaItem = this.agendaItem.id
         // this.$dispatch('new-current-agenda-item', this.agendaItem.id)
       }
     }
@@ -266,7 +270,7 @@
 
   Vue.component('agenda-item', {
     template: '#agenda-item-template',
-    props: ['currentAgendaItem']
+    props: ['agendaItem']
   });
 
   Vue.component('agenda-items', {
@@ -274,7 +278,7 @@
     data: function() {
       return {
         agendaItems: [],
-        currentItemIndex: 1,
+        currentAgendaItem: 1,
         newItems: [
           { type: 'Action Item', icon: 'exclamation-circle-btb' },
           { type: 'Business', icon: 'briefcase' },
@@ -292,8 +296,8 @@
     // ,
     // events: {
     //   'new-current-agenda-item' : function (data) {
-    //     this.currentItemIndex = data
-    //     console.log("in the list the id is " + this.currentItemIndex)
+    //     this.currentAgendaItem = data
+    //     console.log("in the list the id is " + this.currentAgendaItem)
     //   }
     // }
   });
