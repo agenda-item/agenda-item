@@ -22,10 +22,7 @@
   <div class="columns">
     <div class="column is-one-quarter">
       <aside class="menu">
-        <p class="menu-label">
-          Agenda Items
-        </p>
-        <p class="subtitle text-is-centered">New Agenda Item</p>
+        <p class="menu-label">New Agenda Item</p>
         <ul id="ai-new-agenda-item">
           <div v-for="newItem in newItems">
             <!-- populates choices with list of agenda item types ('newItem') from root instance data -->
@@ -33,6 +30,7 @@
           </div>
         </ul>
         <hr>
+        <p class="menu-label">Agenda Items</p>
         <ul>
           <!-- TODO on click loads a template for the meeting details instead of an agenda item -->
           <li><i class="fa fa-library-books" aria-hidden="true"></i> Meeting Details</li>
@@ -82,9 +80,14 @@
         <textarea class="textarea" v-model="agendaItem.description"></textarea>
       </div>
     </div>
+    <!-- TODO action item -->
+    <!-- TODO business -->
+    <!-- TODO document -->
+    <!-- TODO election -->
     <!-- motion -->
-    <motion v-if="agendaItem.type === 'Motion'"></motion>
+    <motion v-if="agendaItem.type === 'Motion'" :agenda-item.sync="agendaItem"></motion>
     <!-- /motion -->
+
     <div class="ai-minutes">
       <label class="label">Discussion</label>
       <div class="control">
@@ -256,7 +259,7 @@
     props: ['agendaItem','currentItemIndex'],
     methods: {
       setCurrentAgendaItem: function() {
-        this.currentItemIndex = this.agendaItem.id
+        this.currentItemIndex = this.agendaItem.id - 1
         // this.$dispatch('new-current-agenda-item', this.agendaItem.id)
       }
     }
@@ -287,7 +290,7 @@
     data: function() {
       return {
         agendaItems: [],
-        currentItemIndex: 1,
+        currentItemIndex: 0,
         newItems: [
           { type: 'Action Item', icon: 'exclamation-circle-btb' },
           { type: 'Business', icon: 'briefcase' },
