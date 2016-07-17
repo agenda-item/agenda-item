@@ -12,19 +12,23 @@
   <!-- TODO add auto-save functionality-->
 
 <style>
+  .ai-agenda-list, #ai-new-agenda-item > div > li {
+    cursor: pointer;
+  }
+
   #ai-new-agenda-item > div > li {
    background: white;
    border: 1px solid;
    border-radius: 10px;
    padding: 10px 15px;
    margin: 3px;
+   
   }
 
   #ai-new-agenda-item > div > li > span:first-child {
     padding-right: 15px;
     color: blue;
   }
-
 </style>
 
 <div id="app" class="container">
@@ -33,24 +37,16 @@
 
 <template id="agenda-items-template">
   <div class="columns">
-    <div class="column is-one-quarter">
+    <div class="column is-2">
       <aside class="menu">
-        <p class="menu-label">New Agenda Item</p>
-        <ul id="ai-new-agenda-item">
-          <div v-for="newItem in newItems">
-            <!-- populates choices with list of agenda item types ('newItem') from root instance data -->
-            <new-item :new-item="newItem" :agenda-items="agendaItems" :current-item-index.sync="currentItemIndex"></new-item>
-          </div>
-        </ul>
-        <hr>
         <p class="menu-label">Agenda Items</p>
-        <ul>
-          <!-- TODO on click loads a template for the meeting details instead of an agenda item -->
+        <ul class="ai-agenda-list">
+          <!-- meeting details are not an agenda item, they belong to the meeting -->
           <li><i class="fa fa-library-books" aria-hidden="true"></i> Meeting Details</li>
           <div v-for="agendaItem in agendaItems">     
               <agenda-item-selection :agenda-item="agendaItem" :current-item-index.sync="currentItemIndex"></agenda-item-selection>
           </div>
-          <!-- TODO on click loads a template for the meeting details instead of an agenda item -->
+          <!-- meeting closing is not an agenda item, the data belongs to the meeting -->
           <li><i class="fa fa-library-books" aria-hidden="true"></i> Meeting Closing</li>
         </ul>
       </aside>
@@ -62,7 +58,21 @@
         <agenda-item :agenda-item="agendaItems[currentItemIndex]"></agenda-item>
       </div>
     </div>
+
+    <div class="column is-2">
+      <div class="pull-right">
+        <p class="menu-label">New Agenda Item</p>
+        <ul id="ai-new-agenda-item">
+          <div v-for="newItem in newItems">
+            <!-- populates choices with list of agenda item types ('newItem') from root instance data -->
+            <new-item :new-item="newItem" :agenda-items="agendaItems" :current-item-index.sync="currentItemIndex"></new-item>
+          </div>
+        </ul>
+      </div>
+    </div>
   </div>
+
+  
 </template>
 
 <!-- creates the list on the left sidebar containing all current agenda items -->
