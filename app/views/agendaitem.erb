@@ -1,7 +1,8 @@
 <div id="app">
-  <div v-for="agendaItem in agendaItems">
+<div v-for="agendaItem in agendaItems">
     <agenda-item :agenda-item="agendaItem"></agenda-item>
   </div>
+    <agenda-item :agenda-item="agendaItem"></agenda-item>
 </div>
 
 <template id="agenda-item-template" >
@@ -14,11 +15,14 @@
     <i v-if="agendaItem.type === 'Election'" class="fa fa-checkbox-multiple-marked-outline" aria-hidden="true"></i>
     <textarea id="description" v-model="agendaItem.description"  name="description"></textarea>
     <textarea id="title" v-model="agendaItem.title" name="title"></textarea>
-
+    <textarea id="description" v-model="agendaItem.description"  name="description"></textarea>
+    <textarea id="title" v-model="agendaItem.title" name="title"></textarea>
+    <textarea id="discussion" v-model="agendaItem.discussion" name="discussion" class="mceEditor" v-on:focus="tinyMCE()"></textarea>
     <button type="submit">submit</button>
   </form>
 </template>
 
+<script src="https://cdn.tinymce.com/4/tinymce.min.js"></script>
 
 <script>
   Vue.component('agendaItem', {
@@ -26,6 +30,8 @@
     props: ['agendaItem'],
     methods: {
       postData: function() {
+        var mceContent = tinyMCE.activeEditor.getContent()
+        this.agendaItem.discussion = mceContent
         console.log(this)
         this.$http.post('/api/agenda-items/' + this.agendaItem.id, this.agendaItem, {emulateJSON:true}).then(function(response) {
           console.log("agenda item updated");
@@ -33,6 +39,26 @@
           console.log(error);
           console.log("erroring");
         }.bind(this));
+      },
+      tinyMCE: function() {
+        tinymce.init({
+          // General options
+          mode : "specific_textareas",
+          editor_selector : "mceEditor",
+          height: 200,
+          width: 500, 
+          plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table contextmenu paste code',
+            'textcolor save'
+          ],
+          toolbar: 'insertfile undo redo | styleselect | bold italic forecolor | backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | image | file | save',
+          content_css: [
+            '//fast.fonts.net/cssapi/e6dc9b99-64fe-4292-ad98-6974f93cd2a2.css',
+            '//www.tinymce.com/css/codepen.min.css'
+          ]
+        });
       }
     }
   });
@@ -41,12 +67,12 @@
     el: '#app',
     data: function(){
       return {
-        agendaItems: []
+        agendaItem: {}
       }
     },
     created: function() {
-      this.$http.get('/api/agenda-items').then(function(response){
-        this.agendaItems = response.json();
+      this.$http.get('/api/agenda-items/1').then(function(response){
+        this.agendaItem = response.json();
       }.bind(this));
     }
   });
