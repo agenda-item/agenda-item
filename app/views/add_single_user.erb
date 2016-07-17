@@ -99,7 +99,7 @@
     },
     methods: {
       updateMover: function() {
-        this.$parent.postData()     
+        this.$parent.postData()      
       }
     }
   })
@@ -127,7 +127,7 @@
     methods: {
       postData: function() {
         console.log(this)
-        this.$http.post('/api/mover/' + this.agendaItem.id, this.agendaItem, {emulateJSON:true}).then(function(response) {
+        this.$http.post('/api/mover/' + this.agendaItem.id, {mover_id: this.agendaItem.mover.id}, {emulateJSON:true}).then(function(response) {
           console.log("agenda item updated");
         }.bind(this));
       }
