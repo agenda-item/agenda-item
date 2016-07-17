@@ -14,7 +14,7 @@
     <textarea id="discussion" v-model="agendaItem.discussion" name="discussion"></textarea>
     </div>
     <div>
-    <label>Status:</label><br>
+    <label>Status: {{agendaItem.status}}</label><br>
     <select v-model="agendaItem.status">
       <option v-for="option in options" v-bind:value="option.value">
         {{ option.text }}
@@ -22,16 +22,28 @@
     </select>
     <textarea id="status" v-model="agendaItem.status" name="status" style="display: none"></textarea>
     </div>
+
     <div>
     <label>Mover:</label>
     <textarea id="mover_id" v-model="agendaItem.mover.id" name="mover_id" style="display: none"></textarea>
     {{agendaItem.mover.first_name}}
   <div><button id="show-modal" @click="showModal = true" class="button is-primary modal-button">Change Mover</button></div> 
-    </div>   
+    </div>
+
+  <modal :show.sync="showModal" :agenda-item.sync="agendaItem"></modal>
+    
+    <div>
+    <label>Seconder:</label>
+    <textarea id="seconder_id" v-model="agendaItem.seconder.id" name="seconder_id" style="display: none"></textarea>
+    {{agendaItem.seconder.first_name}}
+  <div><button id="show-modal" @click="showModal = true" class="button is-primary modal-button">Change Seconder</button></div> 
+    </div> 
+
+  <modal :show.sync="showModal" :agenda-item.sync="agendaItem"></modal>
+
     <button type="submit">submit</button>
   </form>
   <!-- use the modal component, pass in the prop -->
-  <modal :show.sync="showModal" :agenda-item.sync="agendaItem"></modal>
 </div>
 
 <!-- template for the modal component -->
