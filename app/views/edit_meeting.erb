@@ -31,10 +31,9 @@
         <hr>
         <ul>
           <!-- TODO on click loads a template for the meeting details instead of an agenda item -->
-          {{currentItemIndex}}
           <li><i class="fa fa-library-books" aria-hidden="true"></i> Meeting Details</li>
           <div v-for="agendaItem in agendaItems">     
-              <agenda-item-selection :agenda-item="agendaItem" :current-item-index.sync="currentItemIndex"></agenda-item-selection>
+              <agenda-item-selection :agenda-item="agendaItem" :current-item-index="currentItemIndex"></agenda-item-selection>
           </div>
           <!-- TODO on click loads a template for the meeting details instead of an agenda item -->
           <li><i class="fa fa-library-books" aria-hidden="true"></i> Meeting Closing</li>
@@ -44,14 +43,21 @@
   
     <div class="column">
       <div class="section ai-agenda-item">
+        <!-- sets the current agenda item loaded into the side with the currentItemIndex of the agendaItems list stored on the root instance data -->
         <agenda-item :current-agenda-item="agendaItems[currentItemIndex]"></agenda-item>
       </div>
     </div>
   </div>
 </template>
 
+<!-- creates the list on the left sidebar containing all current agenda items -->
 <template id="agenda-item-selection-template">
-  <li @click="setCurrentAgendaItem"><icon :agenda-item="agendaItem"></icon> {{agendaItem.title}}</li>
+  <li @click="setCurrentAgendaItem">
+    <icon :agenda-item="agendaItem"></icon>
+     <!-- TODO set to display 'Unnamed agendaItem.type' if agendaItem.title === null -->
+    <span v-if="agendaItem.title">{{agendaItem.title}}</span>
+    <span v-else><em>Unnamed {{agendaItem.type}}</em></span>
+  </li>
 </template>
 
 <template id="agenda-item-template">
