@@ -18,9 +18,6 @@ get '/users/new' do
   erb :board_members
 end
 
-# get '/test' do
-#   erb :file_upload
-
 get '/select' do
   erb :select_status
 end
