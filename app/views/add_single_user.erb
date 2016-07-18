@@ -27,28 +27,28 @@
     <label>Mover:</label>
     <textarea id="mover_id" v-model="agendaItem.mover.id" name="mover_id" style="display: none"></textarea>
     {{agendaItem.mover.first_name}}
-  <div><button id="show-modal" @click="showModal = true" class="button is-primary modal-button">Change Mover</button></div> 
+  <div><button id="show-mover" @click="showMover = true" class="button is-primary modal-button">Change Mover</button></div> 
     </div>
 
-  <modal :show.sync="showModal" :agenda-item.sync="agendaItem"></modal>
+  <mover :show-mover.sync="showMover" :agenda-item.sync="agendaItem"></mover>
     
     <div>
     <label>Seconder:</label>
     <textarea id="seconder_id" v-model="agendaItem.seconder.id" name="seconder_id" style="display: none"></textarea>
     {{agendaItem.seconder.first_name}}
-  <div><button id="show-modal" @click="showModal = true" class="button is-primary modal-button">Change Seconder</button></div> 
+  <div><button id="show-seconder" @click="showSeconder = true" class="button is-primary modal-button">Change Seconder</button></div> 
     </div> 
 
-  <modal :show.sync="showModal" :agenda-item.sync="agendaItem"></modal>
+  <seconder :show-seconder.sync="showSeconder" :agenda-item.sync="agendaItem"></seconder>
 
     <button type="submit">submit</button>
   </form>
   <!-- use the modal component, pass in the prop -->
 </div>
 
-<!-- template for the modal component -->
-<template id="modal-template">
-  <div class="modal-mask" v-show="show" transition="modal">
+<!-- template for the MOVER modal component -->
+<template id="mover-template">
+  <div class="modal-mask" v-show="showMover" transition="modal">
     <div class="modal-wrapper">
       <div class="modal-container">
 
@@ -84,10 +84,49 @@
   </div>
 </template>
 
+<!-- template for the SECONDER modal component -->
+<template id="seconder-template">
+  <div class="modal-mask" v-show="showSeconder" transition="modal">
+    <div class="modal-wrapper">
+      <div class="modal-container">
+
+        <div class="modal-header">
+          <slot name="header">
+            Select a new mover:
+          </slot>
+        </div>
+        
+        <div class="modal-body">
+          <slot name="body">
+            <div v-for="user in userList">
+              <input type="radio" id="{{user.id}}" name="seconder_id"
+                     v-bind:value="user"
+                     v-model="agendaItem.seconder"
+                     v-on:change="updateSeconder">
+              <label for="{{user.id}}">{{user.first_name}}</label>
+            </div>
+          </slot>
+        </div>
+
+        <div class="modal-footer">
+          <slot name="footer">
+            Are you sure?
+            <button class="button is-primary modal-button"
+              @click="show = false">
+              Yes
+            </button>
+          </slot>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script>
 
-  Vue.component('modal', {
-    template: '#modal-template',
+  // component for adding/updating a MOVER
+  Vue.component('mover', {
+    template: '#mover-template',
     data: function() {
       return {
         userList: [],
@@ -96,7 +135,7 @@
     },
     props: {
       agendaItem: ['agendaItem'],
-      show: {
+      showMover: {
         type: Boolean,
         required: true,
         twoWay: true    
@@ -115,6 +154,37 @@
     }
   })
 
+  // component for adding/updating a SECONDER
+  Vue.component('seconder', {
+    template: '#seconder-template',
+    data: function() {
+      return {
+        userList: [],
+        isPrimary: false
+      }
+    },
+    props: {
+      agendaItem: ['agendaItem'],
+      showSeconder: {
+        type: Boolean,
+        required: true,
+        twoWay: true    
+      }
+    },
+    created: function() {
+      this.$http.get('/api/users').then(function(response){
+        this.userList = response.json();
+        console.log(this.userList)
+      }.bind(this));
+    },
+    methods: {
+      updateSeconder: function() {
+        this.$parent.postData()      
+      }
+    }
+  })  
+
+  // parent component to handle agenda item
   var parent = new Vue({
     el: '#agenda-item-template',
     data: {
@@ -128,19 +198,28 @@
         { text: 'carried forward', value: 'carried forward' },
         { text: 'completed', value: 'completed' }
       ],
-      showModal: false
+      showMover: false,
+      showSeconder: false
      },
     created: function() {
       this.$http.get('/api/mover/5').then(function(response){
         this.agendaItem = response.json();
       }.bind(this));
+
+      this.$http.get('/api/seconder/5').then(function(response){
+        this.agendaItem = response.json();
+      }.bind(this));      
     },
     methods: {
       postData: function() {
         console.log(this)
         this.$http.post('/api/mover/' + this.agendaItem.id, {mover_id: this.agendaItem.mover.id}, {emulateJSON:true}).then(function(response) {
-          console.log("agenda item updated");
+          console.log("mover saved");
         }.bind(this));
+
+        this.$http.post('/api/seconder/' + this.agendaItem.id, {seconder_id: this.agendaItem.seconder.id}, {emulateJSON:true}).then(function(response) {
+          console.log("seconder saved");
+        }.bind(this));        
       }
     }    
   });
