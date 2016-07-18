@@ -25,12 +25,16 @@ get '/add-single-user' do
   erb :add_single_user
 end
 
-get '/api/mover/:id' do |id|
+get '/add-mover-seconder' do 
+  erb :add_mover_seconder
+end
+
+get '/api/agenda-items/:id/mover' do |id|
   content_type :json
   AgendaItem.find(id).to_json(include: :mover)
 end
 
-get '/api/seconder/:id' do |id|
+get '/api/agenda-items/:id/seconder' do |id|
   content_type :json
   AgendaItem.find(id).to_json(include: :seconder)
 end
