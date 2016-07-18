@@ -1,6 +1,5 @@
 
  .style-element section {
-
     border: 1px dotted grey;
     padding: 20px;
     margin: 7px 0;
@@ -39,22 +38,16 @@
     vertical-align: top;
     color: black;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-
   }
 
-
-/*.ai-user::before { */
-
-/*  content: "\f055";
-  font-family: FontAwesome;
-  font-style: normal;
-  font-weight: normal;
-  text-decoration: inherit;
-  padding-right: 1em;*/
-
-  /*font-size: 18px;*/
-
-/*}*/
+.in-favour > .message-body > .message-header::before {
+  content: "\f022";
+    font-family: FontAwesome;
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: inherit;
+    padding-right: 1em;
+}
 
   .ai-count > i, .ai-symbol > i {
     border: 1px solid grey;
@@ -141,6 +134,16 @@
   background-color: #E4A97B;
 }
 
+.present > .message-body > .ai-user {
+  background-color: #916574;
+  color: white;
+}
+
+.absent > .message-body > .ai-user {
+  background-color: #BDC6CB;
+  color: white;
+  }
+
 .button {
   margin: 10px 0 40px 0;
   background-color: #7AB0A3;
@@ -197,4 +200,10 @@
 
 .label {
   padding: 30px 0 3px 0;
+}
+
+p {
+  margin-bottom: 20px; 
+  margin-top: 20px;
+
 }

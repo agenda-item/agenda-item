@@ -14,8 +14,8 @@ get '/organizations/new' do
 end
 
 get '/test' do
-  erb :motion
-  
+  erb :meeting_details
+
 end
 
 #################
