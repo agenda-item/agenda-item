@@ -52,7 +52,7 @@
     </div>
     <div class="message-body">
       <div v-for="vote in allVotes | filterBy 'In Favour' in 'vote_type'">
-        <div class="ai-user"><i class="fa fa-checkbox-marked-circle-outline fa-lg" aria-hidden="true">{{ vote.voting_user.first_name }}</i></div>
+        <div class="ai-user tag"><i class="fa fa-checkbox-marked-circle-outline fa-lg" aria-hidden="true">{{ vote.voting_user.first_name }}</i></div>
       </div>
     </div>
     <div class="message-header">
@@ -152,7 +152,7 @@
     methods: {
       postData: function() {
         console.log(this)
-        this.$http.post('/api/agenda-items/1', this.agendaItem.discussion).then(function(response) {
+        this.$http.post('/api/agenda-items/1', this.agendaItem.discussion, {emulateJSON:true}).then(function(response) {
           console.log("agenda item updated");
         }).error(function(error) {
           console.log(error);
