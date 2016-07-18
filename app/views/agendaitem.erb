@@ -1,0 +1,53 @@
+<div id="app">
+  <div v-for="agendaItem in agendaItems">
+    <agenda-item :agenda-item="agendaItem"></agenda-item>
+  </div>
+</div>
+
+<template id="agenda-item-template" >
+ <form @submit.prevent="postData">
+    <i v-if="agendaItem.type === 'Business'" class="fa fa-briefcase" aria-hidden="true"></i>
+    <i v-if="agendaItem.type === 'Document'" class="fa fa-file-document" aria-hidden="true"></i>
+    <i v-if="agendaItem.type === 'Action Items'" class="fa fa-exclamation-circle-btb" aria-hidden="true"></i>
+    <i v-if="agendaItem.type === 'Meeting Details'" class="fa fa-library-books" aria-hidden="true"></i>
+    <i v-if="agendaItem.type === 'Motion'" class="fa fa-gavel" aria-hidden="true"></i>
+    <i v-if="agendaItem.type === 'Election'" class="fa fa-checkbox-multiple-marked-outline" aria-hidden="true"></i>
+    <textarea id="description" v-model="agendaItem.description"  name="description"></textarea>
+    <textarea id="title" v-model="agendaItem.title" name="title"></textarea>
+
+    <button type="submit">submit</button>
+  </form>
+</template>
+
+
+<script>
+  Vue.component('agendaItem', {
+    template: '#agenda-item-template',
+    props: ['agendaItem'],
+    methods: {
+      postData: function() {
+        console.log(this)
+        this.$http.post('/api/agenda-items/' + this.agendaItem.id, this.agendaItem, {emulateJSON:true}).then(function(response) {
+          console.log("agenda item updated");
+        }).error(function(error) {
+          console.log(error);
+          console.log("erroring");
+        }.bind(this));
+      }
+    }
+  });
+
+  new Vue({
+    el: '#app',
+    data: function(){
+      return {
+        agendaItems: []
+      }
+    },
+    created: function() {
+      this.$http.get('/api/agenda-items').then(function(response){
+        this.agendaItems = response.json();
+      }.bind(this));
+    }
+  });
+</script>

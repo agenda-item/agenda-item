@@ -1,0 +1,69 @@
+<div id="app">
+    <agenda-item :agenda-item="agendaItem" :selected="selected" :options="options"></agenda-item>
+</div>
+
+<template id="agenda-item-template" >
+ <form @submit.prevent="postData">
+    <label>Title:</label>
+    <br>
+    <textarea id="title" v-model="agendaItem.title" name="title"></textarea>
+    <br>
+    <label>Description:</label>
+    <br>
+    <textarea id="description" v-model="agendaItem.description"  name="description"></textarea>
+    <br>
+    <label>Discussion:</label>
+    <br>
+    <textarea id="discussion" v-model="agendaItem.discussion" name="discussion"></textarea>
+    <br>
+    <label>Status:</label>
+    <br>
+    <textarea id="status" v-model="agendaItem.status" name="status"></textarea>
+    <br>
+    <select v-model="agendaItem.status">
+      <option v-for="option in options" v-bind:value="option.value">
+        {{ option.text }}
+      </option>
+    </select>
+    <br>
+    <button type="submit">submit</button>
+  </form>
+</template>
+
+<script>
+  Vue.component('agendaItem', {
+    template: '#agenda-item-template',
+    props: ['agendaItem', 'selected', 'options'],
+    methods: {
+      postData: function() {
+        console.log(this)
+        this.$http.post('/api/agenda-items/' + this.agendaItem.id, this.agendaItem, {emulateJSON:true}).then(function(response) {
+          console.log("agenda item updated");
+        }).error(function(error) {
+          console.log(error);
+          console.log("erroring");
+        }.bind(this));
+      }
+    }
+  });
+  new Vue({
+    el: '#app',
+    data: {
+      agendaItem: {},
+      selected: '--',
+      options: [
+        { text: 'passed', value: 'passed' },
+        { text: 'defeated', value: 'defeated' },
+        { text: 'amended', value: 'amended' },
+        { text: 'active', value: 'active' },
+        { text: 'carried forward', value: 'carried forward' },
+        { text: 'completed', value: 'completed' }
+      ]      
+    },
+    created: function() {
+      this.$http.get('/api/agenda-items/2').then(function(response){
+        this.agendaItem = response.json();
+      }.bind(this));
+    }
+  });
+</script>

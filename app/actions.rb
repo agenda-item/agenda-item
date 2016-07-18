@@ -16,6 +16,44 @@ end
 get '/test' do
   erb :meeting_details
 
+get '/select' do
+  erb :select_status
+end
+
+get '/richtext' do 
+  erb :rich_text_discussion
+end
+
+#################
+# FILE UPLOADER #
+#################
+
+get "/files-upload" do
+  @files = Dir["./public/files/*"]
+  erb :file_upload
+end
+
+post '/agenda-items/3/save_file' do
+  @filename = params[:file][:filename]
+  file = params[:file][:tempfile]
+  if File.exists? "./public/files/#{@filename}" then
+    "File with this name exists already!"
+  else
+    @agenda_item = AgendaItem.find(3)
+    @agenda_item.file_path = @filename
+    if @agenda_item.save
+      puts @agenda_item.file_path
+      puts "inside save"
+    end
+    File.open("./public/files/#{@filename}", 'wb') do |f|
+      f.write(file.read)
+    end
+    "File uploaded"
+  end
+end
+
+get "/public/files/:file" do
+  send_file File.open("./public/files/#{params[:file]}")
 end
 
 #################
@@ -24,11 +62,11 @@ end
 
 # list all organizations
 get '/organizations' do
-  erb :organizations 
+  erb :organizations
 end
 
 # get all organizations
-get '/api/organizations' do 
+get '/api/organizations' do
   content_type :json
   Organization.all.to_json
 end
@@ -66,7 +104,7 @@ end
 
 # list all organizations
 get '/agenda-items' do
-  erb :agenda_items 
+  erb :agenda_items
 end
 
 # list all agenda items
@@ -87,12 +125,15 @@ end
 post '/api/agenda-items/:id' do |id|
   content_type :json
   @agenda_item = AgendaItem.find(id)
+  @agenda_item.title = params[:title]
+  @agenda_item.description = params[:description]
   @agenda_item.discussion = params[:discussion]
+  @agenda_item.status = params[:status]
   if @agenda_item.save
     puts params[:discussion]
     puts "inside save"
     @agenda_item.to_json(include: { :votes => {:include =>:voting_user} })
-  end  
+  end
 end
 
 #########
@@ -101,7 +142,7 @@ end
 
 # list all organizations
 get '/users' do
-  erb :users 
+  erb :users
 end
 
 # get all users
@@ -122,7 +163,7 @@ end
 
 # list all organizations
 get '/votes' do
-  erb :votes 
+  erb :votes
 end
 
 # get all votes
@@ -143,7 +184,7 @@ end
 
 # list all organizations
 get '/meeting-attendees' do
-  erb :meeting_attendees 
+  erb :meeting_attendees
 end
 
 # get all meeting attendees
