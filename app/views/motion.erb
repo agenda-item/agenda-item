@@ -73,8 +73,8 @@
             Log Votes
           </a>
           <p>** if logged</p>
-          <article class="message">
-              <div class="message-header in-favour" >
+          <article class="message in-favor">
+              <div class="message-header" >
                 <span class="icon">  
                   <i class="fa fa-checkbox-marked-circle-outline"></i>
                 </span>
@@ -136,7 +136,7 @@
               </div>  
 
             </article>
-            <article class="message">
+            <article class="message ">
               <div class="message-header opposed">
                <span class="icon">  
                  <i class="fa fa-close-circle-outline"></i>
@@ -175,6 +175,55 @@
               </div>  
 
             </article>
+
+            <article class="message">
+              <div class="message-header in-favor">
+                <span class="icon">  
+                  <i class="fa fa-checkbox-blank-circle-outline"></i>
+                </span>
+                In-favour
+              </div>
+              <div class="message-body">
+                <span class="ai-user is-medium in-favor">
+                  <span class="icon">
+                      <i class="fa fa-person"></i>
+                    </span>
+                  {{ user.first_name }}
+                </span>
+                <span class="ai-user is-medium in-favor">
+                  <span class="icon">
+                      <i class="fa fa-person"></i>
+                    </span>
+                  {{ user.first_name }}
+                </span>     
+              </div>
+
+            </article>
+
+            <article class="message">
+              <div class="message-header opposed">
+                <span class="icon">  
+                  <i class="fa fa-checkbox-blank-circle-outline"></i>
+                </span>
+                Opposed
+              </div>
+              <div class="message-body">
+                <span class="ai-user is-medium opposed">
+                  <span class="icon">
+                      <i class="fa fa-person"></i>
+                    </span>
+                  {{ user.first_name }}
+                </span>
+                <span class="ai-user is-medium opposed">
+                  <span class="icon">
+                      <i class="fa fa-person"></i>
+                    </span>
+                  {{ user.first_name }}
+                </span>     
+              </div>
+
+            </article>
+
             <article class="message">
               <div class="message-header abstain">
                 <span class="icon">  
