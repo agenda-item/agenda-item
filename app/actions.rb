@@ -1,4 +1,4 @@
-#to delete at the end- starts here
+#to delete routes at the end- starts here
 
 get '/motion' do
  erb :motion
@@ -23,12 +23,7 @@ end
 get '/richtext' do 
  erb :rich_text_discussion
 end
-
- 
-#to delete at the end- ends here  
-
-
-
+#to delete routes at the end- ends here  
 
 
 # Landing Page
