@@ -19,8 +19,9 @@ end
 
 
 get '/cort' do
-  # @meeting = Meeting.all
+  @meeting = Meeting.all
   erb :test
+end
 
 get '/richtext' do
   erb :rich_text_discussion
