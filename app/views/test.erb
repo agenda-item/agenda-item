@@ -1,17 +1,37 @@
-<h1> Now to do this correctly! </h1>
-<br>
-<br>
-<hr>
-<br>
-<h2> + Add a new meeting </h3>
-<br>
-<br>
-<hr>
-<h3> List all meetings </h4>
-<br>
-<br>
-<br>
-<h5> Meeting 1: AGM of Mammoths </h5>
-<br>
-<br>
-<p> See, page is done. Let's deploy!</p>
+<div id="meeting-list">
+  <meetings-header></meetings-header>
+</div>
+
+<template id="meetings-header-template">
+  <h1 class="title is-1">List of Meetings</h1>
+  <div class="container box" v-for="meetingDetail in meetingDetails">
+    <button>Meeting 1</button>
+    <strong>Meeting Date:</strong>
+    {{ meetingDetail.meeting_date | moment "dddd, MMMM Do YYYY, h:mm a"}}
+    <a href="#">{{meetingDetail.title}}</a>
+    <button> Delete </button>
+    <button>{{ meetingDetail.status }}</button>
+    <hr>
+  </div>
+</template>
+
+<script>
+
+  Vue.component('meetings-header', {
+    template: '#meetings-header-template',
+    data: function() {
+      return {
+        meetingDetails: []
+      }
+    },
+    created: function() {
+      this.$http.get('/api/meetings').then(function(response){
+        this.meetingDetails = response.json();
+      }.bind(this));
+    }
+  });
+
+  new Vue({
+      el: '#meeting-list'
+    });
+</script>

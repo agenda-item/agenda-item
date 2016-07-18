@@ -19,7 +19,8 @@ end
 
 
 get '/cort' do
-  @meeting = Meeting.all
+  # content_type :json
+  # Meeting.all.to_json
   erb :test
 end
 
