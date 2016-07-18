@@ -169,6 +169,19 @@ post '/api/agenda-items/:id' do |id|
   end
 end
 
+# delete item by id
+
+get '/api/agenda-items/:id/delete' do
+  content_type :json
+  @agenda_item = AgendaItem.find(params[:id])
+  @agenda_item.destroy
+  
+  # results = {result: false}
+  if @agenda_item.destroy
+    puts "agenda item was destroyed"
+    # results[:result] = true
+  end
+end
 #########
 # USERS #
 #########
