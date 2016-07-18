@@ -23,6 +23,7 @@ get '/select' do
   erb :select_status
 end
 
+<<<<<<< HEAD
 get '/motion' do
   erb :motion
 end
@@ -41,6 +42,10 @@ end
 
 get '/meeting-details' do
   erb :meeting_details
+=======
+get '/richtext' do 
+  erb :rich_text_discussion
+>>>>>>> ff62b6fe8b6da9d49de60e8f70d180e6d846b652
 end
 
 #################
