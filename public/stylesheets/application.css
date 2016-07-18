@@ -197,7 +197,7 @@
 }
 
 .message-header {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
   background-color: #26495C;
 }
@@ -226,4 +226,25 @@ p {
 #ai-new-agenda-item > div > li > span:first-child {
  padding-right: 15px;
  color: blue;
+}
+
+article.message:first-of-type > .message-header:before {
+  font-size: 25px;
+  font-weight: bold;
+  content: "\f022";
+  font-family: AgendaItemFinalEmbed;
+}
+
+article.message:nth-of-type(2) > .message-header:before {
+  font-size: 25px;
+  font-weight: bold;
+  content: "\f02a";
+  font-family: AgendaItemFinalEmbed;
+}
+
+article.message:last-of-type > .message-header:before {
+  font-size: 25px;
+  font-weight: bold;
+  content: "\f021";
+  font-family: AgendaItemFinalEmbed;
 }

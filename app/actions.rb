@@ -1,3 +1,36 @@
+#to delete at the end- starts here
+
+get '/motion' do
+ erb :motion
+end
+
+get '/election' do
+ erb :election
+end
+
+get '/business' do
+ erb :business
+end
+
+get '/document' do
+ erb :document
+end
+
+get '/meeting-details' do
+ erb :meeting_details
+end
+
+get '/richtext' do 
+ erb :rich_text_discussion
+end
+
+ 
+#to delete at the end- ends here  
+
+
+
+
+
 # Landing Page
 get '/' do
   erb :index
