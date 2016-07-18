@@ -13,8 +13,35 @@ get '/organizations/new' do
 	erb :signup
 end
 
+
+get '/edit-meeting' do
+  erb :edit_meeting
+end
+
+
 get '/select' do
   erb :select_status
+end
+
+
+get '/motion' do
+  erb :motion
+end
+
+get '/election' do
+  erb :election
+end
+
+get '/business' do
+  erb :business
+end
+
+get '/document' do
+  erb :document
+end
+
+get '/meeting-details' do
+  erb :meeting_details
 end
 
 get '/richtext' do 
@@ -30,13 +57,13 @@ get "/files-upload" do
   erb :file_upload
 end
 
-post '/agenda-items/3/save_file' do
+post '/agenda-items/:id/save_file' do
   @filename = params[:file][:filename]
   file = params[:file][:tempfile]
   if File.exists? "./public/files/#{@filename}" then
     "File with this name exists already!"
   else
-    @agenda_item = AgendaItem.find(3)
+    @agenda_item = AgendaItem.find(params[:id])
     @agenda_item.file_path = @filename
     if @agenda_item.save
       puts @agenda_item.file_path
@@ -116,7 +143,21 @@ get '/api/agenda-items/:id' do |id|
   AgendaItem.find(id).to_json(include: { :votes => {:include =>:voting_user} })
 end
 
-# create new agenda item by id
+# create new agenda item
+post '/api/agenda-items/new' do
+  content_type :json
+  type = params[:type]
+
+  @agenda_item = AgendaItem.new(
+    type: params[:type],
+    creator_id: 1,  #params[current_user.id]
+    meeting_id: 1  #params[current_meeting.id]
+    )
+  if @agenda_item.save
+    puts "the type is #{type}"
+    @agenda_item.to_json
+  end
+end
 
 # update/edit item by id
 post '/api/agenda-items/:id' do |id|
@@ -133,6 +174,19 @@ post '/api/agenda-items/:id' do |id|
   end
 end
 
+# delete item by id
+
+get '/api/agenda-items/:id/delete' do
+  content_type :json
+  @agenda_item = AgendaItem.find(params[:id])
+  @agenda_item.destroy
+  
+  # results = {result: false}
+  if @agenda_item.destroy
+    puts "agenda item was destroyed"
+    # results[:result] = true
+  end
+end
 #########
 # USERS #
 #########
