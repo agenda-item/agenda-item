@@ -1,6 +1,6 @@
 <div id="agenda-item-template" :agenda-item="agendaItem" :selected="selected" :options="options">
 
-  <form @submit.prevent="postData">
+  <form @submit.prevent="postAgendaItem">
     <div>
     <label>Title:</label><br>
     <textarea id="title" v-model="agendaItem.title" name="title"></textarea>
@@ -25,21 +25,21 @@
 
     <div>
     <label>Mover:</label>
-    <textarea id="mover_id" v-model="agendaItem.mover.id" name="mover_id" style="display: none"></textarea>
-    {{agendaItem.mover.first_name}}
+    <textarea id="mover_id" v-model="agendaItemMover.mover.id" name="mover_id" style="display: none"></textarea>
+    {{agendaItemMover.mover.first_name}}
   <div><button id="show-mover" @click="showMover = true" class="button is-primary modal-button">Change Mover</button></div> 
     </div>
 
-  <mover :show-mover.sync="showMover" :agenda-item.sync="agendaItem"></mover>
+  <mover :show-mover.sync="showMover" :agenda-item.sync="agendaItemMover"></mover>
     
     <div>
     <label>Seconder:</label>
-    <textarea id="seconder_id" v-model="agendaItem.seconder.id" name="seconder_id" style="display: none"></textarea>
-    {{agendaItem.seconder.first_name}}
+    <textarea id="seconder_id" v-model="agendaItemSeconder.seconder.id" name="seconder_id" style="display: none"></textarea>
+    {{agendaItemSeconder.seconder.first_name}}
   <div><button id="show-seconder" @click="showSeconder = true" class="button is-primary modal-button">Change Seconder</button></div> 
     </div> 
 
-  <seconder :show-seconder.sync="showSeconder" :agenda-item.sync="agendaItem"></seconder>
+  <seconder :show-seconder.sync="showSeconder" :agenda-item.sync="agendaItemSeconder"></seconder>
 
     <button type="submit">submit</button>
   </form>
@@ -60,12 +60,12 @@
         
         <div class="modal-body">
           <slot name="body">
-            <div v-for="user in userList">
-              <input type="radio" id="{{user.id}}" name="mover_id"
-                     v-bind:value="user"
-                     v-model="agendaItem.mover"
-                     v-on:change="updateMover">
-              <label for="{{user.id}}">{{user.first_name}}</label>
+            <div v-for="mover in moverList">
+              <input type="radio" id="{{mover.id}}" name="mover_id"
+                     v-bind:value="mover"
+                     v-model="agendaItemMover.mover"
+                     v-on:change="postMover">
+              <label for="{{mover.id}}">{{mover.first_name}}</label>
             </div>
           </slot>
         </div>
@@ -74,7 +74,7 @@
           <slot name="footer">
             Are you sure?
             <button class="button is-primary modal-button"
-              @click="show = false">
+              @click="showMover = false">
               Yes
             </button>
           </slot>
@@ -98,12 +98,12 @@
         
         <div class="modal-body">
           <slot name="body">
-            <div v-for="user in userList">
-              <input type="radio" id="{{user.id}}" name="seconder_id"
-                     v-bind:value="user"
-                     v-model="agendaItem.seconder"
-                     v-on:change="updateSeconder">
-              <label for="{{user.id}}">{{user.first_name}}</label>
+            <div v-for="seconder in seconderList">
+              <input type="radio" id="{{seconder.id}}" name="seconder_id"
+                     v-bind:value="seconder"
+                     v-model="agendaItemSeconder.seconder"
+                     v-on:change="postSeconder">
+              <label for="{{seconder.id}}">{{seconder.first_name}}</label>
             </div>
           </slot>
         </div>
@@ -112,7 +112,7 @@
           <slot name="footer">
             Are you sure?
             <button class="button is-primary modal-button"
-              @click="show = false">
+              @click="showSeconder = false">
               Yes
             </button>
           </slot>
@@ -129,8 +129,8 @@
     template: '#mover-template',
     data: function() {
       return {
-        userList: [],
-        isPrimary: false
+        moverList: [],
+        agendaItemMover: {}
       }
     },
     props: {
@@ -143,13 +143,16 @@
     },
     created: function() {
       this.$http.get('/api/users').then(function(response){
-        this.userList = response.json();
-        console.log(this.userList)
+        this.moverList = response.json();
+        console.log(this.moverList)
       }.bind(this));
     },
     methods: {
-      updateMover: function() {
-        this.$parent.postData()      
+      postMover: function() {
+        console.log(this)
+        this.$http.post('/api/mover/' + this.agendaItemMover.id, {mover_id: this.agendaItemMover.mover.id}, {emulateJSON:true}).then(function(response) {
+          console.log("mover saved");
+        }.bind(this));
       }
     }
   })
@@ -159,8 +162,8 @@
     template: '#seconder-template',
     data: function() {
       return {
-        userList: [],
-        isPrimary: false
+        seconderList: [],
+        agendaItemSeconder: {}
       }
     },
     props: {
@@ -173,14 +176,16 @@
     },
     created: function() {
       this.$http.get('/api/users').then(function(response){
-        this.userList = response.json();
-        console.log(this.userList)
+        this.seconderList = response.json();
+        console.log(this.seconderList)
       }.bind(this));
     },
     methods: {
-      updateSeconder: function() {
-        this.$parent.postData()      
-      }
+      postSeconder: function() {
+        this.$http.post('/api/seconder/' + this.agendaItemSeconder.id, {seconder_id: this.agendaItemSeconder.seconder.id}, {emulateJSON:true}).then(function(response) {
+          console.log("seconder saved");
+        }.bind(this)); 
+      }  
     }
   })  
 
@@ -189,6 +194,8 @@
     el: '#agenda-item-template',
     data: {
       agendaItem: {},
+      agendaItemMover: {},
+      agendaItemSeconder: {},
       selected: '--',
       options: [
         { text: 'passed', value: 'passed' },
@@ -202,25 +209,24 @@
       showSeconder: false
      },
     created: function() {
-      this.$http.get('/api/mover/5').then(function(response){
+      this.$http.get('/api/agenda-items/5').then(function(response){
         this.agendaItem = response.json();
       }.bind(this));
 
+      this.$http.get('/api/mover/5').then(function(response){
+        this.agendaItemMover = response.json();
+      }.bind(this));
+
       this.$http.get('/api/seconder/5').then(function(response){
-        this.agendaItem = response.json();
+        this.agendaItemSeconder = response.json();
       }.bind(this));      
     },
     methods: {
-      postData: function() {
-        console.log(this)
-        this.$http.post('/api/mover/' + this.agendaItem.id, {mover_id: this.agendaItem.mover.id}, {emulateJSON:true}).then(function(response) {
-          console.log("mover saved");
-        }.bind(this));
-
-        this.$http.post('/api/seconder/' + this.agendaItem.id, {seconder_id: this.agendaItem.seconder.id}, {emulateJSON:true}).then(function(response) {
-          console.log("seconder saved");
-        }.bind(this));        
-      }
+      postAgendaItem: function() {
+        this.$http.post('/api/agenda-items/' + this.agendaItem.id, this.agendaItem, {emulateJSON:true}).then(function(response) {
+          console.log("agenda item saved");
+        }) 
+      }     
     }    
   });
 </script>
