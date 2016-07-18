@@ -5,11 +5,14 @@
 <template id="meetings-header-template">
   <h1 class="title is-1">List of Meetings</h1>
   <div class="container box" v-for="meetingDetail in meetingDetails">
-    <button>Meeting 1</button>
-    <strong>Meeting Date:</strong>
+    <div class="list_titles">
+      <span>Date</span>             <!-- not sure if these are needed but nice to label our colums -->
+      <span>Meeting Title</span>
+    </div>
+    <button><a href="#">info</a></button>
     {{ meetingDetail.meeting_date | moment "dddd, MMMM Do YYYY, h:mm a"}}
     <a href="#">{{meetingDetail.title}}</a>
-    <button> Delete </button>
+    <a href="#"> <i class="fa fa-trash"></i></a>
     <button>{{ meetingDetail.status }}</button>
     <hr>
   </div>
