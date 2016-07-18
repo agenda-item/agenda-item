@@ -1,7 +1,34 @@
+#to delete routes at the end- starts here
+
+get '/motion' do
+ erb :motion
+end
+
+get '/election' do
+ erb :election
+end
+
+get '/business' do
+ erb :business
+end
+
+get '/document' do
+ erb :document
+end
+
+get '/meeting-details' do
+ erb :meeting_details
+end
+
+get '/richtext' do 
+ erb :rich_text_discussion
+end
+#to delete routes at the end- ends here  
+
+
 # Landing Page
 get '/' do
   erb :index
-  # redirect '/organizations/new'
 end
 
 # Style Guide
@@ -9,8 +36,14 @@ get '/styleguide' do
   erb :styleguide
 end
 
+#Sign Up page
 get '/organizations/new' do
 	erb :signup
+end
+
+#Board Members Sign Up page
+get '/users/new' do
+  erb :board_members
 end
 
 get '/select' do
