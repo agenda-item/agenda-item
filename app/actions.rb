@@ -31,7 +31,8 @@ end
 
 get '/api/agenda-items/:id/mover' do |id|
   content_type :json
-  AgendaItem.find(id).to_json(include: :mover)
+  @agenda_item = AgendaItem.find(id)
+  User.find(@agenda_item.mover.id).to_json
 end
 
 get '/api/agenda-items/:id/seconder' do |id|
@@ -39,17 +40,19 @@ get '/api/agenda-items/:id/seconder' do |id|
   AgendaItem.find(id).to_json(include: :seconder)
 end
 
-post '/api/mover/:id' do |id|
+post '/api/agenda-items/:id/mover' do |id|
   content_type :json
   @agenda_item = AgendaItem.find(id)
   @agenda_item.mover = User.find(params[:mover_id])
   if @agenda_item.save
+    puts @agenda_item.mover
     puts params[:mover_id]
     puts "saved new mover"
+    @agenda_item.mover.to_json
   end 
 end
 
-post '/api/seconder/:id' do |id|
+post '/api/agenda-items/:id/seconder' do |id|
   content_type :json
   @agenda_item = AgendaItem.find(id)
   @agenda_item.seconder = User.find(params[:seconder_id])
