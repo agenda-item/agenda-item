@@ -1,3 +1,13 @@
+.nav {
+  background-color: #F0CC7F;
+  /*margin-bottom: 20px;*/
+  padding: 10px 0 10px 0;
+  box-shadow: 0 5px 3px rgba(17,17,17,.1),0 0 0 1px rgba(17,17,17,.1);
+}
+
+.nav-item a, a.nav-item {
+    color: black;
+}
 
 .style-element section {
   border: 1px dotted grey;
