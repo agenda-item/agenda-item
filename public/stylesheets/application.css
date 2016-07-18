@@ -129,14 +129,15 @@
   color: white;
 }
 
- /*.ai-user.is-medium.opposed*/
- 
- .ai-user.is-medium.opposed  {
- /*.opposed.message-body.ai-user {*/
+.in-favour > .message-body > .ai-user {
+  background-color: #CEE7EF;
+}
+
+.opposed > .message-body > .ai-user {
   background-color: #F0CC7F;
 }
 
-.ai-user.is-medium.abstain {
+.abstain > .message-body > .ai-user {
   background-color: #E4A97B;
 }
 
