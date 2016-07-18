@@ -13,8 +13,12 @@ get '/organizations/new' do
 	erb :signup
 end
 
-get '/select' do
-  erb :select_status
+# get '/select' do
+#   erb :select_status
+# end
+
+get '/jason' do
+  erb :agendaitem
 end
 
 #################
