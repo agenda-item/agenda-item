@@ -75,7 +75,7 @@
         <ul id="ai-new-agenda-item">
           <div v-for="newItem in newItems">
             <!-- populates choices with list of agenda item types ('newItem') from root instance data -->
-            <new-item :new-item="newItem" :agenda-items="agendaItems" :current-item-index.sync="currentItemIndex"></new-item>
+            <new-item :new-item.sync="newItem" :agenda-items.sync="agendaItems" :current-item-index.sync="currentItemIndex"></new-item>
           </div>
         </ul>
       </div>
@@ -174,7 +174,8 @@
   <div class="box">
     <h2 class="subtitle is-3">
       <icon :agenda-item="agendaItem"></icon> 
-      {{agendaItem.type}}
+      <span v-if="agendaItem.type">{{agendaItem.type}}</span>
+      <span v-else>Current index is {{currentItemIndex}}</span>
     </h2>
     <div class="ai-title">
       <div class="control">
@@ -254,6 +255,7 @@
     </div><!-- end document -->
 
     <div v-if="agendaItem.type === 'Election'"><!-- TODO election -->
+
     </div><!-- end election -->
 
     <div v-if="agendaItem.type === 'Motion'"><div><!-- motion TODO fix votes loop with code from /meetings TODO fix unaligned divs -->
@@ -417,8 +419,9 @@
         console.log("clicked to add new item")
         this.$http.post('/api/agenda-items/new', {'type': this.newItem.type}, {emulateJSON:true}).then(function(response) {
           newAgendaItem = response.json()
+          newAgendaItem.position = this.agendaItems.length
           this.agendaItems.push(newAgendaItem)
-          this.currentItemIndex = (this.agendaItems.length -1)
+          this.$dispatch('set-current-item-index', newAgendaItem)
         }).error(function(error) {
           console.log(error);
         }.bind(this));
@@ -431,16 +434,16 @@
     props: ['agendaItem','currentItemIndex'],
     methods: {
       setCurrentAgendaItem: function() {
-        this.currentItemIndex = this.agendaItem.id - 1
+        this.$dispatch('set-current-item-index', this.agendaItem)
       },
       deleteAgendaItem: function() {
         var itemId = this.agendaItem.id
         this.$http.get('/api/agenda-items/' + itemId + '/delete', {'id': itemId}, {emulateJSON:true}).then(function(response) {
           this.$dispatch('agenda-item-deleted', this.agendaItem)
-          console.log("agenda item deleted")
-          if (this.currentItemIndex === itemId) {
-            this.currentItemIndex = itemId - 1
-          }
+          // TODO figure out h
+          // if (this.currentItemIndex === agendaItem.position - 1) {
+          //   this.$dispatch('set-current-item-index', this.agendaItem)
+          // }
         }).error(function(error) {
           console.log(error);
         }.bind(this));
@@ -490,9 +493,15 @@
     },
     events: {
     'agenda-item-deleted': function (agendaItem) {
-      // `this` in event callbacks are automatically bound
-      // to the instance that registered it
+      var deletedItemIndex = this.agendaItems.indexOf(agendaItem)
+      if (this.currentItemIndex === deletedItemIndex) {
+        this.currentItemIndex = (deletedItemIndex - 1)
+      }
       this.agendaItems.pop(agendaItem)
+    },
+    'set-current-item-index': function(agendaItem) {
+      var index = this.agendaItems.indexOf(agendaItem)
+      this.currentItemIndex = index
     }
   }
   });
