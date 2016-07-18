@@ -17,6 +17,10 @@ get '/select' do
   erb :select_status
 end
 
+get '/richtext' do 
+  erb :rich_text_discussion
+end
+
 #################
 # FILE UPLOADER #
 #################
