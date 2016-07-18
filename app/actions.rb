@@ -17,9 +17,14 @@ get '/select' do
   erb :select_status
 end
 
+
 get '/cort' do
   # @meeting = Meeting.all
   erb :test
+
+get '/richtext' do
+  erb :rich_text_discussion
+
 end
 
 #################

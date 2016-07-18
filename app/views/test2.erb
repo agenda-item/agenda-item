@@ -1,12 +1,12 @@
 <div id="app">
-  <!-- <meetings-header></meetings-header> -->
+  <meetings-header></meetings-header>
   <!-- <agenda-items>
   </agenda-items>
   <meetings-footer></meetings-footer> -->
 </div>
 
 <template id="meetings-header-template">
-  <!-- <div class="container box" v-for="meetingDetail in meetingDetails"> -->
+  <div class="container box" v-for="meetingDetail in meetingDetails">
     <h1 class="title is-1"><input type="text" name="meeting_title" placeholder="Meeting Title" v-model= "meeting.title"></h1>
     <p><strong>Minutes Status:</strong><input type="text" name="meeting_status" placeholder="Meeting Status" v-model= "meeting.status"></p>
     <hr>
@@ -25,7 +25,7 @@
 </template>
 
 <div class="new-meeting">
-  <a href="#" class="new-meeting-item" v-for="meeting in meetings">
+  <!-- <a href="#" class="new-meeting-item" v-for="meeting in meetings"> -->
     <p> {{meeting.title}} </p>
     <p> {{meeting.status}} </p>
     <p> {{meeting.date}} </p>
