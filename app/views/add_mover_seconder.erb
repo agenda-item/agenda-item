@@ -1,0 +1,94 @@
+<div id="app">
+  <users></users>
+</div>
+
+<template id="users-template">
+  <div v-for="user in users">
+    <mover :user="user"></mover>
+  </div>
+  <div>---</div>
+  <seconder :users="users"></seconder>
+</template>
+
+<template id="mover-template">
+  The current mover is {{mover.first_name}}
+  <ul>
+    <li><span @click="updateMover">{{user.first_name}}</span></li>
+  </ul>
+</template>
+
+<template id="seconder-template">
+  <ul>
+  <div v-for="user in users">
+    <li @click="updateSeconder">{{user.first_name}}</li>
+  </div>
+  </ul>
+</template>
+
+<script>
+Vue.component('mover', {
+  template: '#mover-template',
+  props: ['user'],
+  data: function() {
+    return {
+      mover: {},
+      classes: {
+        'is-active': false
+      }
+    }
+  },
+  methods: {
+    updateMover: function() {
+        this.$http.post('/api/agenda-items/5/mover', {mover_id: this.user.id}, {emulateJSON:true}).then(function(response) {
+          console.log(response.json())
+          this.mover = response.json()
+          console.log(this.mover.first_name)
+          console.log("mover saved");
+        }.bind(this));
+
+    }
+  },
+  created: function() {
+    this.$http.get('/api/agenda-items/5/mover').then(function(response){
+      this.mover = response.json()
+      console.log(this.mover.first_name)
+    }.bind(this));
+  }
+})
+
+Vue.component('seconder', {
+  template: '#seconder-template',
+  props: ['users'],
+  data: function() {
+    return {
+      seconder: {}
+    }
+  }
+  // ,
+  // created: function() {
+  //   this.$http.get('/api/users').then(function(response){
+  //     this.users = response.json();
+  //     console.log(this.users)
+  //   }.bind(this));
+  // }
+})
+
+Vue.component('users', {
+  template: '#users-template',
+  data: function() {
+    return {
+      users: []
+    }
+  },
+  created: function() {
+    this.$http.get('/api/users').then(function(response){
+      this.users = response.json();
+      console.log(this.users)
+    }.bind(this));
+  }
+})
+
+new Vue({
+  el: '#app'
+})
+</script>
