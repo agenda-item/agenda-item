@@ -19,6 +19,7 @@
 body {
   background: #7CAFA6;
 }
+
 .style-element section {
   border: 1px dotted grey;
   padding: 20px;
@@ -187,10 +188,10 @@ body {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  background-color: white;
+  /*background-color: white;*/
   border: 1px solid #d3d6db;
   border-radius: 3px;
-  color: #222324;
+  /*color: #222324;*/
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -214,6 +215,7 @@ body {
   padding-right: 10px;
   text-align: center;
   white-space: nowrap;
+  margin-top: -20px;
 }
 
 .message-header {
