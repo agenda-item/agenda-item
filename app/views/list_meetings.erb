@@ -14,7 +14,7 @@
       <span>Date</span>             <!-- not sure if these are needed but nice to label our colums -->
       <span>Meeting Title</span>
     </div>
-    <button><a href="#">info</a></button>
+    <button><a href="api/meetings/{{meeting.id}}/edit">info</a></button>
     {{ meeting.meeting_date | moment "dddd, MMMM Do YYYY, h:mm a"}}
     <a href="#">{{meeting.title}}</a>
     <i class="fa fa-trash pull-right" aria-hidden="true" @click="deleteMeeting"></i>
