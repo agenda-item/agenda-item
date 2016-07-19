@@ -27,6 +27,10 @@ body {
   background: #ccc;
 }
 
+#board-bg-img {
+  background-color: #462035;
+}
+
 .ai-user {
   -webkit-box-align: center;
   -webkit-align-items: center;
