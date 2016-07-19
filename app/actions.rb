@@ -1,34 +1,7 @@
-#to delete routes at the end- starts here
-
-get '/motion' do
- erb :motion
-end
-
-get '/election' do
- erb :election
-end
-
-get '/business' do
- erb :business
-end
-
-get '/document' do
- erb :document
-end
-
-get '/meeting-details' do
- erb :meeting_details
-end
-
-get '/richtext' do 
- erb :rich_text_discussion
-end
-#to delete routes at the end- ends here  
-
-
 # Landing Page
 get '/' do
   erb :index
+  # redirect '/organizations/new'
 end
 
 # Style Guide
@@ -36,7 +9,6 @@ get '/styleguide' do
   erb :styleguide
 end
 
-#Sign Up page
 get '/organizations/new' do
 	erb :signup
 end
@@ -62,27 +34,6 @@ get '/select' do
   erb :select_status
 end
 
-
-get '/motion' do
-  erb :motion
-end
-
-get '/election' do
-  erb :election
-end
-
-get '/business' do
-  erb :business
-end
-
-get '/document' do
-  erb :document
-end
-
-get '/meeting-details' do
-  erb :meeting_details
-end
-
 get '/richtext' do 
   erb :rich_text_discussion
 end
@@ -96,13 +47,13 @@ get "/files-upload" do
   erb :file_upload
 end
 
-post '/agenda-items/:id/save_file' do
+post '/agenda-items/3/save_file' do
   @filename = params[:file][:filename]
   file = params[:file][:tempfile]
   if File.exists? "./public/files/#{@filename}" then
     "File with this name exists already!"
   else
-    @agenda_item = AgendaItem.find(params[:id])
+    @agenda_item = AgendaItem.find(3)
     @agenda_item.file_path = @filename
     if @agenda_item.save
       puts @agenda_item.file_path
@@ -182,21 +133,7 @@ get '/api/agenda-items/:id' do |id|
   AgendaItem.find(id).to_json(include: { :votes => {:include =>:voting_user} })
 end
 
-# create new agenda item
-post '/api/agenda-items/new' do
-  content_type :json
-  type = params[:type]
-
-  @agenda_item = AgendaItem.new(
-    type: params[:type],
-    creator_id: 1,  #params[current_user.id]
-    meeting_id: 1  #params[current_meeting.id]
-    )
-  if @agenda_item.save
-    puts "the type is #{type}"
-    @agenda_item.to_json
-  end
-end
+# create new agenda item by id
 
 # update/edit item by id
 post '/api/agenda-items/:id' do |id|
@@ -213,19 +150,6 @@ post '/api/agenda-items/:id' do |id|
   end
 end
 
-# delete item by id
-
-get '/api/agenda-items/:id/delete' do
-  content_type :json
-  @agenda_item = AgendaItem.find(params[:id])
-  @agenda_item.destroy
-  
-  # results = {result: false}
-  if @agenda_item.destroy
-    puts "agenda item was destroyed"
-    # results[:result] = true
-  end
-end
 #########
 # USERS #
 #########
