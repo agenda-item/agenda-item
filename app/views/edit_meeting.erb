@@ -485,8 +485,18 @@
 <template id="meeting-closing-template">
   <div class="box container">
     <h2 class="subtitle is-3"><i class="fa fa-library-books" aria-hidden="true"></i> Meeting Closing</h2>
-    <strong>Meeting Adjournment Time:</strong> {{ meeting.adjournment_time | moment "dddd, MMMM Do YYYY, h:mm a" }}<br/>
-    <strong>Next Meeting:</strong> {{ meeting | moment "dddd, MMMM Do YYYY, h:mm a" }}<br/>
+    <div class="ai-date-time">
+      <div class="control">
+        <label class="label">Meeting Adjournment Time</label>
+        <input class="input" type="datetime-local" placeholder="" v-model="currentMeeting.adjournment_time | moment 'YYYY-MM-DDTHH:mm'" name="adjournment_time">
+      </div>
+    </div>
+    <div class="ai-date-time">
+      <div class="control">
+        <label class="label">Next Meeting Date</label>
+        <input class="input" type="datetime-local" placeholder="" v-model="currentMeeting.next_meeting | moment 'YYYY-MM-DDTHH:mm'" name="next_meeting">
+      </div>
+    </div>
   </div>
 </template>
 
