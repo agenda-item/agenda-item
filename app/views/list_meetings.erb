@@ -1,10 +1,15 @@
 <div id="meeting-list">
-  <meetings-header></meetings-header>
+  <meetings></meetings>
 </div>
 
-<template id="meetings-header-template">
+<template id="meetings-template">
   <h1 class="title is-1">List of Meetings</h1>
   <div class="container box" v-for="meeting in meetings">
+    <meeting :meeting.sync="meeting"></meeting>
+  </div>
+</template>
+
+<template id="meeting-template">
     <div class="list_titles">
       <span>Date</span>             <!-- not sure if these are needed but nice to label our colums -->
       <span>Meeting Title</span>
@@ -13,58 +18,48 @@
     {{ meeting.meeting_date | moment "dddd, MMMM Do YYYY, h:mm a"}}
     <a href="#">{{meeting.title}}</a>
     <i class="fa fa-trash pull-right" aria-hidden="true" @click="deleteMeeting"></i>
-    <!-- <a href="#"> <i class="fa fa-trash"></i></a> -->
     <button>{{ meeting.status }}</button>
     <hr>
-  </div>
 </template>
 
 <script>
 
-  Vue.component('meetings-header', {
-    template: '#meetings-header-template',
+  Vue.component('meetings', {
+    template: '#meetings-template',
     data: function() {
       return {
         meetings: [],
-        currentMeetingIndex: 0
+        // currentMeetingIndex: 0
       }
     },
     created: function() {
       this.$http.get('/api/meetings').then(function(response){
         this.meetings = response.json();
       }.bind(this));
-    },
-    events: {
-      'meeting-deleted': function(meetingItem) {
-        var deletedMeetingIndex = this.meetings.indexOf(meeting)
-        if (this.currentMeetingIndex === deletedMeetingIndex) {
-          this.currentMeetingIndex = (deletedMeetingIndex -1)
-        }
-        this.meetings.pop(meeting)
-      },
-      'set-current-meeting-index': function(meeting){
-        var index = this.meetings.indexOf(meeting)
-        this.currentMeetingIndex = index
-      }
     }
+    // events: {
+    //   'meeting-deleted': function(meeting) {
+    //     var deletedMeetingIndex = this.meetings.indexOf(meeting)
+    //     if (this.currentMeetingIndex === deletedMeetingIndex) {
+    //       this.currentMeetingIndex = (deletedMeetingIndex -1)
+    //     }
+    //     this.meetings.pop(meeting)
+    //   }
+    // }
   });
 
-  Vue.component('meeting-selection',{
-    template: "#meeting-selection-template",
-    props: ['meeting', 'currentMeetingIndex'],
+  Vue.component('meeting',{
+    template: "#meeting-template",
+    props: ['meeting'],
     methods: {
-      setCurrentMeeting: function(){
-        this.$dispatch('set-current-meeting-index', this.meeting)
-      },
       deleteMeeting: function(){
         var meetingId = this.meeting.id
+        console.log(meetingId)
         this.$http.get('/api/meetings/' + meetingId + '/delete', {'id': meetingId}, {emulateJSON:true}).then(function(response){
-          this.$dispatch('meeting-deleted', this.meetingId)
-        }).error(function(error){
-          console.log(error);
+          // this.$dispatch('meeting-deleted', this.meetingId)
         }.bind(this));
       }
-    }
+    },
   });
 
 
