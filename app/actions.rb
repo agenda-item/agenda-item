@@ -17,18 +17,13 @@ get '/select' do
   erb :select_status
 end
 
-
-get '/cort' do
-  # content_type :json
-  # Meeting.all.to_json
-  erb :list_meetings
-end
-
 get '/richtext' do
   erb :rich_text_discussion
-
 end
 
+get '/cort' do
+  erb :list_meetings
+end
 #################
 # FILE UPLOADER #
 #################
@@ -88,7 +83,7 @@ end
 
 # list all meetings
 get '/meetings' do
-  erb :list_meetings
+  erb :meetings
 end
 
 # get all meetings
@@ -102,13 +97,8 @@ get '/api/meetings/:id' do |id|
   content_type :json
   Meeting.find(id).to_json
 end
+# meeting delete
 
-# delete meeting by id
-delete "/api/meetings/:id/delete" do
-  @delMeeting = params[:meeting_id]
-  Meeting.find(id).destroy
-  redirect "/meetings"
-end
 
 ################
 # AGENDA ITEMS #

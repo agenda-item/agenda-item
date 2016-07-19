@@ -4,18 +4,17 @@
 
 <template id="meetings-header-template">
   <h1 class="title is-1">List of Meetings</h1>
-  <div class="container box" v-for="meetingDetail in meetingDetails">
+  <div class="container box" v-for="meeting in meetings">
     <div class="list_titles">
       <span>Date</span>             <!-- not sure if these are needed but nice to label our colums -->
       <span>Meeting Title</span>
     </div>
     <button><a href="#">info</a></button>
-    {{ meetingDetail.meeting_date | moment "dddd, MMMM Do YYYY, h:mm a"}}
-    <a href="#">{{meetingDetail.title}}</a>
+    {{ meeting.meeting_date | moment "dddd, MMMM Do YYYY, h:mm a"}}
+    <a href="#">{{meeting.title}}</a>
     <i class="fa fa-trash pull-right" aria-hidden="true" @click="deleteMeeting"></i>
-    </form>
-    <a href="#"> <i class="fa fa-trash"></i></a>
-    <button>{{ meetingDetail.status }}</button>
+    <!-- <a href="#"> <i class="fa fa-trash"></i></a> -->
+    <button>{{ meeting.status }}</button>
     <hr>
   </div>
 </template>
@@ -26,21 +25,45 @@
     template: '#meetings-header-template',
     data: function() {
       return {
-        meetingDetails: []
+        meetings: [],
+        currentMeetingIndex: 0
       }
     },
     created: function() {
       this.$http.get('/api/meetings').then(function(response){
-        this.meetingDetails = response.json();
+        this.meetings = response.json();
       }.bind(this));
     },
-    deleteMeeting: function() {
-      var meetingId = this.meeting.id,
-      this.$http.get('/api/meetings/' + meetingId + '/delete', {'id': meetingId}, {emulateJSON:true}).then(function(response) {
-        this.$dispatch('meeting-deleted', this.meetingItem)
-      }).error(function(error) {
-        console.log(error);
-      }.bind(this));
+    events: {
+      'meeting-deleted': function(meetingItem) {
+        var deletedMeetingIndex = this.meetings.indexOf(meeting)
+        if (this.currentMeetingIndex === deletedMeetingIndex) {
+          this.currentMeetingIndex = (deletedMeetingIndex -1)
+        }
+        this.meetings.pop(meeting)
+      },
+      'set-current-meeting-index': function(meeting){
+        var index = this.meetings.indexOf(meeting)
+        this.currentMeetingIndex = index
+      }
+    }
+  });
+
+  Vue.component('meeting-selection',{
+    template: "#meeting-selection-template",
+    props: ['meeting', 'currentMeetingIndex'],
+    methods: {
+      setCurrentMeeting: function(){
+        this.$dispatch('set-current-meeting-index', this.meeting)
+      },
+      deleteMeeting: function(){
+        var meetingId = this.meeting.id
+        this.$http.get('/api/meetings/' + meetingId + '/delete', {'id': meetingId}, {emulateJSON:true}).then(function(response){
+          this.$dispatch('meeting-deleted', this.meetingId)
+        }).error(function(error){
+          console.log(error);
+        }.bind(this));
+      }
     }
   });
 
