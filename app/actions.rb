@@ -64,27 +64,6 @@ get '/select' do
   erb :select_status
 end
 
-
-get '/motion' do
-  erb :motion
-end
-
-get '/election' do
-  erb :election
-end
-
-get '/business' do
-  erb :business
-end
-
-get '/document' do
-  erb :document
-end
-
-get '/meeting-details' do
-  erb :meeting_details
-end
-
 get '/richtext' do 
   erb :rich_text_discussion
 
@@ -105,14 +84,14 @@ get "/files-upload" do
   @files = Dir["./public/files/*"]
   erb :file_upload
 end
- 
+
+
 post '/agenda-items/3/save_file' do
   @filename = params[:file][:filename]
   file = params[:file][:tempfile]
   if File.exists? "./public/files/#{@filename}" then
     "File with this name exists already!"
   else
-
     @agenda_item = AgendaItem.find(3)
     @agenda_item.file_path = @filename
     if @agenda_item.save

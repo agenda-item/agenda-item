@@ -13,7 +13,18 @@
         <textarea class="textarea" placeholder="{{ @document.description }}"></textarea>
       </div>
     </div>
-    
+    <div class="ai-responsible">
+      <label class="label">Presenter(s)</label>
+      <input class="input" type="text" placeholder="{{ responsible_person_user_id.user_id }}">
+    </div>
+    <div class="ai-upload">
+      <label class="label">Upload Document</label>
+      <a class="button">
+        Upload
+      </a>
+      <p>* if uploaded
+      {{ agenda_item.filename }}</p>
+    </div>
     <div class="ai-minutes">
       <label class="label">Discussion</label>
       <div class="control">
