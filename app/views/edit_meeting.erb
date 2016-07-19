@@ -495,7 +495,7 @@
       <div class="ai-date-time">
         <div class="control">
           <label class="label">Next Meeting Date</label>
-          <input class="input" type="datetime-local" placeholder="" v-model="currentMeeting.next_meeting | moment 'YYYY-MM-DDTHH:mm'" name="next_meeting">
+          <input class="input" type="datetime-local" placeholder="" v-model="currentMeeting.next_meeting_date | moment 'YYYY-MM-DDTHH:mm'" name="next_meeting_date">
         </div>
       </div>
       <input type="submit" value="Save" class="button">
@@ -511,12 +511,44 @@
 <script>
   Vue.component('meeting-closing', {
       template: "#meeting-closing-template",
-      props: ['currentMeeting']
+      props: ['currentMeeting'],
+      methods: {
+        submitMeeting: function() {
+          // update meeting
+          this.$http.post('/api/meetings/' + this.currentMeeting.id, this.currentMeeting, {emulateJSON:true}).then(function(response) {
+            // if (response.results) {
+              // TODO maybe think about rerouting them to the next agenda item automatically?
+              console.log("meeting updated");
+            // }
+            // else {
+            //   console.log("agenda item not updated");
+            // }
+          }).error(function(error) {
+            console.log(error);
+          }.bind(this));
+        }
+      }
     })
 
   Vue.component('meeting-details', {
     template: "#meeting-details-template",
-    props: ['currentMeeting']
+    props: ['currentMeeting'],
+    methods: {
+    submitMeeting: function() {
+        // update meeting
+        this.$http.post('/api/meetings/' + this.currentMeeting.id, this.currentMeeting, {emulateJSON:true}).then(function(response) {
+          // if (response.results) {
+            // TODO maybe think about rerouting them to the next agenda item automatically?
+            console.log("meeting updated");
+          // }
+          // else {
+          //   console.log("agenda item not updated");
+          // }
+        }).error(function(error) {
+          console.log(error);
+        }.bind(this));
+      }
+    }
   })
 
   Vue.component('new-item', {

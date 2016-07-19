@@ -122,6 +122,30 @@ get '/api/meetings/:id' do |id|
   Meeting.find(id).to_json
 end
 
+# update meeting by id
+post '/api/meetings/:id' do |id|
+  content_type :json
+  results = {result: false}
+  @meeting = Meeting.find(id)
+  puts @meeting
+
+  @meeting.update(
+    title:  params[:title],
+    description: params[:description],
+    discussion: params[:discussion],
+    meeting_date: params[:meeting_date],
+    location: params[:location],
+    chair: params[:chair],
+    adjournment_time: params[:adjournment_time],
+    next_meeting_date: params[:next_meeting_date]
+    )
+
+  if @meeting.save
+    results[:result] = true
+    # @agenda_item.to_json(include: { :votes => {:include =>:voting_user} })
+  end
+end
+
 ################
 # AGENDA ITEMS #
 ################
