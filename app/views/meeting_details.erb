@@ -39,27 +39,33 @@
       </a>
       <br/><br/>
       <p>** if logged</p>
-      <article class="message">
+      <article class="message present">
         <div class="message-header">
+          <span class="icon">  
+            <i class="fa fa-checkbox-marked-outline"></i>
+          </span>
           Present
         </div>
         <div class="message-body">
-          <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ @bob.first_name }}</i></div>
-          <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ @sylvia.first_name }}</i></div>
-          <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ @jason.first_name }}</i></div>
-          <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ @milly.first_name }}</i></div>
-          <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-          <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-          <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+          <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ @bob.first_name }}</i></div>
+          <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ @sylvia.first_name }}</i></div>
+          <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ @jason.first_name }}</i></div>
+          <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ @milly.first_name }}</i></div>
+          <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ user.first_name }}</i></div>
+          <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ user.first_name }}</i></div>
+          <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ user.first_name }}</i></div>
         </div>
       </article>
-      <article class="message">
+      <article class="message absent">
         <div class="message-header">
+          <span class="icon">  
+            <i class="fa fa-close-box-outline"></i>
+          </span>
           Absent
         </div>
         <div class="message-body">
-          <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-          <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+          <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ user.first_name }}</i></div>
+          <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ user.first_name }}</i></div>
         </div>
       </article>
       <a class="button">
