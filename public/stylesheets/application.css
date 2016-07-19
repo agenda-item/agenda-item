@@ -22,9 +22,14 @@ body {
 
 .style-element section {
   border: 1px dotted grey;
+  border-radius: 50px;
   padding: 20px;
   margin: 7px 0;
   background: #ccc;
+}
+
+.style-element {
+  border-radius: 20px;
 }
 
 #board-bg-img {
