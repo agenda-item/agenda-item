@@ -1,113 +1,317 @@
+.nav {
+  /*background-color: #f3d596;*/
+  background-color: white;
+  /*margin-bottom: 20px;*/
+  padding: 10px 50px 10px 50px;
+  box-shadow: 0 5px 3px rgba(17,17,17,.1),0 0 0 1px rgba(17,17,17,.1);
+}
 
- .style-element section {
+.nav-item a, a.nav-item {
+    color: black;
+    /*padding-left: 20px;*/
+}
 
-    border: 1px dotted grey;
-    padding: 20px;
-    margin: 7px 0;
-    background: #ccc;
-  }
+.container {
+  /*max-width: 100%;*/
+  /*background-color: black;*/
+}
 
-  .ai-user {
-    /*border: 1px solid grey;
-    border-radius: 15px;
-    padding: 10px;
-    background: white;
-    display: inline-block;*/
-    background-color: #CEE7EF;
-  }
+body {
+  background: #7CAFA6;
+}
+.style-element section {
+  border: 1px dotted grey;
+  padding: 20px;
+  margin: 7px 0;
+  background: #ccc;
+}
 
-  .ai-count > i, .ai-symbol > i {
-    border: 1px solid grey;
-    border-radius: 15px;
-    padding: 12px;
-    background: white;
-  }
+.ai-user {
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #f5f7fa;
+  border-radius: 290486px;
+  color: #69707a;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  font-size: 12px;
+  height: 24px;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  line-height: 16px;
+  padding-left: 10px;
+  padding-right: 10px;
+  vertical-align: top;
+  white-space: nowrap;
+  background-color: #CEE7EF;
+  font-size: 14px;
+  height: 35px;
+  padding: 14px 14px 14px 14px;
+  margin: 5px;
+  font-size: 14px;
+  vertical-align: top;
+  color: black;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
 
-  .style-element section > .box {
-    width: 80%;
-  }
+.in-favour > .message-body > .message-header::before {
+  content: "\f022";
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  text-decoration: inherit;
+  padding-right: 1em;
+}
 
-  .style-element section > p {
-    margin: 0 0 15px 0;
-  }
+.ai-count > i, .ai-symbol > i {
+  border: 1px solid grey;
+  border-radius: 15px;
+  padding: 12px;
+  background: white;
+}
 
-  .selection-box-wrapper {
-    display: inline-block;
-  }
+.style-element section > .box {
+  width: 80%;
+}
 
-  .selection-box {
-    border: 1px solid grey;
-    background: white;
-    padding: 15px;
-    width: 315px;
-    height: 200px;
-    overflow-y: scroll
-  }
+.style-element section > p {
+  margin: 0 0 15px 0;
+}
 
-  .ai-selection-arrows {
-    display: inline-block;
-  }
+.selection-box-wrapper {
+  display: inline-block;
+}
 
-  .center-element {
-    display: flex;
-    text-align:center;
-    justify-content:center;
-  } 
+.selection-box {
+  border: 1px solid grey;
+  background: white;
+  padding: 15px;
+  width: 315px;
+  height: 200px;
+  overflow-y: scroll
+}
 
-  #main-hero {
-    background-color: #7CAFA6;
-  }
+.ai-selection-arrows {
+  display: inline-block;
+}
 
-  #bottom-hero {
-    background-color: #E1DFE0;
+.center-element {
+  display: flex;
+  text-align:center;
+  justify-content:center;
+} 
 
-  }
+#main-hero {
+  background-color: #7CAFA6;
+}
 
-  #sign-up {
-    padding: 100px;
-  }
+#bottom-hero {
+  background-color: #E1DFE0;
+}
 
-  #sign-up-text {
-    text-align: left;
-  }
+#sign-up {
+  padding: 100px;
+}
 
-  .h1 {
-    padding-bottom: 20px;
-  }
+#sign-up-text {
+  text-align: left;
+}
+
+.signup-form {
+  margin-top: 60px;
+}
+
+.h1 {
+  padding-bottom: 20px;
+}
 
 #about-action-item {
   padding:15px;
 }
 
 #signup-bg-img {
-  background:transparent url(http://marketingland.com/wp-content/ml-loads/2014/09/tablet-calendar-coffee-desk-ss-1920-800x571.jpg) no-repeat center center;
-   background-size: cover;
+  background:transparent url(http://marketingland.com/wp-content/ml-loads/2014/09/tablet-calendar-coffee-desk-ss-1920-800x571.jpg) 
+  no-repeat center center;
+  background-size: cover;
 }
 
 .inline {
   display: block;
-
-}
-
-.in-favour {
-  background-color: #26495C;
-}
-
-.opposed {
-  background-color: #F0CC7F;
-}
-
-.abstain {
-  background-color: #E4A97B;
-}
-
-.button {
-  background-color: #60425A;
   color: white;
 }
 
-.message-header {
-  font-size: 16px;
-  font-weight: bold;
+.in-favour > .message-body > .ai-user {
+  background-color: #CEE7EF;
 }
 
+.opposed > .message-body > .ai-user {
+  background-color: #F0CC7F;
+}
+
+.abstain > .message-body > .ai-user {
+  background-color: #E4A97B;
+}
+
+.present > .message-body > .ai-user {
+  background-color: #916574;
+  color: white;
+}
+
+.absent > .message-body > .ai-user {
+  background-color: #BDC6CB;
+  color: white;
+}
+
+.button {
+  margin: 10px 0 40px 0;
+  background-color: #7AB0A3;
+  color: white;
+  font-size: 18px;
+  height: 40px;
+  line-height: 24px;
+  padding-left: 18px;
+  padding-right: 18px;
+  border-radius: 5px;
+}
+
+.button-index {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #d3d6db;
+  border-radius: 3px;
+  color: #222324;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  font-size: 14px;
+  height: 32px;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  line-height: 24px;
+  padding-left: 8px;
+  padding-right: 8px;
+  position: relative;
+  vertical-align: top;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.message-header {
+  font-size: 20px;
+  font-weight: bold;
+  background-color: #26495C;
+}
+
+.label {
+  padding: 30px 0 3px 0;
+}
+
+p {
+  margin-bottom: 20px; 
+  margin-top: 20px;
+}
+
+.ai-agenda-list, #ai-new-agenda-item > div > li {
+   cursor: pointer;
+   color: black;
+   /*background: transparent;*/
+}
+
+div > #ai-new-agenda-item {
+  /*background-color: blue;*/
+}
+
+div > p.menu-label {
+  /*background-color: yellow;*/
+
+}
+
+p.menu-label {
+  color: black;
+  padding-top: 15px;
+}
+
+.aside {
+  background-color: black;
+}
+
+#ai-new-agenda-item > div > li {
+  background: white;
+  border: 1px solid;
+  border-radius: 10px;
+  padding: 10px 15px;
+  margin: 3px;
+ }
+
+#ai-new-agenda-item > div > li > span:first-child {
+ padding-right: 15px;
+ color: blue;
+}
+/*
+#ai-new-agenda-item {
+  /*background-color: black;*/
+/*  padding: 10px;
+  border-radius: 5px;
+  border-style: solid;*/
+/*}*/
+
+
+article.message:first-of-type > .message-header:before {
+  font-size: 25px;
+  font-weight: bold;
+  content: "\f022";
+  font-family: AgendaItemFinalEmbed;
+}
+
+article.message:nth-of-type(2) > .message-header:before {
+  font-size: 25px;
+  font-weight: bold;
+  content: "\f02a";
+  font-family: AgendaItemFinalEmbed;
+}
+
+article.message:last-of-type > .message-header:before {
+  font-size: 25px;
+  font-weight: bold;
+  content: "\f021";
+  font-family: AgendaItemFinalEmbed;
+}
+/*
+.section {
+  background-color: #EEF5FB;
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 3px;
+}
+*/
+
+.section {
+  /*background-color : transparent;*/
+}
+
+/* for boxes in new and signup pages */
+.main-body {
+  background-color: white;
+}
+
+/*hello*/
