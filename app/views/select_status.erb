@@ -4,7 +4,7 @@
 
 <template id="agenda-item-template" >
  <form @submit.prevent="postData">
-    <label>Title:</label>
+    <!-- <label>Title:</label>
     <br>
     <textarea id="title" v-model="agendaItem.title" name="title"></textarea>
     <br>
@@ -19,7 +19,7 @@
     <label>Status:</label>
     <br>
     <textarea id="status" v-model="agendaItem.status" name="status"></textarea>
-    <br>
+    <br> -->
     <select v-model="agendaItem.status">
       <option v-for="option in options" v-bind:value="option.value">
         {{ option.text }}
