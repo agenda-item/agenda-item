@@ -88,7 +88,7 @@ end
 
 # list all meetings
 get '/meetings' do
-  erb :meetings
+  erb :list_meetings
 end
 
 # get all meetings
