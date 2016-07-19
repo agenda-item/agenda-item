@@ -12,6 +12,11 @@
     <button><a href="#">info</a></button>
     {{ meetingDetail.meeting_date | moment "dddd, MMMM Do YYYY, h:mm a"}}
     <a href="#">{{meetingDetail.title}}</a>
+    <form action="/api/meetings/<%= @meeting.id %>/delete" method="post">
+      <input type="hidden" name="meeting_id" value="<%= meeting.id %>" />
+      <input type="hidden" name="_method" value="delete" />
+      <button>Delete Review</button>
+    </form>
     <a href="#"> <i class="fa fa-trash"></i></a>
     <button>{{ meetingDetail.status }}</button>
     <hr>

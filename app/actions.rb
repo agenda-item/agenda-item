@@ -103,6 +103,13 @@ get '/api/meetings/:id' do |id|
   Meeting.find(id).to_json
 end
 
+# delete meeting by id
+delete "/api/meetings/:id/delete" do
+  @delMeeting = params[:meeting_id]
+  Meeting.find(id).destroy
+  redirect "/meetings"
+end
+
 ################
 # AGENDA ITEMS #
 ################
