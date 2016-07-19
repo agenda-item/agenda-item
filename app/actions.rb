@@ -21,7 +21,7 @@ end
 get '/cort' do
   # content_type :json
   # Meeting.all.to_json
-  erb :test
+  erb :list_meetings
 end
 
 get '/richtext' do
