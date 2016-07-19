@@ -150,6 +150,7 @@ post '/api/agenda-items/new' do
 
   @agenda_item = AgendaItem.new(
     type: params[:type],
+    position: params[:position],
     creator_id: 1,  #params[current_user.id]
     meeting_id: 1  #params[current_meeting.id]
     )

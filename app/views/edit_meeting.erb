@@ -518,10 +518,10 @@
     props: ['newItem', 'agendaItems', 'currentItemIndex'],
     methods: {
       addAgendaItem: function() {
-        console.log("clicked to add new item")
-        this.$http.post('/api/agenda-items/new', {'type': this.newItem.type}, {emulateJSON:true}).then(function(response) {
+        this.newItem.position = this.agendaItems.length
+        console.log(this.newItem.position)
+        this.$http.post('/api/agenda-items/new', {'type': this.newItem.type, 'position': this.newItem.position}, {emulateJSON:true}).then(function(response) {
           newAgendaItem = response.json()
-          newAgendaItem.position = this.agendaItems.length
           this.agendaItems.push(newAgendaItem)
           this.$dispatch('set-current-item-index', newAgendaItem)
         }).error(function(error) {
@@ -536,13 +536,14 @@
     props: ['agendaItem','currentItemIndex'],
     methods: {
       setCurrentAgendaItem: function() {
+        console.log("the position of the clicked one is" + this.agendaItem.position)
         this.$dispatch('set-current-item-index', this.agendaItem)
       },
       deleteAgendaItem: function() {
         var itemId = this.agendaItem.id
         this.$http.get('/api/agenda-items/' + itemId + '/delete', {'id': itemId}, {emulateJSON:true}).then(function(response) {
           this.$dispatch('agenda-item-deleted', this.agendaItem)
-          // TODO figure out h
+          // TODO figure out how to make this work again!
           // if (this.currentItemIndex === agendaItem.position - 1) {
           //   this.$dispatch('set-current-item-index', this.agendaItem)
           // }
