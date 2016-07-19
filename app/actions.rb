@@ -162,15 +162,22 @@ end
 # update/edit item by id
 post '/api/agenda-items/:id' do |id|
   content_type :json
+  results = {result: false}
   @agenda_item = AgendaItem.find(id)
-  @agenda_item.title = params[:title]
-  @agenda_item.description = params[:description]
-  @agenda_item.discussion = params[:discussion]
-  @agenda_item.status = params[:status]
+
+  @agenda_item.update(
+    title:  params[:title],
+    description: params[:description],
+    status: params[:status],
+    discussion: params[:discussion],
+    mover: params[:mover],
+    seconder: params[:seconder],
+    due_date: params[:due_date]
+    )
+
   if @agenda_item.save
-    puts params[:discussion]
-    puts "inside save"
-    @agenda_item.to_json(include: { :votes => {:include =>:voting_user} })
+    results[:result] = true
+    # @agenda_item.to_json(include: { :votes => {:include =>:voting_user} })
   end
 end
 
@@ -187,6 +194,33 @@ get '/api/agenda-items/:id/delete' do
     # results[:result] = true
   end
 end
+
+post '/api/agenda-items/:id/responsible-users' do |id|
+  content_type :json
+  @responsible_users = ResponsibleUser.where(agenda_item_id: id)
+
+  @agenda_item = AgendaItem.find(params[:id])
+
+  responsible_user_ids = params[:responsible_users].map do |user|
+    user[:id]
+  end
+  # active record is smart enough to figure this out and not create orphan records
+  @agenda_item.user_ids = responsible_user_ids
+
+end
+
+post '/api/agenda-items/:id/voters' do |id|
+  content_type :json
+  @voters = Voter.where(agenda_item_id: id)
+
+  @voters.each do |voter|
+    @voter = Voter.find(voter.id)
+    @voter.update(
+      vote_type: params[:vote_type]
+    )
+  end
+end
+
 #########
 # USERS #
 #########
