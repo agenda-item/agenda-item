@@ -1,6 +1,6 @@
 .nav {
   background-color: #F0CC7F;
-  /*margin-bottom: 20px;*/
+  margin-bottom: 20px;
   padding: 10px 0 10px 0;
   box-shadow: 0 5px 3px rgba(17,17,17,.1),0 0 0 1px rgba(17,17,17,.1);
 }
@@ -223,6 +223,7 @@ p {
 
 .ai-agenda-list, #ai-new-agenda-item > div > li {
    cursor: pointer;
+   color: black;
 }
 
 #ai-new-agenda-item > div > li {
@@ -236,6 +237,13 @@ p {
 #ai-new-agenda-item > div > li > span:first-child {
  padding-right: 15px;
  color: blue;
+}
+
+#ai-new-agenda-item {
+  background-color: black;
+  padding: 10px;
+  border-radius: 5px;
+  border-style: solid;
 }
 
 article.message:first-of-type > .message-header:before {
@@ -258,3 +266,16 @@ article.message:last-of-type > .message-header:before {
   content: "\f021";
   font-family: AgendaItemFinalEmbed;
 }
+
+.section {
+  background-color: #EEF5FB;
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 3px;
+}
+
+.container#app {
+  background-color: #BDC6CB;
+}
+
+
