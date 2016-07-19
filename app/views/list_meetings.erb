@@ -29,23 +29,23 @@
     data: function() {
       return {
         meetings: [],
-        // currentMeetingIndex: 0
+        currentMeetingIndex: 0
       }
     },
     created: function() {
       this.$http.get('/api/meetings').then(function(response){
         this.meetings = response.json();
       }.bind(this));
+    },
+    events: {
+      'meeting-deleted': function(meeting) {
+        var deletedMeetingIndex = this.meetings.indexOf(meeting)
+        if (this.currentMeetingIndex === deletedMeetingIndex) {
+          this.currentMeetingIndex = (deletedMeetingIndex -1)
+        }
+        this.meetings.pop(meeting)
+      }
     }
-    // events: {
-    //   'meeting-deleted': function(meeting) {
-    //     var deletedMeetingIndex = this.meetings.indexOf(meeting)
-    //     if (this.currentMeetingIndex === deletedMeetingIndex) {
-    //       this.currentMeetingIndex = (deletedMeetingIndex -1)
-    //     }
-    //     this.meetings.pop(meeting)
-    //   }
-    // }
   });
 
   Vue.component('meeting',{
@@ -56,7 +56,7 @@
         var meetingId = this.meeting.id
         console.log(meetingId)
         this.$http.get('/api/meetings/' + meetingId + '/delete', {'id': meetingId}, {emulateJSON:true}).then(function(response){
-          // this.$dispatch('meeting-deleted', this.meetingId)
+          this.$dispatch('meeting-deleted', this.meetingId)
         }.bind(this));
       }
     },

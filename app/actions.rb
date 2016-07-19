@@ -20,10 +20,6 @@ end
 get '/richtext' do
   erb :rich_text_discussion
 end
-
-get '/cort' do
-  erb :list_meetings
-end
 #################
 # FILE UPLOADER #
 #################
@@ -83,7 +79,7 @@ end
 
 # list all meetings
 get '/meetings' do
-  erb :meetings
+  erb :list_meetings
 end
 
 # get all meetings
