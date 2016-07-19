@@ -31,7 +31,10 @@ Vue.component('mover', {
   props: ['user'],
   data: function() {
     return {
-      mover: {}
+      mover: {},
+      classes: {
+        'is-active': false
+      }
     }
   },
   methods: {
