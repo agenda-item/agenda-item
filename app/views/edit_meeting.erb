@@ -5,10 +5,10 @@
   <!-- election: voters -->
   <!-- business: status ** not working -->
   <!-- action item: status ** not working -->
-  <!-- action item: due date ** not working -->
+  <!-- action item: due date ** not working ** should this also have a time??--> 
   <!-- motion: voters -->
   <!-- meeting details: attendees -->
-  <!-- meeting details: date & time -->
+  <!-- meeting details: date & time ** not working -->
 
 <!-- TODO meeting details and meeting closure functionality -->
   <!-- TODO get data about an individual meeting -->
@@ -52,30 +52,30 @@
         <div class="ai-title">
           <label class="label">Title</label>
           <div class="control">
-            <input class="input" type="text" placeholder="{{ @agm.title }} v-model="" name=""">
+            <input class="input" type="text" placeholder="" v-model="currentMeeting.title" name="title">
           </div>
         </div>
         <div class="ai-description">
           <label class="label">Description</label>
           <div class="control">
-            <textarea class="textarea" placeholder="{{ @agm.description }}" v-model="" name=""></textarea>
+            <textarea class="textarea" placeholder="" v-model="currentMeeting.description" name="description"></textarea>
           </div>
         </div>
         <div class="ai-location">
           <div class="control">
             <label class="label">Location</label>
-            <input class="input" type="text" placeholder="{{ @agm.location }} v-model="" name=""">
+            <input class="input" type="text" placeholder="" v-model="currentMeeting.location" name="location">
           </div>
         </div>
         <div class="ai-date-time">
           <div class="control">
             <label class="label">Date & Time</label>
-            <input class="input" type="datetime-local" placeholder="{{ @agm.meeting_date }} v-model="" name=""">
+            <input class="input" type="datetime-local" placeholder="" v-model="currentMeeting.meeting_date | moment 'YYYY-MM-DDTHH:mm'" name="meeting_date">
           </div>
         </div>
         <div class="ai-responsible">
           <label class="label">Chair of Meeting</label>
-          <input class="input" type="text" placeholder="{{ @agm.chair.first_name + " " + @agm.chair.last_name }}" v-model="" name="">
+          <input class="input" type="text" placeholder="" v-model="currentMeeting.chair.first_name" name="chair">
         </div>
         <div class="ai-attendees">
           <label class="label">Attendees</label>
@@ -144,8 +144,8 @@
     </div>
   
     <div class="column">
-      <div v-if="currentItemIndex === 'Meeting Details'"><meeting-details></meeting-details></div>
-      <div v-if="currentItemIndex === 'Meeting Closing'"><meeting-closing></meeting-closing></div>
+      <div v-if="currentItemIndex === 'Meeting Details'"><meeting-details :current-meeting.sync="currentMeeting"></meeting-details></div>
+      <div v-if="currentItemIndex === 'Meeting Closing'"><meeting-closing :current-meeting.sync="currentMeeting"></meeting-closing></div>
       <div v-if="currentItemIndex >= 0" class="section ai-agenda-item">
         <div><!-- header interface  -->
           <!-- <a class="button">
@@ -497,20 +497,12 @@
 <script>
   Vue.component('meeting-closing', {
       template: "#meeting-closing-template",
-      data: function() {
-        return {
-          meeting: {}
-        }
-      }
+      props: ['currentMeeting']
     })
 
   Vue.component('meeting-details', {
     template: "#meeting-details-template",
-    data: function() {
-      return {
-        meeting: {}
-      }
-    }
+    props: ['currentMeeting']
   })
 
   Vue.component('new-item', {
@@ -604,6 +596,7 @@
     template: '#agenda-items-template',
     data: function() {
       return {
+        currentMeeting: {},
         agendaItems: [],
         currentItemIndex: 'Meeting Details',
         newItems: [
@@ -620,9 +613,15 @@
       }
     },
     created: function() {
+      // gets all agenda items
       this.$http.get('/api/agenda-items').then(function(response){
         this.agendaItems = response.json();
       }.bind(this));
+
+      this.$http.get('/api/meetings/1').then(function(response){
+        this.currentMeeting = response.json();
+      }.bind(this));
+      
     },
     events: {
     'agenda-item-deleted': function (agendaItem) {
