@@ -251,15 +251,6 @@ p {
    /*background: transparent;*/
 }
 
-div > #ai-new-agenda-item {
-  /*background-color: blue;*/
-}
-
-div > p.menu-label {
-  /*background-color: yellow;*/
-
-}
-
 p.menu-label {
   color: black;
   padding-top: 15px;
@@ -270,25 +261,17 @@ p.menu-label {
 }
 
 #ai-new-agenda-item > div > li {
-  background: white;
+  background-color: #FFEED0;
   border: 1px solid;
   border-radius: 10px;
   padding: 10px 15px;
   margin: 3px;
- }
+}
 
 #ai-new-agenda-item > div > li > span:first-child {
  padding-right: 15px;
  color: blue;
 }
-/*
-#ai-new-agenda-item {
-  /*background-color: black;*/
-/*  padding: 10px;
-  border-radius: 5px;
-  border-style: solid;*/
-/*}*/
-
 
 article.message:first-of-type > .message-header:before {
   font-size: 25px;
@@ -310,20 +293,15 @@ article.message:last-of-type > .message-header:before {
   content: "\f021";
   font-family: AgendaItemFinalEmbed;
 }
-/*
-.section {
-  background-color: #EEF5FB;
-  border-radius: 10px;
-  border-style: solid;
-  border-width: 3px;
-}
-*/
 
-.section {
-  /*background-color : transparent;*/
+.skip-button {
+  background-color: black;
 }
 
 /* for boxes in new and signup pages */
 .main-body {
   background-color: white;
 }
+
+
+/*hello*/
