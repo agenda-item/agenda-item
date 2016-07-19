@@ -75,10 +75,6 @@ body {
   background-size: cover;
 }
 
-.board-membership-form{
-  transition: all 1s linear;
-}
-
 .ai-user {
   -webkit-box-align: center;
   -webkit-align-items: center;
