@@ -27,6 +27,12 @@ get '/api/agenda-items/:id/mover' do |id|
   User.find(@agenda_item.mover_id).to_json
 end
 
+get '/api/agenda-items/:id/seconder' do |id|
+  content_type :json
+  @agenda_item = AgendaItem.find(id)
+  User.find(@agenda_item.seconder_id).to_json
+end
+
 post '/api/agenda-items/:id/mover' do |id|
   content_type :json
   @agenda_item = AgendaItem.find(id)
@@ -34,10 +40,13 @@ post '/api/agenda-items/:id/mover' do |id|
   User.find(params[:mover_id]).to_json
 end
 
-# get '/api/agenda-items/:id/seconder' do |id|
-#   content_type :json
-#   AgendaItem.find(id).to_json(include: :seconder)
-# end
+post '/api/agenda-items/:id/seconder' do |id|
+  content_type :json
+  @agenda_item = AgendaItem.find(id)
+  @agenda_item.seconder_id = params[:seconder_id]
+  User.find(params[:seconder_id]).to_json
+end
+
 
 # post '/api/agenda-items/:id/mover' do |id|
 #   content_type :json

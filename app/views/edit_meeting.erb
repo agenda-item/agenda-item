@@ -125,17 +125,14 @@
   <div class="modal-background"></div>
   <div class="modal-card">
     <header class="modal-card-head">
-      <p v-if="agendaItem.type === Election" class="modal-card-title">Select Mover and Seconder</p>
+      <h1 class="title is-2" v-if="agendaItem.type === Election" class="modal-card-title">
+      Select Mover and Seconder</h1>
     </header>
     <section class="modal-card-body">
-      Click to select the member who moved the Agenda Item:
       <list-users :agenda-item.sync="agendaItem"></list-users>
     </section>
     <footer class="modal-card-foot">
-      <!-- this button adds current mover/seconder and close the modal -->
-      <button class="button">Save changes</button>
-      <!-- this button closes the modal -->
-      <button class="button" @click.prevent="closeModal>Cancel</button>
+      <button class="button" @click.prevent="closeModal">Close</button>
     </footer>
   </div>
 </div>
@@ -171,7 +168,7 @@
           </a> -->
         </div>
         <!-- sets the current agenda item loaded into the side with the currentItemIndex of the agendaItems list stored on the root instance data -->
-        <agenda-item :agenda-item="agendaItems[currentItemIndex]"></agenda-item>
+        <agenda-item :agenda-item="agendaItems[currentItemIndex]" :mover.sync="mover" :seconder.sync="seconder"></agenda-item>
       </div>
     </div>
 
@@ -299,10 +296,16 @@
           <label class="label">Mover</label>
           <!-- <button  id="show-mover" @click="showMover = true" class="button">Select Mover</button> -->
           <!-- TODO list-users should be in a modal! -->
+          <span>The current Mover is: {{mover.first_name}}</span>
+
+          <label class="label">Seconder</label>
+          <!-- The current Seconder is: {{mover.first_name}} -->
+          <span>The current Seconder is: {{seconder.first_name}}</span>
+
           <modal :agenda-item.sync="agendaItem"></modal>
         </div>
         <div class="ai-responsible">
-          <label class="label">Seconder</label>
+          
           <input class="input" type="text" placeholder="{{ @election1.seconder.first_name }}" name="seconder">
         </div>
         <div class="ai-vote">
@@ -489,14 +492,38 @@
 </template>
 
 <template id="list-users-template">
-  The current mover is: {{mover.first_name}}
-  <ul v-for="user in usersList">
-    <mover :agenda-item.sync="agendaItem" :user="user" :mover.sync="mover"></mover>
-  </ul>
+  
+    <div id="select-mover">
+      <div v-if="mover">
+        <h2 class="subtitle is-6"><strong>The Current Mover is:</strong> {{mover.first_name}}</h2>
+      </div>
+      <p>Click to select the member who moved the Agenda Item:<p>
+      <ul v-for="user in usersList">
+        <mover :agenda-item.sync="agendaItem" :user="user" :mover.sync="mover"></mover>
+      </ul>
+    </div>
+    <hr>
+    <div id="select-seconder pull-right">
+      <div v-if="seconder">
+        <h2 class="subtitle is-6"><strong>The Current Seconder is:</strong> {{seconder.first_name}}</h2>
+      </div>
+      <p>Click to select the member who seconded the Agenda Item:<p>
+      <ul v-for="user in usersList">
+        <seconder :agenda-item.sync="agendaItem" :user="user" :seconder.sync="seconder"></seconder>
+      </ul>
+    </div>
 </template>
 
 <template id="mover-template">
   <div class="ai-user" @click="setMover">
+    <i class="fa fa-person" aria-hidden="true">
+      {{user.first_name}} {{user.last_name}}
+    </i>
+  </div>
+</template>
+
+<template id="seconder-template">
+  <div class="ai-user" @click="setSeconder">
     <i class="fa fa-person" aria-hidden="true">
       {{user.first_name}} {{user.last_name}}
     </i>
@@ -544,7 +571,7 @@
 <script>
   Vue.component('modal', {
     template: '#modal-template',
-    props: ['agendaItem'],
+    props: ['agendaItem', 'mover', 'seconder'],
     data: function(){
       return {
         showModal: false
@@ -552,13 +579,14 @@
     },
     methods: {
       openModal: function() {
-        this.showModal === true
+        this.showModal = true
       },
       closeModal: function() {
-        this.showModal === false
+        this.showModal = false
       }
     }
   })
+
   Vue.component('mover', {
     template: '#mover-template',
     props: ['agendaItem','user','mover'],
@@ -566,8 +594,19 @@
       setMover: function(){
         this.$http.post('/api/agenda-items/2/mover', {'mover_id': this.user.id}, {emulateJSON:true}).then(function(response){
           this.mover = response.json()
+        }.bind(this));    
+      }
+    }
+  })
+
+  Vue.component('seconder', {
+    template: '#seconder-template',
+    props: ['agendaItem','user','seconder'],
+    methods: {
+      setSeconder: function(){
+        this.$http.post('/api/agenda-items/2/seconder', {'seconder_id': this.user.id}, {emulateJSON:true}).then(function(response){
+          this.seconder = response.json()
         }.bind(this));
-        
       }
     }
   })
@@ -696,7 +735,7 @@
 
   Vue.component('agenda-item', {
     template: '#agenda-item-template',
-    props: ['agendaItem'],
+    props: ['agendaItem', 'mover', 'seconder'],
     methods: {
       postData: function() {
         console.log("save request triggered!")
