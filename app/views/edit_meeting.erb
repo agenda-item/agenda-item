@@ -10,11 +10,6 @@
   <!-- meeting details: attendees -->
   <!-- meeting details: date & time ** not working -->
 
-<!-- TODO meeting details and meeting closure functionality -->
-  <!-- TODO get data about an individual meeting -->
-  <!-- TODO add send prompt in end of meeting details -->
-  <!-- TODO change meeting closing fields to inputs -->
-
 <!-- FUTURE FEATURES: -->
   <!-- TODO create migration for adding called to order time -->
     <!-- TODO add start meeting & end meeting buttons -->
@@ -222,7 +217,7 @@
           <label class="label">Status</label>
           <p class="control">
             <span class="select">
-              <select name="status">
+              <select name="status" v-model="agendaItem.status">
                 <option >Select status</option>
                 <option value="Active">Active</option>
                 <option value="Carried Forward">Carried Forward</option>
@@ -242,7 +237,7 @@
           <label class="label">Status</label>
           <p class="control">
             <span class="select">
-              <select name="status">
+              <select name="status" v-model="agendaItem.status">
                 <option>Select status</option>
                 <option value="Active">Active</option>
                 <option value="Carried Forward">Carried Forward</option>
