@@ -1,11 +1,9 @@
 <!-- TODO move CSS to css file-->
-<!-- TODO add save button and have it post the data -->
+
+<!-- TODO have save button post the data -->
+
 <!-- TODO meeting details and meeting closure functionality -->
   <!-- TODO get data about an individual meeting -->
-  <!-- TODO create template for meeting details -->
-  <!-- TODO create template for meeting end details-->
-  <!-- TODO add logic to show/hide the meeting details on clicks -->
-  <!-- TODO fix date in meeting end details -->
   <!-- TODO add send prompt in end of meeting details -->
 
 <!-- IF WE HAVE TIME: -->
@@ -37,56 +35,10 @@
   <agenda-items></agenda-items>
 </div>
 
-<template id="agenda-items-template">
-  <div class="columns">
-    <div class="column is-3">
-      <aside class="menu">
-        <p class="menu-label">Agenda Items</p>
-        <ul class="ai-agenda-list">
-          <!-- meeting details are not an agenda item, they belong to the meeting -->
-          <li><i class="fa fa-library-books" aria-hidden="true"></i> Meeting Details</li>
-          <div v-for="agendaItem in agendaItems">     
-              <agenda-item-selection :agenda-item.sync="agendaItem" :current-item-index.sync="currentItemIndex"></agenda-item-selection>
-          </div>
-          <!-- meeting closing is not an agenda item, the data belongs to the meeting -->
-          <li><i class="fa fa-library-books" aria-hidden="true"></i> Meeting Closing</li>
-        </ul>
-      </aside>
-    </div>
-  
-    <div class="column">
-      <div class="section ai-agenda-item">
-        <div><!-- header interface  -->
-          <!-- <a class="button">
-            Send
-          </a>
-          <a class="button">
-            Status
-          </a> -->
-        </div>
-        <!-- sets the current agenda item loaded into the side with the currentItemIndex of the agendaItems list stored on the root instance data -->
-        <agenda-item :agenda-item="agendaItems[currentItemIndex]"></agenda-item>
-      </div>
-    </div>
-
-    <div class="column is-2">
-      <div>
-        <p class="menu-label">New Agenda Item</p>
-        <ul id="ai-new-agenda-item">
-          <div v-for="newItem in newItems">
-            <!-- populates choices with list of agenda item types ('newItem') from root instance data -->
-            <new-item :new-item.sync="newItem" :agenda-items.sync="agendaItems" :current-item-index.sync="currentItemIndex"></new-item>
-          </div>
-        </ul>
-      </div>
-    </div>
-  </div>
-</template>
-
 <template id="meeting-details-template">
   <div class="style-element section ai-details">
     <div class="box">
-      <h2 class="subtitle is-3">(Icon missing) Meeting Details</h2>
+      <h2 class="subtitle is-3"><i class="fa fa-library-books" aria-hidden="true"></i> Meeting Details</h2>
       <div class="ai-description">
         <label class="label">Description</label>
         <div class="control">
@@ -156,6 +108,54 @@
   </div>
 </template>
 
+<template id="agenda-items-template">
+  <div class="columns">
+    <div class="column is-3">
+      <aside class="menu">
+        <p class="menu-label">Agenda Items</p>
+        <ul class="ai-agenda-list">
+          <!-- meeting details are not an agenda item, they belong to the meeting -->
+          <li @click="setCurrentMeetingDetails"><i class="fa fa-library-books" aria-hidden="true"></i> Meeting Details</li>
+          <div v-for="agendaItem in agendaItems">     
+              <agenda-item-selection :agenda-item.sync="agendaItem" :current-item-index.sync="currentItemIndex"></agenda-item-selection>
+          </div>
+          <!-- meeting closing is not an agenda item, the data belongs to the meeting -->
+          <li @click="setCurrentMeetingClose"><i class="fa fa-library-books" aria-hidden="true"></i> Meeting Closing</li>
+        </ul>
+      </aside>
+    </div>
+  
+    <div class="column">
+      <div v-if="currentItemIndex === 'Meeting Details'"><meeting-details></meeting-details></div>
+      <div v-if="currentItemIndex === 'Meeting Closing'"><meeting-closing></meeting-closing></div>
+      <div v-if="currentItemIndex >= 0" class="section ai-agenda-item">
+        <div><!-- header interface  -->
+          <!-- <a class="button">
+            Send
+          </a>
+          <a class="button">
+            Status
+          </a> -->
+        </div>
+        <!-- sets the current agenda item loaded into the side with the currentItemIndex of the agendaItems list stored on the root instance data -->
+        <agenda-item :agenda-item="agendaItems[currentItemIndex]"></agenda-item>
+      </div>
+    </div>
+
+    <div class="column is-2">
+      <div>
+        <p class="menu-label">New Agenda Item</p>
+        <ul id="ai-new-agenda-item">
+          <div v-for="newItem in newItems">
+            <!-- populates choices with list of agenda item types ('newItem') from root instance data -->
+            <new-item :new-item.sync="newItem" :agenda-items.sync="agendaItems" :current-item-index.sync="currentItemIndex"></new-item>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+
 <!-- creates the list on the left sidebar containing all current agenda items -->
 <template id="agenda-item-selection-template">
   <li>
@@ -174,8 +174,7 @@
   <div class="box">
     <h2 class="subtitle is-3">
       <icon :agenda-item="agendaItem"></icon> 
-      <span v-if="agendaItem.type">{{agendaItem.type}}</span>
-      <span v-else>Current index is {{currentItemIndex}}</span>
+      <span>{{agendaItem.type}}</span>
     </h2>
     <div class="ai-title">
       <div class="control">
@@ -255,7 +254,62 @@
     </div><!-- end document -->
 
     <div v-if="agendaItem.type === 'Election'"><!-- TODO election -->
-
+      <div class="ai-responsible">
+        <label class="label">Nominee</label>
+        <input class="input" type="text" placeholder="{{ agenda_item.user_id }}">
+      </div>
+      <div class="ai-responsible">
+        <label class="label">Mover</label>
+        <input class="input" type="text" placeholder="{{ @election1.mover.first_name }}">
+      </div>
+      <div class="ai-responsible">
+        <label class="label">Seconder</label>
+        <input class="input" type="text" placeholder="{{ @election1.seconder.first_name }}">
+      </div>
+      <div class="ai-vote">
+        <div v-if="agendaItem.votes.length === 0">
+          <a class="button">
+            Log Votes
+          </a>
+        </div>
+        <div v-else>
+          <article class="message">
+            <div class="message-header">
+              In Favour
+            </div>
+            <div class="message-body">
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            </div>
+          </article>
+          <article class="message">
+            <div class="message-header">
+              Opposed
+            </div>
+            <div class="message-body">
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            </div>
+          </article>
+          <article class="message">
+            <div class="message-header">
+              Abstained
+            </div>
+            <div class="message-body">
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            </div>
+          </article>
+          <a class="button">
+            Adjust Votes
+          </a>
+        </article>
+      </div>
     </div><!-- end election -->
 
     <div v-if="agendaItem.type === 'Motion'"><div><!-- motion TODO fix votes loop with code from /meetings TODO fix unaligned divs -->
@@ -406,11 +460,37 @@
    <li @click="addAgendaItem"><span><i class="fa fa-plus-square fa-lg"></i></span><span><i class="fa fa-{{newItem.icon}}" aria-hidden="true"></i></span> {{newItem.type}}</li>
 </template>
 
+<template id="meeting-closing-template">
+  <div class="box container">
+    <h2 class="subtitle is-3"><i class="fa fa-library-books" aria-hidden="true"></i> Meeting Closing</h2>
+    <strong>Meeting Adjournment Time:</strong> {{ meeting.adjournment_time | moment "dddd, MMMM Do YYYY, h:mm a" }}<br/>
+    <strong>Next Meeting:</strong> {{ meeting | moment "dddd, MMMM Do YYYY, h:mm a" }}<br/>
+  </div>
+</template>
+
 <!-- <template id="agenda-menu-li-template">
   <li>{{ agendaItem.title }}</li>
 </template> -->
 
 <script>
+  Vue.component('meeting-closing', {
+      template: "#meeting-closing-template",
+      data: function() {
+        return {
+          meeting: {}
+        }
+      }
+    })
+
+  Vue.component('meeting-details', {
+    template: "#meeting-details-template",
+    data: function() {
+      return {
+        meeting: {}
+      }
+    }
+  })
+
   Vue.component('new-item', {
     template: "#new-item-template",
     props: ['newItem', 'agendaItems', 'currentItemIndex'],
@@ -476,7 +556,7 @@
     data: function() {
       return {
         agendaItems: [],
-        currentItemIndex: 0,
+        currentItemIndex: 'Meeting Details',
         newItems: [
           { type: 'Action Item', icon: 'exclamation-circle-btb' },
           { type: 'Business', icon: 'briefcase' },
@@ -502,6 +582,14 @@
     'set-current-item-index': function(agendaItem) {
       var index = this.agendaItems.indexOf(agendaItem)
       this.currentItemIndex = index
+    }
+  },
+  methods: {
+    setCurrentMeetingDetails: function() {
+      this.currentItemIndex = 'Meeting Details'
+    },
+    setCurrentMeetingClose: function() {
+      this.currentItemIndex = 'Meeting Closing'
     }
   }
   });
