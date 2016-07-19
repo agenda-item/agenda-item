@@ -119,6 +119,28 @@
   </div>
 </template>
 
+<template id="modal-template">
+  <button class="button" @click.prevent="openModal">Log Mover and Seconder</button>
+  <div class="modal" v-bind:class="{ 'is-active': showModal}">
+  <div class="modal-background"></div>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p v-if="agendaItem.type === Election" class="modal-card-title">Select Mover and Seconder</p>
+    </header>
+    <section class="modal-card-body">
+      Click to select the member who moved the Agenda Item:
+      <list-users :agenda-item.sync="agendaItem"></list-users>
+    </section>
+    <footer class="modal-card-foot">
+      <!-- this button adds current mover/seconder and close the modal -->
+      <button class="button">Save changes</button>
+      <!-- this button closes the modal -->
+      <button class="button" @click.prevent="closeModal>Cancel</button>
+    </footer>
+  </div>
+</div>
+</template>
+
 <template id="agenda-items-template">
   <div class="columns">
     <div class="column is-3">
@@ -275,7 +297,9 @@
         </div>
         <div class="ai-responsible">
           <label class="label">Mover</label>
-          <input class="input" type="text" placeholder="{{ @election1.mover.first_name }}" name="mover">
+          <!-- <button  id="show-mover" @click="showMover = true" class="button">Select Mover</button> -->
+          <!-- TODO list-users should be in a modal! -->
+          <modal :agenda-item.sync="agendaItem"></modal>
         </div>
         <div class="ai-responsible">
           <label class="label">Seconder</label>
@@ -330,6 +354,7 @@
       <div class="ai-motion" v-if="agendaItem.type === 'Motion'"><!-- motion TODO fix votes loop with code from /meetings TODO fix unaligned divs -->
         <div class="ai-responsible">
           <label class="label">Mover</label>
+
           <input class="input" type="text" v-model="agendaItem.mover.first_name">
         </div>
         <div class="ai-responsible">
@@ -463,6 +488,21 @@
   </div>
 </template>
 
+<template id="list-users-template">
+  The current mover is: {{mover.first_name}}
+  <ul v-for="user in usersList">
+    <mover :agenda-item.sync="agendaItem" :user="user" :mover.sync="mover"></mover>
+  </ul>
+</template>
+
+<template id="mover-template">
+  <div class="ai-user" @click="setMover">
+    <i class="fa fa-person" aria-hidden="true">
+      {{user.first_name}} {{user.last_name}}
+    </i>
+  </div>
+</template>
+
 <template id="icons-template">
   <i v-if="agendaItem.type === 'Business'" class="fa fa-briefcase" aria-hidden="true"></i>
   <i v-if="agendaItem.type === 'Document'" class="fa fa-file-document" aria-hidden="true"></i>
@@ -502,6 +542,60 @@
 </template> -->
 
 <script>
+  Vue.component('modal', {
+    template: '#modal-template',
+    props: ['agendaItem'],
+    data: function(){
+      return {
+        showModal: false
+      }
+    },
+    methods: {
+      openModal: function() {
+        this.showModal === true
+      },
+      closeModal: function() {
+        this.showModal === false
+      }
+    }
+  })
+  Vue.component('mover', {
+    template: '#mover-template',
+    props: ['agendaItem','user','mover'],
+    methods: {
+      setMover: function(){
+        this.$http.post('/api/agenda-items/2/mover', {'mover_id': this.user.id}, {emulateJSON:true}).then(function(response){
+          this.mover = response.json()
+        }.bind(this));
+        
+      }
+    }
+  })
+
+  Vue.component('list-users', {
+      template: '#list-users-template',
+      props: ['agendaItem','mover','seconder'],
+      data: function() {
+        return {
+          usersList: []
+        }
+      },
+      created: function() {
+        this.$http.get('/api/users').then(function(response){
+          this.usersList = response.json()
+        }.bind(this));
+
+        this.$http.get('/api/agenda-items/2/mover').then(function(response){
+          this.mover = response.json()
+        }.bind(this));
+
+        this.$http.get('/api/agenda-items/2/seconder').then(function(response){
+          this.seconder = response.json()
+        }.bind(this));
+
+      }
+    })
+
   Vue.component('meeting-closing', {
       template: "#meeting-closing-template",
       props: ['currentMeeting'],

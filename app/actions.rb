@@ -1,7 +1,11 @@
-# Landing Page
+# Onboarding
 get '/' do
   erb :index
   # redirect '/organizations/new'
+end
+
+get '/organizations/new' do
+  erb :signup
 end
 
 # Style Guide
@@ -9,15 +13,52 @@ get '/styleguide' do
   erb :styleguide
 end
 
-get '/organizations/new' do
-	erb :signup
+get '/add-single-user' do 
+  erb :add_single_user
 end
 
+get '/add-mover-seconder' do 
+  erb :add_mover_seconder
+end
+
+get '/api/agenda-items/:id/mover' do |id|
+  content_type :json
+  @agenda_item = AgendaItem.find(id)
+  User.find(@agenda_item.mover_id).to_json
+end
+
+post '/api/agenda-items/:id/mover' do |id|
+  content_type :json
+  @agenda_item = AgendaItem.find(id)
+  @agenda_item.mover_id = params[:mover_id]
+  User.find(params[:mover_id]).to_json
+end
+
+# get '/api/agenda-items/:id/seconder' do |id|
+#   content_type :json
+#   AgendaItem.find(id).to_json(include: :seconder)
+# end
+
+# post '/api/agenda-items/:id/mover' do |id|
+#   content_type :json
+#   @agenda_item = AgendaItem.find(id)
+#   @agenda_item.mover = User.find(params[:mover_id])
+#   if @agenda_item.save
+#     puts @agenda_item.mover
+#     puts params[:mover_id]
+#     puts "saved new mover"
+#     @agenda_item.mover.to_json
+#   end 
+# end
+
+######################
+# DEVELOPMENT ROUTES #
+######################
+# to be deleted
 
 get '/edit-meeting' do
   erb :edit_meeting
 end
-
 
 get '/select' do
   erb :select_status
@@ -28,7 +69,6 @@ get '/motion' do
   erb :motion
 end
 
-<<<<<<< HEAD
 get '/election' do
   erb :election
 end
@@ -47,52 +87,15 @@ end
 
 get '/richtext' do 
   erb :rich_text_discussion
-=======
+
+
 get '/select' do 
   erb :select_status
 end
 
-get '/add-single-user' do 
-  erb :add_single_user
-end
 
-get '/add-mover-seconder' do 
-  erb :add_mover_seconder
-end
 
-get '/api/agenda-items/:id/mover' do |id|
-  content_type :json
-  @agenda_item = AgendaItem.find(id)
-  User.find(@agenda_item.mover.id).to_json
-end
 
-get '/api/agenda-items/:id/seconder' do |id|
-  content_type :json
-  AgendaItem.find(id).to_json(include: :seconder)
-end
-
-post '/api/agenda-items/:id/mover' do |id|
-  content_type :json
-  @agenda_item = AgendaItem.find(id)
-  @agenda_item.mover = User.find(params[:mover_id])
-  if @agenda_item.save
-    puts @agenda_item.mover
-    puts params[:mover_id]
-    puts "saved new mover"
-    @agenda_item.mover.to_json
-  end 
-end
-
-post '/api/agenda-items/:id/seconder' do |id|
-  content_type :json
-  @agenda_item = AgendaItem.find(id)
-  @agenda_item.seconder = User.find(params[:seconder_id])
-  if @agenda_item.save
-    puts params[:seconder_id]
-    puts "saved new seconder"
-  end 
->>>>>>> 356034424aa1be477535be0ef74935a4b5d4c0b4
-end
 
 #################
 # FILE UPLOADER #
@@ -102,32 +105,21 @@ get "/files-upload" do
   @files = Dir["./public/files/*"]
   erb :file_upload
 end
-<<<<<<< HEAD
-
-post '/agenda-items/:id/save_file' do
-=======
  
 post '/agenda-items/3/save_file' do
->>>>>>> 356034424aa1be477535be0ef74935a4b5d4c0b4
   @filename = params[:file][:filename]
   file = params[:file][:tempfile]
   if File.exists? "./public/files/#{@filename}" then
     "File with this name exists already!"
   else
-<<<<<<< HEAD
-    @agenda_item = AgendaItem.find(params[:id])
-=======
+
     @agenda_item = AgendaItem.find(3)
->>>>>>> 356034424aa1be477535be0ef74935a4b5d4c0b4
     @agenda_item.file_path = @filename
     if @agenda_item.save
       puts @agenda_item.file_path
       puts "inside save"
-<<<<<<< HEAD
     end
-=======
-    end  
->>>>>>> 356034424aa1be477535be0ef74935a4b5d4c0b4
+end  
     File.open("./public/files/#{@filename}", 'wb') do |f|
       f.write(file.read)
     end
@@ -248,7 +240,7 @@ post '/api/agenda-items/:id' do |id|
   content_type :json
   results = {result: false}
   @agenda_item = AgendaItem.find(id)
-<<<<<<< HEAD
+
 
   @agenda_item.update(
     title:  params[:title],
@@ -304,17 +296,6 @@ post '/api/agenda-items/:id/voters' do |id|
       vote_type: params[:vote_type]
     )
   end
-=======
-  @agenda_item.title = params[:title]
-  @agenda_item.description = params[:description]
-  @agenda_item.discussion = params[:discussion]
-  @agenda_item.status = params[:status]
-  @agenda_item.mover = params[:mover]
-  @agenda_item.seconder = params[:seconder]
-  if @agenda_item.save
-    @agenda_item.to_json(include: { :votes => {:include =>:voting_user} })
-  end  
->>>>>>> 356034424aa1be477535be0ef74935a4b5d4c0b4
 end
 
 #########
