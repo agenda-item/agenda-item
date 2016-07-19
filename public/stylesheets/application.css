@@ -1,3 +1,39 @@
+/*//dragula css*/
+  .gu-mirror{
+    position: fixed;
+    margin: 0;
+    z-index: 9999;
+    opacity: .8;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    filter: alpha(opacity=80);
+  }
+  
+  .gu-hide{
+    display: none;
+  }
+  
+  .gu-unselectable{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  .gu-transit{
+    opacity: .2;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+    filter: alpha(opacity=20);
+  }
+
+  #drag-and-drop > div {
+    background-color: #18dcf0;
+    transition: opacity 0.2s ease-in-out;
+  }
+  /*.div2 {
+    transition: opacity 0.4s ease-in-out;
+  }*/
+  /*End of dragula css*/
+
 .nav {
   /*background-color: #f3d596;*/
   background-color: white;
@@ -37,6 +73,10 @@ body {
   background:transparent url(https://static.pexels.com/photos/66957/pexels-photo-66957.jpeg) 
   no-repeat center center;
   background-size: cover;
+}
+
+.board-membership-form{
+  transition: all 1s linear;
 }
 
 .ai-user {
