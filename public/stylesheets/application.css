@@ -28,7 +28,10 @@ body {
 }
 
 #board-bg-img {
-  background-color: #462035;
+  /*background-color: #462035;*/
+  background:transparent url(https://static.pexels.com/photos/66957/pexels-photo-66957.jpeg) 
+  no-repeat center center;
+  background-size: cover;
 }
 
 .ai-user {
