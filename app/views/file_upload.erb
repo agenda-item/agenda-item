@@ -1,8 +1,0 @@
-<h1>Upload File</h1>
-  <form action="/agenda-items/3/save_file" method="POST" enctype="multipart/form-data">
-    <input type="file" name="file">
-    <input type="submit" value="Upload">
-  </form>
-  <% for @file in @files %>
-    <li><a href="<%=@file%>"> <%=@file%> </a></li>
-  <% end %>

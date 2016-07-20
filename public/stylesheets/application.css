@@ -352,4 +352,20 @@ article.message:last-of-type > .message-header:before {
    background-color: red;
  }
 
+ .modal-card, .modal-content {
+  width: 900px;
+ }
+
+ .select-user {
+  border: 1px solid black;
+  max-width: 275px;
+  padding: 20px;
+  margin: 15px;
+  text-align: left;
+ }
+
+ .modal-card-head {
+  display: inline;
+ }
+
 /*hello*/
