@@ -1,9 +1,14 @@
+<%#
 <!-- TODO move CSS to css file-->
 
 <!-- TODO test save button post the data fo the following fancy fields -->
   <!-- document: file upload -->
   <!-- election: voters -->
+<<<<<<< HEAD
   <!-- action item: due date ** not working **--> 
+=======
+  <!-- action item: due date ** not working ** should this have a time or just a date??-->
+>>>>>>> d2ef9ded1a13dce5768b1c7e552641f27e30cd3b
   <!-- motion: voters -->
   <!-- meeting details: attendees -->
   <!-- meeting details: date & time ** not working -->
@@ -12,6 +17,7 @@
   <!-- TODO create migration for adding called to order time -->
     <!-- TODO add start meeting & end meeting buttons -->
   <!-- TODO add auto-save functionality-->
+%>
 
 <style>
   .ai-agenda-list, #ai-new-agenda-item > div > li {
@@ -24,7 +30,7 @@
    border-radius: 10px;
    padding: 10px 15px;
    margin: 3px;
-   
+
   }
 
   #ai-new-agenda-item > div > li > span:first-child {
@@ -43,6 +49,7 @@
   <agenda-items></agenda-items>
 </div>
 
+<<<<<<< HEAD
 <template id="meeting-details-template">
   <div class="style-element section ai-details">
     <div class="box">
@@ -576,260 +583,13 @@
 <!-- <template id="agenda-menu-li-template">
   <li>{{ agendaItem.title }}</li>
 </template> -->
+=======
+<%= erb(:"templates/agenda_items") %>
+>>>>>>> d2ef9ded1a13dce5768b1c7e552641f27e30cd3b
 
 <script>
-  Vue.component('modal', {
-    template: '#modal-template',
-    props: ['agendaItem', 'mover', 'seconder'],
-    data: function(){
-      return {
-        showModal: false
-      }
-    },
-    methods: {
-      openModal: function() {
-        this.showModal = true
-      },
-      closeModal: function() {
-        this.showModal = false
-      }
-    }
-  })
-
-  Vue.component('mover', {
-    template: '#mover-template',
-    props: ['agendaItem','user','mover'],
-    methods: {
-      setMover: function(){
-        this.$http.post('/api/agenda-items/2/mover', {'mover_id': this.user.id}, {emulateJSON:true}).then(function(response){
-          this.mover = response.json()
-        }.bind(this));    
-      }
-    }
-  })
-
-  Vue.component('seconder', {
-    template: '#seconder-template',
-    props: ['agendaItem','user','seconder'],
-    methods: {
-      setSeconder: function(){
-        this.$http.post('/api/agenda-items/2/seconder', {'seconder_id': this.user.id}, {emulateJSON:true}).then(function(response){
-          this.seconder = response.json()
-        }.bind(this));
-      }
-    }
-  })
-
-  Vue.component('list-users', {
-      template: '#list-users-template',
-      props: ['agendaItem','mover','seconder'],
-      data: function() {
-        return {
-          usersList: []
-        }
-      },
-      created: function() {
-        this.$http.get('/api/users').then(function(response){
-          this.usersList = response.json()
-        }.bind(this));
-      }
-    })
-
-  Vue.component('meeting-closing', {
-      template: "#meeting-closing-template",
-      props: ['currentMeeting'],
-      methods: {
-        submitMeeting: function() {
-          // update meeting
-          this.$http.post('/api/meetings/' + this.currentMeeting.id, this.currentMeeting, {emulateJSON:true}).then(function(response) {
-            // if (response.results) {
-              // TODO maybe think about rerouting them to the next agenda item automatically?
-              console.log("meeting updated");
-            // }
-            // else {
-            //   console.log("agenda item not updated");
-            // }
-          }).error(function(error) {
-            console.log(error);
-          }.bind(this));
-        }
-      }
-    })
-
-  Vue.component('meeting-details', {
-    template: "#meeting-details-template",
-    props: ['currentMeeting'],
-    methods: {
-    submitMeeting: function() {
-        // update meeting
-        this.$http.post('/api/meetings/' + this.currentMeeting.id, this.currentMeeting, {emulateJSON:true}).then(function(response) {
-          // if (response.results) {
-            // TODO maybe think about rerouting them to the next agenda item automatically?
-            console.log("meeting updated");
-          // }
-          // else {
-          //   console.log("agenda item not updated");
-          // }
-        }).error(function(error) {
-          console.log(error);
-        }.bind(this));
-      }
-    }
-  })
-
-  Vue.component('new-item', {
-    template: "#new-item-template",
-    props: ['newItem', 'agendaItems', 'currentItemIndex'],
-    methods: {
-      addAgendaItem: function() {
-        this.newItem.position = this.agendaItems.length
-        console.log(this.newItem.position)
-        this.$http.post('/api/agenda-items/new', {'type': this.newItem.type, 'position': this.newItem.position}, {emulateJSON:true}).then(function(response) {
-          newAgendaItem = response.json()
-          this.agendaItems.push(newAgendaItem)
-          this.$dispatch('set-current-item-index', newAgendaItem)
-        }).error(function(error) {
-          console.log(error);
-        }.bind(this));
-      }
-    }
-  });
-
-  Vue.component('agenda-item-selection', {
-    template: "#agenda-item-selection-template",
-    props: ['agendaItem','currentItemIndex'],
-    methods: {
-      setCurrentAgendaItem: function() {
-        console.log("the position of the clicked one is" + this.agendaItem.position)
-        this.$dispatch('set-current-item-index', this.agendaItem)
-      },
-      deleteAgendaItem: function() {
-        var itemId = this.agendaItem.id
-        this.$http.get('/api/agenda-items/' + itemId + '/delete', {'id': itemId}, {emulateJSON:true}).then(function(response) {
-          this.$dispatch('agenda-item-deleted', this.agendaItem)
-          // TODO figure out how to make this work again!
-          // if (this.currentItemIndex === agendaItem.position - 1) {
-          //   this.$dispatch('set-current-item-index', this.agendaItem)
-          // }
-        }).error(function(error) {
-          console.log(error);
-        }.bind(this));
-      }
-    }
-  });
-
-  Vue.component('icon', {
-    template: "#icons-template",
-    props: ['agendaItem']
-  });
-
-  Vue.component('motion', {
-    template: "#motion-template",
-    props: ['agendaItem']
-  }); 
-
-  Vue.component('agenda-menu', {
-    template: '#agenda-menu-template',
-    props: ['agendaItems','currentItemIndex']
-  });  
-
-  Vue.component('agenda-item', {
-    template: '#agenda-item-template',
-    props: ['agendaItem', 'mover', 'seconder'],
-    created: function() {
-      this.$http.get('/api/agenda-items/2/mover').then(function(response){
-          this.mover = response.json()
-        }.bind(this));
-
-      this.$http.get('/api/agenda-items/2/seconder').then(function(response){
-        this.seconder = response.json()
-      }.bind(this));
-    },
-    methods: {
-      postData: function() {
-        console.log("save request triggered!")
-        // first post posts the agenda item data
-        this.$http.post('/api/agenda-items/' + this.agendaItem.id, this.agendaItem, {emulateJSON:true}).then(function(response) {
-            // if (response.results) {
-              // TODO maybe think about rerouting them to the next agenda item automatically?
-              console.log("agenda item updated");
-            // }
-            // else {
-            //   console.log("agenda item not updated");
-            // }
-          }).error(function(error) {
-            console.log(error);
-          }.bind(this));
-
-        // second post posts the responsible users
-
-        // third post posts the votes
-
-        // fourth post posts the file
-        if (agendaItem.file_path) {
-          // do the post
-        }
-      }
-    }
-  });
-
-  Vue.component('agenda-items', {
-    template: '#agenda-items-template',
-    data: function() {
-      return {
-        currentMeeting: {},
-        agendaItems: [],
-        currentItemIndex: 'Meeting Details',
-        newItems: [
-          { type: 'Action Item', icon: 'exclamation-circle-btb' },
-          { type: 'Business', icon: 'briefcase' },
-          { type: 'Document', icon: 'file-document'},
-          { type: 'Election', icon: 'checkbox-multiple-marked-outline'},
-          { type: 'Motion', icon: 'gavel'}
-        ],
-        mover: {},
-        seconder: {},
-        responsibleUsers: [],
-        votes: []
-      }
-    },
-    created: function() {
-      // gets all agenda items
-      this.$http.get('/api/agenda-items').then(function(response){
-        this.agendaItems = response.json();
-      }.bind(this));
-
-      this.$http.get('/api/meetings/1').then(function(response){
-        this.currentMeeting = response.json();
-      }.bind(this));
-      
-    },
-    events: {
-    'agenda-item-deleted': function (agendaItem) {
-      var deletedItemIndex = this.agendaItems.indexOf(agendaItem)
-      if (this.currentItemIndex === deletedItemIndex) {
-        this.currentItemIndex = (deletedItemIndex - 1)
-      }
-      this.agendaItems.pop(agendaItem)
-    },
-    'set-current-item-index': function(agendaItem) {
-      var index = this.agendaItems.indexOf(agendaItem)
-      this.currentItemIndex = index
-    }
-  },
-  methods: {
-    setCurrentMeetingDetails: function() {
-      this.currentItemIndex = 'Meeting Details'
-    },
-    setCurrentMeetingClose: function() {
-      this.currentItemIndex = 'Meeting Closing'
-    }
-  }
-  });
-
-
   new Vue({
-    el: '#app',
+    el: "#app"
   });
-
 </script>
+

@@ -1,0 +1,24 @@
+<template id="new-item-template">
+   <li @click="addAgendaItem"><span><i class="fa fa-plus-square fa-lg"></i></span><span><i class="fa fa-{{newItem.icon}}" aria-hidden="true"></i></span> {{newItem.type}}</li>
+</template>
+
+<script>
+  Vue.component('new-item', {
+    template: "#new-item-template",
+    props: ['newItem', 'agendaItems', 'currentItemIndex'],
+    methods: {
+      addAgendaItem: function() {
+        this.newItem.position = this.agendaItems.length
+        console.log(this.newItem.position)
+        this.$http.post('/api/agenda-items/new', {'type': this.newItem.type, 'position': this.newItem.position}, {emulateJSON:true}).then(function(response) {
+          newAgendaItem = response.json()
+          this.agendaItems.push(newAgendaItem)
+          this.$dispatch('set-current-item-index', newAgendaItem)
+        }).error(function(error) {
+          console.log(error);
+        }.bind(this));
+      }
+    }
+  });
+</script>
+
