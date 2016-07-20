@@ -93,7 +93,7 @@ end
 
 get '/api/agenda-items/:id/votes' do |id|
   content_type :json
-  Vote.where(agenda_item_id: id).to_json
+  Vote.where(agenda_item_id: id).to_json(include: :voting_user)
 end
 
 

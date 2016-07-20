@@ -2,7 +2,9 @@
   <div class="ai-election" v-if="agendaItem.type === 'Election'">
     <div class="ai-responsible" >
       <label class="label">Nominee</label>
-      <input class="input" type="text" placeholder="{{ agenda_item.user_id }}" name="responsible_users">
+      <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{nominee.first_name}}</i></div>
+      <br/>
+      <nominee-modal :agenda-item.sync="agendaItem" :mover.sync="mover" :seconder.sync="nominee"></nominee-modal>
     </div>
     <div class="ai-responsible">
       <label class="label">Mover</label>
@@ -16,48 +18,41 @@
       <!-- The current Seconder is: {{mover.first_name}} -->
       <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{seconder.first_name}}</i></div>
       <br/>
-      <seconder-modal :agenda-item.sync="agendaItem" :mover.sync="mover" :seconder.sync="seconder"></seconder-modal>
-      
+      <seconder-modal :agenda-item.sync="agendaItem" :mover.sync="mover" :seconder.sync="seconder"></seconder-modal>  
     </div>
     <div class="ai-vote">
+      <!-- only shows the log votes button if there are no votes-->
       <div v-if="agendaItem.votes.length === 0">
         <a class="button">
           Log Votes
         </a>
       </div>
       <div v-else>
-        <article class="message">
-          <div class="message-header">
-            In Favour
+        <div class="message-header">
+          In Favour
+        </div>
+        <div class="message-body">
+          <div v-for="vote in votes | filterBy 'In Favour' in 'vote_type'">
+            <div class="ai-user"><i class="fa fa-checkbox-marked-circle-outline fa-lg" aria-hidden="true">{{ vote.voting_user.first_name }}</i></div>
           </div>
-          <div class="message-body">
-            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+        </div>
+        <div class="message-header">
+          Opposed
+        </div>
+        <div class="message-body">
+          <div v-for="vote in votes | filterBy 'Opposed' in 'vote_type'">
+              <div class="ai-user"><i class="fa fa-close-circle-outline fa-lg" aria-hidden="true">{{vote.voting_user.first_name}}</i></div>
           </div>
-        </article>
-        <article class="message">
-          <div class="message-header">
-            Opposed
+        </div>
+        <div class="message-header">
+          Abstained
+        </div>
+        <div class="message-body">
+          <div v-for="vote in votes | filterBy 'Abstain' in 'vote_type'">
+              <div class="ai-user"><i class="fa fa-checkbox-blank-circle-outline fa-lg" aria-hidden="true">{{vote.voting_user.first_name}}</i></div>
           </div>
-          <div class="message-body">
-            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-          </div>
-        </article>
-        <article class="message">
-          <div class="message-header">
-            Abstained
-          </div>
-          <div class="message-body">
-            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-          </div>
-        </article>
+        </div>
+      </div>
         <a class="button">
           Adjust Votes
         </a>
@@ -73,16 +68,26 @@
     data: function() {
       return {
         mover: {},
-        seconder: {}
+        seconder: {},
+        nominee: {},
+        votes: []
       }
     },
     created: function() {
-      this.$http.get('/api/agenda-items/2/mover').then(function(response){
+      this.$http.get("/api/agenda-items/6/mover").then(function(response){
         this.mover = response.json()
       }.bind(this));
 
-      this.$http.get('/api/agenda-items/2/seconder').then(function(response){
+      this.$http.get("/api/agenda-items/6/seconder").then(function(response){
         this.seconder = response.json()
+      }.bind(this));
+
+      this.$http.get("/api/agenda-items/6/nominee").then(function(response){
+        this.nominee = response.json()
+      }.bind(this));
+
+      this.$http.get("/api/agenda-items/6/votes").then(function(response){
+        this.votes = response.json()
       }.bind(this));
     }
   })  
