@@ -1,18 +1,20 @@
-
 <div id="app">
   <meetings-header></meetings-header>
-  <agenda-items>
-  </agenda-items>
+  <agenda-items></agenda-items>
   <meetings-footer></meetings-footer>
 </div>
 
 <template id="meetings-header-template">
-  <div class="container box" v-for="meetingDetail in meetingDetails">
+  <div id='header' class="container box" v-for="meetingDetail in meetingDetails">
     <h1 class="title is-1">{{meetingDetail.title}}</h1>
+    <a href="#" onclick="return xepOnline.Formatter.Format(['header','agenda-item','footer'],
+            {pageWidth:'216mm', pageHeight:'279mm', render:'download'});">
+    <i class="fa fa-2x fa-download"></i>
+</a>
     <p><strong>Minutes Status:</strong> {{ meetingDetail.status }}</p>
     <hr>
     <p>{{ meetingDetail.description }}</p>
-    <strong>Meeting Date:</strong> 
+    <strong>Meeting Date:</strong>
     {{ meetingDetail.meeting_date | moment "dddd, MMMM Do YYYY, h:mm a"}}<br/>
     <strong>Meeting Location:</strong> {{ meetingDetail.location }}<br/>
     <strong>Discussion:</strong> {{ meetingDetail.discussion }}<br/>
@@ -25,7 +27,7 @@
 </template>
 
 <template id="agenda-items-template">
-  <div class="container box"> 
+  <div id='agenda-item' class="container box">
     <div v-for="agendaItem in agendaItems | orderBy 'position'">
       <h1 class="subtitle is-5" v-if="agendaItem.title"><i class="fa fa-hand-spock-o" aria-hidden="true"></i> {{agendaItem.title}}</h1>
       <div v-if="agendaItem.discussion"><strong>Discussion:</strong> {{agendaItem.discussion}}<br/></div>
@@ -37,11 +39,11 @@
       <div v-if="agendaItem.position"><strong>Position:</strong> {{agendaItem.position}}<br/></div>
       <div v-if="agendaItem.creator"><strong>Creator:</strong> {{agendaItem.creator}}<br/></div>
       <div v-for="vote in agendaItems.votes">{{vote.voting_user.first_name}}</div>
-      
+
       <list-users :agenda-item="agendaItem"></list-users>
       <hr>
     </div>
-    
+
   </div>
 </template>
 
@@ -52,7 +54,7 @@
     </div>
     <div class="message-body">
       <div v-for="vote in allVotes | filterBy 'In Favour' in 'vote_type'">
-        <div class="ai-user tag"><i class="fa fa-checkbox-marked-circle-outline fa-lg" aria-hidden="true">{{ vote.voting_user.first_name }}</i></div>
+        <div class="ai-user"><i class="fa fa-checkbox-marked-circle-outline fa-lg" aria-hidden="true">{{ vote.voting_user.first_name }}</i></div>
       </div>
     </div>
     <div class="message-header">
@@ -75,7 +77,7 @@
 </template>
 
 <template id="meetings-footer-template">
-  <div class="box container" v-for="meetingFooterDetail in meetingFooterDetails">
+  <div id='footer' class="box container" v-for="meetingFooterDetail in meetingFooterDetails">
     <hr>
     <strong>Meeting Adjournment Time:</strong> {{ meetingFooterDetail.adjournment_time }}<br/>
     <strong>Next Meeting:</strong> {{ meetingFooterDetail.next_meeting_date }}<br/>
@@ -110,13 +112,13 @@
         }
     }
 
-        
+
 
           // if (vote !== null) {
           //   console.log(vote)
-          // } else {console.log("null vote")}      
-        
-        
+          // } else {console.log("null vote")}
+
+
 
         // var votes = [];
         // for ( var i = 0; i < agendaItems.votes.length; i++ ){
@@ -125,11 +127,11 @@
         //   }
         // }
         // var agendaItemVotes = this.agendaItems.reduce(function(x,y){
-        //   return 
+        //   return
         // }, 0)
 
         // console.log(agendaItem.id)
-        // return agendaItem.id 
+        // return agendaItem.id
         // return this.agendaItems.filter(function(agendaItem){
         //   return agendaItem.votes.filter(function(vote){
         //     return vote.vote_type === "In Favour"
@@ -152,7 +154,7 @@
     methods: {
       postData: function() {
         console.log(this)
-        this.$http.post('/api/agenda-items/1', this.agendaItem.discussion, {emulateJSON:true}).then(function(response) {
+        this.$http.post('/api/agenda-items/1', this.agendaItem.discussion).then(function(response) {
           console.log("agenda item updated");
         }).error(function(error) {
           console.log(error);
