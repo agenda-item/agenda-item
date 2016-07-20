@@ -15,15 +15,19 @@ get '/styleguide' do
   erb :styleguide
 end
 
-get '/add-single-user' do 
+get '/add-single-user' do
   erb :add_single_user
 end
 
-get '/add-mover-seconder' do 
+get '/add-mover-seconder' do
   erb :add_mover_seconder
 end
 
-# Get and post mover data 
+get '/cort' do
+  erb :action_item
+end
+
+# Get and post mover data
 
 get '/api/agenda-items/:id/mover' do |id|
   content_type :json
@@ -38,7 +42,7 @@ post '/api/agenda-items/:id/mover' do |id|
   User.find(params[:mover_id]).to_json
 end
 
-# Get and post seconder data 
+# Get and post seconder data
 
 get '/api/agenda-items/:id/seconder' do |id|
   content_type :json
@@ -53,7 +57,7 @@ post '/api/agenda-items/:id/seconder' do |id|
   User.find(params[:seconder_id]).to_json
 end
 
-# Get and post nominee data 
+# Get and post nominee data
 
 get '/api/agenda-items/:id/nominee' do |id|
   content_type :json
@@ -68,25 +72,40 @@ post '/api/agenda-items/:id/nominee' do |id|
   User.find(params[:nominee_id]).to_json
 end
 
-# Get and post responsible_users data 
+# Get and post responsible_users data
 
-get '/api/agenda-items/:id/responsible-users' do |id|
+# get '/api/agenda-items/:id/responsible-users' do |id|
+#   content_type :json
+#   ResponsibleUser.where(agenda_item_id: id).to_json
+# end
+#
+# post '/api/agenda-items/:id/responsible-users' do |id|
+#   content_type :json
+#   @responsible_users = ResponsibleUser.where(agenda_item_id: id)
+#
+#   @agenda_item = AgendaItem.find(id)
+#
+#   responsible_user_ids = params[:responsible_users].map do |user|
+#     user[:id]
+#   end
+  # active record is smart enough to figure this out and not create orphan records
+#   @agenda_item.user_ids = responsible_user_ids
+#
+# end
+
+# get and post creator data
+
+get '/api/agenda-items/:id/creator' do |id|
   content_type :json
-  ResponsibleUser.where(agenda_item_id: id).to_json
+  @agenda_item = AgendaItem.find(id)
+  User.find(@agenda_item.creator_id).to_json
 end
 
-post '/api/agenda-items/:id/responsible-users' do |id|
+post '/api/agenda-items/:id/creator' do |id|
   content_type :json
-  @responsible_users = ResponsibleUser.where(agenda_item_id: id)
-
   @agenda_item = AgendaItem.find(id)
-
-  responsible_user_ids = params[:responsible_users].map do |user|
-    user[:id]
-  end
-  # active record is smart enough to figure this out and not create orphan records
-  @agenda_item.user_ids = responsible_user_ids
-
+  @agenda_item.creator_id = params[:creator_id]
+  User.find(params[:creator_id]).to_json
 end
 
 # get and post votes
@@ -110,7 +129,7 @@ post '/api/agenda-items/:id/voters' do |id|
   @agenda_item.voter_ids = responsible_voter_ids
 end
 
-# Get and post chair data 
+# Get and post chair data
 
 get '/api/meetings/:id/chair' do |id|
   content_type :json
@@ -142,7 +161,7 @@ get '/richtext' do
   erb :rich_text_discussion
 end
 
-get '/select' do 
+get '/select' do
   erb :select_status
 end
 
@@ -331,7 +350,7 @@ get '/api/agenda-items/:id/delete' do
   content_type :json
   @agenda_item = AgendaItem.find(params[:id])
   @agenda_item.destroy
-  
+
   # results = {result: false}
   if @agenda_item.destroy
     puts "agenda item was destroyed"
