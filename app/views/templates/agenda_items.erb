@@ -41,8 +41,8 @@
     </div>
 
     <div class="column">
-      <div v-if="currentItemIndex === 'Meeting Details'"><meeting-details :current-meeting.sync="currentMeeting"></meeting-details></div>
-      <div v-if="currentItemIndex === 'Meeting Closing'"><meeting-closing :current-meeting.sync="currentMeeting"></meeting-closing></div>
+      <div v-if="currentItemIndex === 'Meeting Details'" class="section ai-agenda-item"><meeting-details :current-meeting.sync="currentMeeting"></meeting-details></div>
+      <div v-if="currentItemIndex === 'Meeting Closing'" class="section ai-agenda-item"><meeting-closing :current-meeting.sync="currentMeeting"></meeting-closing></div>
       <div v-if="currentItemIndex >= 0" class="section ai-agenda-item">
         <div><!-- header interface  -->
           <!-- <a class="button">

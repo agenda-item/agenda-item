@@ -12,8 +12,7 @@
         <div class="modal-section">
           <columns class="center-element">
             <column class="is-one-third">
-              <div class="select-user ">
-                
+              <div class="select-user">
                 <ul v-for="user in usersList">
                   <mover :agenda-item.sync="agendaItem" :user="user" :mover.sync="mover" :toggle-selected-mover="toggleSelectedMover"></mover>
                 </ul>
