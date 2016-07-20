@@ -1,0 +1,334 @@
+<template id="agenda-item-template">
+  <div class="box">
+    <form @submit.prevent="postData">
+      <h2 class="subtitle is-3">
+        <icon :agenda-item="agendaItem"></icon>
+        <span>{{agendaItem.type}}</span>
+      </h2>
+      <div class="ai-title">
+        <div class="control">
+          <label class="label">Title</label>
+          <input class="input" type="text" v-model="agendaItem.title" name="title">
+        </div>
+      </div>
+      <div class="ai-description">
+        <label class="label">Description</label>
+        <div class="control">
+          <textarea class="textarea" v-model="agendaItem.description" name="description"></textarea>
+        </div>
+      </div>
+      <div class="ai-action-item" v-if="agendaItem.type === 'Action Item'"><!--  action item TODO need to create responsible person selection functionality. TODO incorporate select functionality-->
+        <div class="ai-responsible">
+          <label class="label">Responsible Board Member(s)</label>
+          <input class="input" type="text" placeholder="@resp_user2.user_id">
+        </div>
+        <div class="ai-date-time">
+          <div class="control">
+            <label class="label">Due Date</label>
+            <input class="input" type="date" placeholder="agendaItem.due_date" name="due_date">
+          </div>
+        </div>
+        <div class="ai-status">
+          <label class="label">Status</label>
+          <p class="control">
+            <span class="select">
+              <select name="status" v-model="agendaItem.status">
+                <option >Select status</option>
+                <option value="Active">Active</option>
+                <option value="Carried Forward">Carried Forward</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </span>
+          </p>
+        </div>
+      </div><!-- end action item -->
+
+      <div class="ai-business" v-if="agendaItem.type === 'Business'"><!-- business TODO incorporate monica's PR with single person upload functionality TODO incorporate monica's PR with fix for options-->
+        <div class="ai-responsible">
+          <label class="label">Presenter(s)</label>
+          <input class="input" type="text" v-model="agendaItem.responsible_users" name="responsible_users">
+        </div>
+        <div class="ai-status">
+          <label class="label">Status</label>
+          <p class="control">
+            <span class="select">
+              <select name="status" v-model="agendaItem.status">
+                <option>Select status</option>
+                <option value="Active">Active</option>
+                <option value="Carried Forward">Carried Forward</option>
+                <option vaue="Completed">Completed</option>
+              </select>
+            </span>
+          </p>
+        </div>
+      </div><!-- end business -->
+
+      <div class="ai-document" v-if="agendaItem.type === 'Document'"><!-- document TODO write function to post the data on submit. does this submit separately from the rest of the stuffs? -->
+        <div class="ai-responsible">
+          <label class="label">Presenter(s)</label>
+          <input class="input" type="text" placeholder="{{ responsible_person_user_id.user_id }}">
+        </div>
+
+        <div class="ai-upload">
+          <label class="label">Upload Document</label>
+          <div v-if="!agendaItem.filename">
+            <!-- <form action="'/agenda-items/' + agendaItem.id + '/save_file'" method="POST" enctype="multipart/form-data"> -->
+              <input type="file" name="file">
+              <!-- TODO if the file isn't posting properly it might be because this name is not being checked for properly in the if statement in the post method -->
+              <!-- <input type="submit" value="Upload" class="button"> -->
+              <!-- </form> -->
+          </div>
+          <div v-else>
+            <a href="">{{ agendaItem.file_path }}</a>
+            <a class="button">Remove Document</a>
+          </div>
+        </div>
+      </div><!-- end document -->
+
+      <div class="ai-election" v-if="agendaItem.type === 'Election'"><!-- TODO election -->
+        <div class="ai-responsible">
+          <label class="label">Nominee</label>
+          <input class="input" type="text" placeholder="{{ agenda_item.user_id }}" name="responsible_users">
+        </div>
+        <div class="ai-responsible">
+          <label class="label">Mover</label>
+          <!-- <button  id="show-mover" @click="showMover = true" class="button">Select Mover</button> -->
+          <!-- TODO list-users should be in a modal! -->
+          <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{mover.first_name}}</i></div>
+
+          <label class="label">Seconder</label>
+          <!-- The current Seconder is: {{mover.first_name}} -->
+          <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{seconder.first_name}}</i></div>
+          <br/>
+          <modal :agenda-item.sync="agendaItem" :mover.sync="mover" :seconder.sync="seconder"></modal>
+        </div>
+        <div class="ai-responsible">
+
+          <input class="input" type="text" placeholder="{{ @election1.seconder.first_name }}" name="seconder">
+        </div>
+        <div class="ai-vote">
+          <div v-if="agendaItem.votes.length === 0">
+            <a class="button">
+              Log Votes
+            </a>
+          </div>
+          <div v-else>
+            <article class="message">
+              <div class="message-header">
+                In Favour
+              </div>
+              <div class="message-body">
+                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              </div>
+            </article>
+            <article class="message">
+              <div class="message-header">
+                Opposed
+              </div>
+              <div class="message-body">
+                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              </div>
+            </article>
+            <article class="message">
+              <div class="message-header">
+                Abstained
+              </div>
+              <div class="message-body">
+                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+              </div>
+            </article>
+            <a class="button">
+              Adjust Votes
+            </a>
+          </div>
+        </div>
+      </div><!-- end election -->
+
+      <div class="ai-motion" v-if="agendaItem.type === 'Motion'"><!-- motion TODO fix votes loop with code from /meetings TODO fix unaligned divs -->
+        <div class="ai-responsible">
+          <label class="label">Mover</label>
+
+          <input class="input" type="text" v-model="agendaItem.mover.first_name">
+        </div>
+        <div class="ai-responsible">
+          <label class="label">Seconder</label>
+          <input class="input" type="text" v-model="agendaItem.seconder.first_name">
+        </div>
+        <div class="ai-vote">
+          <div v-if="agendaItem.votes.length === 0">
+            <a class="button">
+              Log Votes
+            </a>
+          </div>
+
+          <div v-else> <!-- start v-else -->
+            <!-- TODO pull in logic from /meetings for how to loop over votes -->
+            <article class="message">
+              <div class="message-header in-favour" >
+                <span class="icon">
+                  <i class="fa fa-checkbox-marked-circle-outline"></i>
+                </span>
+                In Favour
+              </div>
+              <div class="message-body">
+                <span class="ai-user">
+                  <span class="icon">
+                    <i class="fa fa-person"></i>
+                  </span>
+                  {{ agendaItem.voting_user.first_name }}
+                </span>
+
+                <span class="ai-user">
+                  <span class="icon">
+                    <i class="fa fa-person"></i>
+                  </span>
+                  {{ agendaItem.voting_user.first_name }}
+                </span>
+
+                <span class="ai-user">
+                  <span class="icon">
+                    <i class="fa fa-person"></i>
+                  </span>
+                  {{ agendaItem.voting_user.first_name }}
+                </span>
+
+                <span class="ai-user">
+                  <span class="icon">
+                    <i class="fa fa-person"></i>
+                  </span>
+                  {{ agendaItem.voting_user.first_name }}
+                </span>
+
+                <span class="ai-user">
+                  <span class="icon">
+                    <i class="fa fa-person"></i>
+                  </span>
+                  {{ agendaItem.voting_user.first_name }}
+                </span>
+
+                <span class="ai-user">
+                  <span class="icon">
+                    <i class="fa fa-person"></i>
+                  </span>
+                  {{ agendaItem.voting_user.first_name }}
+                </span>
+              </div>
+            </article>
+            <article class="message">
+              <div class="message-header opposed">
+                <span class="icon">
+                  <i class="fa fa-close-circle-outline"></i>
+                </span>
+                Opposed
+              </div>
+              <div class="message-body">
+                <span class="ai-user  opposed">
+                  <span class="icon">
+                    <i class="fa fa-person"></i>
+                  </span>
+                  {{ agendaItem.voting_user.first_name }}
+                  </span><span class="ai-user  opposed">
+                  <span class="icon">
+                    <i class="fa fa-person"></i>
+                  </span>
+                  {{ agendaItem.voting_user.first_name }}
+                  </span><span class="ai-user  opposed">
+                  <span class="icon">
+                    <i class="fa fa-person"></i>
+                  </span>
+                  {{ agendaItem.voting_user.first_name }}
+                </span>
+              </div>
+            </article>
+            <article class="message">
+              <div class="message-header abstain">
+                <span class="icon">
+                  <i class="fa fa-checkbox-blank-circle-outline"></i>
+                </span>
+                Abstain
+              </div>
+              <div class="message-body">
+                <span class="ai-user  abstain">
+                  <span class="icon">
+                    <i class="fa fa-person"></i>
+                  </span>
+                  {{ agendaItem.voting_user.first_name }}
+                </span>
+                <span class="ai-user  abstain">
+                  <span class="icon">
+                    <i class="fa fa-person"></i>
+                  </span>
+                  {{ agendaItem.voting_user.first_name }}
+                </span>
+              </div>
+            </article>
+            <a class="button">
+              Adjust Votes
+            </a>
+          </div><!-- end v-else -->
+        </div>
+      </div><!-- end motion -->
+      <!-- </div> -->
+
+    <div class="ai-minutes">
+      <label class="label">Discussion</label>
+      <div class="control">
+        <textarea class="textarea" v-model="agendaItem.discussion" name="discussion"></textarea>
+      </div>
+    </div>
+    <input type="submit" value="Save" class="button">
+  </form>
+</div>
+</template>
+
+
+<script>
+  Vue.component('agenda-item', {
+    template: '#agenda-item-template',
+    props: ['agendaItem', 'mover', 'seconder'],
+    created: function() {
+      this.$http.get('/api/agenda-items/2/mover').then(function(response){
+        this.mover = response.json()
+      }.bind(this));
+
+      this.$http.get('/api/agenda-items/2/seconder').then(function(response){
+        this.seconder = response.json()
+      }.bind(this));
+    },
+    methods: {
+      postData: function() {
+        console.log("save request triggered!")
+        // first post posts the agenda item data
+        this.$http.post('/api/agenda-items/' + this.agendaItem.id, this.agendaItem, {emulateJSON:true}).then(function(response) {
+          // if (response.results) {
+          // TODO maybe think about rerouting them to the next agenda item automatically?
+          console.log("agenda item updated");
+          // }
+          // else {
+          //   console.log("agenda item not updated");
+          // }
+        }).error(function(error) {
+          console.log(error);
+        }.bind(this));
+
+        // second post posts the responsible users
+
+        // third post posts the votes
+
+        // fourth post posts the file
+        if (agendaItem.file_path) {
+          // do the post
+        }
+      }
+    }
+  });
+
+</script>
