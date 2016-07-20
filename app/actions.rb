@@ -15,14 +15,6 @@ get '/styleguide' do
   erb :styleguide
 end
 
-get '/add-single-user' do
-  erb :add_single_user
-end
-
-get '/add-mover-seconder' do
-  erb :add_mover_seconder
-end
-
 # Get and post mover data
 
 get '/api/agenda-items/:id/mover' do |id|
