@@ -1,3 +1,4 @@
+require_relative "utils"
 # Landing Page
 get '/' do
   erb :index
@@ -25,6 +26,22 @@ get '/download-minutes' do
   erb :download_pdf
 end
 
+get '/users/new' do 
+  erb :board_members
+end
+
+get '/motion' do
+  erb :motion
+end
+
+get '/edit-meeting' do
+  erb :meeting_details
+end
+
+get '/document' do
+  erb :document
+end
+
 #################
 # FILE UPLOADER #
 #################
@@ -36,21 +53,27 @@ end
 
 post '/agenda-items/3/save_file' do
   @filename = params[:file][:filename]
-  file = params[:file][:tempfile]
-  if File.exists? "./public/files/#{@filename}" then
-    "File with this name exists already!"
+  message = ""
+  if is_valid_filename(@filename)
+    file = params[:file][:tempfile]
+    if File.exists? "./public/files/#{@filename}" then
+      "File with this name exists already!"
+    else
+      @agenda_item = AgendaItem.find(3)
+      @agenda_item.file_path = @filename
+      if @agenda_item.save
+        puts @agenda_item.file_path
+        puts "inside save"
+      end
+      File.open("./public/files/#{@filename}", 'wb') do |f|
+        f.write(file.read)
+      end
+      message = "File has been uploaded"
+    end
   else
-    @agenda_item = AgendaItem.find(3)
-    @agenda_item.file_path = @filename
-    if @agenda_item.save
-      puts @agenda_item.file_path
-      puts "inside save"
-    end
-    File.open("./public/files/#{@filename}", 'wb') do |f|
-      f.write(file.read)
-    end
-    "File uploaded"
+    message = "Error uploading file, please retry"
   end
+  message
 end
 
 get "/public/files/:file" do
@@ -84,7 +107,7 @@ end
 
 # list all meetings
 get '/meetings' do
-  erb :meetings
+  erb :list_meetings
 end
 
 # get all meetings
@@ -97,6 +120,16 @@ end
 get '/api/meetings/:id' do |id|
   content_type :json
   Meeting.find(id).to_json
+end
+
+# meeting delete
+get '/api/meetings/:id/delete' do
+  content_type :json
+  @meeting = Meeting.find(params[:id])
+  @meeting.destroy
+  if @meeting.destroy
+    puts "meeting has been removed from existence! MWAAAHAHAHA"
+  end
 end
 
 ################

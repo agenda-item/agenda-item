@@ -1,3 +1,39 @@
+/*//dragula css*/
+  .gu-mirror{
+    position: fixed;
+    margin: 0;
+    z-index: 9999;
+    opacity: .8;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    filter: alpha(opacity=80);
+  }
+  
+  .gu-hide{
+    display: none;
+  }
+  
+  .gu-unselectable{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  .gu-transit{
+    opacity: .2;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+    filter: alpha(opacity=20);
+  }
+
+  #drag-and-drop > div {
+    background-color: #18dcf0;
+    transition: opacity 0.2s ease-in-out;
+  }
+  /*.div2 {
+    transition: opacity 0.4s ease-in-out;
+  }*/
+  /*End of dragula css*/
+
 .nav {
   /*background-color: #f3d596;*/
   background-color: white;
@@ -11,19 +47,31 @@
     /*padding-left: 20px;*/
 }
 
-.container {
-  /*max-width: 100%;*/
-  /*background-color: black;*/
-}
-
 body {
   background: #7CAFA6;
 }
+
 .style-element section {
   border: 1px dotted grey;
+  border-radius: 50px;
   padding: 20px;
   margin: 7px 0;
   background: #ccc;
+}
+
+.style-element {
+  border-radius: 20px;
+}
+
+#board-bg-img {
+  /*background-color: #462035;*/
+  background:transparent url(https://static.pexels.com/photos/66957/pexels-photo-66957.jpeg) 
+  no-repeat center center;
+  background-size: cover;
+}
+
+.board-membership-form{
+  transition: all 1s linear;
 }
 
 .ai-user {
@@ -169,7 +217,7 @@ body {
 }
 
 .button {
-  margin: 10px 0 40px 0;
+  margin: 10px 0 10px 0;
   background-color: #7AB0A3;
   color: white;
   font-size: 18px;
@@ -180,14 +228,13 @@ body {
   border-radius: 5px;
 }
 
-.button-index {
+a.button-index {
   -moz-appearance: none;
   -webkit-appearance: none;
   -webkit-box-align: center;
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  background-color: white;
   border: 1px solid #d3d6db;
   border-radius: 3px;
   color: #222324;
@@ -214,6 +261,17 @@ body {
   padding-right: 10px;
   text-align: center;
   white-space: nowrap;
+  margin-top: 0;
+  background-color: #60425A;
+  color: white;
+}
+
+.content a:not(.button):visited {
+    color: white;
+}
+
+.content a:not(.button):hover {
+    border-bottom-color: white;
 }
 
 .message-header {
@@ -237,15 +295,6 @@ p {
    /*background: transparent;*/
 }
 
-div > #ai-new-agenda-item {
-  /*background-color: blue;*/
-}
-
-div > p.menu-label {
-  /*background-color: yellow;*/
-
-}
-
 p.menu-label {
   color: black;
   padding-top: 15px;
@@ -256,25 +305,17 @@ p.menu-label {
 }
 
 #ai-new-agenda-item > div > li {
-  background: white;
+  background-color: #FFEED0;
   border: 1px solid;
   border-radius: 10px;
   padding: 10px 15px;
   margin: 3px;
- }
+}
 
 #ai-new-agenda-item > div > li > span:first-child {
  padding-right: 15px;
  color: blue;
 }
-/*
-#ai-new-agenda-item {
-  /*background-color: black;*/
-/*  padding: 10px;
-  border-radius: 5px;
-  border-style: solid;*/
-/*}*/
-
 
 article.message:first-of-type > .message-header:before {
   font-size: 25px;
@@ -296,22 +337,19 @@ article.message:last-of-type > .message-header:before {
   content: "\f021";
   font-family: AgendaItemFinalEmbed;
 }
-/*
-.section {
-  background-color: #EEF5FB;
-  border-radius: 10px;
-  border-style: solid;
-  border-width: 3px;
-}
-*/
 
-.section {
-  /*background-color : transparent;*/
+.skip-button {
+  background-color: black;
 }
 
 /* for boxes in new and signup pages */
 .main-body {
   background-color: white;
 }
+
+.user-selected {
+   color: black;
+   background-color: red;
+ }
 
 /*hello*/
