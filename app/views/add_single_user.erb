@@ -1,0 +1,244 @@
+<div id="agenda-item-template" :agenda-item="agendaItem">
+
+  <form @submit.prevent="postAgendaItem">
+
+    <div>
+    <label>Mover:</label><br/>
+    <button  id="show-mover" @click="showMover = true" class="button">Select Mover</button>
+    <!-- <div v-for="agendaItem in agendaItems"> -->
+    <!-- TODO actually get the agendaItems list on the page :) -->
+    <modal :agenda-item="agendaItem"></modal>
+    <!-- </div> -->
+      
+    <!-- <textarea id="dislay_mover" v-model="agendaItemMover.mover.id" name="mover_id" style="display: none"></textarea>
+    {{agendaItemMover.mover.first_name}}
+  <div><button id="show-mover" @click="showMover = true" class="button is-primary modal-button">Change Mover</button></div> 
+    </div>
+
+  <mover :show-mover.sync="showMover" :agenda-item.sync="agendaItemMover"></mover>
+    
+    <div>
+    <label>Seconder:</label>
+    <textarea id="seconder_id" v-model="agendaItemSeconder.seconder.id" name="seconder_id" style="display: none"></textarea>
+    {{agendaItemSeconder.seconder.first_name}}
+  <div><button id="show-seconder" @click="showSeconder = true" class="button is-primary modal-button">Change Seconder</button></div> 
+    </div> 
+
+  <seconder :show-seconder.sync="showSeconder" :agenda-item.sync="agendaItemSeconder"></seconder>
+ -->
+    <!-- <button type="submit">submit</button> -->
+  </form>
+  <!-- use the modal component, pass in the prop -->
+</div>
+
+<!-- template for the MOVER modal component -->
+<template id="list-users-template">
+Agenda Item id is: {{agendaItem.id}}
+  <ul v-for="user in usersList">
+    <mover :agenda-item="agendaItem" :user="user"></mover>
+  </ul>
+</template>
+
+<template id="modal-template">
+  <div class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-container">
+      <div class="modal-content">
+        <list-users :agenda-item="agendaItem"></list-users>
+      </div>
+    </div>
+    <button class="modal-close"></button>
+  </div>
+</template>
+
+<template id="mover-template">
+  Agenda Item id is: {{agendaItem.id}}
+  <div class="ai-user"><i class="fa fa-person" aria-hidden="true">
+  {{user.first_name}} {{user.last_name}}</i></div>
+  <!-- <div class="modal-mask" v-show="showMover" transition="modal">
+    <div class="modal-wrapper">
+      <div class="modal-container">
+
+        <div class="modal-header">
+          <slot name="header">
+            Select a new mover:
+          </slot>
+        </div>
+        
+        <div class="modal-body">
+          <slot name="body">
+            <div v-for="mover in moverList">
+              <input type="radio" id="{{mover.id}}" name="mover_id"
+                     v-bind:value="mover"
+                     v-model="agendaItemMover.mover"
+                     v-on:change="postMover">
+              <label for="{{mover.id}}">{{mover.first_name}}</label>
+            </div>
+          </slot>
+        </div>
+
+        <div class="modal-footer">
+          <slot name="footer">
+            Are you sure?
+            <button class="button is-primary modal-button"
+              @click="showMover = false">
+              Yes
+            </button>
+          </slot>
+        </div>
+      </div>
+    </div>
+  </div> -->
+</template>
+
+<!-- template for the SECONDER modal component -->
+<template id="seconder-template">
+  <div class="modal-mask" v-show="showSeconder" transition="modal">
+    <div class="modal-wrapper">
+      <div class="modal-container">
+
+        <div class="modal-header">
+          <slot name="header">
+            Select a new mover:
+          </slot>
+        </div>
+        
+        <div class="modal-body">
+          <slot name="body">
+            <div v-for="seconder in seconderList">
+              <input type="radio" id="{{seconder.id}}" name="seconder_id"
+                     v-bind:value="seconder"
+                     v-model="agendaItemSeconder.seconder"
+                     v-on:change="postSeconder">
+              <label for="{{seconder.id}}">{{seconder.first_name}}</label>
+            </div>
+          </slot>
+        </div>
+
+        <div class="modal-footer">
+          <slot name="footer">
+            Are you sure?
+            <button class="button is-primary modal-button"
+              @click="showSeconder = false">
+              Yes
+            </button>
+          </slot>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  Vue.component('list-users', {
+    template: '#list-users-template',
+    props: ['agendaItem'],
+    data: function() {
+      return {
+        usersList: []
+      }
+    },
+    created: function() {
+      this.$http.get('/api/users').then(function(response){
+        this.usersList = response.json()
+      }.bind(this));
+    }
+  })
+
+  // component for adding/updating a MOVER
+  Vue.component('mover', {
+    template: '#mover-template',
+    props: ['agendaItem','user'],
+    data: function(){
+      return {
+        mover: {},
+        showMover: {
+        type: Boolean,
+        required: true,
+        twoWay: true    
+      }
+      }
+    },
+    created: function() {
+      this.$http.get('/api/agenda-items/2/mover').then(function(response){
+        this.mover = response.json()
+        console.log(response.json())
+      }.bind(this));
+    }
+  })
+
+  // component for adding/updating a SECONDER
+  Vue.component('seconder', {
+    template: '#seconder-template',
+    data: function() {
+      return {
+        seconderList: [],
+        agendaItemSeconder: {}
+      }
+    },
+    props: {
+      agendaItem: ['agendaItem'],
+      showSeconder: {
+        type: Boolean,
+        required: true,
+        twoWay: true    
+      }
+    }
+    // ,
+    // created: function() {
+    //   this.$http.get('/api/users').then(function(response){
+    //     this.seconderList = response.json();
+    //     console.log(this.seconderList)
+    //   }.bind(this));
+    // },
+    // methods: {
+    //   postSeconder: function() {
+    //     this.$http.post('/api/seconder/' + this.agendaItemSeconder.id, {seconder_id: this.agendaItemSeconder.seconder.id}, {emulateJSON:true}).then(function(response) {
+    //       console.log("seconder saved");
+    //     }.bind(this)); 
+    //   }  
+    // }
+  })  
+
+  // parent component to handle agenda item
+  var parent = new Vue({
+    el: '#agenda-item-template',
+    data: {
+      agendaItem: {},
+      agendaItemMover: {},
+      agendaItemSeconder: {},
+      selected: '--',
+      options: [
+        { text: 'passed', value: 'passed' },
+        { text: 'defeated', value: 'defeated' },
+        { text: 'amended', value: 'amended' },
+        { text: 'active', value: 'active' },
+        { text: 'carried forward', value: 'carried forward' },
+        { text: 'completed', value: 'completed' }
+      ],
+      showMover: false,
+      showSeconder: false
+     }
+    //  ,
+    // created: function() {
+    //   this.$http.get('/api/agenda-items/5').then(function(response){
+    //     this.agendaItem = response.json();
+    //   }.bind(this));
+
+    //   this.$http.get('/api/mover/5').then(function(response){
+    //     this.agendaItemMover = response.json();
+    //   }.bind(this));
+
+    //   this.$http.get('/api/seconder/5').then(function(response){
+    //     this.agendaItemSeconder = response.json();
+    //   }.bind(this));      
+    // },
+    // methods: {
+    //   postAgendaItem: function() {
+    //     this.$http.post('/api/agenda-items/' + this.agendaItem.id, this.agendaItem, {emulateJSON:true}).then(function(response) {
+    //       console.log("agenda item saved");
+    //     }) 
+    //   }     
+    // }    
+  });
+</script>

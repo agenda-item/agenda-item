@@ -1,0 +1,77 @@
+
+
+<template id="agenda-item-template">
+  <div class="box">
+    <form @submit.prevent="postData">
+      <h2 class="subtitle is-3">
+        <icon :agenda-item="agendaItem"></icon>
+        <span>{{agendaItem.type}}</span>
+      </h2>
+      <div class="ai-title">
+        <div class="control">
+          <label class="label">Title</label>
+          <input class="input" type="text" v-model="agendaItem.title" name="title">
+        </div>
+      </div>
+      <div class="ai-description">
+        <label class="label">Description</label>
+        <div class="control">
+          <textarea class="textarea" v-model="agendaItem.description" name="description"></textarea>
+        </div>
+      </div>
+      
+      <action-item :agenda-item.sync="agendaItem"></action-item>
+
+      <business :agenda-item.sync="agendaItem"></business>
+
+      <document :agenda-item.sync="agendaItem"></document>
+
+      <election :agenda-item.sync="agendaItem"></election>
+
+      <motion :agenda-item.sync="agendaItem"></motion>
+
+    <div class="ai-minutes">
+      <label class="label">Discussion</label>
+      <div class="control">
+        <textarea class="textarea" v-model="agendaItem.discussion" name="discussion"></textarea>
+      </div>
+    </div>
+    <input type="submit" value="Save" class="button">
+  </form>
+</div>
+</template>
+
+
+<script>
+  Vue.component('agenda-item', {
+    template: '#agenda-item-template',
+    props: ['agendaItem'],
+    methods: {
+      postData: function() {
+        console.log("save request triggered!")
+        // first post posts the agenda item data
+        this.$http.post('/api/agenda-items/' + this.agendaItem.id, this.agendaItem, {emulateJSON:true}).then(function(response) {
+          // if (response.results) {
+          // TODO maybe think about rerouting them to the next agenda item automatically?
+          console.log("agenda item updated");
+          // }
+          // else {
+          //   console.log("agenda item not updated");
+          // }
+        }).error(function(error) {
+          console.log(error);
+        }.bind(this));
+
+        // second post posts the responsible users
+
+        // third post posts the votes
+
+        // fourth post posts the file
+        if (agendaItem.file_path) {
+          // do the post
+        }
+      }
+    }
+  });
+
+</script>

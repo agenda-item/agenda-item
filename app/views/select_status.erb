@@ -4,7 +4,11 @@
 
 <template id="agenda-item-template" >
  <form @submit.prevent="postData">
+<<<<<<< HEAD
+    <!-- <label>Title:</label>
+=======
     <label>Title:</label>
+>>>>>>> 356034424aa1be477535be0ef74935a4b5d4c0b4
     <br>
     <textarea id="title" v-model="agendaItem.title" name="title"></textarea>
     <br>
@@ -19,7 +23,11 @@
     <label>Status:</label>
     <br>
     <textarea id="status" v-model="agendaItem.status" name="status"></textarea>
+<<<<<<< HEAD
+    <br> -->
+=======
     <br>
+>>>>>>> 356034424aa1be477535be0ef74935a4b5d4c0b4
     <select v-model="agendaItem.status">
       <option v-for="option in options" v-bind:value="option.value">
         {{ option.text }}
@@ -52,12 +60,21 @@
       agendaItem: {},
       selected: '--',
       options: [
-        { text: 'passed', value: 'passed' },
+<<<<<<< HEAD
+        { text: 'Passed', value: 'Passed' },
+        { text: 'Defeated', value: 'Defeated' },
+        { text: 'Amended', value: 'Amended' },
+        { text: 'Active', value: 'Active' },
+        { text: 'Carried Forward', value: 'Carried Forward' },
+        { text: 'Completed', value: 'Completed' }
+=======
+        { status: 'passed', value: 'passed' },
         { text: 'defeated', value: 'defeated' },
         { text: 'amended', value: 'amended' },
         { text: 'active', value: 'active' },
         { text: 'carried forward', value: 'carried forward' },
         { text: 'completed', value: 'completed' }
+>>>>>>> 356034424aa1be477535be0ef74935a4b5d4c0b4
       ]      
     },
     created: function() {
