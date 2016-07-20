@@ -1,37 +1,32 @@
-<div class="style-element section ai-election">
-  <div class="box">
-    <h2 class="subtitle is-3">Election</h2>
-    <div class="ai-title">
-      <div class="control">
-        <label class="label">Title</label>
-        <input class="input" type="text" placeholder="{{ @election1.title }}">
-      </div>
-    </div>
-    <div class="ai-motion">
-      <label class="label">Motion to Nominate</label>
-      <div class="control">
-        <textarea class="textarea" placeholder="{{ @election1.description }}"></textarea>
-      </div>
-    </div>
-    <div class="ai-responsible">
+<template id="election-template">
+  <div class="ai-election" v-if="agendaItem.type === 'Election'">
+    <div class="ai-responsible" >
       <label class="label">Nominee</label>
-      <input class="input" type="text" placeholder="{{ agenda_item.user_id }}">
+      <input class="input" type="text" placeholder="{{ agenda_item.user_id }}" name="responsible_users">
     </div>
     <div class="ai-responsible">
       <label class="label">Mover</label>
-      <input class="input" type="text" placeholder="{{ @election1.mover.first_name }}">
-    </div>
-    <div class="ai-responsible">
+      <!-- <button  id="show-mover" @click="showMover = true" class="button">Select Mover</button> -->
+      <!-- TODO list-users should be in a modal! -->
+      <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{mover.first_name}}</i></div>
+      <br/>
+      <mover-modal :agenda-item.sync="agendaItem" :mover.sync="mover" :seconder.sync="seconder"></mover-modal>
+  
       <label class="label">Seconder</label>
-      <input class="input" type="text" placeholder="{{ @election1.seconder.first_name }}">
+      <!-- The current Seconder is: {{mover.first_name}} -->
+      <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{seconder.first_name}}</i></div>
+      <br/>
+      <seconder-modal :agenda-item.sync="agendaItem" :mover.sync="mover" :seconder.sync="seconder"></seconder-modal>
+      
     </div>
     <div class="ai-vote">
-      <p>** if not logged</p>
-      <a class="button">
-        Log Votes
-      </a>
-      <p>** if logged</p>
-      <article class="message">
+      <div v-if="agendaItem.votes.length === 0">
+        <a class="button">
+          Log Votes
+        </a>
+      </div>
+      <div v-else>
+        <article class="message">
           <div class="message-header">
             In Favour
           </div>
@@ -67,11 +62,28 @@
           Adjust Votes
         </a>
       </div>
-    <div class="ai-minutes">
-      <label class="label">Discussion</label>
-      <div class="control">
-        <textarea class="textarea" placeholder="{{ @election1.discussion }}"></textarea>
-      </div>
     </div>
   </div>
-</div>
+</template>
+
+<script>
+  Vue.component('election', {
+    template: '#election-template',
+    props: ['agendaItem'],
+    data: function() {
+      return {
+        mover: {},
+        seconder: {}
+      }
+    },
+    created: function() {
+      this.$http.get('/api/agenda-items/2/mover').then(function(response){
+        this.mover = response.json()
+      }.bind(this));
+
+      this.$http.get('/api/agenda-items/2/seconder').then(function(response){
+        this.seconder = response.json()
+      }.bind(this));
+    }
+  })  
+</script>
