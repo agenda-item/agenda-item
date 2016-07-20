@@ -9,12 +9,15 @@
       <!-- <button  id="show-mover" @click="showMover = true" class="button">Select Mover</button> -->
       <!-- TODO list-users should be in a modal! -->
       <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{mover.first_name}}</i></div>
-
+      <br/>
+      <mover-modal :agenda-item.sync="agendaItem" :mover.sync="mover" :seconder.sync="seconder"></mover-modal>
+  
       <label class="label">Seconder</label>
       <!-- The current Seconder is: {{mover.first_name}} -->
       <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{seconder.first_name}}</i></div>
       <br/>
-      <mover-seconder-modal :agenda-item.sync="agendaItem" :mover.sync="mover" :seconder.sync="seconder"></mover-seconder-modal>
+      <seconder-modal :agenda-item.sync="agendaItem" :mover.sync="mover" :seconder.sync="seconder"></seconder-modal>
+      
     </div>
     <div class="ai-vote">
       <div v-if="agendaItem.votes.length === 0">

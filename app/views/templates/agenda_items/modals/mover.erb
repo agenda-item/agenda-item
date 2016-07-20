@@ -1,32 +1,19 @@
-<style>
-  .user-selected {
-     color: black;
-     background-color: red;
-   }
-</style>
-
-<template id="mover-seconder-modal-template">
-  <button class="button" @click.prevent="openModal">Log Mover and Seconder</button>
+<template id="mover-modal-template">
+  <button class="button" @click.prevent="openModal">Log Mover</button>
   <div class="modal" v-bind:class="{ 'is-active': showModal}">
   <div class="modal-background">
   </div>
     <div class="modal-card">
       <header class="modal-card-head">
         <h1 class="title is-3" class="modal-card-title">
-          Select Mover and Seconder</h1>
+          Select Mover</h1>
       </header>
       <section class="modal-card-body">
         <div class="modal-section">
-          <div id="select-mover">
+          <div id="select-user">
             <p>Click to select the member who moved the Agenda Item:<p>
             <ul v-for="user in usersList">
               <mover :agenda-item.sync="agendaItem" :user="user" :mover.sync="mover" :toggle-selected-mover="toggleSelectedMover"></mover>
-            </ul>
-          </div>
-          <div id="select-seconder">
-            <p>Click to select the member who seconded the Agenda Item:<p>
-            <ul v-for="user in usersList">
-              <seconder :agenda-item.sync="agendaItem" :user="user" :seconder.sync="seconder" :toggle-selected-seconder="toggleSelectedSeconder"></seconder>
             </ul>
           </div>
         </div>
@@ -38,8 +25,8 @@
 </template>
 
 <script>
-  Vue.component('mover-seconder-modal', {
-    template: '#mover-seconder-modal-template',
+  Vue.component('mover-modal', {
+    template: '#mover-modal-template',
     props: ['agendaItem', 'mover', 'seconder'],
     data: function(){
       return {
@@ -66,7 +53,6 @@
   })
 </script>
 
-
 <template id="mover-template">
     <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedMover}" @click="setMover"><i class="fa fa-person" aria-hidden="true">
       {{user.first_name}} {{user.last_name}}
@@ -91,33 +77,6 @@
           this.toggleSelectedMover = false
         }
       }
-  })
-</script>
-
-<template id="seconder-template">
-    <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedSeconder}" @click="setSeconder"><i class="fa fa-person" aria-hidden="true">
-      {{user.first_name}} {{user.last_name}}
-    </i></li>
-</template>
-
-<script>
-  Vue.component('seconder', {
-    template: '#seconder-template',
-    props: ['agendaItem','user','seconder', 'toggleSelectedSeconder'],
-    methods: {
-      setSeconder: function(){
-        this.$http.post('/api/agenda-items/2/seconder', {'seconder_id': this.user.id}, {emulateJSON:true}).then(function(response){
-          this.$parent.$broadcast('clearSelectedSeconder')
-          this.seconder = response.json()
-          this.toggleSelectedSeconder = true
-        }.bind(this));
-      }
-    },
-    events: {
-      clearSelectedSeconder: function() {
-          this.toggleSelectedSeconder = false
-      }
-    }
   })
 </script>
 
