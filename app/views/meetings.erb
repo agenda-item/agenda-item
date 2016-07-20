@@ -37,27 +37,33 @@
     </div>
   </template>
 
-      <template id="agenda-items-template">
-        <div class="column">
-          <div id='agenda-item' class="container box">
-            <div v-for="agendaItem in agendaItems | orderBy 'position'">
-              <h1 class="subtitle is-5" v-if="agendaItem.title"><i class="fa fa-hand-spock-o" aria-hidden="true"></i> {{agendaItem.title}}</h1>
-              <div v-if="agendaItem.discussion"><strong>Discussion:</strong> {{agendaItem.discussion}}<br/></div>
-              <div v-if="agendaItem.file_path"><strong>File Path:</strong> {{agendaItem.file_path}}<br/></div>
-              <div v-if="agendaItem.mover" ><strong>Mover:</strong> {{agendaItem.mover}}<br/></div>
-              <div v-if="agendaItem.seconder"><strong>Seconder:</strong> {{agendaItem.seconder}}<br/></div>
-              <div v-if="agendaItem.due_date"><strong>Due Date:</strong> {{agendaItem.due_date | moment "dddd, MMMM Do YYYY, h:mm a" }}<br/></div>
-              <div v-if="agendaItem.status"><strong>Status:</strong> {{agendaItem.status}}<br/></div>
-              <div v-if="agendaItem.position"><strong>Position:</strong> {{agendaItem.position}}<br/></div>
-              <div v-if="agendaItem.creator"><strong>Creator:</strong> {{agendaItem.creator}}<br/></div>
-              <div v-for="vote in agendaItems.votes">{{vote.voting_user.first_name}}</div>
+    <template id="agenda-items-template">
+      <div class="columns">
+        <div class="column is-2">
+        </div>
+          <div class="column">
+            <div id='agenda-item' class="container box">
+              <div v-for="agendaItem in agendaItems | orderBy 'position'">
+                <h1 class="subtitle is-5" v-if="agendaItem.title"><i class="fa fa-hand-spock-o" aria-hidden="true"></i> {{agendaItem.title}}</h1>
+                <div v-if="agendaItem.discussion"><strong>Discussion:</strong> {{agendaItem.discussion}}<br/></div>
+                <div v-if="agendaItem.file_path"><strong>File Path:</strong> {{agendaItem.file_path}}<br/></div>
+                <div v-if="agendaItem.mover" ><strong>Mover:</strong> {{agendaItem.mover}}<br/></div>
+                <div v-if="agendaItem.seconder"><strong>Seconder:</strong> {{agendaItem.seconder}}<br/></div>
+                <div v-if="agendaItem.due_date"><strong>Due Date:</strong> {{agendaItem.due_date | moment "dddd, MMMM Do YYYY, h:mm a" }}<br/></div>
+                <div v-if="agendaItem.status"><strong>Status:</strong> {{agendaItem.status}}<br/></div>
+                <div v-if="agendaItem.position"><strong>Position:</strong> {{agendaItem.position}}<br/></div>
+                <div v-if="agendaItem.creator"><strong>Creator:</strong> {{agendaItem.creator}}<br/></div>
+                <div v-for="vote in agendaItems.votes">{{vote.voting_user.first_name}}</div>
 
-              <list-users :agenda-item="agendaItem"></list-users>
-              <hr>
+                <list-users :agenda-item="agendaItem"></list-users>
+                <hr>
+              </div>
             </div>
           </div>
+        <div class="column is-2">
         </div>
-      </template>
+      </div>
+    </template>
 
       <template id="list-users-template">
         <div v-if="agendaItem.status != 'Active'">
