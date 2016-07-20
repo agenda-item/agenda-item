@@ -17,11 +17,11 @@ get '/select' do
   erb :select_status
 end
 
-get '/richtext' do 
+get '/richtext' do
   erb :rich_text_discussion
 end
 
-get '/download-minutes' do 
+get '/download-minutes' do
   erb :download_pdf
 end
 
