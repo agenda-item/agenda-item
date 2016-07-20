@@ -1,5 +1,5 @@
-
 require_relative "utils"
+
 # Landing Page
 get '/' do
   erb :index
@@ -77,7 +77,7 @@ end
 
 get '/richtext' do
   erb :rich_text_discussion
-
+end
 
 get '/select' do 
   erb :select_status
@@ -245,7 +245,6 @@ post '/api/agenda-items/:id' do |id|
   content_type :json
   results = {result: false}
   @agenda_item = AgendaItem.find(id)
-
 
   @agenda_item.update(
     title:  params[:title],

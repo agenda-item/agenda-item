@@ -1,0 +1,47 @@
+<!-- document TODO write function to post the file data on submit. does this submit separately from the rest of the stuffs? -->
+
+<template id="document-template">
+  <div class="ai-document" v-if="agendaItem.type === 'Document'">
+    <div class="ai-responsible">
+      <label class="label">Presenter(s)</label>
+      <input class="input" type="text" placeholder="{{ responsible_person_user_id.user_id }}">
+    </div>
+
+    <div class="ai-upload">
+      <label class="label">Upload Document</label>
+      <div v-if="!agendaItem.filename">
+        <!-- <form action="'/agenda-items/' + agendaItem.id + '/save_file'" method="POST" enctype="multipart/form-data"> -->
+          <input type="file" name="file">
+          <!-- TODO if the file isn't posting properly it might be because this name is not being checked for properly in the if statement in the post method -->
+          <!-- <input type="submit" value="Upload" class="button"> -->
+          <!-- </form> -->
+      </div>
+      <div v-else>
+        <a href="">{{ agendaItem.file_path }}</a>
+        <a class="button">Remove Document</a>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  Vue.component('document', {
+      template: '#document-template',
+      props: ['agendaItem'],
+      data: function() {
+        return {
+          mover: {},
+          seconder: {}
+        }
+      },
+      created: function() {
+        this.$http.get('/api/agenda-items/2/mover').then(function(response){
+          this.mover = response.json()
+        }.bind(this));
+
+        this.$http.get('/api/agenda-items/2/seconder').then(function(response){
+          this.seconder = response.json()
+        }.bind(this));
+      }
+    })  
+</script>
