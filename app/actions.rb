@@ -107,7 +107,7 @@ end
 
 # list all meetings
 get '/meetings' do
-  erb :meetings
+  erb :list_meetings
 end
 
 # get all meetings
@@ -120,6 +120,16 @@ end
 get '/api/meetings/:id' do |id|
   content_type :json
   Meeting.find(id).to_json
+end
+
+# meeting delete
+get '/api/meetings/:id/delete' do
+  content_type :json
+  @meeting = Meeting.find(params[:id])
+  @meeting.destroy
+  if @meeting.destroy
+    puts "meeting has been removed from existence! MWAAAHAHAHA"
+  end
 end
 
 ################
