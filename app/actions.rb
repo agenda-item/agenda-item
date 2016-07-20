@@ -138,7 +138,7 @@ get '/meetings/new' do
 end
 
 get '/logout' do
-
+  redirect '/'
 end
 ################
 # AGENDA ITEMS #
