@@ -26,7 +26,7 @@ get '/download-minutes' do
   erb :download_pdf
 end
 
-get '/users/new' do 
+get '/users/new' do
   erb :board_members
 end
 
@@ -132,6 +132,14 @@ get '/api/meetings/:id/delete' do
   end
 end
 
+get '/meetings/new' do
+  content_type :json
+
+end
+
+get '/logout' do
+
+end
 ################
 # AGENDA ITEMS #
 ################
