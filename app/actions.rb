@@ -25,6 +25,9 @@ get '/download-minutes' do
   erb :download_pdf
 end
 
+get '/users/new' do 
+  erb :board_members
+end
 #################
 # FILE UPLOADER #
 #################
