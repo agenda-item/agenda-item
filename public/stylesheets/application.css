@@ -56,6 +56,10 @@ body {
   background: #7CAFA6;
 }
 
+.pdf-button {
+  margin-left: 60px;
+}
+
 .style-element section {
   border: 1px dotted grey;
   border-radius: 50px;
