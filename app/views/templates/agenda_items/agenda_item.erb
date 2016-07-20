@@ -1,3 +1,5 @@
+
+
 <template id="agenda-item-template">
   <div class="box">
     <form @submit.prevent="postData">
@@ -85,72 +87,7 @@
         </div>
       </div><!-- end document -->
 
-      <div class="ai-election" v-if="agendaItem.type === 'Election'"><!-- TODO election -->
-        <div class="ai-responsible">
-          <label class="label">Nominee</label>
-          <input class="input" type="text" placeholder="{{ agenda_item.user_id }}" name="responsible_users">
-        </div>
-        <div class="ai-responsible">
-          <label class="label">Mover</label>
-          <!-- <button  id="show-mover" @click="showMover = true" class="button">Select Mover</button> -->
-          <!-- TODO list-users should be in a modal! -->
-          <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{mover.first_name}}</i></div>
-
-          <label class="label">Seconder</label>
-          <!-- The current Seconder is: {{mover.first_name}} -->
-          <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{seconder.first_name}}</i></div>
-          <br/>
-          <modal :agenda-item.sync="agendaItem" :mover.sync="mover" :seconder.sync="seconder"></modal>
-        </div>
-        <div class="ai-responsible">
-
-          <input class="input" type="text" placeholder="{{ @election1.seconder.first_name }}" name="seconder">
-        </div>
-        <div class="ai-vote">
-          <div v-if="agendaItem.votes.length === 0">
-            <a class="button">
-              Log Votes
-            </a>
-          </div>
-          <div v-else>
-            <article class="message">
-              <div class="message-header">
-                In Favour
-              </div>
-              <div class="message-body">
-                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-              </div>
-            </article>
-            <article class="message">
-              <div class="message-header">
-                Opposed
-              </div>
-              <div class="message-body">
-                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-              </div>
-            </article>
-            <article class="message">
-              <div class="message-header">
-                Abstained
-              </div>
-              <div class="message-body">
-                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-              </div>
-            </article>
-            <a class="button">
-              Adjust Votes
-            </a>
-          </div>
-        </div>
-      </div><!-- end election -->
+      <election :agenda-item.sync="agendaItem"></election>
 
       <div class="ai-motion" v-if="agendaItem.type === 'Motion'"><!-- motion TODO fix votes loop with code from /meetings TODO fix unaligned divs -->
         <div class="ai-responsible">
@@ -293,16 +230,7 @@
 <script>
   Vue.component('agenda-item', {
     template: '#agenda-item-template',
-    props: ['agendaItem', 'mover', 'seconder'],
-    created: function() {
-      this.$http.get('/api/agenda-items/2/mover').then(function(response){
-        this.mover = response.json()
-      }.bind(this));
-
-      this.$http.get('/api/agenda-items/2/seconder').then(function(response){
-        this.seconder = response.json()
-      }.bind(this));
-    },
+    props: ['agendaItem'],
     methods: {
       postData: function() {
         console.log("save request triggered!")

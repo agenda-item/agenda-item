@@ -1,5 +1,7 @@
 <%= erb(:"templates/agenda_items/new_item") %>
 <%= erb(:"templates/agenda_items/agenda_item_selection") %>
+<%= erb(:"templates/agenda_items/election") %>
+<%= erb(:"templates/agenda_items/modals/mover-seconder") %>
 <%= erb(:"templates/agenda_items/agenda_item") %>
 <%= erb(:"templates/agenda_items/helpers") %>
 <%= erb(:"templates/agenda_items/meeting_details") %>
@@ -35,7 +37,7 @@
           </a> -->
         </div>
         <!-- sets the current agenda item loaded into the side with the currentItemIndex of the agendaItems list stored on the root instance data -->
-        <agenda-item :agenda-item="agendaItems[currentItemIndex]" :mover.sync="mover" :seconder.sync="seconder"></agenda-item>
+        <agenda-item :agenda-item="agendaItems[currentItemIndex]"></agenda-item>
       </div>
     </div>
 
@@ -68,8 +70,6 @@
           { type: 'Election', icon: 'checkbox-multiple-marked-outline'},
           { type: 'Motion', icon: 'gavel'}
         ],
-        mover: {},
-        seconder: {},
         responsibleUsers: [],
         votes: []
       }
@@ -107,4 +107,5 @@
     }
   }
   });
+  
 </script>

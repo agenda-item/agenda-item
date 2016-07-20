@@ -1,0 +1,136 @@
+<style>
+  .user-selected {
+     color: black;
+     background-color: red;
+   }
+</style>
+
+<template id="mover-seconder-modal-template">
+  <button class="button" @click.prevent="openModal">Log Mover and Seconder</button>
+  <div class="modal" v-bind:class="{ 'is-active': showModal}">
+  <div class="modal-background">
+  </div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <h1 class="title is-3" class="modal-card-title">
+          Select Mover and Seconder</h1>
+      </header>
+      <section class="modal-card-body">
+        <div class="modal-section">
+          <div id="select-mover">
+            <div v-if="mover">
+              <h2 class="subtitle is-6"><strong>The Current Mover is:</strong> {{mover.first_name}}</h2>
+            </div>
+            <p>Click to select the member who moved the Agenda Item:<p>
+            <ul v-for="user in usersList">
+              <mover :agenda-item.sync="agendaItem" :user="user" :mover.sync="mover" :selected-class="selectedClass"></mover>
+            </ul>
+          </div>
+          <div id="select-seconder">
+            <div v-if="seconder">
+              <h2 class="subtitle is-6"><strong>The Current Seconder is:</strong> {{seconder.first_name}}</h2>
+            </div>
+            <p>Click to select the member who seconded the Agenda Item:<p>
+            <ul v-for="user in usersList">
+              <seconder :agenda-item.sync="agendaItem" :user="user" :seconder.sync="seconder" :selected-class="selectedClass"></seconder>
+            </ul>
+          </div>
+        </div>
+        <list-users :agenda-item.sync="agendaItem" :mover.sync="mover" :seconder.sync="seconder"></list-users>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button" @click.prevent="closeModal">Close</button>
+      </footer>
+    </div>
+</template>
+
+<script>
+  Vue.component('mover-seconder-modal', {
+    template: '#mover-seconder-modal-template',
+    props: ['agendaItem', 'mover', 'seconder'],
+    data: function(){
+      return {
+        showModal: false,
+        selectedClass: false,
+        usersList: []
+      }
+    },
+    methods: {
+      openModal: function() {
+        this.showModal = true
+      },
+      closeModal: function() {
+        this.showModal = false
+        console.log("clicking close " + this.showModal)
+      }
+    },
+    created: function() {
+      this.$http.get('/api/users').then(function(response){
+        this.usersList = response.json()
+      }.bind(this));
+    }
+  })
+</script>
+
+
+<template id="mover-template">
+    <li class="ai-user" v-bind:class="{ 'user-selected': selectedClass}" @click="setMover"><i class="fa fa-person" aria-hidden="true">
+      {{user.first_name}} {{user.last_name}}
+    </i></li>
+</template>
+
+<script>
+  Vue.component('mover', {
+    template: '#mover-template',
+    props: ['agendaItem','user','mover','selectedClass'],
+    methods: {
+      setMover: function(){
+        this.$http.post('/api/agenda-items/2/mover', {'mover_id': this.user.id}, {emulateJSON:true}).then(function(response){
+          this.$parent.$broadcast('clearSelectedUsers')
+          this.mover = response.json()
+          this.selectedClass = true
+        }.bind(this));
+      },
+      clearSelected: function(){
+        this.selectedClass = false
+      }
+    },
+    events: {
+      clearSelectedUsers: function() {
+          this.selectedClass = false
+          console.log("i can hear!")
+        }
+      }
+  })
+</script>
+
+<template id="seconder-template">
+    <li class="ai-user" v-bind:class="{ 'user-selected': selectedClass}" @click="setSeconder"><i class="fa fa-person" aria-hidden="true">
+      {{user.first_name}} {{user.last_name}}
+    </i></li>
+</template>
+
+<script>
+  Vue.component('seconder', {
+    template: '#seconder-template',
+    props: ['agendaItem','user','seconder', 'selectedClass'],
+    methods: {
+      setSeconder: function(){
+        this.$http.post('/api/agenda-items/2/seconder', {'seconder_id': this.user.id}, {emulateJSON:true}).then(function(response){
+          this.$parent.$broadcast('clearSelectedUsers')
+          this.seconder = response.json()
+          this.selectedClass = true
+        }.bind(this));
+      },
+      clearSelected: function(){
+        this.selectedClass = false
+      }
+    },
+    events: {
+      clearSelectedUsers: function() {
+          this.selectedClass = false
+      }
+    }
+  })
+</script>
+
