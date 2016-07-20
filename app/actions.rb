@@ -134,7 +134,8 @@ end
 
 get '/meetings/new' do
   content_type :json
-
+  @meeting = Meeting.new
+  erb :'new_meeting'  #not correct erb, placeholder
 end
 
 get '/logout' do
