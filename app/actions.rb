@@ -81,8 +81,9 @@ get '/select' do
   erb :select_status
 end
 
-
-
+get '/download-minutes' do 
+  erb :download_pdf
+end
 
 
 #################
