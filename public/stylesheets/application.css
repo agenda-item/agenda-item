@@ -1,3 +1,39 @@
+/*//dragula css*/
+  .gu-mirror{
+    position: fixed;
+    margin: 0;
+    z-index: 9999;
+    opacity: .8;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    filter: alpha(opacity=80);
+  }
+  
+  .gu-hide{
+    display: none;
+  }
+  
+  .gu-unselectable{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  .gu-transit{
+    opacity: .2;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+    filter: alpha(opacity=20);
+  }
+
+  #drag-and-drop > div {
+    background-color: #18dcf0;
+    transition: opacity 0.2s ease-in-out;
+  }
+  /*.div2 {
+    transition: opacity 0.4s ease-in-out;
+  }*/
+  /*End of dragula css*/
+
 .nav {
   /*background-color: #f3d596;*/
   background-color: white;
@@ -19,11 +55,24 @@
 body {
   background: #7CAFA6;
 }
+
 .style-element section {
   border: 1px dotted grey;
+  border-radius: 50px;
   padding: 20px;
   margin: 7px 0;
   background: #ccc;
+}
+
+.style-element {
+  border-radius: 20px;
+}
+
+#board-bg-img {
+  /*background-color: #462035;*/
+  background:transparent url(https://static.pexels.com/photos/66957/pexels-photo-66957.jpeg) 
+  no-repeat center center;
+  background-size: cover;
 }
 
 .ai-user {
@@ -187,10 +236,10 @@ body {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  background-color: white;
+  /*background-color: white;*/
   border: 1px solid #d3d6db;
   border-radius: 3px;
-  color: #222324;
+  /*color: #222324;*/
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -214,6 +263,7 @@ body {
   padding-right: 10px;
   text-align: center;
   white-space: nowrap;
+  margin-top: -20px;
 }
 
 .message-header {
@@ -313,5 +363,3 @@ article.message:last-of-type > .message-header:before {
 .main-body {
   background-color: white;
 }
-
-/*hello*/
