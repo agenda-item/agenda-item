@@ -23,10 +23,6 @@ get '/add-mover-seconder' do
   erb :add_mover_seconder
 end
 
-get '/cort' do
-  erb :action_item
-end
-
 # Get and post mover data
 
 get '/api/agenda-items/:id/mover' do |id|

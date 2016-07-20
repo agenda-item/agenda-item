@@ -13,7 +13,7 @@
           <div id="select-user">
             <p>Click to select the member who is responsible for this item:<p>
             <ul v-for="user in usersList">
-              <responsible-users :agenda-item.sync="agendaItem" :user="user" :creator.sync="creator" :toggle-selected-responsible-users="toggleSelectedResponsibleUser"></responsible-users>
+              <responsible-users :agenda-item.sync="agendaItem" :user="user" :creator.sync="creator" :toggle-selected-responsible-user="toggleSelectedResponsibleUser"></responsible-users>
             </ul>
           </div>
         </div>
