@@ -23,16 +23,12 @@ get '/add-mover-seconder' do
   erb :add_mover_seconder
 end
 
+# Get and post mover data 
+
 get '/api/agenda-items/:id/mover' do |id|
   content_type :json
   @agenda_item = AgendaItem.find(id)
   User.find(@agenda_item.mover_id).to_json
-end
-
-get '/api/agenda-items/:id/seconder' do |id|
-  content_type :json
-  @agenda_item = AgendaItem.find(id)
-  User.find(@agenda_item.seconder_id).to_json
 end
 
 post '/api/agenda-items/:id/mover' do |id|
@@ -42,6 +38,14 @@ post '/api/agenda-items/:id/mover' do |id|
   User.find(params[:mover_id]).to_json
 end
 
+# Get and post seconder data 
+
+get '/api/agenda-items/:id/seconder' do |id|
+  content_type :json
+  @agenda_item = AgendaItem.find(id)
+  User.find(@agenda_item.seconder_id).to_json
+end
+
 post '/api/agenda-items/:id/seconder' do |id|
   content_type :json
   @agenda_item = AgendaItem.find(id)
@@ -49,18 +53,77 @@ post '/api/agenda-items/:id/seconder' do |id|
   User.find(params[:seconder_id]).to_json
 end
 
+# Get and post nominee data 
 
-# post '/api/agenda-items/:id/mover' do |id|
-#   content_type :json
-#   @agenda_item = AgendaItem.find(id)
-#   @agenda_item.mover = User.find(params[:mover_id])
-#   if @agenda_item.save
-#     puts @agenda_item.mover
-#     puts params[:mover_id]
-#     puts "saved new mover"
-#     @agenda_item.mover.to_json
-#   end 
-# end
+get '/api/agenda-items/:id/nominee' do |id|
+  content_type :json
+  @agenda_item = AgendaItem.find(id)
+  User.find(@agenda_item.nominee_id).to_json
+end
+
+post '/api/agenda-items/:id/nominee' do |id|
+  content_type :json
+  @agenda_item = AgendaItem.find(id)
+  @agenda_item.seconder_id = params[:nominee_id]
+  User.find(params[:nominee_id]).to_json
+end
+
+# Get and post responsible_users data 
+
+get '/api/agenda-items/:id/responsible-users' do |id|
+  content_type :json
+  ResponsibleUser.where(agenda_item_id: id).to_json
+end
+
+post '/api/agenda-items/:id/responsible-users' do |id|
+  content_type :json
+  @responsible_users = ResponsibleUser.where(agenda_item_id: id)
+
+  @agenda_item = AgendaItem.find(id)
+
+  responsible_user_ids = params[:responsible_users].map do |user|
+    user[:id]
+  end
+  # active record is smart enough to figure this out and not create orphan records
+  @agenda_item.user_ids = responsible_user_ids
+
+end
+
+# get and post votes
+
+get '/api/agenda-items/:id/votes' do |id|
+  content_type :json
+  Vote.where(agenda_item_id: id).to_json
+end
+
+
+post '/api/agenda-items/:id/voters' do |id|
+  content_type :json
+  @voters = Voter.where(agenda_item_id: id)
+
+  @agenda_item = AgendaItem.find(id)
+
+  responsible_voter_ids = params[:votes].map do |user|
+    user[:id]
+  end
+  # active record is smart enough to figure this out and not create orphan records
+  @agenda_item.voter_ids = responsible_voter_ids
+end
+
+# Get and post chair data 
+
+get '/api/meetings/:id/chair' do |id|
+  content_type :json
+  @meeting = Meeting.find(id)
+  User.find(@meeting.chair_id).to_json
+end
+
+post '/api/meetings/:id/chair' do |id|
+  content_type :json
+  @meeting = Meeting.find(id)
+  @meeting.chair_id = params[:chair_id]
+  User.find(params[:chair_id]).to_json
+end
 
 ######################
 # DEVELOPMENT ROUTES #
@@ -276,31 +339,6 @@ get '/api/agenda-items/:id/delete' do
   end
 end
 
-post '/api/agenda-items/:id/responsible-users' do |id|
-  content_type :json
-  @responsible_users = ResponsibleUser.where(agenda_item_id: id)
-
-  @agenda_item = AgendaItem.find(params[:id])
-
-  responsible_user_ids = params[:responsible_users].map do |user|
-    user[:id]
-  end
-  # active record is smart enough to figure this out and not create orphan records
-  @agenda_item.user_ids = responsible_user_ids
-
-end
-
-post '/api/agenda-items/:id/voters' do |id|
-  content_type :json
-  @voters = Voter.where(agenda_item_id: id)
-
-  @voters.each do |voter|
-    @voter = Voter.find(voter.id)
-    @voter.update(
-      vote_type: params[:vote_type]
-    )
-  end
-end
 
 #########
 # USERS #
