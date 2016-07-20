@@ -14,6 +14,23 @@ get '/organizations/new' do
 	erb :signup
 end
 
+#Board Members Sign Up page
+get '/users/new' do
+  erb :board_members
+end
+
+post '/users/new' do 
+  email = params[:email]
+  first_name = params[:first_name]
+  last_name = params[:last_name]
+  board_position = params[:board_position]
+  redirect(to('/users/new')) 
+end
+
+get '/edit-meeting' do
+  erb :edit_meeting
+end
+
 get '/select' do
   erb :select_status
 end
@@ -104,6 +121,10 @@ end
 ############
 # MEETINGS #
 ############
+# show the meetings
+get '/meetings/:id' do
+	erb :meetings_show 
+end
 
 # list all meetings
 get '/meetings' do
