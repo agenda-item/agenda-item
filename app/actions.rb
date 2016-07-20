@@ -37,10 +37,8 @@ end
 
 post '/agenda-items/3/save_file' do
   @filename = params[:file][:filename]
-  puts @filename
   message = ""
   if is_valid_filename(@filename)
-    puts @filename
     file = params[:file][:tempfile]
     if File.exists? "./public/files/#{@filename}" then
       "File with this name exists already!"
