@@ -1,5 +1,5 @@
-<template id="mover-modal-template">
-  <button class="button" @click.prevent="openModal">Log Mover</button>
+<template id="nominee-modal-template">
+  <button class="button" @click.prevent="openModal">Log Nominee</button>
   <div class="modal" v-bind:class="{ 'is-active': showModal}">
   <div class="modal-background">
   </div>
@@ -25,8 +25,8 @@
 </template>
 
 <script>
-  Vue.component('mover-modal', {
-    template: '#mover-modal-template',
+  Vue.component('nominee-modal', {
+    template: '#nominee-modal-template',
     props: ['agendaItem', 'mover', 'seconder'],
     data: function(){
       return {

@@ -2,7 +2,9 @@
   <div class="ai-election" v-if="agendaItem.type === 'Election'">
     <div class="ai-responsible" >
       <label class="label">Nominee</label>
-      <input class="input" type="text" placeholder="{{ agenda_item.user_id }}" name="responsible_users">
+      <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{nominee.first_name}}</i></div>
+      <br/>
+      <nominee-modal :agenda-item.sync="agendaItem" :mover.sync="mover" :nominee.sync="nominee"></nominee-modal>
     </div>
     <div class="ai-responsible">
       <label class="label">Mover</label>
@@ -73,16 +75,23 @@
     data: function() {
       return {
         mover: {},
-        seconder: {}
+        seconder: {},
+        nominee: {},
+        votes: []
       }
     },
     created: function() {
-      this.$http.get('/api/agenda-items/2/mover').then(function(response){
+      this.$http.get('/api/agenda-items/{{agendaItem.id}}/mover').then(function(response){
         this.mover = response.json()
       }.bind(this));
-
-      this.$http.get('/api/agenda-items/2/seconder').then(function(response){
-        this.seconder = response.json()
+      this.$http.get('/api/agenda-items/{{agendaItem.id}}/seconder').then(function(response){
+        this.mover = response.json()
+      }.bind(this));
+      this.$http.get('/api/agenda-items/{{agendaItem.id}}/nominee').then(function(response){
+        this.mover = response.json()
+      }.bind(this));
+      this.$http.get('/api/agenda-items/{{agendaItem.id}}/votes').then(function(response){
+        this.mover = response.json()
       }.bind(this));
     }
   })  

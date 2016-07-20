@@ -1,8 +1,10 @@
 <template id="business-template">
   <div class="ai-business" v-if="agendaItem.type === 'Business'">
     <div class="ai-responsible">
-      <label class="label">Presenter(s)</label>
-      <input class="input" type="text" v-model="agendaItem.responsible_users" name="responsible_users">
+      <label class="label">Responsible User</label>
+        <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{creator.first_name}}</i></div>
+        <br/>
+        <presenters-modal :agenda-item.sync="agendaItem" :creator.sync="creator"></presenters-modal>
     </div>
     <div class="ai-status">
       <label class="label">Status</label>
@@ -26,17 +28,13 @@
     props: ['agendaItem'],
     data: function() {
       return {
-        mover: {},
-        seconder: {}
+        creator: {}
       }
     },
     created: function() {
-      this.$http.get('/api/agenda-items/2/mover').then(function(response){
-        this.mover = response.json()
-      }.bind(this));
-
-      this.$http.get('/api/agenda-items/2/seconder').then(function(response){
-        this.seconder = response.json()
+      this.$http.get('/api/agenda-items/1/creator').then(function(response){
+        this.creator = response.json()
+        console.log(response.json().first_name)
       }.bind(this));
     }
   })  
