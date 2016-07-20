@@ -48,7 +48,7 @@
 }
 
 body {
-  background: #7CAFA6;
+  background: #BAC0BD;
 }
 
 .style-element section {
@@ -305,7 +305,7 @@ p.menu-label {
 }
 
 #ai-new-agenda-item > div > li {
-  background-color: #FFEED0;
+  background-color: #EEECDC;
   border: 1px solid;
   border-radius: 10px;
   padding: 10px 15px;
@@ -314,7 +314,6 @@ p.menu-label {
 
 #ai-new-agenda-item > div > li > span:first-child {
  padding-right: 15px;
- color: blue;
 }
 
 article.message:first-of-type > .message-header:before {
@@ -368,4 +367,9 @@ article.message:last-of-type > .message-header:before {
   display: inline;
  }
 
+.menu-label {
+  font-size: 15px;
+  padding: 15px;
+
+}
 /*hello*/
