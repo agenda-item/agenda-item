@@ -7,3 +7,4 @@
 .DS_Store
 /config/database.yml
 /testing
+/edit_meeting.erb
