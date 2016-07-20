@@ -4,7 +4,7 @@
   </div>
 </div>
 
-<template id="agenda-item-template" >
+<template id="agenda-item-template">
  <form @submit.prevent="postData">
     <i v-if="agendaItem.type === 'Business'" class="fa fa-briefcase" aria-hidden="true"></i>
     <i v-if="agendaItem.type === 'Document'" class="fa fa-file-document" aria-hidden="true"></i>
