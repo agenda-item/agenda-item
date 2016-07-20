@@ -1,19 +1,19 @@
-<template id="responsible-users-template">
-  <button class="button" @click.prevent="openModal">Log Mover</button>
+<template id="responsible-users-modal-template">
+  <button class="button" @click.prevent="openModal">Log Responsible User</button>
   <div class="modal" v-bind:class="{ 'is-active': showModal}">
   <div class="modal-background">
   </div>
     <div class="modal-card">
       <header class="modal-card-head">
         <h1 class="title is-3" class="modal-card-title">
-          Select Mover</h1>
+          Select Responsible User</h1>
       </header>
       <section class="modal-card-body">
         <div class="modal-section">
           <div id="select-user">
-            <p>Click to select the member who moved the Agenda Item:<p>
+            <p>Click to select the member who is responsible for this item:<p>
             <ul v-for="user in usersList">
-              <mover :agenda-item.sync="agendaItem" :user="user" :mover.sync="mover" :toggle-selected-mover="toggleSelectedMover"></mover>
+              <responsible-users :agenda-item.sync="agendaItem" :user="user" :creator.sync="creator" :toggle-selected-responsible-user="toggleSelectedResponsibleUser"></responsible-users>
             </ul>
           </div>
         </div>
@@ -25,14 +25,13 @@
 </template>
 
 <script>
-  Vue.component('responsible-usersl', {
-    template: '#responsible-users-template',
-    props: ['agendaItem', 'mover', 'seconder'],
+  Vue.component('responsible-users-modal', {
+    template: '#responsible-users-modal-template',
+    props: ['agendaItem', 'creator'],
     data: function(){
       return {
         showModal: false,
-        toggleSelectedMover: false,
-        toggleSelectedSeconder: false,
+        toggleSelectedResponsibleUser: false,
         usersList: []
       }
     },
@@ -53,30 +52,29 @@
   })
 </script>
 
-<template id="mover-template">
-    <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedMover}" @click="setMover"><i class="fa fa-person" aria-hidden="true">
+<template id="responsible-users-template">
+    <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedResponsibleUser}" @click="setResponsibleUser"><i class="fa fa-person" aria-hidden="true">
       {{user.first_name}} {{user.last_name}}
     </i></li>
 </template>
 
 <script>
-  Vue.component('mover', {
-    template: '#mover-template',
-    props: ['agendaItem','user','mover','toggleSelectedMover'],
+  Vue.component('responsible-users', {
+    template: '#responsible-users-template',
+    props: ['agendaItem', 'user','creator','toggleSelectedResponsibleUser'],
     methods: {
-      setMover: function(){
-        this.$http.post('/api/agenda-items/2/mover', {'mover_id': this.user.id}, {emulateJSON:true}).then(function(response){
-          this.$parent.$broadcast('clearSelectedMover')
-          this.mover = response.json()
-          this.toggleSelectedMover = true
+      setResponsibleUser: function(){
+        this.$http.post('/api/agenda-items/3/creator', {'creator_id': this.user.id}, {emulateJSON:true}).then(function(response){
+          this.$parent.$broadcast('clearSelectedResponsibleUser')
+          this.creator = response.json()
+          this.toggleSelectedResponsibleUser = true
         }.bind(this));
       }
     },
     events: {
-      clearSelectedMover: function() {
-          this.toggleSelectedMover = false
+      clearSelectedResponsibleUser: function() {
+          this.toggleSelectedResponsibleUser = false
         }
       }
   })
 </script>
-
