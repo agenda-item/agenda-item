@@ -1,14 +1,16 @@
-
 <div id="app">
   <meetings-header></meetings-header>
-  <agenda-items>
-  </agenda-items>
+  <agenda-items></agenda-items>
   <meetings-footer></meetings-footer>
 </div>
 
 <template id="meetings-header-template">
-  <div class="container box" v-for="meetingDetail in meetingDetails">
+  <div id='header' class="container box" v-for="meetingDetail in meetingDetails">
     <h1 class="title is-1">{{meetingDetail.title}}</h1>
+    <a href="#" onclick="return xepOnline.Formatter.Format(['header','agenda-item','footer'],
+            {pageWidth:'216mm', pageHeight:'279mm', render:'download'});">
+    <i class="fa fa-2x fa-download"></i>
+</a>
     <p><strong>Minutes Status:</strong> {{ meetingDetail.status }}</p>
     <hr>
     <p>{{ meetingDetail.description }}</p>
@@ -25,7 +27,7 @@
 </template>
 
 <template id="agenda-items-template">
-  <div class="container box">
+  <div id='agenda-item' class="container box">
     <div v-for="agendaItem in agendaItems | orderBy 'position'">
       <h1 class="subtitle is-5" v-if="agendaItem.title"><i class="fa fa-hand-spock-o" aria-hidden="true"></i> {{agendaItem.title}}</h1>
       <div v-if="agendaItem.discussion"><strong>Discussion:</strong> {{agendaItem.discussion}}<br/></div>
@@ -75,7 +77,7 @@
 </template>
 
 <template id="meetings-footer-template">
-  <div class="box container" v-for="meetingFooterDetail in meetingFooterDetails">
+  <div id='footer' class="box container" v-for="meetingFooterDetail in meetingFooterDetails">
     <hr>
     <strong>Meeting Adjournment Time:</strong> {{ meetingFooterDetail.adjournment_time }}<br/>
     <strong>Next Meeting:</strong> {{ meetingFooterDetail.next_meeting_date }}<br/>
