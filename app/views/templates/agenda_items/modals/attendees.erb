@@ -5,17 +5,22 @@
   </div>
     <div class="modal-card">
       <header class="modal-card-head">
-        <h1 class="title is-3" class="modal-card-title">
-          Select Mover</h1>
+        <h1 class="title is-3" class="modal-card-title">Select Mover</h1>
+        <h2 class="subtitle is-6">Click to select the member who moved the Agenda Item</h2>
       </header>
       <section class="modal-card-body">
         <div class="modal-section">
-          <div class="select-user">
-            <p>Click to select the member who moved the Agenda Item:<p>
-            <ul v-for="user in usersList">
-              <mover :agenda-item.sync="agendaItem" :user="user" :mover.sync="mover" :toggle-selected-mover="toggleSelectedMover"></mover>
-            </ul>
-          </div>
+          <columns class="center-element">
+            <column class="is-one-third">
+              <div class="select-user ">
+                
+                <ul v-for="user in usersList">
+                  <mover :agenda-item.sync="agendaItem" :user="user" :mover.sync="mover" :toggle-selected-mover="toggleSelectedMover"></mover>
+                </ul>
+              </div>
+            </column>
+          </columns>
+          
         </div>
       </section>
       <footer class="modal-card-foot">
