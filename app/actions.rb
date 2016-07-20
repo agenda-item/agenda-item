@@ -121,6 +121,10 @@ end
 ############
 # MEETINGS #
 ############
+# show the meetings
+get '/meetings/:id' do
+	erb :meetings/show 
+end
 
 # list all meetings
 get '/meetings' do
