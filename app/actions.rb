@@ -123,7 +123,7 @@ end
 ############
 # show the meetings
 get '/meetings/:id' do
-	erb :meetings/show 
+	erb :meetings_show 
 end
 
 # list all meetings
