@@ -46,11 +46,28 @@
     color: black;
     /*padding-left: 20px;*/
 }
-
-.container {
-  /*max-width: 100%;*/
-  /*background-color: black;*/
-}
+/*
+.button-create-new-team {
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border: 1px solid #d3d6db ;
+  border-radius: 3px;
+  display: inline-flex;
+  font-size: 14px;
+  height: 32px;
+  line-height: 24px;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
+  background-color: #60425A;
+  color: white;
+}*/
 
 body {
   background: #7CAFA6;
@@ -222,7 +239,7 @@ body {
 }
 
 .button {
-  margin: 10px 0 40px 0;
+  margin: 10px 0 10px 0;
   background-color: #7AB0A3;
   color: white;
   font-size: 18px;
@@ -240,10 +257,9 @@ body {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  /*background-color: white;*/
   border: 1px solid #d3d6db;
   border-radius: 3px;
-  /*color: #222324;*/
+  color: #222324;
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
@@ -267,7 +283,8 @@ body {
   padding-right: 10px;
   text-align: center;
   white-space: nowrap;
-  margin-top: -20px;
+  margin-top: 0;
+  background-color: #60425A;
 }
 
 .message-header {

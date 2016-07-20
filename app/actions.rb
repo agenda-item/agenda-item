@@ -28,6 +28,19 @@ end
 get '/users/new' do 
   erb :board_members
 end
+
+get '/motion' do
+  erb :motion
+end
+
+get '/edit-meeting' do
+  erb :meeting_details
+end
+
+get '/document' do
+  erb :document
+end
+
 #################
 # FILE UPLOADER #
 #################
