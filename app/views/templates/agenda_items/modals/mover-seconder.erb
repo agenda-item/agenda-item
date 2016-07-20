@@ -18,25 +18,18 @@
       <section class="modal-card-body">
         <div class="modal-section">
           <div id="select-mover">
-            <div v-if="mover">
-              <h2 class="subtitle is-6"><strong>The Current Mover is:</strong> {{mover.first_name}}</h2>
-            </div>
             <p>Click to select the member who moved the Agenda Item:<p>
             <ul v-for="user in usersList">
-              <mover :agenda-item.sync="agendaItem" :user="user" :mover.sync="mover" :selected-class="selectedClass"></mover>
+              <mover :agenda-item.sync="agendaItem" :user="user" :mover.sync="mover" :toggle-selected-mover="toggleSelectedMover"></mover>
             </ul>
           </div>
           <div id="select-seconder">
-            <div v-if="seconder">
-              <h2 class="subtitle is-6"><strong>The Current Seconder is:</strong> {{seconder.first_name}}</h2>
-            </div>
             <p>Click to select the member who seconded the Agenda Item:<p>
             <ul v-for="user in usersList">
-              <seconder :agenda-item.sync="agendaItem" :user="user" :seconder.sync="seconder" :selected-class="selectedClass"></seconder>
+              <seconder :agenda-item.sync="agendaItem" :user="user" :seconder.sync="seconder" :toggle-selected-seconder="toggleSelectedSeconder"></seconder>
             </ul>
           </div>
         </div>
-        <list-users :agenda-item.sync="agendaItem" :mover.sync="mover" :seconder.sync="seconder"></list-users>
       </section>
       <footer class="modal-card-foot">
         <button class="button" @click.prevent="closeModal">Close</button>
@@ -51,7 +44,8 @@
     data: function(){
       return {
         showModal: false,
-        selectedClass: false,
+        toggleSelectedMover: false,
+        toggleSelectedSeconder: false,
         usersList: []
       }
     },
@@ -74,7 +68,7 @@
 
 
 <template id="mover-template">
-    <li class="ai-user" v-bind:class="{ 'user-selected': selectedClass}" @click="setMover"><i class="fa fa-person" aria-hidden="true">
+    <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedMover}" @click="setMover"><i class="fa fa-person" aria-hidden="true">
       {{user.first_name}} {{user.last_name}}
     </i></li>
 </template>
@@ -82,30 +76,26 @@
 <script>
   Vue.component('mover', {
     template: '#mover-template',
-    props: ['agendaItem','user','mover','selectedClass'],
+    props: ['agendaItem','user','mover','toggleSelectedMover'],
     methods: {
       setMover: function(){
         this.$http.post('/api/agenda-items/2/mover', {'mover_id': this.user.id}, {emulateJSON:true}).then(function(response){
-          this.$parent.$broadcast('clearSelectedUsers')
+          this.$parent.$broadcast('clearSelectedMover')
           this.mover = response.json()
-          this.selectedClass = true
+          this.toggleSelectedMover = true
         }.bind(this));
-      },
-      clearSelected: function(){
-        this.selectedClass = false
       }
     },
     events: {
-      clearSelectedUsers: function() {
-          this.selectedClass = false
-          console.log("i can hear!")
+      clearSelectedMover: function() {
+          this.toggleSelectedMover = false
         }
       }
   })
 </script>
 
 <template id="seconder-template">
-    <li class="ai-user" v-bind:class="{ 'user-selected': selectedClass}" @click="setSeconder"><i class="fa fa-person" aria-hidden="true">
+    <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedSeconder}" @click="setSeconder"><i class="fa fa-person" aria-hidden="true">
       {{user.first_name}} {{user.last_name}}
     </i></li>
 </template>
@@ -113,22 +103,19 @@
 <script>
   Vue.component('seconder', {
     template: '#seconder-template',
-    props: ['agendaItem','user','seconder', 'selectedClass'],
+    props: ['agendaItem','user','seconder', 'toggleSelectedSeconder'],
     methods: {
       setSeconder: function(){
         this.$http.post('/api/agenda-items/2/seconder', {'seconder_id': this.user.id}, {emulateJSON:true}).then(function(response){
-          this.$parent.$broadcast('clearSelectedUsers')
+          this.$parent.$broadcast('clearSelectedSeconder')
           this.seconder = response.json()
-          this.selectedClass = true
+          this.toggleSelectedSeconder = true
         }.bind(this));
-      },
-      clearSelected: function(){
-        this.selectedClass = false
       }
     },
     events: {
-      clearSelectedUsers: function() {
-          this.selectedClass = false
+      clearSelectedSeconder: function() {
+          this.toggleSelectedSeconder = false
       }
     }
   })
