@@ -226,6 +226,12 @@ body {
   padding-left: 18px;
   padding-right: 18px;
   border-radius: 5px;
+  border-color: #87918C;
+}
+
+.ai-attendees a:not(.button):hover {
+    border-bottom-color: white;
+    color: blue;
 }
 
 a.button-index {
@@ -351,7 +357,7 @@ article.message:last-of-type > .message-header:before {
    background-color: #FEE47E;
  }
 
- .modal-card, .modal-content {
+.modal-card, .modal-content {
   width: 900px;
  }
 
@@ -363,13 +369,18 @@ article.message:last-of-type > .message-header:before {
   text-align: left;
  }
 
- .modal-card-head {
+.modal-card-head {
   display: inline;
  }
 
 .menu-label {
   font-size: 15px;
   padding: 15px;
-
 }
+
+.message-body {
+  background: #f4f8f3; 
+}
+
+
 /*hello*/
