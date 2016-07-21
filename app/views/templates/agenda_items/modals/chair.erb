@@ -67,7 +67,7 @@
     props: ['currentMeeting','user','chair','toggleSelectedChair'],
     methods: {
       setChair: function(){
-        this.$http.post('/api/meetings/2/chair', {'chair_id': this.user.id}, {emulateJSON:true}).then(function(response){
+        this.$http.post('/api/meetings/1/chair', {'chair_id': this.user.id}, {emulateJSON:true}).then(function(response){
           this.$parent.$broadcast('clearSelectedChair')
           this.chair = response.json()
           this.toggleSelectedChair = true
