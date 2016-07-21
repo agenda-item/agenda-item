@@ -274,7 +274,7 @@ get '/api/meetings/:id' do |id|
   content_type :json
   meeting = Meeting.find(id)
   session["meeting"] = meeting.id
-  meeting.to_json(include: :chair) 
+  meeting.to_json(include: :chair)
 end
 
 # gets the current meeting from the helpers
@@ -289,7 +289,6 @@ post '/api/meetings/:id' do |id|
   content_type :json
   results = {result: false}
   @meeting = Meeting.find(id)
-  puts @meeting
 
   @meeting.update(
     title:  params[:title],
@@ -331,6 +330,7 @@ end
 get '/api/agenda-items' do
  content_type :json
  AgendaItem.where(meeting_id: current_meeting.id).to_json(include: [:mover, :seconder, :creator, votes: {include: :voting_user}] )
+
 end
 
 # get agenda item by id
@@ -358,9 +358,9 @@ end
 
 # update/edit item by id
 post '/api/agenda-items/:id' do |id|
- content_type :json
- results = {result: false}
- @agenda_item = AgendaItem.find(id)
+  content_type :json
+  results = {result: false}
+  @agenda_item = AgendaItem.find(id)
   if params[:creator]
     @creator = User.find(params[:creator][:id].to_i)
     @agenda_item.update(
