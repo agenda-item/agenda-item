@@ -150,6 +150,18 @@ end
 # NEW BOARD MEMBERS #
 #####################
 
+####################
+# NEW ORGANIZATION #
+####################
+
+get '/organizations/new' do
+	erb :signup
+end
+
+#####################
+# NEW BOARD MEMBERS #
+#####################
+
 #Board Members Sign Up page
 get '/users/new' do
   erb :board_members
@@ -188,11 +200,6 @@ end
 #################
 # FILE UPLOADER #
 #################
-
-get "/files-upload" do
-  @files = Dir["./public/files/*"]
-  erb :file_upload
-end
 
 post '/agenda-items/3/save_file' do
   @filename = params[:file][:filename]
@@ -264,7 +271,6 @@ get '/api/meetings/:id' do |id|
   content_type :json
   Meeting.find(id).to_json
 end
-
 
 # update meeting by id
 post '/api/meetings/:id' do |id|
@@ -342,6 +348,8 @@ post '/api/agenda-items/new' do
     @agenda_item.to_json
   end
 end
+
+# JEN HAS THIS ROUTE
 
 # JEN HAS THIS ROUTE
 
