@@ -251,6 +251,7 @@ post '/meetings/new' do
   else
     puts "didn't succeed"
   end
+  erb :edit_meeting
 end
 
 # show a meeting

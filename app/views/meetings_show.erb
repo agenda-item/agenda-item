@@ -24,9 +24,6 @@
           <strong>Meeting Location:</strong> {{ meetingDetail.location }}<br/>
           <strong>Discussion:</strong> {{ meetingDetail.discussion }}<br/>
           <br/>
-          <strong>Meeting Chair ID:</strong> {{ meetingDetail.chair_id }}<br/>
-          <strong>Meeting Organization ID:</strong> {{ meetingDetail.org_id }}<br/>
-          <strong>Meeting Template:</strong> {{ meetingDetail.template_id }}<br/>
           <hr>
         </div>
            
@@ -58,10 +55,8 @@
               <div v-if="agendaItem.seconder"><strong>Seconder:</strong> {{agendaItem.seconder}}<br/></div>
               <div v-if="agendaItem.due_date"><strong>Due Date:</strong> {{agendaItem.due_date | moment "dddd, MMMM Do YYYY, h:mm a" }}<br/></div>
               <div v-if="agendaItem.status"><strong>Status:</strong> {{agendaItem.status}}<br/></div>
-              <div v-if="agendaItem.creator"><strong>Creator:</strong> {{agendaItem.creator}}<br/></div>
-              <div v-for="vote in agendaItems.votes">{{vote.voting_user.first_name}}</div>
-
-              <list-users :agenda-item="agendaItem"></list-users>
+              <!-- <div v-for="vote in agendaItems.votes">{{vote.voting_user.first_name}}</div>
+                <list-users :agenda-item="agendaItem"></list-users> -->
               <hr>
             </div>
           </div>
