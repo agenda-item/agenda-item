@@ -13,7 +13,7 @@
           <div id="select-user">
             <p>Click to select the chair:<p>
             <ul v-for="user in usersList">
-              <chair :current-meeting.sync="currentMeeting" :user="user" :chair.sync="chair" :toggle-selected-chair=":toggleSelectedChair"></chair>
+              <chair :current-meeting.sync="currentMeeting" :user="user"  :toggle-selected-chair=":toggleSelectedChair"></chair>
 
             </ul>
           </div>
@@ -28,7 +28,7 @@
 <script>
   Vue.component('chair-modal', {
     template: '#chair-modal-template',
-    props: ['currentMeeting', 'chair'],
+    props: ['currentMeeting'],
     data: function(){
       return {
         showModal: false,
@@ -65,12 +65,13 @@
 <script>
   Vue.component('chair', {
     template: '#chair-template',
-    props: ['currentMeeting','user','chair','toggleSelectedChair'],
+    props: ['currentMeeting', 'user', 'chair', 'toggleSelectedChair'],
     methods: {
       setChair: function(){
-        this.$http.post('/api/meetings/1/chair', {'chair_id': this.user.id}, {emulateJSON:true}).then(function(response){
+        var url = '/api/meetings/' + this.currentMeeting.id
+        this.$http.post(url, {'chair': this.user}, {emulateJSON:true}).then(function(response){
           this.$parent.$broadcast('clearSelectedChair')
-          this.chair = response.json()
+          this.currentMeeting = response.json()
           this.toggleSelectedChair = true
         }.bind(this));
       }
@@ -79,6 +80,6 @@
       clearSelectedChair: function() {
           this.toggleSelectedChair = false
         }
-      }
+    }
   })
 </script>
