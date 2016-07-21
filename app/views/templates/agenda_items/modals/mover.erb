@@ -13,7 +13,7 @@
           <div class="select-user">
             <p>Click to select the member who moved the Agenda Item:<p>
             <ul v-for="user in usersList">
-              <mover :agenda-item.sync="agendaItem" :user="user" :mover.sync="mover" :toggle-selected-mover="toggleSelectedMover"></mover>
+              <mover :agenda-item.sync="agendaItem" :user="user" :toggle-selected-mover="toggleSelectedMover"></mover>
             </ul>
           </div>
         </div>
@@ -27,7 +27,7 @@
 <script>
   Vue.component('mover-modal', {
     template: '#mover-modal-template',
-    props: ['agendaItem', 'mover', 'seconder'],
+    props: ['agendaItem'],
     data: function(){
       return {
         showModal: false,
@@ -62,12 +62,12 @@
 <script>
   Vue.component('mover', {
     template: '#mover-template',
-    props: ['agendaItem','user','mover','toggleSelectedMover'],
+    props: ['agendaItem','user','toggleSelectedMover'],
     methods: {
       setMover: function(){
-        this.$http.post('/api/agenda-items/2/mover', {'mover_id': this.user.id}, {emulateJSON:true}).then(function(response){
+        this.$http.post('/api/agenda-items/' + this.agendaItem.id, {'mover': this.user}, {emulateJSON:true}).then(function(response){
           this.$parent.$broadcast('clearSelectedMover')
-          this.mover = response.json()
+          this.agendaItem.mover = response.json()
           this.toggleSelectedMover = true
         }.bind(this));
       }

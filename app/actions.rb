@@ -369,7 +369,8 @@ post '/api/agenda-items/:id' do |id|
     discussion: params[:discussion],
     mover: params[:mover],
     seconder: params[:seconder],
-    due_date: params[:due_date]
+    due_date: params[:due_date],
+    creator: params[:creator]
     )
 
   if @agenda_item.save
