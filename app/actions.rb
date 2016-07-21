@@ -141,22 +141,6 @@ get '/edit-meeting' do
   erb :edit_meeting
 end
 
-get '/select' do
-  erb :select_status
-end
-
-get '/richtext' do
-  erb :rich_text_discussion
-end
-
-get '/select' do
-  erb :select_status
-end
-
-get '/download-minutes' do
-  erb :download_pdf
-end
-
 #################
 # FILE UPLOADER #
 #################
