@@ -175,7 +175,7 @@ get "/files-upload" do
 end
 
 
-post '/agenda-items/3/save_file' do
+post '/agenda-items/:id/save_file' do
   @filename = params[:file][:filename]
   message = ""
   if is_valid_filename(@filename)
@@ -183,7 +183,7 @@ post '/agenda-items/3/save_file' do
     if File.exists? "./public/files/#{@filename}" then
       "File with this name exists already!"
     else
-      @agenda_item = AgendaItem.find(3)
+      @agenda_item = AgendaItem.find(params[:id])
       @agenda_item.file_path = @filename
       if @agenda_item.save
         puts @agenda_item.file_path
@@ -198,10 +198,24 @@ post '/agenda-items/3/save_file' do
     message = "Error uploading file, please retry"
   end
   message
+  redirect '/edit-meeting'
 end
 
 get "/public/files/:file" do
   send_file File.open("./public/files/#{params[:file]}")
+end
+
+# remove document
+
+get '/agenda-items/:id/remove-document' do
+  content_type :json
+  @agenda_item = AgendaItem.find(params[:id])
+  @agenda_item.file_path = nil
+  @agenda_item.save
+  if @agenda_item.save
+    puts "document removed"
+    redirect '/edit-meeting'
+  end
 end
 
 #################
