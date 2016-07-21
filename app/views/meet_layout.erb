@@ -1,18 +1,17 @@
 <div id="meeting-list">
   <meetings></meetings>
-
 </div>
 
 <template id="meetings-template">
   <div class="columns">
     <div class="column is-2">
-      <aside class="menu">
-      </aside>
     </div>
     <div class="column">
-      <div id='header' class="container box" v-for="meeting in meetings">
+      <div id='header' class="container box">
         <h1 class="title is-1">List of Meetings</h1>
+        <div v-for="meeting in meetings">
         <meeting :meeting.sync="meeting"></meeting>
+        </div>
       </div>
     </div>
     <div class="column is-2">
@@ -21,7 +20,6 @@
 </template>
 
 <template id="meeting-template">
-    <div class="list_titles">
       <div class="style-element section">
         <table class="table">
           <thead>
@@ -33,6 +31,18 @@
               <th></th>
             </tr>
           </thead>
+          <tbody>
+            <!-- <div v-for="meeting in meetings">
+            <meeting :meeting.sync="meeting"></meeting>
+            </div> -->
+            <tr>
+              <td><button><a href="api/meetings/{{meeting.id}}/edit">info</a></button></td>
+              <td>{{ meeting.meeting_date | moment "dddd, MMMM Do YYYY, h:mm a"}}</td>
+              <td>{{meeting.title}}</td>
+              <td><button>{{ meeting.status }}</button></td>
+              <td><i class="fa fa-trash pull-right" aria-hidden="true" @click="deleteMeeting"></i></td>
+            </tr>
+          </tbody>
           <tfoot>
             <tr>
               <th></th>
@@ -42,15 +52,6 @@
               <th></th>
             </tr>
           </tfoot>
-          <tbody>
-            <tr>
-              <td><button><a href="api/meetings/{{meeting.id}}/edit">info</a></button></td>
-              <td>{{ meeting.meeting_date | moment "dddd, MMMM Do YYYY, h:mm a"}}</td>
-              <td>{{meeting.title}}</td>
-              <td><button>{{ meeting.status }}</button></td>
-              <td><i class="fa fa-trash pull-right" aria-hidden="true" @click="deleteMeeting"></i></td>
-            </tr>
-          </tbody>
         </table>
       </div>
 </template>

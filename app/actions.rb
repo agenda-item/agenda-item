@@ -11,10 +11,6 @@ get '/styleguide' do
 end
 
 get '/cort' do
-  erb :meetings_show
-end
-
-get '/cort1' do
   erb :meet_layout
 end
 ####################
