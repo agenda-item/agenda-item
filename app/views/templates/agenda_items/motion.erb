@@ -1,0 +1,151 @@
+<!-- motion TODO fix votes loop with code from /meetings -->
+<!-- TODO fix unaligned divs -->
+<template id="motion-template">
+  <div class="ai-motion" v-if="agendaItem.type === 'Motion'">
+    <div class="ai-responsible">
+      <label class="label">Mover</label>
+
+      <input class="input" type="text" v-model="agendaItem.mover.first_name">
+    </div>
+    <div class="ai-responsible">
+      <label class="label">Seconder</label>
+      <input class="input" type="text" v-model="agendaItem.seconder.first_name">
+    </div>
+    <div class="ai-vote">
+      <div v-if="agendaItem.votes.length === 0">
+        <a class="button">
+          Log Votes
+        </a>
+      </div>
+
+      <div v-else> <!-- start v-else -->
+        <!-- TODO pull in logic from /meetings for how to loop over votes -->
+        <article class="message">
+          <div class="message-header in-favour" >
+            <span class="icon">
+              <i class="fa fa-checkbox-marked-circle-outline"></i>
+            </span>
+            In Favour
+          </div>
+          <div class="message-body">
+            <span class="ai-user">
+              <span class="icon">
+                <i class="fa fa-person"></i>
+              </span>
+              {{ agendaItem.voting_user.first_name }}
+            </span>
+
+            <span class="ai-user">
+              <span class="icon">
+                <i class="fa fa-person"></i>
+              </span>
+              {{ agendaItem.voting_user.first_name }}
+            </span>
+
+            <span class="ai-user">
+              <span class="icon">
+                <i class="fa fa-person"></i>
+              </span>
+              {{ agendaItem.voting_user.first_name }}
+            </span>
+
+            <span class="ai-user">
+              <span class="icon">
+                <i class="fa fa-person"></i>
+              </span>
+              {{ agendaItem.voting_user.first_name }}
+            </span>
+
+            <span class="ai-user">
+              <span class="icon">
+                <i class="fa fa-person"></i>
+              </span>
+              {{ agendaItem.voting_user.first_name }}
+            </span>
+
+            <span class="ai-user">
+              <span class="icon">
+                <i class="fa fa-person"></i>
+              </span>
+              {{ agendaItem.voting_user.first_name }}
+            </span>
+          </div>
+        </article>
+        <article class="message">
+          <div class="message-header opposed">
+            <span class="icon">
+              <i class="fa fa-close-circle-outline"></i>
+            </span>
+            Opposed
+          </div>
+          <div class="message-body">
+            <span class="ai-user  opposed">
+              <span class="icon">
+                <i class="fa fa-person"></i>
+              </span>
+              {{ agendaItem.voting_user.first_name }}
+              </span><span class="ai-user  opposed">
+              <span class="icon">
+                <i class="fa fa-person"></i>
+              </span>
+              {{ agendaItem.voting_user.first_name }}
+              </span><span class="ai-user  opposed">
+              <span class="icon">
+                <i class="fa fa-person"></i>
+              </span>
+              {{ agendaItem.voting_user.first_name }}
+            </span>
+          </div>
+        </article>
+        <article class="message">
+          <div class="message-header abstain">
+            <span class="icon">
+              <i class="fa fa-checkbox-blank-circle-outline"></i>
+            </span>
+            Abstain
+          </div>
+          <div class="message-body">
+            <span class="ai-user  abstain">
+              <span class="icon">
+                <i class="fa fa-person"></i>
+              </span>
+              {{ agendaItem.voting_user.first_name }}
+            </span>
+            <span class="ai-user  abstain">
+              <span class="icon">
+                <i class="fa fa-person"></i>
+              </span>
+              {{ agendaItem.voting_user.first_name }}
+            </span>
+          </div>
+        </article>
+        <a class="button">
+          Adjust Votes
+        </a>
+      </div><!-- end v-else -->
+    </div>
+  </div>
+</template>
+
+<script>
+  Vue.component('motion', {
+    template: '#motion-template',
+    props: ['agendaItem'],
+    data: function() {
+      return {
+        mover: {},
+        seconder: {}
+      }
+    },
+    created: function() {
+      this.$http.get('/api/agenda-items/2/mover').then(function(response){
+        this.mover = response.json()
+      }.bind(this));
+
+      this.$http.get('/api/agenda-items/2/seconder').then(function(response){
+        this.seconder = response.json()
+      }.bind(this));
+    }
+  })  
+</script>
+  
