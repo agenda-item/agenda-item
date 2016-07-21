@@ -363,24 +363,39 @@ post '/api/agenda-items/:id' do |id|
  @agenda_item = AgendaItem.find(id)
   if params[:creator]
     @creator = User.find(params[:creator][:id].to_i)
+    @agenda_item.update(
+   title:  params[:title],
+   description: params[:description],
+   status: params[:status],
+   discussion: params[:discussion],
+   due_date: params[:due_date],
+   creator: @creator
+   )
   end
   if params[:seconder]
    @seconder = User.find(params[:seconder][:id].to_i)
+   @agenda_item.update(
+   title:  params[:title],
+   description: params[:description],
+   status: params[:status],
+   discussion: params[:discussion],
+   seconder: @seconder,
+   due_date: params[:due_date]
+   )
   end
   if params[:mover]
     @mover = User.find(params[:mover][:id].to_i)
-  end
-
- @agenda_item.update(
+    @agenda_item.update(
    title:  params[:title],
    description: params[:description],
    status: params[:status],
    discussion: params[:discussion],
    mover: @mover,
-   seconder: @seconder,
-   due_date: params[:due_date],
-   creator: @creator
+   due_date: params[:due_date]
    )
+  end
+
+ 
 
  if @agenda_item.save
    results[:result] = true

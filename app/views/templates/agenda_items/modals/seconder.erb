@@ -27,11 +27,10 @@
 <script>
   Vue.component('seconder-modal', {
     template: '#seconder-modal-template',
-    props: ['agendaItem', 'mover', 'seconder'],
+    props: ['agendaItem'],
     data: function(){
       return {
         showModal: false,
-        toggleSelectedMover: false,
         toggleSelectedSeconder: false,
         usersList: []
       }
@@ -62,7 +61,7 @@
 <script>
   Vue.component('seconder', {
     template: '#seconder-template',
-    props: ['agendaItem','user','seconder', 'toggleSelectedSeconder'],
+    props: ['agendaItem','user', 'toggleSelectedSeconder'],
     methods: {
       setSeconder: function(){
         var url= '/api/agenda-items/' + this.agendaItem.id
