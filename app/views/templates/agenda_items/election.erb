@@ -1,0 +1,98 @@
+<template id="election-template">
+  <div class="ai-election" v-if="agendaItem.type === 'Election'">
+    <div class="ai-responsible" >
+      <label class="label">Nominee</label>
+      <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{nominee.first_name}}</i></div>
+      <br/>
+      <nominee-modal :agenda-item.sync="agendaItem" :mover.sync="mover" :nominee.sync="nominee"></nominee-modal>
+    </div>
+    <div class="ai-responsible">
+      <label class="label">Mover</label>
+      <!-- <button  id="show-mover" @click="showMover = true" class="button">Select Mover</button> -->
+      <!-- TODO list-users should be in a modal! -->
+      <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{mover.first_name}}</i></div>
+      <br/>
+      <mover-modal :agenda-item.sync="agendaItem" :mover.sync="mover" :seconder.sync="seconder"></mover-modal>
+  
+      <label class="label">Seconder</label>
+      <!-- The current Seconder is: {{mover.first_name}} -->
+      <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{seconder.first_name}}</i></div>
+      <br/>
+      <seconder-modal :agenda-item.sync="agendaItem" :mover.sync="mover" :seconder.sync="seconder"></seconder-modal>
+      
+    </div>
+    <div class="ai-vote">
+      <div v-if="agendaItem.votes.length === 0">
+        <a class="button">
+          Log Votes
+        </a>
+      </div>
+      <div v-else>
+        <article class="message">
+          <div class="message-header">
+            In Favour
+          </div>
+          <div class="message-body">
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+          </div>
+        </article>
+        <article class="message">
+          <div class="message-header">
+            Opposed
+          </div>
+          <div class="message-body">
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+          </div>
+        </article>
+        <article class="message">
+          <div class="message-header">
+            Abstained
+          </div>
+          <div class="message-body">
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+            <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+          </div>
+        </article>
+        <a class="button">
+          Adjust Votes
+        </a>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  Vue.component('election', {
+    template: '#election-template',
+    props: ['agendaItem'],
+    data: function() {
+      return {
+        mover: {},
+        seconder: {},
+        nominee: {},
+        votes: []
+      }
+    },
+    created: function() {
+      this.$http.get('/api/agenda-items/{{agendaItem.id}}/mover').then(function(response){
+        this.mover = response.json()
+      }.bind(this));
+      this.$http.get('/api/agenda-items/{{agendaItem.id}}/seconder').then(function(response){
+        this.mover = response.json()
+      }.bind(this));
+      this.$http.get('/api/agenda-items/{{agendaItem.id}}/nominee').then(function(response){
+        this.mover = response.json()
+      }.bind(this));
+      this.$http.get('/api/agenda-items/{{agendaItem.id}}/votes').then(function(response){
+        this.mover = response.json()
+      }.bind(this));
+    }
+  })  
+</script>

@@ -7,18 +7,18 @@
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
     filter: alpha(opacity=80);
   }
-  
+
   .gu-hide{
     display: none;
   }
-  
+
   .gu-unselectable{
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
   }
-  
+
   .gu-transit{
     opacity: .2;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
@@ -40,6 +40,11 @@
   /*margin-bottom: 20px;*/
   padding: 10px 50px 10px 50px;
   box-shadow: 0 5px 3px rgba(17,17,17,.1),0 0 0 1px rgba(17,17,17,.1);
+}
+
+body, textarea, input, i ,button {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
 }
 
 .nav-item a, a.nav-item {
@@ -65,7 +70,7 @@ body {
 
 #board-bg-img {
   /*background-color: #462035;*/
-  background:transparent url(https://static.pexels.com/photos/66957/pexels-photo-66957.jpeg) 
+  background:transparent url(https://static.pexels.com/photos/66957/pexels-photo-66957.jpeg)
   no-repeat center center;
   background-size: cover;
 }
@@ -153,7 +158,7 @@ body {
   display: flex;
   text-align:center;
   justify-content:center;
-} 
+}
 
 #main-hero {
   background-color: #7CAFA6;
@@ -184,7 +189,7 @@ body {
 }
 
 #signup-bg-img {
-  background:transparent url(http://marketingland.com/wp-content/ml-loads/2014/09/tablet-calendar-coffee-desk-ss-1920-800x571.jpg) 
+  background:transparent url(http://marketingland.com/wp-content/ml-loads/2014/09/tablet-calendar-coffee-desk-ss-1920-800x571.jpg)
   no-repeat center center;
   background-size: cover;
 }
@@ -291,7 +296,7 @@ a.button-index {
 }
 
 p {
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
   margin-top: 20px;
 }
 
@@ -308,6 +313,9 @@ p.menu-label {
 
 .aside {
   background-color: black;
+}
+aside.menu {
+  font-size: 16px;
 }
 
 #ai-new-agenda-item > div > li {
@@ -369,6 +377,26 @@ article.message:last-of-type > .message-header:before {
   text-align: left;
  }
 
+ .modal-card, .modal-content {
+  width: 900px;
+ }
+
+ .select-user {
+  border: 1px solid black;
+  max-width: 275px;
+  padding: 20px;
+  margin: 15px;
+  text-align: left;
+ }
+
+ .select-user {
+  border: 1px solid black;
+  max-width: 275px;
+  padding: 20px;
+  margin: 15px;
+  text-align: left;
+ }
+
 .modal-card-head {
   display: inline;
  }
@@ -381,6 +409,5 @@ article.message:last-of-type > .message-header:before {
 .message-body {
   background: #F4F8F3; 
 }
-
 
 /*hello*/

@@ -1,0 +1,15 @@
+<template id="icons-template">
+  <i v-if="agendaItem.type === 'Business'" class="fa fa-briefcase" aria-hidden="true"></i>
+  <i v-if="agendaItem.type === 'Document'" class="fa fa-file-document" aria-hidden="true"></i>
+  <i v-if="agendaItem.type === 'Action Item'" class="fa fa-exclamation-circle-btb" aria-hidden="true"></i>
+  <i v-if="agendaItem.type === 'Motion'" class="fa fa-gavel" aria-hidden="true"></i>
+  <i v-if="agendaItem.type === 'Election'" class="fa fa-checkbox-multiple-marked-outline" aria-hidden="true"></i>
+</template>
+
+<script>
+  Vue.component('icon', {
+    template: "#icons-template",
+    props: ['agendaItem']
+  });
+</script>
+
