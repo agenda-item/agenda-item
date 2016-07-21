@@ -10,6 +10,9 @@ get '/styleguide' do
   erb :styleguide
 end
 
+get '/cort' do
+  erb :meet_layout
+end
 ####################
 # NEW ORGANIZATION #
 ####################
@@ -28,12 +31,12 @@ get '/users/new' do
 end
 
 # create new board member (user)
-post '/users/new' do 
+post '/users/new' do
   email = params[:email]
   first_name = params[:first_name]
   last_name = params[:last_name]
   board_position = params[:board_position]
-  redirect(to('/users/new')) 
+  redirect(to('/users/new'))
 end
 
 get '/edit-meeting' do
@@ -95,7 +98,7 @@ end
 
 # show a meeting
 get '/meetings/:id' do
-	erb :meetings_show 
+	erb :meetings_show
 end
 
 # list all meetings
