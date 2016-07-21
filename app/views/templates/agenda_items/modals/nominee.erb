@@ -1,5 +1,5 @@
 <template id="nominee-modal-template">
-  <button class="button" @click.prevent="openModal">Log Nominee</button>
+  <button class="button" @click.prevent="openModal">Log Mover</button>
   <div class="modal" v-bind:class="{ 'is-active': showModal}">
   <div class="modal-background">
   </div>
@@ -11,7 +11,7 @@
       <section class="modal-card-body">
         <div class="modal-section">
           <div class="select-user">
-            <p>Click to select the member who is nominated:<p>
+            <p>Click to select the member who moved the Agenda Item:<p>
             <ul v-for="user in usersList">
               <nominee :agenda-item.sync="agendaItem" :user="user" :toggle-selected-mover="toggleSelectedMover"></nominee>
             </ul>
@@ -42,32 +42,32 @@
       },
       closeModal: function() {
         this.showModal = false
-        console.log("clicking close " + this.showModal)
       }
     },
     created: function() {
       this.$http.get('/api/users').then(function(response){
-        var votes = response.json()
+        this.usersList = response.json()
       }.bind(this));
     }
   })
 </script>
 
 <template id="nominee-template">
-    <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedMover}" @click="setNominee"><i class="fa fa-person" aria-hidden="true">
+    <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedMover}" @click="setMover"><i class="fa fa-person" aria-hidden="true">
       {{user.first_name}} {{user.last_name}}
     </i></li>
 </template>
 
 <script>
-  Vue.component('nominee', {
-    template: '#nominee-template',
+  Vue.component('mover', {
+    template: '#mover-template',
     props: ['agendaItem','user','toggleSelectedMover'],
     methods: {
       setMover: function(){
-        this.$http.post('/api/agenda-items/' + this.agendaItem.id, {'nominee': this.user}, {emulateJSON:true}).then(function(response){
+        var url= '/api/agenda-items/' + this.agendaItem.id
+        this.$http.post(url, {'creator': this.user}, {emulateJSON:true}).then(function(response){
           this.$parent.$broadcast('clearSelectedMover')
-          this.agendaItem.creator = response.json()
+          this.agendaItem = response.json()
           this.toggleSelectedMover = true
         }.bind(this));
       }

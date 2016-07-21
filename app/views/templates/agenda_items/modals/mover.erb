@@ -65,9 +65,10 @@
     props: ['agendaItem','user','toggleSelectedMover'],
     methods: {
       setMover: function(){
-        this.$http.post('/api/agenda-items/' + this.agendaItem.id, {'mover': this.user}, {emulateJSON:true}).then(function(response){
+        var url= '/api/agenda-items/' + this.agendaItem.id
+        this.$http.post(url, {'mover': this.user}, {emulateJSON:true}).then(function(response){
           this.$parent.$broadcast('clearSelectedMover')
-          this.agendaItem.mover = response.json()
+          this.agendaItem = response.json()
           this.toggleSelectedMover = true
         }.bind(this));
       }
