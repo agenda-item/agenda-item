@@ -5,9 +5,9 @@
 
     <div class="ai-responsible">
       <label class="label">Responsible User</label>
-        <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{creator.first_name}}</i></div>
+        <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{agendaItem.creator.first_name}}</i></div>
         <br/>
-        <presenters-modal :agenda-item.sync="agendaItem" :creator.sync="creator"></presenters-modal>
+        <presenters-modal :agenda-item.sync="agendaItem"></presenters-modal>
     </div>
 
     <div class="ai-upload">
@@ -30,17 +30,6 @@
 <script>
   Vue.component('document', {
     template: '#document-template',
-    props: ['agendaItem'],
-    data: function() {
-      return {
-        creator: {}
-      }
-    },
-    created: function() {
-      this.$http.get('/api/agenda-items/1/creator').then(function(response){
-        this.creator = response.json()
-        console.log(response.json().first_name)
-      }.bind(this));
-    }
+    props: ['agendaItem']
   })  
 </script>
