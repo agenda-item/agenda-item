@@ -177,9 +177,9 @@ end
 ######################
 # to be deleted
 
-get '/edit-meeting' do
-  erb :edit_meeting
-end
+# get '/edit-meeting' do
+#   erb :edit_meeting
+# end
 
 #################
 # FILE UPLOADER #
@@ -234,10 +234,22 @@ end
 # MEETINGS #
 ############
 
+# edit meeting
+get '/meetings/:id/edit' do |id|
+  @current_meeting = Meeting.find(id)
+  erb :edit_meeting
+end
+
 # create new meeting
 post '/meetings/new' do
-  @current_meeting = Meeting.create
-  redirect '/meetings/#{@current_meeting.id}/edit'
+  @current_meeting = Meeting.new
+
+  if @current_meeting.save
+    puts "current meeting is", @current_meeting
+    redirect '/meetings/#{current_meeting.id}/edit'
+  else
+    puts "didn't succeed"
+  end
 end
 
 # show a meeting
