@@ -1,0 +1,36 @@
+<template id="business-template">
+  <div class="ai-business" v-if="agendaItem.type === 'Business'">
+    <div class="ai-responsible">
+      <label class="label">Responsible User</label>
+        <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{agendaItem.creator.first_name}}</i></div>
+        <br/>
+        <presenters-modal :agenda-item.sync="agendaItem"></presenters-modal>
+    </div>
+    <div class="ai-status">
+      <label class="label">Status</label>
+      <p class="control">
+        <span class="select">
+          <select name="status" v-model="agendaItem.status">
+            <option>Select status</option>
+            <option value="Active">Active</option>
+            <option value="Carried Forward">Carried Forward</option>
+            <option vaue="Completed">Completed</option>
+          </select>
+        </span>
+      </p>
+    </div>
+  </div>
+</template>
+
+<script>
+  Vue.component('business', {
+    template: '#business-template',
+    props: ['agendaItem'],
+    created: function() {
+      this.$http.get('/api/agenda-items/1/creator').then(function(response){
+        this.creator = response.json()
+        console.log(response.json().first_name)
+      }.bind(this));
+    }
+  })  
+</script>

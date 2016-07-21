@@ -1,0 +1,134 @@
+<%= erb(:"templates/agenda_items/helpers") %>
+<%= erb(:"templates/agenda_items/new_item") %>
+<%= erb(:"templates/agenda_items/agenda_item_selection") %>
+
+<%= erb(:"templates/agenda_items/agenda_item") %>
+
+<%= erb(:"templates/agenda_items/meeting_details") %>
+<%= erb(:"templates/agenda_items/modals/attendees") %>
+
+<%= erb(:"templates/agenda_items/meeting_closing") %>
+
+<%= erb(:"templates/agenda_items/election") %>
+<%= erb(:"templates/agenda_items/motion") %>
+<%= erb(:"templates/agenda_items/modals/mover") %>
+<%= erb(:"templates/agenda_items/modals/seconder") %>
+<%= erb(:"templates/agenda_items/modals/nominee") %>
+<%= erb(:"templates/agenda_items/modals/votes") %>
+
+<%= erb(:"templates/agenda_items/document") %>
+<%= erb(:"templates/agenda_items/business") %>
+<%= erb(:"templates/agenda_items/modals/presenters") %>
+
+<%= erb(:"templates/agenda_items/action_item") %>
+<%= erb(:"templates/agenda_items/modals/responsible_users") %>
+<%= erb(:"templates/agenda_items/modals/chair") %>
+
+<template id="agenda-items-template">
+  <div class="columns">
+    <div class="column is-3">
+      <aside class="menu">
+        <p class="menu-label">Meeting Agenda</p>
+        <ul class="ai-agenda-list">
+          <!-- meeting details are not an agenda item, they belong to the meeting -->
+          <li @click="setCurrentMeetingDetails"><i class="fa fa-library-books" aria-hidden="true"></i> Meeting Details</li>
+          <div v-for="agendaItem in agendaItems | orderBy 'position'">
+              <agenda-item-selection :agenda-item.sync="agendaItem" :current-item-index.sync="currentItemIndex"></agenda-item-selection>
+          </div>
+          <!-- meeting closing is not an agenda item, the data belongs to the meeting -->
+          <li @click="setCurrentMeetingClose"><i class="fa fa-library-books" aria-hidden="true"></i> Meeting Closing</li>
+        </ul>
+      </aside>
+    </div>
+
+    <div class="column">
+      <div v-if="currentItemIndex === 'Meeting Details'" class="section ai-agenda-item"><meeting-details :current-meeting.sync="currentMeeting"></meeting-details></div>
+      <div v-if="currentItemIndex === 'Meeting Closing'" class="section ai-agenda-item"><meeting-closing :current-meeting.sync="currentMeeting"></meeting-closing></div>
+      <div v-if="currentItemIndex >= 0" class="section ai-agenda-item">
+        <div><!-- header interface  -->
+          <!-- <a class="button">
+            Send
+          </a>
+          <a class="button">
+            Status
+          </a> -->
+        </div>
+        <!-- sets the current agenda item loaded into the side with the currentItemIndex of the agendaItems list stored on the root instance data -->
+        <agenda-item :agenda-item="agendaItems[currentItemIndex]" :votes.sync="votes"></agenda-item>
+      </div>
+    </div>
+
+    <div class="column is-2">
+      <div>
+        <p class="menu-label">Add Agenda Item</p>
+        <ul id="ai-new-agenda-item">
+          <div v-for="newItem in newItems">
+            <!-- populates choices with list of agenda item types ('newItem') from root instance data -->
+            <new-item :new-item.sync="newItem" :agenda-items.sync="agendaItems" :current-item-index.sync="currentItemIndex"></new-item>
+          </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  Vue.component('agenda-items', {
+    template: '#agenda-items-template',
+    data: function() {
+      return {
+        currentMeeting: {},
+        agendaItems: [],
+        currentItemIndex: 'Meeting Details',
+        newItems: [
+          { type: 'Action Item', icon: 'exclamation-circle-btb' },
+          { type: 'Business', icon: 'briefcase' },
+          { type: 'Document', icon: 'file-document'},
+          { type: 'Election', icon: 'checkbox-multiple-marked-outline'},
+          { type: 'Motion', icon: 'gavel'}
+        ],
+        responsibleUsers: [],
+        votes: []
+      }
+    },
+    created: function() {
+      // gets all agenda items
+      this.$http.get('/api/agenda-items').then(function(response){
+        this.agendaItems = response.json();
+      }.bind(this));
+
+      this.$http.get('/api/current-meeting').then(function(response){
+        console.log(response.json())
+        this.currentMeeting = response.json();
+      }.bind(this));
+    },
+    events: {
+    'agenda-item-deleted': function (agendaItem) {
+      var deletedItemIndex = this.agendaItems.indexOf(agendaItem)
+      if (this.currentItemIndex === deletedItemIndex) {
+        this.currentItemIndex = (deletedItemIndex - 1)
+      }
+      this.agendaItems.pop(agendaItem)
+    },
+    'set-current-item-index': function(agendaItem) {
+      this.$http.get("/api/agenda-items/" + agendaItem.id + "/votes").then(function(response){
+        this.votes = response.json()
+        this.currentItemVotes = response.json()
+      }.bind(this));
+
+      var index = this.agendaItems.indexOf(agendaItem)
+      this.currentItemIndex = index
+      
+    }
+  },
+  methods: {
+    setCurrentMeetingDetails: function() {
+      this.currentItemIndex = 'Meeting Details'
+    },
+    setCurrentMeetingClose: function() {
+      this.currentItemIndex = 'Meeting Closing'
+    }
+  }
+  });
+  
+</script>

@@ -1,0 +1,71 @@
+<template id="election-template">
+  <div class="ai-election" v-if="agendaItem.type === 'Election'">
+    <div class="ai-responsible" >
+      <label class="label">Nominee</label>
+      <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{agendaItem.creator.first_name}}</i></div>
+      <br/>
+      <nominee-modal :agenda-item.sync="agendaItem"></nominee-modal>
+    </div>
+    <div class="ai-responsible">
+      <label class="label">Mover</label>
+      <!-- <button  id="show-mover" @click="showMover = true" class="button">Select Mover</button> -->
+      <!-- TODO list-users should be in a modal! -->
+      <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{agendaItem.mover.first_name}}</i></div>
+      <br/>
+      <mover-modal :agenda-item.sync="agendaItem"></mover-modal>
+
+      <label class="label">Seconder</label>
+      <!-- The current Seconder is: {{mover.first_name}} -->
+      <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{agendaItem.seconder.first_name}}</i></div>
+      <br/>
+      <seconder-modal :agenda-item.sync="agendaItem"></seconder-modal>
+    </div>
+    <votes-modal :agenda-item.sync="agendaItem" :votes.sync="votes"></votes-modal>
+    <div class="ai-vote">
+      <div v-if="agendaItem.votes.length != 0">
+        <div class="message-header">
+          In Favour
+        </div>
+        <div class="message-body">
+          <div v-for="vote in votes | filterBy 'In Favour' in 'vote_type'">
+            <div class="ai-user"><i class="fa fa-checkbox-marked-circle-outline fa-lg" aria-hidden="true">{{ vote.voting_user.first_name }}</i></div>
+          </div>
+        </div>
+        <div class="message-header">
+          Opposed
+        </div>
+        <div class="message-body">
+          <div v-for="vote in votes | filterBy 'Opposed' in 'vote_type'">
+              <div class="ai-user"><i class="fa fa-close-circle-outline fa-lg" aria-hidden="true">{{vote.voting_user.first_name}}</i></div>
+          </div>
+        </div>
+        <div class="message-header">
+          Abstained
+        </div>
+        <div class="message-body">
+          <div v-for="vote in votes | filterBy 'Abstain' in 'vote_type'">
+              <div class="ai-user"><i class="fa fa-checkbox-blank-circle-outline fa-lg" aria-hidden="true">{{vote.voting_user.first_name}}</i></div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  Vue.component('election', {
+    template: '#election-template',
+    props: ['agendaItem','votes'],
+    data: function() {
+      return {
+        votes: []
+      }
+    },
+    created: function() {
+      this.$http.get('/api/agenda-items/{{agendaItem.id}}/votes').then(function(response){
+        this.mover = response.json()
+      }.bind(this));
+    }
+  })
+</script>

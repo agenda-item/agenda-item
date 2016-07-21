@@ -1,0 +1,103 @@
+<template id="meeting-details-template">
+    <div class="box">
+      <form @submit.prevent="submitMeeting">
+        <h2 class="subtitle is-3"><i class="fa fa-library-books" aria-hidden="true"></i> Meeting Details</h2>
+        <div class="ai-title">
+          <label class="label">Title</label>
+          <div class="control">
+            <input class="input" type="text" placeholder="" v-model="currentMeeting.title" name="title">
+          </div>
+        </div>
+        <div class="ai-description">
+          <label class="label">Description</label>
+          <div class="control">
+            <textarea class="textarea" placeholder="" v-model="currentMeeting.description" name="description"></textarea>
+          </div>
+        </div>
+        <div class="ai-location">
+          <div class="control">
+            <label class="label">Location</label>
+            <input class="input" type="text" placeholder="" v-model="currentMeeting.location" name="location">
+          </div>
+        </div>
+        <div class="ai-date-time">
+          <div class="control">
+            <label class="label">Date & Time</label>
+            <input class="input" type="datetime-local" placeholder="" v-model="currentMeeting.meeting_date | moment 'YYYY-MM-DDTHH:mm'" name="meeting_date">
+          </div>
+        </div>
+        <div class="ai-responsible">
+          <label class="label">Chair of Meeting</label>
+          <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{currentMeeting.chair.first_name}}</i></div>
+          <br/>
+          <chair-modal :current-meeting.sync="currentMeeting"></chair-modal>
+        </div>
+        <!-- <div class="ai-attendees">
+          <label class="label">Attendees</label>
+            <attendees-modal :attendees="attendees"></attendees-modal>
+            <article class="message">
+              <div class="message-header">
+                Present
+              </div>
+              <div v-for="attendee in attendees | filterBy 'Present' in 'attendance_type'">
+                <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ attendee.first_name }}</i></div>
+              </div>
+              <div class="message-body">
+                <div v-for="attendee in attendees | filterBy 'Present' in 'attendance_type'">
+                  <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ attendee.first_name }}</i></div>
+                </div>
+              </div>
+            </article>
+            <article class="message">
+              <div class="message-header">
+                Absent
+              </div>
+              <div class="message-body">
+                <div v-for="attendee in attendees | filterBy 'Absent' in 'attendance_type'">
+                  <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ attendee.first_name }}</i></div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div> -->
+           <!-- TODO add call to order time stamp -->
+        <div class="ai-minutes">
+          <label class="label">Discussion</label>
+          <div class="control">
+            <textarea class="textarea" placeholder="" v-model="currentMeeting.discussion" name="discussion"></textarea>
+          </div>
+        </div>
+        <input type="submit" value="Save" class="button">
+      </form>
+    </div>
+  </div>
+</template>
+
+<script>
+  Vue.component('meeting-details', {
+    template: "#meeting-details-template",
+    props: ['currentMeeting'],
+    computed: {
+      attendees: function() {
+        console.log(this.currentMeeting.meeting_attendees)
+        return this.currentMeeting.meeting_attendees
+      }
+    },
+    methods: {
+    submitMeeting: function() {
+        // update meeting
+        this.$http.post('/api/meetings/' + this.currentMeeting.id, this.currentMeeting, {emulateJSON:true}).then(function(response) {
+          // if (response.results) {
+            // TODO maybe think about rerouting them to the next agenda item automatically?
+            console.log("meeting updated");
+          // }
+          // else {
+          //   console.log("agenda item not updated");
+          // }
+        }).error(function(error) {
+          console.log(error);
+        }.bind(this));
+      }
+    }
+  })
+</script>

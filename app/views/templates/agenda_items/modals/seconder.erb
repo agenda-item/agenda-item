@@ -1,0 +1,83 @@
+<template id="seconder-modal-template">
+  <button class="button" @click.prevent="openModal">Log Seconder</button>
+  <div class="modal" v-bind:class="{ 'is-active': showModal}">
+  <div class="modal-background">
+  </div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <h1 class="title is-3" class="modal-card-title">
+          Select Mover and Seconder</h1>
+      </header>
+      <section class="modal-card-body">
+        <div class="modal-section">
+          <div class="select-user">
+            <p>Click to select the member who seconded the Agenda Item:</p>
+            <ul v-for="user in usersList">
+              <seconder :agenda-item.sync="agendaItem" :user="user" :seconder.sync="seconder" :toggle-selected-seconder="toggleSelectedSeconder"></seconder>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button" @click.prevent="closeModal">Close</button>
+      </footer>
+    </div>
+</template>
+
+<script>
+  Vue.component('seconder-modal', {
+    template: '#seconder-modal-template',
+    props: ['agendaItem', 'mover', 'seconder'],
+    data: function(){
+      return {
+        showModal: false,
+        toggleSelectedMover: false,
+        toggleSelectedSeconder: false,
+        usersList: []
+      }
+    },
+    methods: {
+      openModal: function() {
+        this.showModal = true
+      },
+      closeModal: function() {
+        this.showModal = false
+        console.log("clicking close " + this.showModal)
+      }
+    },
+    created: function() {
+      this.$http.get('/api/users').then(function(response){
+        this.usersList = response.json()
+      }.bind(this));
+    }
+  })
+</script>
+
+<template id="seconder-template">
+    <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedSeconder}" @click="setSeconder"><i class="fa fa-person" aria-hidden="true">
+      {{user.first_name}} {{user.last_name}}
+    </i></li>
+</template>
+
+<script>
+  Vue.component('seconder', {
+    template: '#seconder-template',
+    props: ['agendaItem','user','seconder', 'toggleSelectedSeconder'],
+    methods: {
+      setSeconder: function(){
+        var url= '/api/agenda-items/' + this.agendaItem.id
+        this.$http.post(url, {'seconder': this.user}, {emulateJSON:true}).then(function(response){
+          this.$parent.$broadcast('clearSelectedMover')
+          this.agendaItem = response.json()
+          this.toggleSelectedMover = true
+        }.bind(this));
+      }
+    },
+    events: {
+      clearSelectedSeconder: function() {
+          this.toggleSelectedSeconder = false
+      }
+    }
+  })
+</script>
+
