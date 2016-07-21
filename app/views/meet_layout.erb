@@ -9,23 +9,15 @@
       <aside class="menu">
       </aside>
     </div>
-      <div class="column">
-        <div id='header' class="container box" v-for="meeting in meetings">
-          <h1 class="title is-1">List of Meetings</h1>
-          <meeting :meeting.sync="meeting"></meeting>
-        </div>
+    <div class="column">
+      <div id='header' class="container box" v-for="meeting in meetings">
+        <h1 class="title is-1">List of Meetings</h1>
+        <meeting :meeting.sync="meeting"></meeting>
       </div>
-      <div class="column is-2">
-        <!-- <div class="box"> -->
-        <div class="pdf-button">
-        <a href="#" class="button is-info is-normal" onclick="return xepOnline.Formatter.Format(['header','agenda-item','footer'],
-            {pageWidth:'216mm', pageHeight:'279mm', render:'download'});">
-          <i class="fa fa-2x fa-download"></i>
-        </a>
-        </div>
-        <!-- </div> -->
-      </div>
-
+    </div>
+    <div class="column is-2">
+    </div>
+  </div>
 </template>
 
 <template id="meeting-template">
@@ -58,7 +50,6 @@
               <td><button>{{ meeting.status }}</button></td>
               <td><i class="fa fa-trash pull-right" aria-hidden="true" @click="deleteMeeting"></i></td>
             </tr>
-
           </tbody>
         </table>
       </div>
