@@ -13,7 +13,7 @@
           <div id="select-user">
             <p>Click to select the member who chair the Agenda Item:<p>
             <ul v-for="user in usersList">
-              <chair :agenda-item.sync="agendaItem" :user="user" :chair.sync="chair" :toggle-selected-chair="toggleSelectedChair"></chair>
+              <chair :current-meeting.sync="currentMeeting" :user="user" :chair.sync="chair" :toggle-selected-chair="toggleSelectedChair"></chair>
             </ul>
           </div>
         </div>
