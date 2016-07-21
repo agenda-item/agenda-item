@@ -97,7 +97,8 @@
         this.agendaItems = response.json();
       }.bind(this));
 
-      this.$http.get('/api/meetings/1').then(function(response){
+      this.$http.get('/api/current-meeting').then(function(response){
+        console.log(response.json())
         this.currentMeeting = response.json();
       }.bind(this));
     },
