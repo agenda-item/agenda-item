@@ -1,0 +1,27 @@
+<%#
+<!-- TODO test save button post the data fo the following fancy fields -->
+  <!-- document: file upload -->
+  <!-- election: voters -->
+  <!-- action item: due date ** not working **--> 
+  <!-- motion: voters -->
+  <!-- meeting details: attendees -->
+  <!-- meeting details: date & time ** not working -->
+
+<!-- FUTURE FEATURES: -->
+  <!-- TODO create migration for adding called to order time -->
+    <!-- TODO add start meeting & end meeting buttons -->
+  <!-- TODO add auto-save functionality-->
+%>
+
+<div id="app" class="container">
+  <agenda-items></agenda-items>
+</div>
+
+<%= erb(:"templates/agenda_items") %>
+
+<script>
+  new Vue({
+    el: "#app"
+  });
+</script>
+

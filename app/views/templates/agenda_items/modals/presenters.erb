@@ -1,0 +1,80 @@
+<template id="presenters-modal-template">
+  <button class="button" @click.prevent="openModal">Log Presenter</button>
+  <div class="modal" v-bind:class="{ 'is-active': showModal}">
+  <div class="modal-background">
+  </div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <h1 class="title is-3" class="modal-card-title">
+          Select Responsible User</h1>
+      </header>
+      <section class="modal-card-body">
+        <div class="modal-section">
+          <div id="select-user">
+            <p>Click to select the member who is responsible for the Agenda Item:<p>
+            <ul v-for="user in usersList">
+              <presenter :agenda-item.sync="agendaItem" :user="user" :creator.sync="creator" :toggle-selected-presenter="toggleSelectedPresenter"></presenter>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <footer class="modal-card-foot">
+        <button class="button" @click.prevent="closeModal">Close</button>
+      </footer>
+    </div>
+</template>
+
+<script>
+  Vue.component('presenters-modal', {
+    template: '#presenters-modal-template',
+    props: ['agendaItem', 'creator'],
+    data: function(){
+      return {
+        showModal: false,
+        toggleSelectedPresenter: false,
+        usersList: []
+      }
+    },
+    methods: {
+      openModal: function() {
+        this.showModal = true
+      },
+      closeModal: function() {
+        this.showModal = false
+        console.log("clicking close " + this.showModal)
+      }
+    },
+    created: function() {
+      this.$http.get('/api/users').then(function(response){
+        this.usersList = response.json()
+      }.bind(this));
+    }
+  })
+</script>
+
+<template id="presenter-template">
+    <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedPresenter}" @click="setPresenter"><i class="fa fa-person" aria-hidden="true">
+      {{user.first_name}} {{user.last_name}}
+    </i></li>
+</template>
+
+<script>
+  Vue.component('presenter', {
+    template: '#presenter-template',
+    props: ['agendaItem','user','creator','toggleSelectedPresenter'],
+    methods: {
+      setPresenter: function(){
+        this.$http.post('/api/agenda-items/2/creator', {'creator_id': this.user.id}, {emulateJSON:true}).then(function(response){
+          this.$parent.$broadcast('clearSelectedPresenter')
+          this.creator = response.json()
+          this.toggleSelectedPresenter = true
+        }.bind(this));
+      }
+    },
+    events: {
+      clearSelectedPresenter: function() {
+          this.toggleSelectedPresenter = false
+        }
+      }
+  })
+</script>
