@@ -4,7 +4,7 @@
 
 <template id="meetings-template">
   <div class="columns">
-    <div class="column is-half">
+    <div class="column is-2">
     </div>
       <div class="column">
         <div class="box">
@@ -27,11 +27,11 @@
 
 <template id="meeting-template">
   <div class="columns">
-    <div class="column"><a href="/meetings/{{meeting.id}}/edit"><i class="fa fa-library-books" aria-hidden="true"></i></a></div>
+    <div class="column is-1"><a href="/meetings/{{meeting.id}}/edit"><i class="fa fa-library-books" aria-hidden="true"></i></a></div>
     <div class="column">{{ meeting.meeting_date | moment "dddd, MMMM Do YYYY, h:mm a"}}</div>
     <div class="column">{{meeting.title}}</div>
-    <div class="column">{{ meeting.status }}</div>
-    <div class="column"><i class="fa fa-trash pull-right" aria-hidden="true" @click="deleteMeeting"></i></div>
+    <div class="column is-1">{{ meeting.status }}</div>
+    <div class="column is-1"><i class="fa fa-trash pull-right" aria-hidden="true" @click="deleteMeeting"></i></div>
   </div>
 </template>
 
