@@ -3,7 +3,6 @@ require_relative "utils"
 # Landing Page
 get '/' do
   erb :index
-  # redirect '/organizations/new'
 end
 
 get '/organizations/new' do
@@ -139,6 +138,31 @@ post '/api/meetings/:id/chair' do |id|
   @meeting.chair_id = params[:chair_id]
   User.find(params[:chair_id]).to_json
 end
+####################
+# NEW ORGANIZATION #
+####################
+
+get '/organizations/new' do
+	erb :signup
+end
+
+#####################
+# NEW BOARD MEMBERS #
+#####################
+
+#Board Members Sign Up page
+get '/users/new' do
+  erb :board_members
+end
+
+# create new board member (user)
+post '/users/new' do 
+  email = params[:email]
+  first_name = params[:first_name]
+  last_name = params[:last_name]
+  board_position = params[:board_position]
+  redirect(to('/users/new')) 
+end
 
 ######################
 # DEVELOPMENT ROUTES #
@@ -157,10 +181,6 @@ get '/richtext' do
   erb :rich_text_discussion
 end
 
-get '/select' do
-  erb :select_status
-end
-
 get '/download-minutes' do
   erb :download_pdf
 end
@@ -169,12 +189,15 @@ end
 # FILE UPLOADER #
 #################
 
+<<<<<<< HEAD
 get "/files-upload" do
   @files = Dir["./public/files/*"]
   erb :file_upload
 end
 
 
+=======
+>>>>>>> 03faf50afa0b2a9c262a7b8e3dc51468b79092c2
 post '/agenda-items/3/save_file' do
   @filename = params[:file][:filename]
   message = ""
@@ -208,11 +231,6 @@ end
 # ORGANIZATIONS #
 #################
 
-# list all organizations
-get '/organizations' do
-  erb :organizations
-end
-
 # get all organizations
 get '/api/organizations' do
   content_type :json
@@ -228,6 +246,11 @@ end
 ############
 # MEETINGS #
 ############
+
+# show a meeting
+get '/meetings/:id' do
+	erb :meetings_show 
+end
 
 # list all meetings
 get '/meetings' do
@@ -246,6 +269,7 @@ get '/api/meetings/:id' do |id|
   Meeting.find(id).to_json
 end
 
+<<<<<<< HEAD
 # update meeting by id
 post '/api/meetings/:id' do |id|
   content_type :json
@@ -271,6 +295,9 @@ post '/api/meetings/:id' do |id|
 end
 
 # meeting delete
+=======
+# delete a meeting
+>>>>>>> 03faf50afa0b2a9c262a7b8e3dc51468b79092c2
 get '/api/meetings/:id/delete' do
   content_type :json
   @meeting = Meeting.find(params[:id])
@@ -280,14 +307,19 @@ get '/api/meetings/:id/delete' do
   end
 end
 
+# # create a new meeting (placeholder route)
+# get '/meetings/new' do
+#   content_type :json
+#   @meeting = Meeting.new
+# end
+
+get '/logout' do
+  redirect '/'
+end
+
 ################
 # AGENDA ITEMS #
 ################
-
-# list all organizations
-get '/agenda-items' do
-  erb :agenda_items
-end
 
 # list all agenda items
 get '/api/agenda-items' do
@@ -317,6 +349,8 @@ post '/api/agenda-items/new' do
     @agenda_item.to_json
   end
 end
+
+# JEN HAS THIS ROUTE
 
 # update/edit item by id
 post '/api/agenda-items/:id' do |id|
@@ -359,11 +393,6 @@ end
 # USERS #
 #########
 
-# list all organizations
-get '/users' do
-  erb :users
-end
-
 # get all users
 get '/api/users' do
  content_type :json
@@ -380,11 +409,6 @@ end
 # VOTES #
 #########
 
-# list all organizations
-get '/votes' do
-  erb :votes
-end
-
 # get all votes
 get '/api/votes' do
   content_type :json
@@ -400,11 +424,6 @@ end
 #####################
 # MEETING ATTENDEES #
 #####################
-
-# list all organizations
-get '/meeting-attendees' do
-  erb :meeting_attendees
-end
 
 # get all meeting attendees
 get '/api/meeting-attendees' do

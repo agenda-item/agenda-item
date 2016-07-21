@@ -42,13 +42,17 @@
   box-shadow: 0 5px 3px rgba(17,17,17,.1),0 0 0 1px rgba(17,17,17,.1);
 }
 
+body {
+  font-family: 'Raleway', sans-serif;
+}
+
 .nav-item a, a.nav-item {
     color: black;
     /*padding-left: 20px;*/
 }
 
 body {
-  background: #7CAFA6;
+  background: #BAC0BD;
 }
 
 .style-element section {
@@ -226,6 +230,12 @@ body {
   padding-left: 18px;
   padding-right: 18px;
   border-radius: 5px;
+  border-color: #87918C;
+}
+
+.ai-attendees a:not(.button):hover {
+    border-bottom-color: white;
+    color: blue;
 }
 
 a.button-index {
@@ -305,7 +315,7 @@ p.menu-label {
 }
 
 #ai-new-agenda-item > div > li {
-  background-color: #FFEED0;
+  background-color: #EEECDC;
   border: 1px solid;
   border-radius: 10px;
   padding: 10px 15px;
@@ -314,7 +324,6 @@ p.menu-label {
 
 #ai-new-agenda-item > div > li > span:first-child {
  padding-right: 15px;
- color: blue;
 }
 
 article.message:first-of-type > .message-header:before {
@@ -349,7 +358,19 @@ article.message:last-of-type > .message-header:before {
 
 .user-selected {
    color: black;
-   background-color: red;
+   background-color: #FEE47E;
+ }
+
+.modal-card, .modal-content {
+  width: 900px;
+ }
+
+ .select-user {
+  border: 1px solid black;
+  max-width: 275px;
+  padding: 20px;
+  margin: 15px;
+  text-align: left;
  }
 
  .modal-card, .modal-content {
@@ -367,5 +388,14 @@ article.message:last-of-type > .message-header:before {
  .modal-card-head {
   display: inline;
  }
+
+.menu-label {
+  font-size: 15px;
+  padding: 15px;
+}
+
+.message-body {
+  background: #F4F8F3; 
+}
 
 /*hello*/
