@@ -64,10 +64,10 @@
     props: ['agendaItem','user','toggleSelectedPresenter'],
     methods: {
       setPresenter: function(){
-        console.log("clicking to set presenter")
-        this.$http.post('/api/agenda-items/' + this.agendaItem.id, {'creator': this.user}, {emulateJSON:true}).then(function(response){
+        var url= '/api/agenda-items/' + this.agendaItem.id
+        this.$http.post(url, {'creator': this.user}, {emulateJSON:true}).then(function(response){
           this.$parent.$broadcast('clearSelectedPresenter')
-          this.agendaItem.creator = response.json()
+          this.agendaItem = response.json()
           this.toggleSelectedPresenter = true
         }.bind(this));
       }
