@@ -189,15 +189,11 @@ end
 # FILE UPLOADER #
 #################
 
-<<<<<<< HEAD
 get "/files-upload" do
   @files = Dir["./public/files/*"]
   erb :file_upload
 end
 
-
-=======
->>>>>>> 03faf50afa0b2a9c262a7b8e3dc51468b79092c2
 post '/agenda-items/3/save_file' do
   @filename = params[:file][:filename]
   message = ""
@@ -269,7 +265,7 @@ get '/api/meetings/:id' do |id|
   Meeting.find(id).to_json
 end
 
-<<<<<<< HEAD
+
 # update meeting by id
 post '/api/meetings/:id' do |id|
   content_type :json
@@ -295,9 +291,6 @@ post '/api/meetings/:id' do |id|
 end
 
 # meeting delete
-=======
-# delete a meeting
->>>>>>> 03faf50afa0b2a9c262a7b8e3dc51468b79092c2
 get '/api/meetings/:id/delete' do
   content_type :json
   @meeting = Meeting.find(params[:id])
