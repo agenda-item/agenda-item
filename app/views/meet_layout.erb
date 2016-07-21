@@ -4,56 +4,35 @@
 
 <template id="meetings-template">
   <div class="columns">
-    <div class="column is-2">
+    <div class="column is-half">
     </div>
-    <div class="column">
-      <div id='header' class="container box">
-        <h1 class="title is-1">List of Meetings</h1>
-        <div v-for="meeting in meetings">
-        <meeting :meeting.sync="meeting"></meeting>
+      <div class="column">
+        <div class="box">
+          <h1 class="title is-1">List of Meetings</h1>
+          <div class="container">
+            <div>
+              <div v-for="meeting in meetings">
+                <meeting :meeting.sync="meeting"></meeting>
+              </div>
+            </div>
+          </div>
+          <div class="style-element section">
+          </div>
         </div>
       </div>
-    </div>
     <div class="column is-2">
     </div>
   </div>
 </template>
 
 <template id="meeting-template">
-      <div class="style-element section">
-        <table class="table">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Meeting Date</th>
-              <th>Meeting Title</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- <div v-for="meeting in meetings">
-            <meeting :meeting.sync="meeting"></meeting>
-            </div> -->
-            <tr>
-              <td><button><a href="api/meetings/{{meeting.id}}/edit">info</a></button></td>
-              <td>{{ meeting.meeting_date | moment "dddd, MMMM Do YYYY, h:mm a"}}</td>
-              <td>{{meeting.title}}</td>
-              <td><button>{{ meeting.status }}</button></td>
-              <td><i class="fa fa-trash pull-right" aria-hidden="true" @click="deleteMeeting"></i></td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <th></th>
-              <th>Meeting Date</th>
-              <th>Meeting Title</th>
-              <th></th>
-              <th></th>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
+  <div class="columns">
+    <div class="column"><a href="/meetings/{{meeting.id}}/edit"><i class="fa fa-library-books" aria-hidden="true"></i></a></div>
+    <div class="column">{{ meeting.meeting_date | moment "dddd, MMMM Do YYYY, h:mm a"}}</div>
+    <div class="column">{{meeting.title}}</div>
+    <div class="column">{{ meeting.status }}</div>
+    <div class="column"><i class="fa fa-trash pull-right" aria-hidden="true" @click="deleteMeeting"></i></div>
+  </div>
 </template>
 
 <script>
