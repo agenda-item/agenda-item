@@ -14,9 +14,10 @@
           <div class="columns">
             <div class="column">
               <div class="select-user">
-                <p>Abstained Voters</p>
-                <ul v-for="vote in votes | filterBy 'Abstain' in 'vote_type'">
-                  <abstained-voter :agenda-item.sync="agendaItem" :user="user" :vote.sync="vote" :toggle-selected-voter="toggleSelectedVote" :abstained-votes-list.sync="abstainedVotesList"></abstained-voter>
+                <p>Present</p>
+                <ul v-for="attendee in attendees | filterBy 'present' in 'attendance_type'">
+                  <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ attendee.first_name }}</i></div>
+                  <present-member :agenda-item.sync="agendaItem" :attendee="attendee"></present-member>
                 </ul>
               </div>
             </div>
@@ -62,7 +63,7 @@
 <script>
   Vue.component('attendees-modal', {
     template: '#attendees-modal-template',
-    props: ['agendaItem','votes'],
+    props: ['agendaItem','votes','attendees'],
     data: function(){
       return {
         showModal: false,
