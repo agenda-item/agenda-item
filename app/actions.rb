@@ -1,5 +1,13 @@
 require_relative "utils"
 
+helpers do
+
+  def current_meeting
+    @current_meeting ||= Meeting.find(session["meeting"]) if session["meeting"]
+  end
+
+end
+
 # Landing Page
 get '/' do
   erb :index
@@ -169,9 +177,9 @@ end
 ######################
 # to be deleted
 
-get '/edit-meeting' do
-  erb :edit_meeting
-end
+# get '/edit-meeting' do
+#   erb :edit_meeting
+# end
 
 #################
 # FILE UPLOADER #
@@ -226,6 +234,25 @@ end
 # MEETINGS #
 ############
 
+# edit meeting
+get '/meetings/:id/edit' do |id|
+  meeting = Meeting.find(id)
+  session["meeting"] = meeting.id
+  erb :edit_meeting
+end
+
+# create new meeting
+post '/meetings/new' do
+  meeting = Meeting.new
+  session["meeting"] = meeting.id
+
+  if meeting.save
+    redirect '/meetings/#{meeting.id}/edit'
+  else
+    puts "didn't succeed"
+  end
+end
+
 # show a meeting
 get '/meetings/:id' do
 	erb :meetings_show
@@ -245,7 +272,15 @@ end
 # get meeting by id
 get '/api/meetings/:id' do |id|
   content_type :json
-  Meeting.find(id).to_json
+  meeting = Meeting.find(id)
+  session["meeting"] = meeting.id
+  meeting.to_json
+end
+
+# gets the current meeting from the helpers
+get '/api/current-meeting' do
+  content_type :json
+  current_meeting.to_json
 end
 
 
@@ -292,10 +327,10 @@ end
 # AGENDA ITEMS #
 ################
 
-# list all agenda items
+# list all agenda items related to the current meeting
 get '/api/agenda-items' do
  content_type :json
- AgendaItem.all.to_json(include: { :votes => {:include =>:voting_user} })
+ AgendaItem.where(meeting_id: current_meeting.id).to_json(include: { :votes => {:include =>:voting_user} })
 end
 
 # get agenda item by id
