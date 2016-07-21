@@ -29,16 +29,11 @@
     background-color: #18dcf0;
     transition: opacity 0.2s ease-in-out;
   }
-  /*.div2 {
-    transition: opacity 0.4s ease-in-out;
-  }*/
-  /*End of dragula css*/
 
 .nav {
   /*background-color: #f3d596;*/
   background-color: #EAF2F0;
   /*background-color: white;*/
-  /*margin-bottom: 20px;*/
   padding: 10px 50px 10px 50px;
   box-shadow: 0 5px 3px rgba(17,17,17,.1),0 0 0 1px rgba(17,17,17,.1);
 }
@@ -51,7 +46,6 @@
 body {
   background: #BAC0BD;
   font-family: Geneva;
-
 }
 
 .style-element section {
