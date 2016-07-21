@@ -108,21 +108,25 @@ end
 
 get '/api/agenda-items/:id/votes' do |id|
   content_type :json
-  Vote.where(agenda_item_id: id).to_json
+  Vote.where(agenda_item_id: id).to_json(include: :voting_user)
 end
 
 
-post '/api/agenda-items/:id/voters' do |id|
+post '/api/votes' do
   content_type :json
-  @voters = Voter.where(agenda_item_id: id)
 
-  @agenda_item = AgendaItem.find(id)
+  @votes = params[:votes]
 
-  responsible_voter_ids = params[:votes].map do |user|
-    user[:id]
+  @votes.each do |_, vote|
+    voter_id = vote[:id].to_i
+    puts "the vote is", vote
+    vote = Vote.find(voter_id)
+    vote.vote_type = params[:vote_type]
+    if vote.save
+      puts "updated the thing"
+    end
+    "I updated #{voter_id}"
   end
-  # active record is smart enough to figure this out and not create orphan records
-  @agenda_item.voter_ids = responsible_voter_ids
 end
 
 # Get and post chair data
@@ -383,12 +387,6 @@ end
 # list all organizations
 get '/votes' do
   erb :votes
-end
-
-# get all votes
-get '/api/votes' do
-  content_type :json
-  Vote.all.to_json
 end
 
 # get vote by id

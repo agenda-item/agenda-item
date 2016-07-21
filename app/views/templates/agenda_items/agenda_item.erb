@@ -24,7 +24,7 @@
 
       <document :agenda-item.sync="agendaItem"></document>
 
-      <election :agenda-item.sync="agendaItem"></election>
+      <election :agenda-item.sync="agendaItem" :votes="votes"></election>
 
       <motion :agenda-item.sync="agendaItem"></motion>
 
@@ -43,7 +43,7 @@
 <script>
   Vue.component('agenda-item', {
     template: '#agenda-item-template',
-    props: ['agendaItem'],
+    props: ['agendaItem','votes'],
     methods: {
       postData: function() {
         console.log("save request triggered!")

@@ -54,7 +54,7 @@
           </a> -->
         </div>
         <!-- sets the current agenda item loaded into the side with the currentItemIndex of the agendaItems list stored on the root instance data -->
-        <agenda-item :agenda-item="agendaItems[currentItemIndex]"></agenda-item>
+        <agenda-item :agenda-item="agendaItems[currentItemIndex]" :votes.sync="votes"></agenda-item>
       </div>
     </div>
 
@@ -100,7 +100,6 @@
       this.$http.get('/api/meetings/1').then(function(response){
         this.currentMeeting = response.json();
       }.bind(this));
-
     },
     events: {
     'agenda-item-deleted': function (agendaItem) {
@@ -111,8 +110,14 @@
       this.agendaItems.pop(agendaItem)
     },
     'set-current-item-index': function(agendaItem) {
+      this.$http.get("/api/agenda-items/" + agendaItem.id + "/votes").then(function(response){
+        this.votes = response.json()
+        this.currentItemVotes = response.json()
+      }.bind(this));
+
       var index = this.agendaItems.indexOf(agendaItem)
       this.currentItemIndex = index
+      
     }
   },
   methods: {
