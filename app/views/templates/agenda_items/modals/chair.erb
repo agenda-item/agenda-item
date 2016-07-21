@@ -11,7 +11,7 @@
       <section class="modal-card-body">
         <div class="modal-section">
           <div id="select-user">
-            <p>Click to select the member who moved the Agenda Item:<p>
+            <p>Click to select the member who chair the Agenda Item:<p>
             <ul v-for="user in usersList">
               <chair :agenda-item.sync="agendaItem" :user="user" :chair.sync="chair" :toggle-selected-chair=":toggleSelectedChair"></chair>
             </ul>
@@ -32,6 +32,7 @@
       return {
         showModal: false,
         toggleSelectedChair: false,
+
         // toggleSelectedSeconder: false,
         usersList: []      
       }
@@ -47,7 +48,7 @@
     },
     created: function() {
       this.$http.get('/api/meetings/1/chair').then(function(response){
-        this.chair = response.json()
+        this.usersList = response.json()
       }.bind(this));
     }
   })
@@ -55,6 +56,7 @@
 
 <template id="chair-template">
     <li class="ai-user" v-bind:class="{'user-selected': toggleSelectedChair}" @click="setChair"><i class="fa fa-person" aria-hidden="true">
+
       {{user.first_name}} {{user.last_name}}
     </i></li>
 </template>
@@ -64,7 +66,7 @@
     template: '#chair-template',
     props: ['agendaItem','user','chair','toggleSelectedChair'],
     methods: {
-      setMover: function(){
+      setChair: function(){
         this.$http.post('/api/agenda-items/2/chair', {'chair_id': this.user.id}, {emulateJSON:true}).then(function(response){
           this.$parent.$broadcast('clearSelectedChair')
           this.chair = response.json()
@@ -79,4 +81,3 @@
       }
   })
 </script>
-
