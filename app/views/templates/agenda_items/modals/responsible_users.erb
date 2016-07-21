@@ -65,9 +65,11 @@
     props: ['agendaItem', 'user','toggleSelectedResponsibleUser'],
     methods: {
       setResponsibleUser: function(){
-        this.$http.post('/api/agenda-items/' + this.agendaItem.id, {'creator': this.user}, {emulateJSON:true}).then(function(response){
+        var url= '/api/agenda-items/' + this.agendaItem.id
+        this.$http.post(url, {'creator': this.user}, {emulateJSON:true}).then(function(response){
           this.$parent.$broadcast('clearSelectedResponsibleUser')
-          this.agendaItem.creator = response.json()
+          this.agendaItem = response.json()
+          // console.log(this.agendaItem.creator)
           this.toggleSelectedResponsibleUser = true
         }.bind(this));
       }
