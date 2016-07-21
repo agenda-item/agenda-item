@@ -65,12 +65,13 @@
 <script>
   Vue.component('chair', {
     template: '#chair-template',
-    props: ['currentMeeting', 'user', 'toggleSelectedChair'],
+    props: ['currentMeeting', 'user', 'chair', 'toggleSelectedChair'],
     methods: {
       setChair: function(){
-        this.$http.post('/api/meetings/' + this.currentMeeting.id, {'chair': this.user}, {emulateJSON:true}).then(function(response){
+        var url = '/api/meetings/' + this.currentMeeting.id
+        this.$http.post(url, {'chair': this.user}, {emulateJSON:true}).then(function(response){
           this.$parent.$broadcast('clearSelectedChair')
-          this.currentMeeting.chair = response.json()
+          this.currentMeeting = response.json()
           this.toggleSelectedChair = true
         }.bind(this));
       }
@@ -79,6 +80,6 @@
       clearSelectedChair: function() {
           this.toggleSelectedChair = false
         }
-      }
+    }
   })
 </script>
