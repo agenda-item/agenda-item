@@ -274,7 +274,7 @@ get '/api/meetings/:id' do |id|
   content_type :json
   meeting = Meeting.find(id)
   session["meeting"] = meeting.id
-  meeting.to_json
+  meeting.to_json(include: :chair) 
 end
 
 # gets the current meeting from the helpers
@@ -330,7 +330,7 @@ end
 # list all agenda items related to the current meeting
 get '/api/agenda-items' do
  content_type :json
- AgendaItem.where(meeting_id: current_meeting.id).to_json(include: { :votes => {:include =>:voting_user} })
+ AgendaItem.where(meeting_id: current_meeting.id).to_json(include: [:mover, :seconder, :creator, votes: {include: :voting_user}] )
 end
 
 # get agenda item by id
