@@ -274,7 +274,7 @@ get '/api/meetings/:id' do |id|
   content_type :json
   meeting = Meeting.find(id)
   session["meeting"] = meeting.id
-  meeting.to_json
+  meeting.to_json(include: :chair)
 end
 
 # gets the current meeting from the helpers
@@ -330,7 +330,8 @@ end
 # list all agenda items related to the current meeting
 get '/api/agenda-items' do
  content_type :json
- AgendaItem.where(meeting_id: current_meeting.id).to_json(include: { :votes => {:include =>:voting_user} })
+ AgendaItem.where(meeting_id: current_meeting.id).to_json(include: [:mover, :seconder, :creator, votes: {include: :voting_user}] )
+
 end
 
 # get agenda item by id
@@ -361,20 +362,29 @@ post '/api/agenda-items/:id' do |id|
   content_type :json
   results = {result: false}
   @agenda_item = AgendaItem.find(id)
-
+  if params[:creator]
+    @creator = User.find(params[:creator][:id].to_i)
+  end
+  if params[:seconder]
+  @seconder = User.find(params[:seconder][:id].to_i)
+  end
+  if params[:mover]
+  @mover = User.find(params[:mover][:id].to_i)
+  end
   @agenda_item.update(
     title:  params[:title],
     description: params[:description],
     status: params[:status],
     discussion: params[:discussion],
-    mover: params[:mover],
-    seconder: params[:seconder],
-    due_date: params[:due_date]
+    mover: @mover,
+    seconder: @seconder,
+    due_date: params[:due_date],
+    creator: @creator
     )
 
   if @agenda_item.save
     results[:result] = true
-    # @agenda_item.to_json(include: { :votes => {:include =>:voting_user} })
+    @agenda_item.to_json(include: [:mover, :seconder, :creator, votes: {include: :voting_user}] )
   end
 end
 
