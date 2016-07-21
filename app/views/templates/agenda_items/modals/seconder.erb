@@ -13,7 +13,7 @@
           <div class="select-user">
             <p>Click to select the member who seconded the Agenda Item:</p>
             <ul v-for="user in usersList">
-              <seconder :agenda-item.sync="agendaItem" :user="user" :seconder.sync="seconder" :toggle-selected-seconder="toggleSelectedSeconder"></seconder>
+              <seconder :agenda-item.sync="agendaItem" :user="user" :toggle-selected-seconder="toggleSelectedSeconder"></seconder>
             </ul>
           </div>
         </div>
@@ -27,11 +27,10 @@
 <script>
   Vue.component('seconder-modal', {
     template: '#seconder-modal-template',
-    props: ['agendaItem', 'mover', 'seconder'],
+    props: ['agendaItem'],
     data: function(){
       return {
         showModal: false,
-        toggleSelectedMover: false,
         toggleSelectedSeconder: false,
         usersList: []
       }
@@ -62,14 +61,14 @@
 <script>
   Vue.component('seconder', {
     template: '#seconder-template',
-    props: ['agendaItem','user','seconder', 'toggleSelectedSeconder'],
+    props: ['agendaItem','user', 'toggleSelectedSeconder'],
     methods: {
       setSeconder: function(){
         var url= '/api/agenda-items/' + this.agendaItem.id
         this.$http.post(url, {'seconder': this.user}, {emulateJSON:true}).then(function(response){
-          this.$parent.$broadcast('clearSelectedMover')
+          this.$parent.$broadcast('clearSelectedSeconder')
           this.agendaItem = response.json()
-          this.toggleSelectedMover = true
+          this.toggleSelectedSeconder = true
         }.bind(this));
       }
     },
