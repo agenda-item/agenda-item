@@ -47,7 +47,7 @@
     },
     created: function() {
       this.$http.get('/api/users').then(function(response){
-        this.usersList = response.json()
+        var votes = response.json()
       }.bind(this));
     }
   })

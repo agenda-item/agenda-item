@@ -111,9 +111,7 @@
     'set-current-item-index': function(agendaItem) {
       this.$http.get("/api/agenda-items/" + agendaItem.id + "/votes").then(function(response){
         this.votes = response.json()
-        console.log("getting the votes for " + agendaItem.title)
         this.currentItemVotes = response.json()
-        console.log(this.votes)
       }.bind(this));
 
       var index = this.agendaItems.indexOf(agendaItem)
