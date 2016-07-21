@@ -2,9 +2,9 @@
   <div class="ai-business" v-if="agendaItem.type === 'Business'">
     <div class="ai-responsible">
       <label class="label">Responsible User</label>
-        <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{creator.first_name}}</i></div>
+        <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{agendaItem.creator.first_name}}</i></div>
         <br/>
-        <presenters-modal :agenda-item.sync="agendaItem" :creator.sync="creator"></presenters-modal>
+        <presenters-modal :agenda-item.sync="agendaItem"></presenters-modal>
     </div>
     <div class="ai-status">
       <label class="label">Status</label>
@@ -26,11 +26,6 @@
   Vue.component('business', {
     template: '#business-template',
     props: ['agendaItem'],
-    data: function() {
-      return {
-        creator: {}
-      }
-    },
     created: function() {
       this.$http.get('/api/agenda-items/1/creator').then(function(response){
         this.creator = response.json()
