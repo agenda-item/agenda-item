@@ -272,14 +272,15 @@ end
 # get meeting by id
 get '/api/meetings/:id' do |id|
   content_type :json
-  meeting = Meeting.find(id).to_json
+  meeting = Meeting.find(id)
   session["meeting"] = meeting.id
+  meeting.to_json
 end
 
 # gets the current meeting from the helpers
 get '/api/current-meeting' do
   content_type :json
-  @current_meeting.to_json
+  current_meeting.to_json
 end
 
 
