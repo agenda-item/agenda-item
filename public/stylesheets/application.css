@@ -42,8 +42,9 @@
   box-shadow: 0 5px 3px rgba(17,17,17,.1),0 0 0 1px rgba(17,17,17,.1);
 }
 
-body {
+body, textarea, input, i ,button {
   font-family: 'Raleway', sans-serif;
+  font-weight: 400;
 }
 
 .nav-item a, a.nav-item {
@@ -312,6 +313,9 @@ p.menu-label {
 
 .aside {
   background-color: black;
+}
+aside.menu {
+  font-size: 16px;
 }
 
 #ai-new-agenda-item > div > li {
