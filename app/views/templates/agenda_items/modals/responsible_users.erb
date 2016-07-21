@@ -69,7 +69,6 @@
         this.$http.post(url, {'creator': this.user}, {emulateJSON:true}).then(function(response){
           this.$parent.$broadcast('clearSelectedResponsibleUser')
           this.agendaItem = response.json()
-          // console.log(this.agendaItem.creator)
           this.toggleSelectedResponsibleUser = true
         }.bind(this));
       }
