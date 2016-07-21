@@ -1,0 +1,36 @@
+<template id="agenda-item-selection-template">
+  <li>
+    <span @click="setCurrentAgendaItem">
+      <icon :agenda-item="agendaItem"></icon>
+      <!-- TODO Olga: add overflow to this span -->
+      <span v-if="agendaItem.title">{{agendaItem.title}}</span>
+      <span v-else><em>Unnamed {{agendaItem.type}}</em></span>
+    </span>
+    <!-- TODO Olga: add padding left and maybe colouring? to this i -->
+    <i class="fa fa-trash pull-right" aria-hidden="true" @click="deleteAgendaItem"></i>
+  </li>
+</template>
+
+<script>
+  Vue.component('agenda-item-selection', {
+    template: "#agenda-item-selection-template",
+    props: ['agendaItem','currentItemIndex'],
+    methods: {
+      setCurrentAgendaItem: function() {
+        this.$dispatch('set-current-item-index', this.agendaItem)
+      },
+      deleteAgendaItem: function() {
+        var itemId = this.agendaItem.id
+        this.$http.get('/api/agenda-items/' + itemId + '/delete', {'id': itemId}, {emulateJSON:true}).then(function(response) {
+          this.$dispatch('agenda-item-deleted', this.agendaItem)
+          // TODO figure out how to make this work again!
+          // if (this.currentItemIndex === agendaItem.position - 1) {
+          //   this.$dispatch('set-current-item-index', this.agendaItem)
+          // }
+        }).error(function(error) {
+          console.log(error);
+        }.bind(this));
+      }
+    }
+  });
+</script>

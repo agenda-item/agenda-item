@@ -1,0 +1,46 @@
+<!-- document TODO write function to post the file data on submit. does this submit separately from the rest of the stuffs? -->
+
+<template id="document-template">
+  <div class="ai-document" v-if="agendaItem.type === 'Document'">
+
+    <div class="ai-responsible">
+      <label class="label">Responsible User</label>
+        <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{creator.first_name}}</i></div>
+        <br/>
+        <presenters-modal :agenda-item.sync="agendaItem" :creator.sync="creator"></presenters-modal>
+    </div>
+
+    <div class="ai-upload">
+      <label class="label">Upload Document</label>
+      <div v-if="!agendaItem.file_path">
+        <form action="/agenda-items/{{agendaItem.id}}/save_file" method="POST" enctype="multipart/form-data">
+          <input type="file" name="file" >
+          <!-- TODO if the file isn't posting properly it might be because this name is not being checked for properly in the if statement in the post method -->
+          <input type="submit" value="Upload">
+        </form>
+      </div>
+      <div v-else>
+        <a href="/public/files/{{agendaItem.file_path}}">{{ agendaItem.file_path }}</a> | 
+        <a href="/agenda-items/{{agendaItem.id}}/remove-document">Remove Document</a>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  Vue.component('document', {
+    template: '#document-template',
+    props: ['agendaItem'],
+    data: function() {
+      return {
+        creator: {}
+      }
+    },
+    created: function() {
+      this.$http.get('/api/agenda-items/1/creator').then(function(response){
+        this.creator = response.json()
+        console.log(response.json().first_name)
+      }.bind(this));
+    }
+  })  
+</script>
