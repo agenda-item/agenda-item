@@ -1,5 +1,13 @@
 require_relative "utils"
 
+helpers do
+
+  def current_meeting
+    @current_meeting ||= Meeting.find(session["meeting"]) if session["meeting"]
+  end
+
+end
+
 # Landing Page
 get '/' do
   erb :index
@@ -169,9 +177,9 @@ end
 ######################
 # to be deleted
 
-get '/edit-meeting' do
-  erb :edit_meeting
-end
+# get '/edit-meeting' do
+#   erb :edit_meeting
+# end
 
 #################
 # FILE UPLOADER #
@@ -226,6 +234,25 @@ end
 # MEETINGS #
 ############
 
+# edit meeting
+get '/meetings/:id/edit' do |id|
+  meeting = Meeting.find(id)
+  session["meeting"] = meeting.id
+  erb :edit_meeting
+end
+
+# create new meeting
+post '/meetings/new' do
+  meeting = Meeting.new
+  session["meeting"] = meeting.id
+
+  if meeting.save
+    redirect '/meetings/#{meeting.id}/edit'
+  else
+    puts "didn't succeed"
+  end
+end
+
 # show a meeting
 get '/meetings/:id' do
 	erb :meetings_show
@@ -245,7 +272,15 @@ end
 # get meeting by id
 get '/api/meetings/:id' do |id|
   content_type :json
-  Meeting.find(id).to_json
+  meeting = Meeting.find(id)
+  session["meeting"] = meeting.id
+  meeting.to_json(include: :chair)
+end
+
+# gets the current meeting from the helpers
+get '/api/current-meeting' do
+  content_type :json
+  current_meeting.to_json
 end
 
 
@@ -254,7 +289,6 @@ post '/api/meetings/:id' do |id|
   content_type :json
   results = {result: false}
   @meeting = Meeting.find(id)
-  puts @meeting
 
   @meeting.update(
     title:  params[:title],
@@ -292,10 +326,11 @@ end
 # AGENDA ITEMS #
 ################
 
-# list all agenda items
+# list all agenda items related to the current meeting
 get '/api/agenda-items' do
  content_type :json
- AgendaItem.all.to_json(include: { :votes => {:include =>:voting_user} })
+ AgendaItem.where(meeting_id: current_meeting.id).to_json(include: [:mover, :seconder, :creator, votes: {include: :voting_user}] )
+
 end
 
 # get agenda item by id
@@ -326,20 +361,29 @@ post '/api/agenda-items/:id' do |id|
   content_type :json
   results = {result: false}
   @agenda_item = AgendaItem.find(id)
-
+  if params[:creator]
+    @creator = User.find(params[:creator][:id].to_i)
+  end
+  if params[:seconder]
+  @seconder = User.find(params[:seconder][:id].to_i)
+  end
+  if params[:mover]
+  @mover = User.find(params[:mover][:id].to_i)
+  end
   @agenda_item.update(
     title:  params[:title],
     description: params[:description],
     status: params[:status],
     discussion: params[:discussion],
-    mover: params[:mover],
-    seconder: params[:seconder],
-    due_date: params[:due_date]
+    mover: @mover,
+    seconder: @seconder,
+    due_date: params[:due_date],
+    creator: @creator
     )
 
   if @agenda_item.save
     results[:result] = true
-    # @agenda_item.to_json(include: { :votes => {:include =>:voting_user} })
+    @agenda_item.to_json(include: [:mover, :seconder, :creator, votes: {include: :voting_user}] )
   end
 end
 
