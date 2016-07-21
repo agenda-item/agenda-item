@@ -13,7 +13,7 @@
           <div id="select-user">
             <p>Click to select the member who is responsible for this item:<p>
             <ul v-for="user in usersList">
-              <responsible-users :agenda-item.sync="agendaItem" :user="user" :creator.sync="creator" :toggle-selected-responsible-user="toggleSelectedResponsibleUser"></responsible-users>
+              <responsible-users :agenda-item.sync="agendaItem" :user="user" :toggle-selected-responsible-user="toggleSelectedResponsibleUser"></responsible-users>
             </ul>
           </div>
         </div>
@@ -28,7 +28,7 @@
 
   Vue.component('responsible-users-modal', {
     template: '#responsible-users-modal-template',
-    props: ['agendaItem', 'creator'],
+    props: ['agendaItem'],
     data: function(){
       return {
         showModal: false,
@@ -62,12 +62,12 @@
 <script>
   Vue.component('responsible-users', {
     template: '#responsible-users-template',
-    props: ['agendaItem', 'user','creator','toggleSelectedResponsibleUser'],
+    props: ['agendaItem', 'user','toggleSelectedResponsibleUser'],
     methods: {
       setResponsibleUser: function(){
-        this.$http.post('/api/agenda-items/3/creator', {'creator_id': this.user.id}, {emulateJSON:true}).then(function(response){
+        this.$http.post('/api/agenda-items/' + this.agendaItem.id, {'creator': this.user}, {emulateJSON:true}).then(function(response){
           this.$parent.$broadcast('clearSelectedResponsibleUser')
-          this.creator = response.json()
+          this.agendaItem.creator = response.json()
           this.toggleSelectedResponsibleUser = true
         }.bind(this));
       }

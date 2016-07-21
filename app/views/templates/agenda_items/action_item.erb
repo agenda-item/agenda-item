@@ -2,9 +2,9 @@
   <div class="ai-action-item" v-if="agendaItem.type === 'Action Item'">
     <div class="ai-responsible">
       <label class="label">Responsible Board Member(s)</label>
-      <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{creator.first_name}}</i></div>
+      <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{agendaItem.creator.first_name}}</i></div>
       <br/>
-      <responsible-users-modal :agenda-item.sync="agendaItem" :creator.sync="creator">
+      <responsible-users-modal :agenda-item.sync="agendaItem">
       </responsible-users-modal>
     </div>
     <div class="ai-date-time">
@@ -35,15 +35,6 @@
   Vue.component('action-item', {
     template: '#action-item-template',
     props: ['agendaItem'],
-    data: function() {
-      return {
-        creator: []
-      }
-    },
-    created: function() {
-      this.$http.get('/api/agenda-items/3/creator').then(function(response){
-        this.creator = response.json()
-      }.bind(this));
     }
   })
 </script>
