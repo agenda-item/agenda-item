@@ -361,9 +361,15 @@ post '/api/agenda-items/:id' do |id|
  content_type :json
  results = {result: false}
  @agenda_item = AgendaItem.find(id)
- @creator = User.find(params[:creator][:id].to_i)
- @seconder = User.find(params[:seconder][:id].to_i)
- @mover = User.find(params[:mover][:id].to_i)
+  if params[:creator]
+    @creator = User.find(params[:creator][:id].to_i)
+  end
+  if params[:seconder]
+   @seconder = User.find(params[:seconder][:id].to_i)
+  end
+  if params[:mover]
+    @mover = User.find(params[:mover][:id].to_i)
+  end
 
  @agenda_item.update(
    title:  params[:title],
