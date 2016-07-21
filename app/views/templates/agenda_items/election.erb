@@ -20,14 +20,9 @@
       <br/>
       <seconder-modal :agenda-item.sync="agendaItem" :mover.sync="mover" :seconder.sync="seconder"></seconder-modal>  
     </div>
+    <votes-modal :agenda-item.sync="agendaItem" :votes.sync="votes"></votes-modal> 
     <div class="ai-vote">
-      <!-- only shows the log votes button if there are no votes-->
-      <div v-if="agendaItem.votes.length === 0">
-        <a class="button">
-          Log Votes
-        </a>
-      </div>
-      <div v-else>
+      <div v-if="agendaItem.votes.length != 0">
         <div class="message-header">
           In Favour
         </div>
@@ -53,9 +48,6 @@
           </div>
         </div>
       </div>
-        <a class="button">
-          Adjust Votes
-        </a>
       </div>
     </div>
   </div>
@@ -64,31 +56,27 @@
 <script>
   Vue.component('election', {
     template: '#election-template',
-    props: ['agendaItem'],
+    props: ['agendaItem','votes'],
     data: function() {
       return {
         mover: {},
         seconder: {},
-        nominee: {},
-        votes: []
+        nominee: {}
       }
     },
     created: function() {
-      this.$http.get("/api/agenda-items/6/mover").then(function(response){
+      this.$http.get("/api/agenda-items/" + this.agendaItem.id + "/mover").then(function(response){
         this.mover = response.json()
       }.bind(this));
 
-      this.$http.get("/api/agenda-items/6/seconder").then(function(response){
+      this.$http.get("/api/agenda-items/" + this.agendaItem.id + "/seconder").then(function(response){
         this.seconder = response.json()
       }.bind(this));
 
-      this.$http.get("/api/agenda-items/6/nominee").then(function(response){
+      this.$http.get("/api/agenda-items/" + this.agendaItem.id + "/nominee").then(function(response){
         this.nominee = response.json()
       }.bind(this));
 
-      this.$http.get("/api/agenda-items/6/votes").then(function(response){
-        this.votes = response.json()
-      }.bind(this));
     }
   })  
 </script>
