@@ -32,26 +32,20 @@
           <br/>
           <chair-modal :current-meeting.sync="c" :chair.sync="chair" ></chair-modal>
         </div>
-        <div class="ai-attendees">
+        <!-- <div class="ai-attendees">
           <label class="label">Attendees</label>
-          <div v-if="meeting.attendees.length === 0">
-            <a class="button">
-              Log Attendees
-            </a>
-          </div>
-          <div v-else><!-- start v-else -->
+            <attendees-modal :attendees="attendees"></attendees-modal>
             <article class="message">
               <div class="message-header">
                 Present
               </div>
+              <div v-for="attendee in attendees | filterBy 'Present' in 'attendance_type'">
+                <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ attendee.first_name }}</i></div>
+              </div>
               <div class="message-body">
-                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ @bob.first_name }}</i></div>
-                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ @sylvia.first_name }}</i></div>
-                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ @jason.first_name }}</i></div>
-                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ @milly.first_name }}</i></div>
-                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+                <div v-for="attendee in attendees | filterBy 'Present' in 'attendance_type'">
+                  <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ attendee.first_name }}</i></div>
+                </div>
               </div>
             </article>
             <article class="message">
@@ -59,15 +53,13 @@
                 Absent
               </div>
               <div class="message-body">
-                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
-                <div class="ai-user"><i class="fa fa-hand-spock-o" aria-hidden="true">{{ user.first_name }}</i></div>
+                <div v-for="attendee in attendees | filterBy 'Absent' in 'attendance_type'">
+                  <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ attendee.first_name }}</i></div>
+                </div>
               </div>
             </article>
-            <a class="button">
-              Adjust Attendees
-            </a>
-          </div><!-- end v-else   -->
-        </div>
+          </div>
+        </div> -->
            <!-- TODO add call to order time stamp -->
         <div class="ai-minutes">
           <label class="label">Discussion</label>
@@ -94,6 +86,12 @@
       this.$http.get('/api/meetings/1/chair').then(function(response){
         this.chair = response.json()
       }.bind(this));
+    },
+    computed: {
+      attendees: function() {
+        console.log(this.currentMeeting.meeting_attendees)
+        return this.currentMeeting.meeting_attendees
+      }
     },
     methods: {
     submitMeeting: function() {

@@ -10,8 +10,8 @@
       </header>
       <section class="modal-card-body">
         <div class="modal-section">
-          <div id="select-user">
-            <p>Click to select the member who seconded the Agenda Item:<p>
+          <div class="select-user">
+            <p>Click to select the member who seconded the Agenda Item:</p>
             <ul v-for="user in usersList">
               <seconder :agenda-item.sync="agendaItem" :user="user" :seconder.sync="seconder" :toggle-selected-seconder="toggleSelectedSeconder"></seconder>
             </ul>
