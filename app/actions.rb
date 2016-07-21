@@ -147,13 +147,8 @@ post '/api/votes' do
 
   @votes.each do |_, vote|
     voter_id = vote[:id].to_i
-    puts "the vote is", vote
     vote = Vote.find(voter_id)
     vote.vote_type = params[:vote_type]
-    if vote.save
-      puts "updated the thing"
-    end
-    "I updated #{voter_id}"
   end
 end
 

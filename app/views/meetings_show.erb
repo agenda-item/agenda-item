@@ -23,7 +23,6 @@
           {{ meetingDetail.meeting_date | moment "dddd, MMMM Do YYYY, h:mm a"}}<br/>
           <strong>Meeting Location:</strong> {{ meetingDetail.location }}<br/>
           <strong>Discussion:</strong> {{ meetingDetail.discussion }}<br/>
-          <br/>
           <hr>
         </div>
            
@@ -51,12 +50,13 @@
               <h1 class="subtitle is-5" v-if="agendaItem.title"><icon :agenda-item="agendaItem"></icon> {{agendaItem.title}}</h1>
               <div v-if="agendaItem.discussion"><strong>Discussion:</strong> {{agendaItem.discussion}}<br/></div>
               <div v-if="agendaItem.file_path"><strong>File Path:</strong> {{agendaItem.file_path}}<br/></div>
-              <div v-if="agendaItem.mover" ><strong>Mover:</strong> {{agendaItem.mover}}<br/></div>
-              <div v-if="agendaItem.seconder"><strong>Seconder:</strong> {{agendaItem.seconder}}<br/></div>
+              <div v-if="agendaItem.mover" ><strong>Mover:</strong> {{agendaItem.mover.first_name}}<br/></div>
+              <div v-if="agendaItem.seconder"><strong>Seconder:</strong> {{agendaItem.seconder.first_name}}<br/></div>
               <div v-if="agendaItem.due_date"><strong>Due Date:</strong> {{agendaItem.due_date | moment "dddd, MMMM Do YYYY, h:mm a" }}<br/></div>
               <div v-if="agendaItem.status"><strong>Status:</strong> {{agendaItem.status}}<br/></div>
-              <!-- <div v-for="vote in agendaItems.votes">{{vote.voting_user.first_name}}</div>
-                <list-users :agenda-item="agendaItem"></list-users> -->
+              <!-- <div v-for="vote in agendaItems.votes">{{vote.voting_user.first_name}}</div> -->
+
+              <!-- <list-users :agenda-item="agendaItem"></list-users> -->
               <hr>
             </div>
           </div>
