@@ -1,5 +1,13 @@
 require_relative "utils"
 
+helpers do
+
+  def current_meeting
+    @current_meeting = nil
+  end
+
+end
+
 # Landing Page
 get '/' do
   erb :index
@@ -226,6 +234,12 @@ end
 # MEETINGS #
 ############
 
+# create new meeting
+post '/meetings/new' do
+  @current_meeting = Meeting.create
+  redirect '/meetings/#{@current_meeting.id}/edit'
+end
+
 # show a meeting
 get '/meetings/:id' do
 	erb :meetings_show
@@ -234,6 +248,11 @@ end
 # list all meetings
 get '/meetings' do
   erb :list_meetings
+end
+
+# gets the current meeting from the helpers
+get '/current-meeting' do
+  @current_meeting
 end
 
 # get all meetings
@@ -245,7 +264,7 @@ end
 # get meeting by id
 get '/api/meetings/:id' do |id|
   content_type :json
-  Meeting.find(id).to_json
+  @current_meeting = Meeting.find(id).to_json
 end
 
 
