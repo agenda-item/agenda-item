@@ -15,14 +15,6 @@ get '/styleguide' do
   erb :styleguide
 end
 
-get '/add-single-user' do
-  erb :add_single_user
-end
-
-get '/add-mover-seconder' do
-  erb :add_mover_seconder
-end
-
 # Get and post mover data
 
 get '/api/agenda-items/:id/mover' do |id|
@@ -36,6 +28,19 @@ post '/api/agenda-items/:id/mover' do |id|
   @agenda_item = AgendaItem.find(id)
   @agenda_item.mover_id = params[:mover_id]
   User.find(params[:mover_id]).to_json
+end
+
+#Board Members Sign Up page
+get '/users/new' do
+  erb :board_members
+end
+
+post '/users/new' do 
+  email = params[:email]
+  first_name = params[:first_name]
+  last_name = params[:last_name]
+  board_position = params[:board_position]
+  redirect(to('/users/new')) 
 end
 
 # Get and post seconder data
@@ -143,37 +148,14 @@ end
 ######################
 # DEVELOPMENT ROUTES #
 ######################
-# to be deleted
 
 get '/edit-meeting' do
   erb :edit_meeting
 end
 
-get '/select' do
-  erb :select_status
-end
-
-get '/richtext' do
-  erb :rich_text_discussion
-end
-
-get '/select' do
-  erb :select_status
-end
-
-get '/download-minutes' do
-  erb :download_pdf
-end
-
 #################
 # FILE UPLOADER #
 #################
-
-get "/files-upload" do
-  @files = Dir["./public/files/*"]
-  erb :file_upload
-end
-
 
 post '/agenda-items/3/save_file' do
   @filename = params[:file][:filename]
@@ -191,7 +173,7 @@ post '/agenda-items/3/save_file' do
       end
       File.open("./public/files/#{@filename}", 'wb') do |f|
         f.write(file.read)
-      end
+    end
       message = "File has been uploaded"
     end
   else
@@ -208,11 +190,6 @@ end
 # ORGANIZATIONS #
 #################
 
-# list all organizations
-get '/organizations' do
-  erb :organizations
-end
-
 # get all organizations
 get '/api/organizations' do
   content_type :json
@@ -228,6 +205,10 @@ end
 ############
 # MEETINGS #
 ############
+# show the meetings
+get '/meetings/:id' do
+	erb :meetings_show 
+end
 
 # list all meetings
 get '/meetings' do
@@ -280,14 +261,18 @@ get '/api/meetings/:id/delete' do
   end
 end
 
+get '/meetings/new' do
+  content_type :json
+  @meeting = Meeting.new
+  erb :'new_meeting'  #not correct erb, placeholder
+end
+
+get '/logout' do
+  redirect '/'
+end
 ################
 # AGENDA ITEMS #
 ################
-
-# list all organizations
-get '/agenda-items' do
-  erb :agenda_items
-end
 
 # list all agenda items
 get '/api/agenda-items' do
@@ -359,11 +344,6 @@ end
 # USERS #
 #########
 
-# list all organizations
-get '/users' do
-  erb :users
-end
-
 # get all users
 get '/api/users' do
  content_type :json
@@ -380,11 +360,6 @@ end
 # VOTES #
 #########
 
-# list all organizations
-get '/votes' do
-  erb :votes
-end
-
 # get all votes
 get '/api/votes' do
   content_type :json
@@ -400,11 +375,6 @@ end
 #####################
 # MEETING ATTENDEES #
 #####################
-
-# list all organizations
-get '/meeting-attendees' do
-  erb :meeting_attendees
-end
 
 # get all meeting attendees
 get '/api/meeting-attendees' do
