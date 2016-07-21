@@ -3,7 +3,7 @@ require_relative "utils"
 helpers do
 
   def current_meeting
-    @current_meeting = nil
+    @current_meeting ||= Meeting.find(session["meeting"]) if session["meeting"]
   end
 
 end
@@ -236,17 +236,18 @@ end
 
 # edit meeting
 get '/meetings/:id/edit' do |id|
-  @current_meeting = Meeting.find(id)
+  meeting = Meeting.find(id)
+  session["meeting"] = meeting.id
   erb :edit_meeting
 end
 
 # create new meeting
 post '/meetings/new' do
-  @current_meeting = Meeting.new
+  meeting = Meeting.new
+  session["meeting"] = meeting.id
 
-  if @current_meeting.save
-    puts "current meeting is", @current_meeting
-    redirect '/meetings/#{current_meeting.id}/edit'
+  if meeting.save
+    redirect '/meetings/#{meeting.id}/edit'
   else
     puts "didn't succeed"
   end
@@ -262,11 +263,6 @@ get '/meetings' do
   erb :list_meetings
 end
 
-# gets the current meeting from the helpers
-get '/current-meeting' do
-  @current_meeting
-end
-
 # get all meetings
 get '/api/meetings' do
   content_type :json
@@ -276,7 +272,14 @@ end
 # get meeting by id
 get '/api/meetings/:id' do |id|
   content_type :json
-  @current_meeting = Meeting.find(id).to_json
+  meeting = Meeting.find(id).to_json
+  session["meeting"] = meeting.id
+end
+
+# gets the current meeting from the helpers
+get '/api/current-meeting' do
+  content_type :json
+  @current_meeting.to_json
 end
 
 
@@ -323,10 +326,10 @@ end
 # AGENDA ITEMS #
 ################
 
-# list all agenda items
+# list all agenda items related to the current meeting
 get '/api/agenda-items' do
  content_type :json
- AgendaItem.all.to_json(include: { :votes => {:include =>:voting_user} })
+ AgendaItem.where(meeting_id: current_meeting.id).to_json(include: { :votes => {:include =>:voting_user} })
 end
 
 # get agenda item by id
