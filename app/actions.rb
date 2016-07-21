@@ -135,7 +135,6 @@ end
 ######################
 # DEVELOPMENT ROUTES #
 ######################
-# to be deleted
 
 get '/edit-meeting' do
   erb :edit_meeting
@@ -144,12 +143,6 @@ end
 #################
 # FILE UPLOADER #
 #################
-
-get "/files-upload" do
-  @files = Dir["./public/files/*"]
-  erb :file_upload
-end
-
 
 post '/agenda-items/3/save_file' do
   @filename = params[:file][:filename]
@@ -183,11 +176,6 @@ end
 #################
 # ORGANIZATIONS #
 #################
-
-# list all organizations
-get '/organizations' do
-  erb :organizations
-end
 
 # get all organizations
 get '/api/organizations' do
@@ -260,11 +248,6 @@ end
 # AGENDA ITEMS #
 ################
 
-# list all organizations
-get '/agenda-items' do
-  erb :agenda_items
-end
-
 # list all agenda items
 get '/api/agenda-items' do
  content_type :json
@@ -335,11 +318,6 @@ end
 # USERS #
 #########
 
-# list all organizations
-get '/users' do
-  erb :users
-end
-
 # get all users
 get '/api/users' do
  content_type :json
@@ -356,11 +334,6 @@ end
 # VOTES #
 #########
 
-# list all organizations
-get '/votes' do
-  erb :votes
-end
-
 # get all votes
 get '/api/votes' do
   content_type :json
@@ -376,11 +349,6 @@ end
 #####################
 # MEETING ATTENDEES #
 #####################
-
-# list all organizations
-get '/meeting-attendees' do
-  erb :meeting_attendees
-end
 
 # get all meeting attendees
 get '/api/meeting-attendees' do
