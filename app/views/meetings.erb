@@ -79,8 +79,8 @@
 <template id="meetings-footer-template">
   <div id='footer' class="box container" v-for="meetingFooterDetail in meetingFooterDetails">
     <hr>
-    <strong>Meeting Adjournment Time:</strong> {{ meetingFooterDetail.adjournment_time }}<br/>
-    <strong>Next Meeting:</strong> {{ meetingFooterDetail.next_meeting_date }}<br/>
+    <strong>Meeting Adjournment Time:</strong> {{ meetingFooterDetail.adjournment_time | moment "dddd, MMMM Do YYYY, h:mm a"  }}<br/>
+    <strong>Next Meeting:</strong> {{ meetingFooterDetail.next_meeting_date | moment "dddd, MMMM Do YYYY, h:mm a" }}<br/>
   </div>
 </template>
 
