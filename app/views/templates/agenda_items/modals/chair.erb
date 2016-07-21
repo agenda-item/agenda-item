@@ -11,9 +11,9 @@
       <section class="modal-card-body">
         <div class="modal-section">
           <div id="select-user">
-            <p>Click to select the member who chair the Agenda Item:<p>
+            <p>Click to select the chair:<p>
             <ul v-for="user in usersList">
-              <chair :agenda-item.sync="agendaItem" :user="user" :chair.sync="chair" :toggle-selected-chair=":toggleSelectedChair"></chair>
+              <chair :current-meeting.sync="currentMeeting" :user="user" :chair.sync="chair" :toggle-selected-chair=":toggleSelectedChair"></chair>
             </ul>
           </div>
         </div>
@@ -27,7 +27,7 @@
 <script>
   Vue.component('chair-modal', {
     template: '#chair-modal-template',
-    props: ['agendaItem', 'chair'],
+    props: ['currentMeeting', 'chair'],
     data: function(){
       return {
         showModal: false,
@@ -47,7 +47,7 @@
       }
     },
     created: function() {
-      this.$http.get('/api/meetings/1/chair').then(function(response){
+      this.$http.get('/api/users').then(function(response){
         this.usersList = response.json()
       }.bind(this));
     }
@@ -64,10 +64,10 @@
 <script>
   Vue.component('chair', {
     template: '#chair-template',
-    props: ['agendaItem','user','chair','toggleSelectedChair'],
+    props: ['currentMeeting','user','chair','toggleSelectedChair'],
     methods: {
       setChair: function(){
-        this.$http.post('/api/agenda-items/2/chair', {'chair_id': this.user.id}, {emulateJSON:true}).then(function(response){
+        this.$http.post('/api/meetings/2/chair', {'chair_id': this.user.id}, {emulateJSON:true}).then(function(response){
           this.$parent.$broadcast('clearSelectedChair')
           this.chair = response.json()
           this.toggleSelectedChair = true

@@ -30,7 +30,7 @@
           <label class="label">Chair of Meeting</label>
           <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{chair.first_name}}</i></div>
           <br/>
-          <chair-modal :agenda-item.sync="agendaItem" :chair.sync="chair" ></chair-modal>
+          <chair-modal :current-meeting.sync="c" :chair.sync="chair" ></chair-modal>
         </div>
         <div class="ai-attendees">
           <label class="label">Attendees</label>
