@@ -65,10 +65,11 @@
     props: ['agendaItem','user','seconder', 'toggleSelectedSeconder'],
     methods: {
       setSeconder: function(){
-        this.$http.post('/api/agenda-items/2/seconder', {'seconder_id': this.user.id}, {emulateJSON:true}).then(function(response){
-          this.$parent.$broadcast('clearSelectedSeconder')
-          this.seconder = response.json()
-          this.toggleSelectedSeconder = true
+        var url= '/api/agenda-items/' + this.agendaItem.id
+        this.$http.post(url, {'seconder': this.user}, {emulateJSON:true}).then(function(response){
+          this.$parent.$broadcast('clearSelectedMover')
+          this.agendaItem = response.json()
+          this.toggleSelectedMover = true
         }.bind(this));
       }
     },

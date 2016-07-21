@@ -289,9 +289,6 @@ post '/api/meetings/:id' do |id|
   content_type :json
   results = {result: false}
   @meeting = Meeting.find(id)
-  if params[:chair]
-    @chair = User.find(params[:chair][:id].to_i)
-  end
 
   @meeting.update(
     title:  params[:title],
@@ -299,14 +296,14 @@ post '/api/meetings/:id' do |id|
     discussion: params[:discussion],
     meeting_date: params[:meeting_date],
     location: params[:location],
-    chair: @chair,
+    chair: params[:chair],
     adjournment_time: params[:adjournment_time],
     next_meeting_date: params[:next_meeting_date]
-  )
+    )
 
   if @meeting.save
     results[:result] = true
-    @meeting.to_json(include: :chair)
+    # @agenda_item.to_json(include: { :votes => {:include =>:voting_user} })
   end
 end
 
@@ -331,8 +328,9 @@ end
 
 # list all agenda items related to the current meeting
 get '/api/agenda-items' do
-  content_type :json
-  AgendaItem.where(meeting_id: current_meeting.id).to_json(include: [:mover, :seconder, :creator, votes: {include: :voting_user}] )
+ content_type :json
+ AgendaItem.where(meeting_id: current_meeting.id).to_json(include: [:mover, :seconder, :creator, votes: {include: :voting_user}] )
+
 end
 
 # get agenda item by id
@@ -357,7 +355,8 @@ post '/api/agenda-items/new' do
     @agenda_item.to_json
   end
 end
-# 
+
+# update/edit item by id
 post '/api/agenda-items/:id' do |id|
   content_type :json
   results = {result: false}
@@ -366,12 +365,11 @@ post '/api/agenda-items/:id' do |id|
     @creator = User.find(params[:creator][:id].to_i)
   end
   if params[:seconder]
-    @seconder = User.find(params[:seconder][:id].to_i)
+  @seconder = User.find(params[:seconder][:id].to_i)
   end
   if params[:mover]
-    @mover = User.find(params[:mover][:id].to_i)
+  @mover = User.find(params[:mover][:id].to_i)
   end
-
   @agenda_item.update(
     title:  params[:title],
     description: params[:description],
@@ -383,11 +381,12 @@ post '/api/agenda-items/:id' do |id|
     creator: @creator
     )
 
-   if @agenda_item.save
-     results[:result] = true
-     @agenda_item.to_json(include: [:mover, :seconder, :creator, votes: {include: :voting_user}] )
- end
+  if @agenda_item.save
+    results[:result] = true
+    @agenda_item.to_json(include: [:mover, :seconder, :creator, votes: {include: :voting_user}] )
+  end
 end
+
 # delete item by id
 
 get '/api/agenda-items/:id/delete' do
