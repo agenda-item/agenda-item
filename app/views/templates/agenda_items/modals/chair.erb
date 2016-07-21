@@ -1,17 +1,17 @@
 <template id="chair-modal-template">
-  <button class="button" @click.prevent="openModal">Log Mover</button>
+  <button class="button" @click.prevent="openModal">Log Chair</button>
   <div class="modal" v-bind:class="{ 'is-active': showModal}">
   <div class="modal-background">
   </div>
     <div class="modal-card">
       <header class="modal-card-head">
         <h1 class="title is-3" class="modal-card-title">
-          Select Mover</h1>
+          Select Chair</h1>
       </header>
       <section class="modal-card-body">
         <div class="modal-section">
           <div id="select-user">
-            <p>Click to select the member who moved the Agenda Item:<p>
+            <p>Click to select the member who chair the Agenda Item:<p>
             <ul v-for="user in usersList">
               <chair :agenda-item.sync="agendaItem" :user="user" :chair.sync="chair" :toggle-selected-chair="toggleSelectedChair"></chair>
             </ul>
@@ -27,13 +27,12 @@
 <script>
   Vue.component('chair-modal', {
     template: '#chair-modal-template',
-    props: ['agendaItem', 'chair', 'seconder'],
+    props: ['agendaItem', 'chair'],
     data: function(){
       return {
         showModal: false,
         toggleSelectedChair: false,
-        toggleSelectedSeconder: false,
-        chair: {}      
+        usersList: []
       }
     },
     methods: {
@@ -47,14 +46,14 @@
     },
     created: function() {
       this.$http.get('/api/meetings/1/chair').then(function(response){
-        this.chair = response.json()
+        this.usersList = response.json()
       }.bind(this));
     }
   })
 </script>
 
 <template id="chair-template">
-    <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedChair}" @click="setMover"><i class="fa fa-person" aria-hidden="true">
+    <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedChair}" @click="setChair"><i class="fa fa-person" aria-hidden="true">
       {{user.first_name}} {{user.last_name}}
     </i></li>
 </template>
@@ -64,7 +63,7 @@
     template: '#chair-template',
     props: ['agendaItem','user','chair','toggleSelectedChair'],
     methods: {
-      setMover: function(){
+      setChair: function(){
         this.$http.post('/api/agenda-items/2/chair', {'chair_id': this.user.id}, {emulateJSON:true}).then(function(response){
           this.$parent.$broadcast('clearSelectedChair')
           this.chair = response.json()
@@ -79,4 +78,3 @@
       }
   })
 </script>
-
