@@ -28,6 +28,7 @@ post '/api/agenda-items/:id/mover' do |id|
   @agenda_item = AgendaItem.find(id)
   @agenda_item.mover_id = params[:mover_id]
   User.find(params[:mover_id]).to_json
+end
 
 #Board Members Sign Up page
 get '/users/new' do
@@ -172,7 +173,7 @@ post '/agenda-items/3/save_file' do
       end
       File.open("./public/files/#{@filename}", 'wb') do |f|
         f.write(file.read)
-      end
+    end
       message = "File has been uploaded"
     end
   else
