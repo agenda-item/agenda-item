@@ -4,7 +4,7 @@ configure :development do
 end
 
 configure :development, :test do
-  
+  set :database, ENV['DATABASE_URL']
 end
 
 configure :production do

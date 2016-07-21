@@ -7,18 +7,18 @@
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
     filter: alpha(opacity=80);
   }
-  
+
   .gu-hide{
     display: none;
   }
-  
+
   .gu-unselectable{
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
   }
-  
+
   .gu-transit{
     opacity: .2;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
@@ -65,7 +65,7 @@ body {
 
 #board-bg-img {
   /*background-color: #462035;*/
-  background:transparent url(https://static.pexels.com/photos/66957/pexels-photo-66957.jpeg) 
+  background:transparent url(https://static.pexels.com/photos/66957/pexels-photo-66957.jpeg)
   no-repeat center center;
   background-size: cover;
 }
@@ -153,7 +153,7 @@ body {
   display: flex;
   text-align:center;
   justify-content:center;
-} 
+}
 
 #main-hero {
   background-color: #7CAFA6;
@@ -184,7 +184,7 @@ body {
 }
 
 #signup-bg-img {
-  background:transparent url(http://marketingland.com/wp-content/ml-loads/2014/09/tablet-calendar-coffee-desk-ss-1920-800x571.jpg) 
+  background:transparent url(http://marketingland.com/wp-content/ml-loads/2014/09/tablet-calendar-coffee-desk-ss-1920-800x571.jpg)
   no-repeat center center;
   background-size: cover;
 }
@@ -291,7 +291,7 @@ a.button-index {
 }
 
 p {
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
   margin-top: 20px;
 }
 
@@ -379,7 +379,7 @@ article.message:last-of-type > .message-header:before {
 }
 
 .message-body {
-  background: #F4F8F3; 
+  background: #F4F8F3;
 }
 
 
