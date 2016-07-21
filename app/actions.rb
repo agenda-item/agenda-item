@@ -28,6 +28,18 @@ post '/api/agenda-items/:id/mover' do |id|
   @agenda_item = AgendaItem.find(id)
   @agenda_item.mover_id = params[:mover_id]
   User.find(params[:mover_id]).to_json
+
+#Board Members Sign Up page
+get '/users/new' do
+  erb :board_members
+end
+
+post '/users/new' do 
+  email = params[:email]
+  first_name = params[:first_name]
+  last_name = params[:last_name]
+  board_position = params[:board_position]
+  redirect(to('/users/new')) 
 end
 
 # Get and post seconder data
@@ -192,6 +204,10 @@ end
 ############
 # MEETINGS #
 ############
+# show the meetings
+get '/meetings/:id' do
+	erb :meetings_show 
+end
 
 # list all meetings
 get '/meetings' do
@@ -244,6 +260,15 @@ get '/api/meetings/:id/delete' do
   end
 end
 
+get '/meetings/new' do
+  content_type :json
+  @meeting = Meeting.new
+  erb :'new_meeting'  #not correct erb, placeholder
+end
+
+get '/logout' do
+  redirect '/'
+end
 ################
 # AGENDA ITEMS #
 ################

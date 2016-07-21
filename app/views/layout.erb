@@ -32,23 +32,24 @@
     <nav class="nav">
       <div class=container>
         <div class="nav-left">
-          <a class="nav-item" href="#">
-            <img src="/assets/logo-sm.jpg" alt="logo}">
+          <a class="nav-item" href="/" title="Home">
+            <img src="/assets/logo-sm.jpg" alt="logo">
           </a>
         </div>
 
         <div class="nav-center">
-          <a class="nav-item" href="#">
+          <a class="nav-item" href="/meetings" title= "Show All Meetings">
             <span class="icon">
               <i class="fa fa-view-comfy"></i>
             </span>
           </a>
-          <a class="nav-item" href="#">
+          <a class="nav-item" href="/meetings/new/" title="Add New Meeting">
             <span class="icon">
               <i class="fa fa-add-to-photos"></i>
             </span>
           </a>
-          <a class="nav-item" href="#">
+          <!-- logout doesn't currently work, will be implemented with Sessions in future. For now, will just redirect to '/' -->
+          <a class="nav-item" href="/logout" title="Logout">
             <span class="icon">
               <i class="fa fa-logout"></i>
 
