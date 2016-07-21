@@ -28,9 +28,9 @@
         </div>
         <div class="ai-responsible">
           <label class="label">Chair of Meeting</label>
-          <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{chair.first_name}}</i></div>
+          <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{currentMeeting.chair.first_name}}</i></div>
           <br/>
-          <chair-modal :current-meeting.sync="c" :chair.sync="chair" ></chair-modal>
+          <chair-modal :current-meeting.sync="currentMeeting"></chair-modal>
         </div>
         <!-- <div class="ai-attendees">
           <label class="label">Attendees</label>
@@ -77,16 +77,6 @@
   Vue.component('meeting-details', {
     template: "#meeting-details-template",
     props: ['currentMeeting'],
-    data: function() {
-      return {
-        chair: []
-      }
-    },
-    created: function() {
-      this.$http.get('/api/meetings/1/chair').then(function(response){
-        this.chair = response.json()
-      }.bind(this));
-    },
     computed: {
       attendees: function() {
         console.log(this.currentMeeting.meeting_attendees)
