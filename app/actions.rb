@@ -1,8 +1,13 @@
 require_relative "utils"
+
 # Landing Page
 get '/' do
   erb :index
   # redirect '/organizations/new'
+end
+
+get '/organizations/new' do
+  erb :signup
 end
 
 # Style Guide
@@ -10,22 +15,135 @@ get '/styleguide' do
   erb :styleguide
 end
 
-get '/organizations/new' do
-	erb :signup
+get '/add-single-user' do
+  erb :add_single_user
 end
 
-#Board Members Sign Up page
-get '/users/new' do
-  erb :board_members
+get '/add-mover-seconder' do
+  erb :add_mover_seconder
 end
 
-post '/users/new' do 
-  email = params[:email]
-  first_name = params[:first_name]
-  last_name = params[:last_name]
-  board_position = params[:board_position]
-  redirect(to('/users/new')) 
+# Get and post mover data
+
+get '/api/agenda-items/:id/mover' do |id|
+  content_type :json
+  @agenda_item = AgendaItem.find(id)
+  User.find(@agenda_item.mover_id).to_json
 end
+
+post '/api/agenda-items/:id/mover' do |id|
+  content_type :json
+  @agenda_item = AgendaItem.find(id)
+  @agenda_item.mover_id = params[:mover_id]
+  User.find(params[:mover_id]).to_json
+end
+
+# Get and post seconder data
+
+get '/api/agenda-items/:id/seconder' do |id|
+  content_type :json
+  @agenda_item = AgendaItem.find(id)
+  User.find(@agenda_item.seconder_id).to_json
+end
+
+post '/api/agenda-items/:id/seconder' do |id|
+  content_type :json
+  @agenda_item = AgendaItem.find(id)
+  @agenda_item.seconder_id = params[:seconder_id]
+  User.find(params[:seconder_id]).to_json
+end
+
+# Get and post nominee data
+
+get '/api/agenda-items/:id/nominee' do |id|
+  content_type :json
+  @agenda_item = AgendaItem.find(id)
+  User.find(@agenda_item.nominee_id).to_json
+end
+
+post '/api/agenda-items/:id/nominee' do |id|
+  content_type :json
+  @agenda_item = AgendaItem.find(id)
+  @agenda_item.seconder_id = params[:nominee_id]
+  User.find(params[:nominee_id]).to_json
+end
+
+# Get and post responsible_users data
+
+# get '/api/agenda-items/:id/responsible-users' do |id|
+#   content_type :json
+#   ResponsibleUser.where(agenda_item_id: id).to_json
+# end
+#
+# post '/api/agenda-items/:id/responsible-users' do |id|
+#   content_type :json
+#   @responsible_users = ResponsibleUser.where(agenda_item_id: id)
+#
+#   @agenda_item = AgendaItem.find(id)
+#
+#   responsible_user_ids = params[:responsible_users].map do |user|
+#     user[:id]
+#   end
+  # active record is smart enough to figure this out and not create orphan records
+#   @agenda_item.user_ids = responsible_user_ids
+#
+# end
+
+# get and post creator data
+
+get '/api/agenda-items/:id/creator' do |id|
+  content_type :json
+  @agenda_item = AgendaItem.find(id)
+  User.find(@agenda_item.creator_id).to_json
+end
+
+post '/api/agenda-items/:id/creator' do |id|
+  content_type :json
+  @agenda_item = AgendaItem.find(id)
+  @agenda_item.creator_id = params[:creator_id]
+  User.find(params[:creator_id]).to_json
+end
+
+# get and post votes
+
+get '/api/agenda-items/:id/votes' do |id|
+  content_type :json
+  Vote.where(agenda_item_id: id).to_json
+end
+
+
+post '/api/agenda-items/:id/voters' do |id|
+  content_type :json
+  @voters = Voter.where(agenda_item_id: id)
+
+  @agenda_item = AgendaItem.find(id)
+
+  responsible_voter_ids = params[:votes].map do |user|
+    user[:id]
+  end
+  # active record is smart enough to figure this out and not create orphan records
+  @agenda_item.voter_ids = responsible_voter_ids
+end
+
+# Get and post chair data
+
+get '/api/meetings/:id/chair' do |id|
+  content_type :json
+  @meeting = Meeting.find(id)
+  User.find(@meeting.chair_id).to_json
+end
+
+post '/api/meetings/:id/chair' do |id|
+  content_type :json
+  @meeting = Meeting.find(id)
+  @meeting.chair_id = params[:chair_id]
+  User.find(params[:chair_id]).to_json
+end
+
+######################
+# DEVELOPMENT ROUTES #
+######################
+# to be deleted
 
 get '/edit-meeting' do
   erb :edit_meeting
@@ -39,24 +157,12 @@ get '/richtext' do
   erb :rich_text_discussion
 end
 
+get '/select' do
+  erb :select_status
+end
+
 get '/download-minutes' do
   erb :download_pdf
-end
-
-get '/users/new' do
-  erb :board_members
-end
-
-get '/motion' do
-  erb :motion
-end
-
-get '/edit-meeting' do
-  erb :meeting_details
-end
-
-get '/document' do
-  erb :document
 end
 
 #################
@@ -67,6 +173,7 @@ get "/files-upload" do
   @files = Dir["./public/files/*"]
   erb :file_upload
 end
+
 
 post '/agenda-items/3/save_file' do
   @filename = params[:file][:filename]
@@ -121,10 +228,6 @@ end
 ############
 # MEETINGS #
 ############
-# show the meetings
-get '/meetings/:id' do
-	erb :meetings_show 
-end
 
 # list all meetings
 get '/meetings' do
@@ -143,6 +246,30 @@ get '/api/meetings/:id' do |id|
   Meeting.find(id).to_json
 end
 
+# update meeting by id
+post '/api/meetings/:id' do |id|
+  content_type :json
+  results = {result: false}
+  @meeting = Meeting.find(id)
+  puts @meeting
+
+  @meeting.update(
+    title:  params[:title],
+    description: params[:description],
+    discussion: params[:discussion],
+    meeting_date: params[:meeting_date],
+    location: params[:location],
+    chair: params[:chair],
+    adjournment_time: params[:adjournment_time],
+    next_meeting_date: params[:next_meeting_date]
+    )
+
+  if @meeting.save
+    results[:result] = true
+    # @agenda_item.to_json(include: { :votes => {:include =>:voting_user} })
+  end
+end
+
 # meeting delete
 get '/api/meetings/:id/delete' do
   content_type :json
@@ -153,15 +280,6 @@ get '/api/meetings/:id/delete' do
   end
 end
 
-get '/meetings/new' do
-  content_type :json
-  @meeting = Meeting.new
-  erb :'new_meeting'  #not correct erb, placeholder
-end
-
-get '/logout' do
-  redirect '/'
-end
 ################
 # AGENDA ITEMS #
 ################
@@ -183,22 +301,59 @@ get '/api/agenda-items/:id' do |id|
   AgendaItem.find(id).to_json(include: { :votes => {:include =>:voting_user} })
 end
 
-# create new agenda item by id
+# create new agenda item
+post '/api/agenda-items/new' do
+  content_type :json
+  type = params[:type]
+
+  @agenda_item = AgendaItem.new(
+    type: params[:type],
+    position: params[:position],
+    creator_id: 1,  #params[current_user.id]
+    meeting_id: 1  #params[current_meeting.id]
+    )
+  if @agenda_item.save
+    puts "the type is #{type}"
+    @agenda_item.to_json
+  end
+end
 
 # update/edit item by id
 post '/api/agenda-items/:id' do |id|
   content_type :json
+  results = {result: false}
   @agenda_item = AgendaItem.find(id)
-  @agenda_item.title = params[:title]
-  @agenda_item.description = params[:description]
-  @agenda_item.discussion = params[:discussion]
-  @agenda_item.status = params[:status]
+
+  @agenda_item.update(
+    title:  params[:title],
+    description: params[:description],
+    status: params[:status],
+    discussion: params[:discussion],
+    mover: params[:mover],
+    seconder: params[:seconder],
+    due_date: params[:due_date]
+    )
+
   if @agenda_item.save
-    puts params[:discussion]
-    puts "inside save"
-    @agenda_item.to_json(include: { :votes => {:include =>:voting_user} })
+    results[:result] = true
+    # @agenda_item.to_json(include: { :votes => {:include =>:voting_user} })
   end
 end
+
+# delete item by id
+
+get '/api/agenda-items/:id/delete' do
+  content_type :json
+  @agenda_item = AgendaItem.find(params[:id])
+  @agenda_item.destroy
+
+  # results = {result: false}
+  if @agenda_item.destroy
+    puts "agenda item was destroyed"
+    # results[:result] = true
+  end
+end
+
 
 #########
 # USERS #
@@ -212,13 +367,13 @@ end
 # get all users
 get '/api/users' do
  content_type :json
- User.all.to_json(include: { :meetings => {:include =>:agenda_items} })
+ User.all.to_json(include: :meetings)
 end
 
 # get user by id
 get '/api/users/:id' do |id|
   content_type :json
-  User.find(id).to_json(include: { :meetings => {:include =>:agenda_items} })
+  User.find(id).to_json(include: :meetings)
 end
 
 #########
