@@ -242,11 +242,11 @@ get '/meetings/new' do
   meeting = Meeting.new
   session["meeting"] = meeting.id
 
-  # if meeting.save
-    redirect "/meetings"
-  # else
-  #   puts "didn't succeed"
-  # end
+  if meeting.save
+    redirect "/meetings/#{meeting.id}"
+  else
+    puts "didn't succeed"
+  end
   
 end
 
