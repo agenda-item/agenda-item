@@ -28,9 +28,8 @@
   <title></title>
 </head>
 <body>
-<%= erb(:"templates/agenda_items/helpers") %>
 
-    <nav class="nav">
+    <nav class="nav" id="nav">
       <div class=container>
         <div class="nav-left">
           <a class="nav-item" href="/" title="Home">
@@ -68,6 +67,7 @@
     <!-- date formating plugin for Vue.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
     <script src="/javascript/vue-moment.min.js"></script>
+    <%= erb(:"templates/agenda_items/helpers") %>
   <%= yield %>
 </body>
 </html>
