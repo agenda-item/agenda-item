@@ -229,25 +229,25 @@ end
 ############
 # MEETINGS #
 ############
+# create new meeting
+post '/meetings/new' do
+  content_type :json
+  meeting = Meeting.new()
+
+  if meeting.save
+    # session["meeting"] = meeting[:id]
+    puts meeting
+    # redirect "/meetings"
+    meeting.to_json
+  end
+  
+end
 
 # edit meeting
 get '/meetings/:id/edit' do |id|
   meeting = Meeting.find(id)
   session["meeting"] = meeting.id
   erb :edit_meeting
-end
-
-# create new meeting
-get '/meetings/new' do
-  meeting = Meeting.new
-  session["meeting"] = meeting.id
-
-  if meeting.save
-    redirect "/meetings/#{meeting.id}"
-  else
-    puts "didn't succeed"
-  end
-  
 end
 
 # show a meeting
@@ -305,7 +305,6 @@ post '/api/meetings/:id' do |id|
 end
 
 # delete a meeting
-
 get '/api/meetings/:id/delete' do
   content_type :json
   @meeting = Meeting.find(params[:id])
@@ -314,6 +313,8 @@ get '/api/meetings/:id/delete' do
     puts "meeting has been removed from existence! MWAAAHAHAHA"
   end
 end
+
+
 
 get '/logout' do
   redirect '/'
