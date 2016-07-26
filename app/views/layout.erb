@@ -28,6 +28,7 @@
   <title></title>
 </head>
 <body>
+<%= erb(:"templates/agenda_items/helpers") %>
 
     <nav class="nav">
       <div class=container>
@@ -43,15 +44,13 @@
               <i class="fa fa-view-comfy"></i>
             </span>
           </a>
-          
             
-           <!--  <a class="nav-item" title="Add New Meeting" type="submit">
-              <span class="icon">
-                <i class="fa fa-add-to-photos"></i>
-              </span>
-            </a>
-            -->
-         
+          <a class="nav-item" title="Add New Meeting" type="submit" @click.prevent="newMeeting">
+            <span class="icon">
+              <i class="fa fa-add-to-photos"></i>
+            </span>
+          </a>
+           
           <!-- logout doesn't currently work, will be implemented with Sessions in future. For now, will just redirect to '/' -->
           <!-- <a class="nav-item" href="/logout" title="Logout">
             <span class="icon">
