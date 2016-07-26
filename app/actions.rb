@@ -230,14 +230,14 @@ end
 # MEETINGS #
 ############
 # create new meeting
-post '/meetings/new' do
+post '/api/meetings/new' do
   content_type :json
   meeting = Meeting.new()
 
   if meeting.save
-    # session["meeting"] = meeting[:id]
+    session["meeting"] = meeting.id
     puts meeting
-    # redirect "/meetings"
+    redirect "/meetings/#{meeting.id}"
     meeting.to_json
   end
   
@@ -279,7 +279,6 @@ get '/api/current-meeting' do
   content_type :json
   current_meeting.to_json
 end
-
 
 # update meeting by id
 post '/api/meetings/:id' do |id|
