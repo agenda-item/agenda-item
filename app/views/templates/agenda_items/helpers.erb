@@ -23,8 +23,7 @@
         console.log("clicked new")
         this.$http.post('/api/meetings/new', {emulateJSON:true}).then(function(response){
           var meeting = response.json()
-          console.log(response.json())
-          window.location = '/meetings'
+          window.location = '/meetings/' + meeting.id + '/edit'
         }.bind(this));
       }
     }
