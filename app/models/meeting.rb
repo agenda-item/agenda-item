@@ -6,13 +6,13 @@ class Meeting < ActiveRecord::Base
   belongs_to :chair, 
               class_name: "User"
 
-  validates :meeting_date,
-    presence: true
+  # validates :meeting_date,
+  #   presence: true
 
-  validates :title,
-    presence: true 
+  # validates :title,
+  #   presence: true 
 
-  validates :status,
-    presence: true   
+  # validates :status,
+  #   presence: true   
 
 end

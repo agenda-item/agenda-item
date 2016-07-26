@@ -232,13 +232,16 @@ end
 # create new meeting
 post '/api/meetings/new' do
   content_type :json
-  meeting = Meeting.new()
+  meeting = Meeting.new
+  puts meeting
 
   if meeting.save
     session["meeting"] = meeting.id
-    puts meeting
-    redirect "/meetings/#{meeting.id}"
+    puts "saved meeting id: ", meeting[:id]
     meeting.to_json
+  else
+    puts "nope, did not save"
+    "did not save".to_json
   end
   
 end
