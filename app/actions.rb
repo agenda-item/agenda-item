@@ -149,6 +149,7 @@ post '/api/votes' do
     voter_id = vote[:id].to_i
     vote = Vote.find(voter_id)
     vote.vote_type = params[:vote_type]
+    vote.to_json(include: :voting_user)
   end
 end
 
