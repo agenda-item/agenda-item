@@ -1,3 +1,4 @@
+<!-- smart icons filtered by type -->
 <template id="icons-template">
   <i v-if="agendaItem.type === 'Business'" class="fa fa-briefcase" aria-hidden="true"></i>
   <i v-if="agendaItem.type === 'Document'" class="fa fa-file-document" aria-hidden="true"></i>
@@ -13,3 +14,18 @@
   });
 </script>
 
+<!-- navbar items -->
+<script>
+  var nav = new Vue({
+    el: '#nav',
+    methods: {
+      newMeeting: function() {
+        console.log("clicked new")
+        this.$http.post('/api/meetings/new', {emulateJSON:true}).then(function(response){
+          var meeting = response.json()
+          window.location = '/meetings/' + meeting.id + '/edit'
+        }.bind(this));
+      }
+    }
+  })
+</script>
