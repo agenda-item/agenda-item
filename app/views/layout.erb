@@ -29,7 +29,7 @@
 </head>
 <body>
 
-    <nav class="nav">
+    <nav class="nav" id="nav">
       <div class=container>
         <div class="nav-left">
           <a class="nav-item" href="/" title="Home">
@@ -43,15 +43,13 @@
               <i class="fa fa-view-comfy"></i>
             </span>
           </a>
-          
             
-           <!--  <a class="nav-item" title="Add New Meeting" type="submit">
-              <span class="icon">
-                <i class="fa fa-add-to-photos"></i>
-              </span>
-            </a>
-            -->
-         
+          <a class="nav-item" title="Add New Meeting" type="submit" @click.prevent="newMeeting">
+            <span class="icon">
+              <i class="fa fa-add-to-photos"></i>
+            </span>
+          </a>
+           
           <!-- logout doesn't currently work, will be implemented with Sessions in future. For now, will just redirect to '/' -->
           <!-- <a class="nav-item" href="/logout" title="Logout">
             <span class="icon">
@@ -69,6 +67,7 @@
     <!-- date formating plugin for Vue.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.12.0/moment.min.js"></script>
     <script src="/javascript/vue-moment.min.js"></script>
+    <%= erb(:"templates/agenda_items/helpers") %>
   <%= yield %>
 </body>
 </html>
