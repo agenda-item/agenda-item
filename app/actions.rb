@@ -2,6 +2,10 @@ require_relative "utils"
 
 helpers do
 
+  def current_organization
+    Organization.find_by(id: session[:organization_id])
+  end
+
   def current_meeting
     @current_meeting ||= Meeting.find(session["meeting"]) if session["meeting"]
   end
@@ -27,6 +31,7 @@ post '/organizations' do
   if @organization.save
     puts "this is your email: #{email}"
     @organization.to_json
+    session[:organization_id] = @organization.id
     redirect(to('/organizations/new'))
   end
 end
