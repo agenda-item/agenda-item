@@ -37,6 +37,19 @@
           </a>
         </div>
 
+
+          <div class="login-info">
+            <% if current_organization %>
+              <%= current_organization.email %>
+              |
+              <a href="/logout">Logout</a>
+            <% else %>
+              <a href="/login">Login</a>
+             |
+              <a href="/organizations/new">Signup</a>
+           <% end %>
+         </div>
+
         <div class="nav-center">
           <a class="nav-item" href="/meetings" title= "Show All Meetings">
             <span class="icon">
