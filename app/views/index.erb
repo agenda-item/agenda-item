@@ -12,25 +12,28 @@
         <div class="column is-two-thirds">
           <div class="columns center-element">
 
-            <div id="sign-up-text" class="notification content">
-              <h4>Sign Up</h4>
-              <div class="control is-grouped">
+            <form method="POST" action="/organizations">
+              <div id="sign-up-text" class="notification content">
+                <h4>Sign Up</h4>
 
-                <div class="control has-icon is-expanded">
-                  <input class="input" type="email" placeholder="email address"/>
-                    <i class="fa fa-email"></i>
-                </div>
-                   <p class="control">
+                <div class="control is-grouped">
+                  <div class="control has-icon is-expanded">
+                    <input class="input" type="email" placeholder="email address" name="email"/>
+                      <i class="fa fa-email"></i>
+                  </div>
+
+                  <p class="control">
                     <div class="">
                     <a class="button-index" href="#">
                      <span class="icon">
-                         <i class="fa fa-account-multiple"></i>
-                     </span>
-                     <span>Create New Team</span>
+                      <i class="fa fa-account-multiple"></i>
+                    </span>
+                    <button type="submit"><span>Create New Team</span></button>
                     </a>
-                   </p>
+                  </p>
+                </div>
               </div>
-            </div>
+            </form>
           </div>
           </div>
         </div>
