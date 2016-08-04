@@ -40,7 +40,7 @@
 
           <div class="login-info">
             <% if current_organization %>
-              <%= current_organization.email %>
+              <%= current_organization.name %>: (<%= current_organization.email %>)
               |
               <a href="/logout">Logout</a>
             <% else %>
