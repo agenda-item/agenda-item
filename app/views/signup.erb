@@ -4,12 +4,14 @@
 		    <!-- <p class="notification is-warning">Auto</p> -->
 		</div>
 		<div class="column is-half">
+
 		  <div class="signup-form">
+		  <form method="POST" action="/organizations/details">
 			  <div class="style-element section">
 			    <p>SIGN UP</p>
           <label class="label">Organization Name</label>
           <p class="control has-icon">
-            <input class="input" type="text" placeholder="Organization Name">
+            <input class="input" type="text" placeholder="Organization Name" name="organization_name">
             <i class="fa fa-library"></i>
           </p>
 			    <label class="label">First Name</label>
@@ -26,11 +28,16 @@
 			    <p class="control has-icon">
 			      <input class="input" type="password" placeholder="Password">
 			      <i class="fa fa-lock"></i>
+			    </p>
 			    <p class="control continue-button">
+			    <button type="submit">
 			      <a class="button has-icon">Continue <i class="fa fa-arrow-right"></i></a></a>
+			    </button>
 			    </p>
 			  </div>
+			</form>
 			</div>
+
 		</div>
 
 		<div class="column is-one-quarter">
