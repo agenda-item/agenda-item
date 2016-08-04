@@ -17,6 +17,20 @@ get '/organizations/new' do
   erb :signup
 end
 
+post '/organizations' do
+  content_type :json
+  email = params[:email]
+
+  @organization = Organization.new(
+    email: params[:email]
+  )
+  if @organization.save
+    puts "this is your email: #{email}"
+    @organization.to_json
+    redirect(to('/organizations/new'))
+  end
+end
+
 # Style Guide
 get '/styleguide' do
   erb :styleguide
