@@ -21,18 +21,33 @@ get '/organizations/new' do
   erb :signup
 end
 
-post '/organizations' do
+post '/organizations/email' do
   content_type :json
   email = params[:email]
 
   @organization = Organization.new(
-    email: params[:email]
+    email: email
   )
   if @organization.save
     puts "this is your email: #{email}"
     @organization.to_json
     session[:organization_id] = @organization.id
     redirect(to('/organizations/new'))
+  end
+end
+
+post '/organizations/details' do 
+  content_type :json
+  name = params[:organization_name]
+
+  @organization = current_organization
+
+  @organization.name = name
+
+  if @organization.save
+    puts "this is your org name: #{name}"
+    @organization.to_json
+    redirect(to('/users/new'))
   end
 end
 
