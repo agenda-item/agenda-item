@@ -146,11 +146,20 @@ end
 
 # create new board member (user)
 post '/users/new' do
-  email = params[:email]
   first_name = params[:first_name]
   last_name = params[:last_name]
   board_position = params[:board_position]
-  redirect(to('/users/new'))
+
+  @user = User.new(
+    first_name: first_name,
+    last_name: last_name,
+    type: board_position
+  )
+  if @user.save
+    puts "your new board member is: #{first_name} #{last_name}"
+    @user.to_json
+    redirect(to('/users/new'))
+  end  
 end
 
 # get all users
