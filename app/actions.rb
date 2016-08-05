@@ -39,14 +39,26 @@ end
 post '/organizations/details' do 
   content_type :json
   name = params[:organization_name]
+  first_name = params[:first_name]
+  last_name = params[:last_name]
+  password = params[:password]
 
   @organization = current_organization
 
+  @user = User.new(
+    email: current_organization.email,
+    first_name: first_name,
+    last_name: last_name,
+    password: password
+    )
+
   @organization.name = name
 
-  if @organization.save
+  if @organization.save && @user.save
     puts "this is your org name: #{name}"
+    puts "current user: #{first_name} #{last_name}"
     @organization.to_json
+    @user.to_json
     redirect(to('/users/new'))
   end
 end
