@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
 
   has_many :votes
 
-  has_secure_password
+  # has_secure_password
 
   validates :first_name,
     presence: true
@@ -37,6 +37,7 @@ class User < ActiveRecord::Base
 
   validates :email,
     presence: true,
-    uniqueness: true
+    uniqueness: true,
+    :if => lambda { |user| user.type != "Board" }
 
 end
