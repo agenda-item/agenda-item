@@ -17,10 +17,20 @@ get '/' do
   erb :index
 end
 
-get '/organizations/new' do
-  erb :signup
+#####################
+# LOG IN AND LOGOUT #
+#####################
+
+get '/logout' do
+  session.clear
+  redirect '/'
 end
 
+###################
+# SIGN UP PROCESS #
+###################
+
+# step 1: user email (the get action is '/')
 post '/organizations/email' do
   content_type :json
   email = params[:email]
@@ -34,6 +44,11 @@ post '/organizations/email' do
     session[:organization_id] = @organization.id
     redirect(to('/organizations/new'))
   end
+end
+
+# step 2: org name and new user (org creator)
+get '/organizations/new' do
+  erb :signup
 end
 
 post '/organizations/details' do 
@@ -61,6 +76,30 @@ post '/organizations/details' do
     @user.to_json
     redirect(to('/users/new'))
   end
+end
+
+
+#step 3: Board Members Sign Up page
+get '/users/new' do
+  erb :board_members
+end
+
+# create new board member (user)
+post '/users/new' do
+  first_name = params[:first_name]
+  last_name = params[:last_name]
+  board_position = params[:board_position]
+
+  @user = User.new(
+    first_name: first_name,
+    last_name: last_name,
+    type: board_position
+  )
+  if @user.save
+    puts "your new board member is: #{first_name} #{last_name}"
+    @user.to_json
+    redirect(to('/users/new'))
+  end  
 end
 
 # Style Guide
@@ -138,29 +177,6 @@ end
 #########
 # USERS #
 #########
-
-#Board Members Sign Up page
-get '/users/new' do
-  erb :board_members
-end
-
-# create new board member (user)
-post '/users/new' do
-  first_name = params[:first_name]
-  last_name = params[:last_name]
-  board_position = params[:board_position]
-
-  @user = User.new(
-    first_name: first_name,
-    last_name: last_name,
-    type: board_position
-  )
-  if @user.save
-    puts "your new board member is: #{first_name} #{last_name}"
-    @user.to_json
-    redirect(to('/users/new'))
-  end  
-end
 
 # get all users
 get '/api/users' do
@@ -367,13 +383,6 @@ get '/api/meetings/:id/delete' do
   if @meeting.destroy
     puts "meeting has been removed from existence! MWAAAHAHAHA"
   end
-end
-
-
-
-get '/logout' do
-  session.clear
-  redirect '/'
 end
 
 ################
