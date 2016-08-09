@@ -234,7 +234,7 @@ body {
     color: blue;
 }
 
-a.button-index {
+.button-index {
   -moz-appearance: none;
   -webkit-appearance: none;
   -webkit-box-align: center;

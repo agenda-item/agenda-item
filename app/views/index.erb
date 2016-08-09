@@ -6,38 +6,22 @@
           <h1 class="title is-1 center-element" style="color: #E1D4DE">Taking Minutes Made Easy</h1>
         </div>
       </div>
-      <div id="sign-up" class="columns">
-        <div class="column">
-        </div>
-        <div class="column is-two-thirds">
-          <div class="columns center-element">
-
-            <form method="POST" action="/organizations/email">
-              <div id="sign-up-text" class="notification content">
-                <h4>Sign Up</h4>
-
-                <div class="control is-grouped">
-                  <div class="control has-icon is-expanded">
-                    <input class="input" type="email" placeholder="email address" name="email"/>
-                      <i class="fa fa-email"></i>
-                  </div>
-
-                  <p class="control">
-                    <div class="">
-                    <a class="button-index" href="#">
-                     <span class="icon">
-                      <i class="fa fa-account-multiple"></i>
-                    </span>
-                    <button type="submit"><span>Create New Team</span></button>
-                    </a>
-                  </p>
+      <div id="sign-up">
+        <div class="columns center-element">
+          <form method="POST" action="/organizations/email">
+            <div id="sign-up-text" class="notification content">
+              <h4>Sign Up</h4>
+              <div class="control is-grouped">
+                <div class="control has-icon is-expanded">
+                  <input class="input" type="email" placeholder="email address" name="email"/>
+                  <i class="fa fa-email"></i>
+                </div>
+                <div class="control">
+                  <button type="submit" class="button-index"><span class="icon"> <i class="fa fa-account-multiple"></i></span> Create New Team</button>
                 </div>
               </div>
-            </form>
-          </div>
-          </div>
-        </div>
-        <div class="column">
+            </div>
+          </form>
         </div>
       </div>
     </div>
