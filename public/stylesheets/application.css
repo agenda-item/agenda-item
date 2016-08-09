@@ -290,6 +290,10 @@ body {
   padding: 30px 0 3px 0;
 }
 
+.login-info {
+  padding: 12px;
+}
+
 p {
   margin-bottom: 20px;
   margin-top: 20px;
