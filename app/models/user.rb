@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
 
   has_many :votes
 
-  # has_secure_password
+  has_secure_password
 
   validates :first_name,
     presence: true
