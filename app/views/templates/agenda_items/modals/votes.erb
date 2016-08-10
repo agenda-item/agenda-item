@@ -13,6 +13,7 @@
         <div class="modal-section">
           <div class="columns">
             <div class="column">
+              <button class="button" @click.prevent="moveOpposedToAbstained">Log Abstainer(s)</button>
               <div class="select-user">
                 <p>Abstained Voters</p>
                 <ul v-for="vote in votes | filterBy 'Abstain' in 'vote_type'">
@@ -21,10 +22,7 @@
               </div>
             </div>
             <div class="column">
-              <button class="button" @click.prevent="moveOpposedToAbstained"><i class="fa fa-chevron-with-circle-left fa-lg"></i></button>
-              <button class="button" @click.prevent="moveAbstainedToOpposed"><i class="fa fa-chevron-with-circle-right fa-lg"></i></button>
-            </div>
-            <div class="column">
+              <button class="button" @click.prevent="moveOpposedToAbstained">Log Opposer(s)</button>
               <div class="select-user">
                 <p>Opposed Voters</p>
                 <div v-if="agendaItem.votes.length === 0">
@@ -40,16 +38,15 @@
               </div>
             </div>
             <div class="column">
-              <button class="button" @click.prevent="moveInFavourToOpposed"><i class="fa fa-chevron-with-circle-left fa-lg"></i></button>
-              <button class="button" @click.prevent="moveOpposedToInFavour"><i class="fa fa-chevron-with-circle-right fa-lg"></i></button>
-            </div>
-            <div class="column">
+              <button class="button" @click.prevent="moveOpposedToAbstained">Log In Favour(s)</button>
               <div class="select-user">
                 <p>In Favour Voters</p>
                 <ul v-for="vote in votes | filterBy 'In Favour' in 'vote_type'">
                   <voter :agenda-item.sync="agendaItem" :user="user" :vote.sync="vote" :toggle-selected-voter="toggleSelectedVote" :selected-votes-list.sync="selectedVotesList"></voter>
                 </ul>
               </div>
+            </div>
+
             </div>
           </div>
       </section>
