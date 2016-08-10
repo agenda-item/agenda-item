@@ -76,44 +76,64 @@
     methods: {
       openModal: function() {
         this.showModal = true
-        console.log("clicking open")
       },
       closeModal: function() {
         this.showModal = false
-        console.log("clicking close")
       },
       moveInFavourToOpposed: function() {
-          this.$http.post('/api/votes', {'votes': this.inFavourVotesList, 'vote_type': 'Opposed'}, {emulateJSON:true}).then(function(response){
-              for (vote of this.inFavourVotesList) {
-                vote.vote_type = 'Opposed'
-              }
+        var votes = this.inFavourVotesList
+
+        for (i = 0; i < votes.length; i++) { 
+          var vote = votes[i]
+          var vote_id = votes[i].id
+
+          this.$http.post('/api/votes', {'vote': vote, 'vote_id': vote_id,'vote_type': 'Opposed'}, {emulateJSON:true}).then(function(response){
+            vote = response.json()
+            this.inFavourVotesList.pop(vote)
+            this.opposedVotesList.push(vote)
           }.bind(this));
+        }
       },
-      moveOpposedToInFavour: function() {    
-          this.$http.post('/api/votes', {'votes': this.opposedVotesList, 'vote_type': 'In Favour'}, {emulateJSON:true}).then(function(response){
-              for (vote of this.opposedVotesList) {
-                vote.vote_type = 'In Favour'
-              }
+      moveOpposedToInFavour: function() {   
+        var votes = this.opposedVotesList
+
+        for (i = 0; i < votes.length; i++) { 
+          var vote = votes[i]
+          var vote_id = votes[i].id
+
+          this.$http.post('/api/votes', {'vote': vote, 'vote_id': vote_id,'vote_type': 'In Favour'}, {emulateJSON:true}).then(function(response){
+            vote = response.json()
           }.bind(this));
+        }
       },
       moveOpposedToAbstained: function() {
-          this.$http.post('/api/votes', {'votes': this.opposedVotesList, 'vote_type': 'Abstain'}, {emulateJSON:true}).then(function(response){
-              for (vote of this.opposedVotesList) {
-                vote.vote_type = 'Abstain'
-              }
+        var votes = this.opposedVotesList
+
+        for (i = 0; i < votes.length; i++) { 
+          var vote = votes[i]
+          var vote_id = votes[i].id
+
+          this.$http.post('/api/votes', {'vote': vote, 'vote_id': vote_id,'vote_type': 'Abstain'}, {emulateJSON:true}).then(function(response){
+            vote = response.json()
           }.bind(this));
+        }   
       },
       moveAbstainedToOpposed: function() {
-          this.$http.post('/api/votes', {'votes': this.abstainedVotesList, 'vote_type': 'Opposed'}, {emulateJSON:true}).then(function(response){
-              for (vote of this.abstainedVotesList) {
-                vote.vote_type = 'Opposed'
-              }
+        var votes = this.abstainedVotesList
+
+        for (i = 0; i < votes.length; i++) { 
+          var vote = votes[i]
+          var vote_id = votes[i].id
+
+          this.$http.post('/api/votes', {'vote': vote, 'vote_id': vote_id,'vote_type': 'Opposed'}, {emulateJSON:true}).then(function(response){
+            vote = response.json()
           }.bind(this));
-    },
+        } 
+      }
+    }
     created: function() {
       this.$http.get('/api/users').then(function(response){
         console.log(response.json())
-        console.log("getting users list and logging its contents")
         this.usersList= response.json()
         console.log(this.usersList)
       }.bind(this));
@@ -124,9 +144,11 @@
 </script>
 
 <template id="opposed-voter-template">
-    <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedVote}" @click="selectOpposedVote"><i class="fa fa-person" aria-hidden="true">
-          {{user.first_name}} {{vote.voting_user.first_name}} {{user.last_name}} {{vote.voting_user.last_name}}
-        </i></li>
+    <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedVote}" @click="selectOpposedVote">
+      <i class="fa fa-person" aria-hidden="true">
+        {{user.first_name}} {{vote.voting_user.first_name}} {{user.last_name}} {{vote.voting_user.last_name}}
+      </i>
+    </li>
 </template>
 
 <script>
