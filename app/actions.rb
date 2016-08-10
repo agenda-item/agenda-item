@@ -214,12 +214,11 @@ end
 post '/api/votes' do
   content_type :json
 
-  @votes = params[:votes]
-
-  @votes.each do |_, vote|
-    voter_id = vote[:id].to_i
-    vote = Vote.find(voter_id)
-    vote.vote_type = params[:vote_type]
+  vote = Vote.find(params[:vote_id].to_i)
+  vote.vote_type = params[:vote_type]
+  
+  if vote.save
+    puts "saved successfully"
     vote.to_json(include: :voting_user)
   end
 end
