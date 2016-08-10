@@ -13,7 +13,7 @@
         <div class="modal-section">
           <div class="columns">
             <div class="column">
-              <button class="button" @click.prevent="moveOpposedToAbstained">Log Abstainer(s)</button>
+              <button class="button" @click.prevent="logVotes('Abstained')">Log Abstainer(s)</button>
               <div class="select-user">
                 <p>Abstained Voters</p>
                 <ul v-for="vote in votes | filterBy 'Abstain' in 'vote_type'">
@@ -22,7 +22,7 @@
               </div>
             </div>
             <div class="column">
-              <button class="button" @click.prevent="moveOpposedToAbstained">Log Opposer(s)</button>
+              <button class="button" @click.prevent="logVotes('Opposed')">Log Opposer(s)</button>
               <div class="select-user">
                 <p>Opposed Voters</p>
                 <div v-if="agendaItem.votes.length === 0">
@@ -38,7 +38,7 @@
               </div>
             </div>
             <div class="column">
-              <button class="button" @click.prevent="moveOpposedToAbstained">Log In Favour(s)</button>
+              <button class="button" @click.prevent="logVotes('Abstained')">Log In Favour(s)</button>
               <div class="select-user">
                 <p>In Favour Voters</p>
                 <ul v-for="vote in votes | filterBy 'In Favour' in 'vote_type'">
@@ -65,10 +65,7 @@
         showModal: false,
         toggleSelectedVote: false,
         usersList: [],
-        selectedVotesList: [],
-        abstainedVotesList: [],
-        opposedVotesList: [],
-        inFavourVotesList: []
+        selectedVotesList: []
       }
     },
     methods: {
@@ -78,53 +75,17 @@
       closeModal: function() {
         this.showModal = false
       },
-      moveInFavourToOpposed: function() {
+      logVotes: function(vote_type) {
         var selectedVotes = this.selectedVotesList
 
         for (i = 0; i < selectedVotes.length; i++) { 
           var vote = selectedVotes[i]
           var vote_id = selectedVotes[i].id
 
-          this.$http.post('/api/votes', {'vote': vote, 'vote_id': vote_id,'vote_type': 'Opposed'}, {emulateJSON:true}).then(function(response){
+          this.$http.post('/api/votes', {'vote': vote, 'vote_id': vote_id,'vote_type': vote_type}, {emulateJSON:true}).then(function(response){
             vote = response.json()
           }.bind(this));
         }
-      },
-      moveOpposedToInFavour: function() {   
-        var selectedVotes = this.selectedVotesList
-
-        for (i = 0; i < selectedVotes.length; i++) { 
-          var vote = selectedVotes[i]
-          var vote_id = selectedVotes[i].id
-
-          this.$http.post('/api/votes', {'vote': vote, 'vote_id': vote_id,'vote_type': 'In Favour'}, {emulateJSON:true}).then(function(response){
-            vote = response.json()
-          }.bind(this));
-        }
-      },
-      moveOpposedToAbstained: function() {
-        var selectedVotes = this.selectedVotesList
-
-        for (i = 0; i < selectedVotes.length; i++) { 
-          var vote = selectedVotes[i]
-          var vote_id = selectedVotes[i].id
-
-          this.$http.post('/api/votes', {'vote': vote, 'vote_id': vote_id,'vote_type': 'Abstain'}, {emulateJSON:true}).then(function(response){
-            vote = response.json()
-          }.bind(this));
-        }   
-      },
-      moveAbstainedToOpposed: function() {
-        var selectedVotes = this.selectedVotesList
-
-        for (i = 0; i < selectedVotes.length; i++) { 
-          var vote = selectedVotes[i]
-          var vote_id = selectedVotes[i].id
-
-          this.$http.post('/api/votes', {'vote': vote, 'vote_id': vote_id,'vote_type': 'Opposed'}, {emulateJSON:true}).then(function(response){
-            vote = response.json()
-          }.bind(this));
-        } 
       }
     },
     created: function() {
