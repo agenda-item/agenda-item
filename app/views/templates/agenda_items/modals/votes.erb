@@ -13,7 +13,7 @@
         <div class="modal-section">
           <div class="columns">
             <div class="column">
-              <button class="button" @click.prevent="logVotes('Abstained')">Log Abstainer(s)</button>
+              <button class="button" @click.prevent="logVotes('Abstained')">Log Abstaining Voter(s)</button>
               <div class="select-user">
                 <p>Abstained Voters</p>
                 <ul v-for="vote in votes | filterBy 'Abstain' in 'vote_type'">
@@ -22,7 +22,7 @@
               </div>
             </div>
             <div class="column">
-              <button class="button" @click.prevent="logVotes('Opposed')">Log Opposer(s)</button>
+              <button class="button" @click.prevent="logVotes('Opposed')">Log Opposing Voter(s)</button>
               <div class="select-user">
                 <p>Opposed Voters</p>
                 <div v-if="agendaItem.votes.length === 0">
@@ -38,7 +38,7 @@
               </div>
             </div>
             <div class="column">
-              <button class="button" @click.prevent="logVotes('Abstained')">Log In Favour(s)</button>
+              <button class="button" @click.prevent="logVotes('Abstained')">Log In Favour Voter(s)</button>
               <div class="select-user">
                 <p>In Favour Voters</p>
                 <ul v-for="vote in votes | filterBy 'In Favour' in 'vote_type'">
@@ -76,7 +76,6 @@
         this.showModal = false
       },
       logVotes: function(vote_type) {
-        console.log("original votes list", this.votes);
         var selectedVotes = this.selectedVotesList
         for (i = 0; i < selectedVotes.length; i++) { 
           var vote = selectedVotes[i]
@@ -87,10 +86,8 @@
             found_vote = this.votes.find(originalVote => originalVote.id === returnedVote.id)
             vote = returnedVote
             found_vote.vote_type = returnedVote.vote_type
-            console.log("updated votes list", this.votes);
           }.bind(this));
         }
-        
       }
     },
     created: function() {
