@@ -81,25 +81,23 @@
         this.showModal = false
       },
       moveInFavourToOpposed: function() {
-        var votes = this.inFavourVotesList
+        var selectedVotes = this.inFavourVotesList
 
-        for (i = 0; i < votes.length; i++) { 
-          var vote = votes[i]
-          var vote_id = votes[i].id
+        for (i = 0; i < selectedVotes.length; i++) { 
+          var vote = selectedVotes[i]
+          var vote_id = selectedVotes[i].id
 
           this.$http.post('/api/votes', {'vote': vote, 'vote_id': vote_id,'vote_type': 'Opposed'}, {emulateJSON:true}).then(function(response){
             vote = response.json()
-            this.inFavourVotesList.pop(vote)
-            this.opposedVotesList.push(vote)
           }.bind(this));
         }
       },
       moveOpposedToInFavour: function() {   
-        var votes = this.opposedVotesList
+        var selectedVotes = this.opposedVotesList
 
-        for (i = 0; i < votes.length; i++) { 
-          var vote = votes[i]
-          var vote_id = votes[i].id
+        for (i = 0; i < selectedVotes.length; i++) { 
+          var vote = selectedVotes[i]
+          var vote_id = selectedVotes[i].id
 
           this.$http.post('/api/votes', {'vote': vote, 'vote_id': vote_id,'vote_type': 'In Favour'}, {emulateJSON:true}).then(function(response){
             vote = response.json()
@@ -107,11 +105,11 @@
         }
       },
       moveOpposedToAbstained: function() {
-        var votes = this.opposedVotesList
+        var selectedVotes = this.opposedVotesList
 
-        for (i = 0; i < votes.length; i++) { 
-          var vote = votes[i]
-          var vote_id = votes[i].id
+        for (i = 0; i < selectedVotes.length; i++) { 
+          var vote = selectedVotes[i]
+          var vote_id = selectedVotes[i].id
 
           this.$http.post('/api/votes', {'vote': vote, 'vote_id': vote_id,'vote_type': 'Abstain'}, {emulateJSON:true}).then(function(response){
             vote = response.json()
@@ -119,18 +117,18 @@
         }   
       },
       moveAbstainedToOpposed: function() {
-        var votes = this.abstainedVotesList
+        var selectedVotes = this.abstainedVotesList
 
-        for (i = 0; i < votes.length; i++) { 
-          var vote = votes[i]
-          var vote_id = votes[i].id
+        for (i = 0; i < selectedVotes.length; i++) { 
+          var vote = selectedVotes[i]
+          var vote_id = selectedVotes[i].id
 
           this.$http.post('/api/votes', {'vote': vote, 'vote_id': vote_id,'vote_type': 'Opposed'}, {emulateJSON:true}).then(function(response){
             vote = response.json()
           }.bind(this));
         } 
       }
-    }
+    },
     created: function() {
       this.$http.get('/api/users').then(function(response){
         console.log(response.json())
@@ -138,7 +136,6 @@
         console.log(this.usersList)
       }.bind(this));
     }
-  }
 });
 
 </script>
