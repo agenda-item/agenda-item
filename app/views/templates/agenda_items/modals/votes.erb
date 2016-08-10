@@ -16,7 +16,7 @@
               <div class="select-user">
                 <p>Abstained Voters</p>
                 <ul v-for="vote in votes | filterBy 'Abstain' in 'vote_type'">
-                  <abstained-voter :agenda-item.sync="agendaItem" :user="user" :vote.sync="vote" :toggle-selected-voter="toggleSelectedVote" :abstained-votes-list.sync="abstainedVotesList"></abstained-voter>
+                  <voter :agenda-item.sync="agendaItem" :user="user" :vote.sync="vote" :toggle-selected-voter="toggleSelectedVote" :selected-votes-list.sync="selectedVotesList"></voter>
                 </ul>
               </div>
             </div>
@@ -34,7 +34,7 @@
                 </div>
                 <!-- <div v-else> -->
                   <ul v-for="vote in votes | filterBy 'Opposed' in 'vote_type'">
-                    <opposed-voter :agenda-item.sync="agendaItem" :user="user" :vote.sync="vote" :toggle-selected-voter="toggleSelectedVote" :opposed-votes-list.sync="opposedVotesList"></opposed-voter>
+                    <voter :agenda-item.sync="agendaItem" :user="user" :vote.sync="vote" :toggle-selected-voter="toggleSelectedVote" :selected-votes-list.sync="selectedVotesList"></voter>
                   </ul>
                 <!-- </div> -->
               </div>
@@ -47,7 +47,7 @@
               <div class="select-user">
                 <p>In Favour Voters</p>
                 <ul v-for="vote in votes | filterBy 'In Favour' in 'vote_type'">
-                  <in-favour-voter :agenda-item.sync="agendaItem" :user="user" :vote.sync="vote" :toggle-selected-voter="toggleSelectedVote" :in-favour-votes-list.sync="inFavourVotesList"></in-favour-voter>
+                  <voter :agenda-item.sync="agendaItem" :user="user" :vote.sync="vote" :toggle-selected-voter="toggleSelectedVote" :selected-votes-list.sync="selectedVotesList"></voter>
                 </ul>
               </div>
             </div>
@@ -68,6 +68,7 @@
         showModal: false,
         toggleSelectedVote: false,
         usersList: [],
+        selectedVotesList: [],
         abstainedVotesList: [],
         opposedVotesList: [],
         inFavourVotesList: []
@@ -81,7 +82,7 @@
         this.showModal = false
       },
       moveInFavourToOpposed: function() {
-        var selectedVotes = this.inFavourVotesList
+        var selectedVotes = this.selectedVotesList
 
         for (i = 0; i < selectedVotes.length; i++) { 
           var vote = selectedVotes[i]
@@ -93,7 +94,7 @@
         }
       },
       moveOpposedToInFavour: function() {   
-        var selectedVotes = this.opposedVotesList
+        var selectedVotes = this.selectedVotesList
 
         for (i = 0; i < selectedVotes.length; i++) { 
           var vote = selectedVotes[i]
@@ -105,7 +106,7 @@
         }
       },
       moveOpposedToAbstained: function() {
-        var selectedVotes = this.opposedVotesList
+        var selectedVotes = this.selectedVotesList
 
         for (i = 0; i < selectedVotes.length; i++) { 
           var vote = selectedVotes[i]
@@ -117,7 +118,7 @@
         }   
       },
       moveAbstainedToOpposed: function() {
-        var selectedVotes = this.abstainedVotesList
+        var selectedVotes = this.selectedVotesList
 
         for (i = 0; i < selectedVotes.length; i++) { 
           var vote = selectedVotes[i]
@@ -131,17 +132,15 @@
     },
     created: function() {
       this.$http.get('/api/users').then(function(response){
-        console.log(response.json())
         this.usersList= response.json()
-        console.log(this.usersList)
       }.bind(this));
     }
 });
 
 </script>
 
-<template id="opposed-voter-template">
-    <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedVote}" @click="selectOpposedVote">
+<template id="voter-template">
+    <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedVote}" @click="selectVote">
       <i class="fa fa-person" aria-hidden="true">
         {{user.first_name}} {{vote.voting_user.first_name}} {{user.last_name}} {{vote.voting_user.last_name}}
       </i>
@@ -149,69 +148,17 @@
 </template>
 
 <script>
-  Vue.component('opposed-voter', {
-    template: '#opposed-voter-template',
-    props: ['agendaItem','user','vote','toggleSelectedVote','opposedVotesList'],
+  Vue.component('voter', {
+    template: '#voter-template',
+    props: ['agendaItem','vote','toggleSelectedVote', 'selectedVotesList'],
     methods: {
-      selectOpposedVote: function(){
-        if (this.opposedVotesList.includes(this.vote)) {
+      selectVote: function(){
+        if (this.selectedVotesList.includes(this.vote)) {
           this.toggleSelectedVote = false
-          this.opposedVotesList.pop(this.vote)
+          this.selectedVotesList.pop(this.vote)
         } else {
           this.toggleSelectedVote = true
-          this.opposedVotesList.push(this.vote)
-        }
-      }
-    }
-  })
-</script>
-
-<template id="in-favour-voter-template">
-    <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedVote}" @click="selectInFavourVote">
-      <i class="fa fa-person" aria-hidden="true">
-        {{vote.voting_user.first_name}} {{vote.voting_user.last_name}}
-      </i>
-    </li>
-</template>
-
-<script>
-  Vue.component('in-favour-voter', {
-    template: '#in-favour-voter-template',
-    props: ['agendaItem','user','vote','toggleSelectedVote','inFavourVotesList'],
-    methods: {
-      selectInFavourVote: function(){
-        if (this.inFavourVotesList.includes(this.vote)) {
-          this.toggleSelectedVote = false
-          this.inFavourVotesList.pop(this.vote)
-        } else {
-          this.toggleSelectedVote = true
-          this.inFavourVotesList.push(this.vote)
-        }
-      }
-    }
-  })
-</script>
-
-<template id="abstained-voter-template">
-    <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedVote}" @click="selectOpposedVote">
-      <i class="fa fa-person" aria-hidden="true">
-        {{vote.voting_user.first_name}} {{vote.voting_user.last_name}}
-      </i>
-    </li>
-</template>
-
-<script>
-  Vue.component('abstained-voter', {
-    template: '#abstained-voter-template',
-    props: ['agendaItem','user','vote','toggleSelectedVote','abstainedVotesList'],
-    methods: {
-      selectOpposedVote: function(){
-        if (this.abstainedVotesList.includes(this.vote)) {
-          this.toggleSelectedVote = false
-          this.abstainedVotesList.pop(this.vote)
-        } else {
-          this.toggleSelectedVote = true
-          this.abstainedVotesList.push(this.vote)
+          this.selectedVotesList.push(this.vote)
         }
       }
     }
