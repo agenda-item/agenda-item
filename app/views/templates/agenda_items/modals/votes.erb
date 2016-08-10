@@ -76,16 +76,21 @@
         this.showModal = false
       },
       logVotes: function(vote_type) {
+        console.log("original votes list", this.votes);
         var selectedVotes = this.selectedVotesList
-
         for (i = 0; i < selectedVotes.length; i++) { 
           var vote = selectedVotes[i]
           var vote_id = selectedVotes[i].id
 
           this.$http.post('/api/votes', {'vote': vote, 'vote_id': vote_id,'vote_type': vote_type}, {emulateJSON:true}).then(function(response){
-            vote = response.json()
+            returnedVote = response.json()
+            found_vote = this.votes.find(originalVote => originalVote.id === returnedVote.id)
+            vote = returnedVote
+            found_vote.vote_type = returnedVote.vote_type
+            console.log("updated votes list", this.votes);
           }.bind(this));
         }
+        
       }
     },
     created: function() {
@@ -108,7 +113,7 @@
 <script>
   Vue.component('voter', {
     template: '#voter-template',
-    props: ['agendaItem','vote','toggleSelectedVote', 'selectedVotesList'],
+    props: ['agendaItem', 'user', 'vote', 'toggleSelectedVote', 'selectedVotesList'],
     methods: {
       selectVote: function(){
         if (this.selectedVotesList.includes(this.vote)) {
