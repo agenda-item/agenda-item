@@ -50,11 +50,13 @@
   Vue.component('meeting-details', {
     template: "#meeting-details-template",
     props: ['currentMeeting'],
-    computed: {
-      attendees: function() {
-        console.log(this.currentMeeting.meeting_attendees)
-        return this.currentMeeting.meeting_attendees
+    data: function() {
+      return {
+        attendees: []
       }
+    },
+    created: function() {
+      // get any current attendees and push them into the attendees array
     },
     methods: {
     submitMeeting: function() {

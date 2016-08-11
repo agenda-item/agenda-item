@@ -97,7 +97,6 @@
       }.bind(this));
 
       this.$http.get('/api/current-meeting').then(function(response){
-        console.log(response.json())
         this.currentMeeting = response.json();
       }.bind(this));
     },

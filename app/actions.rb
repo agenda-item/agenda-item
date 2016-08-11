@@ -313,10 +313,18 @@ get '/api/meetings/:id/delete' do
   end
 end
 
-
-
 get '/logout' do
   redirect '/'
+end
+
+#####################
+# MEETING ATTENDEES #
+#####################
+
+get '/api/meetings/:id/meeting-attendees' do
+  content_type :json
+  @meeting = Meeting.find(params[:id])
+  @meeting.to_json(include: { :meeting_attendees => {:include =>:user} })
 end
 
 ################
