@@ -32,35 +32,8 @@
           <br/>
           <chair-modal :current-meeting.sync="currentMeeting"></chair-modal>
         </div>
-        <!-- <div class="ai-attendees">
-          <label class="label">Attendees</label>
-            <attendees-modal :attendees="attendees"></attendees-modal>
-            <article class="message">
-              <div class="message-header">
-                Present
-              </div>
-              <div v-for="attendee in attendees | filterBy 'Present' in 'attendance_type'">
-                <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ attendee.first_name }}</i></div>
-              </div>
-              <div class="message-body">
-                <div v-for="attendee in attendees | filterBy 'Present' in 'attendance_type'">
-                  <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ attendee.first_name }}</i></div>
-                </div>
-              </div>
-            </article>
-            <article class="message">
-              <div class="message-header">
-                Absent
-              </div>
-              <div class="message-body">
-                <div v-for="attendee in attendees | filterBy 'Absent' in 'attendance_type'">
-                  <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ attendee.first_name }}</i></div>
-                </div>
-              </div>
-            </article>
-          </div>
-        </div> -->
-           <!-- TODO add call to order time stamp -->
+        <attendees-modal :agenda-item.sync="agendaItem" :attendees.sync="attendees"></attendees-modal>
+        <!-- TODO add call to order time stamp -->
         <div class="ai-minutes">
           <label class="label">Discussion</label>
           <div class="control">
