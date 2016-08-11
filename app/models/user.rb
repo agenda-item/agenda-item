@@ -4,7 +4,8 @@ class User < ActiveRecord::Base
   belongs_to :organization
 
   has_many :meeting_attendees
-  
+  has_many :meetings, through: :meeting_attendees
+
   has_many :meeting_permissions
   has_many :meetings, through: :meeting_permissions
 
