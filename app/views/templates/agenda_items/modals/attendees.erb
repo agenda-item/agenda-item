@@ -17,7 +17,7 @@
               <div class="select-user">
                 <p>Present</p>
                 <ul v-for="attendee in attendees | filterBy 'present' in 'attendance_type'">
-                  <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ attendee.first_name }}</i></div>
+                  <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ attendee.user.first_name }}</i></div>
                   <board-member :agenda-item.sync="agendaItem" :attendee="attendee"></board-member>
                 </ul>
               </div>
@@ -87,7 +87,9 @@
 <template id="board-member-template">
     <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedMember}" @click="selectMember">
       <i class="fa fa-person" aria-hidden="true">
-        {{meeting.meeting_attendee.first_name}} {{vote.meeting_attendee.last_name}}
+        <!-- {{attendees.user.first_name}} 
+        {{attendees.meeting_attendee.user.first_name}} 
+        {{meeting.meeting_attendee.user.first_name}} {{meeting_attendee.user.last_name}} -->
       </i>
     </li>
 </template>

@@ -321,10 +321,9 @@ end
 # MEETING ATTENDEES #
 #####################
 
-get '/api/meetings/:id/meeting-attendees' do
+get '/api/meetings/:id/meeting-attendees' do |id|
   content_type :json
-  @meeting = Meeting.find(params[:id])
-  @meeting.to_json(include: { :meeting_attendees => {:include =>:user} })
+  MeetingAttendee.where(meeting_id: id).to_json(include: :user)
 end
 
 ################
