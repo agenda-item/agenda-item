@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   self.inheritance_column = nil
 
   belongs_to :organization
+
+  has_many :meeting_attendees
   
   has_many :meeting_permissions
   has_many :meetings, through: :meeting_permissions
