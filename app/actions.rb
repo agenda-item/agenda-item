@@ -79,7 +79,8 @@ post '/organizations/details' do
     email: @organization.email,
     first_name: first_name,
     last_name: last_name,
-    password: password
+    password: password,
+    organization: @organization
     )
 
   if @organization.save && @user.save
