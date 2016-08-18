@@ -26,7 +26,7 @@
               <div class="select-user">
                 <p>Absent</p>
                 <ul v-for="attendee in attendees | filterBy 'Absent' in 'attendance_type'">
-                  <board-member :agenda-item.sync="agendaItem" :attendee="attendee" :toggle-selected-member="toggleSelectedMember" :selected-votes-list.sync="selectedMembersList"></board-member>
+                  <board-member :agenda-item.sync="agendaItem" :attendee="attendee" :toggle-selected-member="toggleSelectedMember" :selected-members-list.sync="selectedMembersList"></board-member>
                 </ul>
               </div>
             </div>
@@ -71,17 +71,8 @@
             found_atteendee.attendance_type = returnedAttendee.attendance_type
           }.bind(this));
         }
-    },
-    created: function() {
-      if (this.attendees === 0) {
-        this.$http.get('/api/users').then(function(response){
-          users = response.json()
-          console.log("got the users list!")
-          // map over the users array and push them into the this.attendees array with an attendance type of absent
-        }.bind(this));
-      }  
+      },
     }
-  }
   });
 </script>
 
