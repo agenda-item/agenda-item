@@ -39,15 +39,17 @@
 
 
           <div class="login-info">
-            <% if current_organization %>
-              <%= current_organization.name %>: (<%= current_organization.email %>)
+            <% if current_user %>
+              <%= current_user.first_name %>: (<%= current_user.email %>)
+              | 
+              <%= current_user.organization.name %>
               |
               <a href="/logout">Logout</a>
             <% else %>
               <a href="/login">Login</a>
              |
               <a href="/organizations/new">Signup</a>
-           <% end %>
+           <% end %>           
          </div>
 
         <div class="nav-center">
