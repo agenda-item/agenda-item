@@ -1,64 +1,40 @@
 <section id="board-bg-img" class="is-fullheight" style="min-height: 100vh">
 	<div class="columns">
-
-		<div class="column is-one-quarter">
-		    <!-- <p class="notification is-warning">Auto</p> -->
-		</div>
-		<div class="column is-half">
+		<div class="column is-half is-offset-one-quarter">
 			<form method="POST" action="/users/new">
 				<div class="signup-form">
-				<div class="style-element section">
-				<p>Board Membership Sign Up</p>
-			 	<div class="board-membership-form">
-				<!-- <div class="control is-horizontal"> -->
-				  <div class="control-label">
-				    <!-- <label class="label">From</label> -->
-				  </div>
-				  <div class="control is-grouped">
-				    <p class="control is-expanded has-icon">
-				    	<i class="fa fa-person"></i>
-				      <input class="input" type="text" name="first_name" placeholder="First Name">
-				    </p>
-				    <p class="control is-expanded has-icon">
-				      <input class="input" type="text" name="last_name" placeholder="Last Name">
-				      <i class="fa fa-person"></i>
-				    </p>
-				  </div>
-				<!-- </div> -->
-
-				<!-- <div class="control is-horizontal"> -->
-				  <div class="control-label">
-				    <!-- <label class="label">From</label> -->
-				  </div>
-				  <div class="control is-grouped">
-				    <p class="control is-expanded has-icon">
-				      <input class="input" type="text" name="board_position" placeholder="Board Position">
-				      <i class="fa fa-microphone-settings"></i>
-				    </p>
-				    <p class="control is-expanded has-icon">
-				      <input class="input" type="email" name="email" placeholder="Email">
-				      <i class="fa fa-email"></i>
-				    </p>
-
-				  </div>
-				</div>
-				  <div class="control is-grouped">
-					  <p class="control">
-					    <a class="button">Continue <i class="fa fa-arrow-right"></i></a>
-					  </p>
-
-					  <p class="control">
-					    <button type="submit" class="button"> Add New Member</button>
-					  </p>
+					<div class="style-element section">
+						<h4>Board Membership Sign Up</h4>
+						<div class="board-membership-form">
+							<label class="label">First Name</label>
+							<div class="control is-expanded has-icon">
+								<i class="fa fa-person"></i>
+								<input class="input" type="text" name="first_name" placeholder="First Name">
+							</div>
+							<label class="label">Last Name</label>
+							<div class="control is-expanded has-icon">
+								<input class="input" type="text" name="last_name" placeholder="Last Name">
+								<i class="fa fa-person"></i>
+							</div>
+							<!-- hidden since default value -->
+							 <input class="input" type="hidden" name="board_position" placeholder="Board Position" value="Board">
+							<label class="label">Email</label>
+							<div class="control is-expanded has-icon">
+								<input class="input" type="email" name="email" placeholder="Email" required>
+								<i class="fa fa-email"></i>
+							</div>
+						</div>
+						<div class="control is-grouped">
+							<div class="control">
+								<button type="submit" class="button"> Add Another Member</button>
+							</div>
+							<div class="control">
+								<a href='/meetings' class="button">Continue <i class="fa fa-arrow-right"></i></a>
+							</div>
+						</div>
 					</div>
-
-			</div>
-
-			</div>
-		</form>
-	</div>
-
-		<div class="column is-one-quarter">
-		    <!-- <p class="notification is-danger">Auto</p> -->
+				</div>
+			</form>
 		</div>
+	</div>
 </section>

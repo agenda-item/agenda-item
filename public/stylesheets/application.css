@@ -179,6 +179,10 @@ body {
   margin-top: 60px;
 }
 
+.login-form {
+  margin-top: 60px;
+}
+
 .h1 {
   padding-bottom: 20px;
 }
@@ -189,6 +193,12 @@ body {
 
 #signup-bg-img {
   background:transparent url(http://marketingland.com/wp-content/ml-loads/2014/09/tablet-calendar-coffee-desk-ss-1920-800x571.jpg)
+  no-repeat center center;
+  background-size: cover;
+}
+
+#login-bg-img {
+  background:transparent url(http://img.hrhwalls.com/images2/ki13j11c4ef.jpg)
   no-repeat center center;
   background-size: cover;
 }
@@ -238,7 +248,7 @@ body {
     color: blue;
 }
 
-a.button-index {
+.button-index {
   -moz-appearance: none;
   -webkit-appearance: none;
   -webkit-box-align: center;
@@ -292,6 +302,10 @@ a.button-index {
 
 .label {
   padding: 30px 0 3px 0;
+}
+
+.login-info {
+  padding: 12px;
 }
 
 p {

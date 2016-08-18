@@ -2,10 +2,17 @@ require_relative "utils"
 
 helpers do
 
+  def current_organization
+    Organization.find_by(id: session[:organization_id])
+  end
+
   def current_meeting
     @current_meeting ||= Meeting.find(session["meeting"]) if session["meeting"]
   end
 
+  def current_user
+    User.find_by(id: session[:user_id])
+  end
 end
 
 # Landing Page
@@ -13,8 +20,100 @@ get '/' do
   erb :index
 end
 
-get '/organizations/new' do
-  erb :signup
+#####################
+# LOG IN AND LOGOUT #
+#####################
+
+get '/login' do 
+  erb :login
+end
+
+post '/login' do
+  email = params[:email]
+  password = params[:password]
+
+  #1. find user by username
+  user = User.find_by(email: email)
+  
+  #2. if that user exists and that user's password mathces the password input
+    if user.authenticate(password)
+      #login
+      session[:user_id] = user.id
+      redirect(to('/'))
+    else
+    @error_message = "Login failed."
+    erb(:login)
+    end
+end
+
+get '/logout' do
+  session.clear
+  redirect '/'
+end
+
+###################
+# SIGN UP PROCESS #
+###################
+
+# step 1: user email (the get action is '/')
+get '/organizations/email' do
+  puts "test"
+
+  erb :signup, locals: {email: params[:email]}
+end
+
+post '/organizations/details' do 
+  content_type :json
+  email = params[:email]
+  name = params[:organization_name]
+  first_name = params[:first_name]
+  last_name = params[:last_name]
+  password = params[:password]
+
+  @organization = Organization.new(
+    email: email,
+    name: name
+  )
+
+  @user = User.new(
+    email: @organization.email,
+    first_name: first_name,
+    last_name: last_name,
+    password: password,
+    organization: @organization
+    )
+
+  if @organization.save && @user.save
+    puts "this is your org name: #{name}"
+    puts "current user: #{first_name} #{last_name}"
+    @organization.to_json
+    @user.to_json
+    redirect(to('/users/new'))
+  end
+end
+
+
+#step 3: Board Members Sign Up page
+get '/users/new' do
+  erb :board_members
+end
+
+# create new board member (user)
+post '/users/new' do
+  first_name = params[:first_name]
+  last_name = params[:last_name]
+  board_position = params[:board_position]
+
+  @user = User.new(
+    first_name: first_name,
+    last_name: last_name,
+    type: board_position
+  )
+  if @user.save
+    puts "your new board member is: #{first_name} #{last_name}"
+    @user.to_json
+    redirect(to('/users/new'))
+  end  
 end
 
 # Style Guide
@@ -92,20 +191,6 @@ end
 #########
 # USERS #
 #########
-
-#Board Members Sign Up page
-get '/users/new' do
-  erb :board_members
-end
-
-# create new board member (user)
-post '/users/new' do
-  email = params[:email]
-  first_name = params[:first_name]
-  last_name = params[:last_name]
-  board_position = params[:board_position]
-  redirect(to('/users/new'))
-end
 
 # get all users
 get '/api/users' do
@@ -311,12 +396,6 @@ get '/api/meetings/:id/delete' do
   if @meeting.destroy
     puts "meeting has been removed from existence! MWAAAHAHAHA"
   end
-end
-
-
-
-get '/logout' do
-  redirect '/'
 end
 
 ################
