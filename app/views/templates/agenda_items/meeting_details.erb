@@ -32,10 +32,24 @@
           <br/>
           <chair-modal :current-meeting.sync="currentMeeting"></chair-modal>
         </div>
-        <p>display attendees like votes here</p>
-        <ul v-for="attendee in attendees">
-          <li class="ai-user"><i class="fa fa-person fa-lg" aria-hidden="true">{{attendee.user.first_name}} {{attendee.user.last_name}}</i></li>
-        </ul>
+        <article class="message">
+          <div class="message-header">
+            Present
+          </div>
+          <ul v-for="attendee in attendees | filterBy 'Present' in 'attendance_type'">
+            <li class="ai-user"><i class="fa fa-person fa-lg" aria-hidden="true">{{attendee.user.first_name}} {{attendee.user.last_name}}</i></li>
+          </ul>
+        </article>
+         <article class="message">
+          <div class="message-header">
+            Absent
+          </div>
+          <ul v-for="attendee in attendees | filterBy 'Absent' in 'attendance_type'">
+            <li class="ai-user"><i class="fa fa-person fa-lg" aria-hidden="true">{{attendee.user.first_name}} {{attendee.user.last_name}}</i></li>
+          </ul>
+        </article>
+        
+        
         <attendees-modal :agenda-item.sync="agendaItem" :attendees.sync="attendees"></attendees-modal>
         <!-- TODO add call to order time stamp -->
         <div class="ai-minutes">

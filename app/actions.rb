@@ -326,6 +326,20 @@ get '/api/meetings/:id/meeting-attendees' do |id|
   MeetingAttendee.where(meeting_id: id).to_json(include: :user)
 end
 
+post '/api/meetings/:id/meeting-attendees' do |id|
+  content_type :json
+
+  attendee = MeetingAttendee.find(params[:attendee_id].to_i)
+  attendee.attendance_type = params[:attendance_type]
+  
+  if attendee.save
+    puts "saved successfully"
+    attendee.to_json(include: :user)
+  else
+    puts "not saved"
+  end
+end
+
 ################
 # AGENDA ITEMS #
 ################

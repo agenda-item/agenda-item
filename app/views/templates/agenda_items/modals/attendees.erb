@@ -13,22 +13,20 @@
         <div class="modal-section">
           <div class="columns">
             <div class="column">
-              <button class="button" @click.prevent="logAttendees('present')">Log Present Members</button>
+              <button class="button" @click.prevent="logAttendees('Present')">Log Present Members</button>
               <div class="select-user">
                 <p>Present</p>
-                <ul v-for="attendee in attendees | filterBy 'present' in 'attendance_type'">
-                  <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ attendee.user.first_name }}</i></div>
-                  <board-member :agenda-item.sync="agendaItem" :attendee="attendee"></board-member>
+                <ul v-for="attendee in attendees | filterBy 'Present' in 'attendance_type'">
+                  <board-member :agenda-item.sync="agendaItem" :attendee="attendee" :toggle-selected-member="toggleSelectedMember" :selected-members-list.sync="selectedMembersList"></board-member>
                 </ul>
               </div>
             </div>
             <div class="column">
-              <button class="button" @click.prevent="logAttendees('absent')">Log Absent Members</button>
+              <button class="button" @click.prevent="logAttendees('Absent')">Log Absent Members</button>
               <div class="select-user">
                 <p>Absent</p>
-                <ul v-for="attendee in attendees | filterBy 'absent' in 'attendance_type'">
-                  <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ attendee.first_name }}</i></div>
-                  <board-member :agenda-item.sync="agendaItem" :attendee="attendee"></board-member>
+                <ul v-for="attendee in attendees | filterBy 'Absent' in 'attendance_type'">
+                  <board-member :agenda-item.sync="agendaItem" :attendee="attendee" :toggle-selected-member="toggleSelectedMember" :selected-votes-list.sync="selectedMembersList"></board-member>
                 </ul>
               </div>
             </div>
@@ -59,17 +57,19 @@
         this.showModal = false
       },
       logAttendees: function(attendance_type) {
-        // var selectedVotes = this.selectedVotesList
-        // for (i = 0; i < selectedVotes.length; i++) { 
-        //   var vote = selectedVotes[i]
-        //   var vote_id = selectedVotes[i].id
+        var selectedMembers = this.selectedMembersList
+        console.log(selectedMembers)
+        for (i = 0; i < selectedMembers.length; i++) { 
+          var attendee = selectedMembers[i]
+          var attendee_id = selectedMembers[i].id
+          var url = '/api/meetings/' + attendee_id + '/meeting-attendees'
 
-        //   this.$http.post('/api/votes', {'vote': vote, 'vote_id': vote_id,'vote_type': vote_type}, {emulateJSON:true}).then(function(response){
-        //     returnedVote = response.json()
-        //     found_vote = this.votes.find(originalVote => originalVote.id === returnedVote.id)
-        //     vote = returnedVote
-        //     found_vote.vote_type = returnedVote.vote_type
-        //   }.bind(this));
+          this.$http.post(url, {'attendee': attendee, 'attendee_id': attendee_id,'attendance_type': attendance_type}, {emulateJSON:true}).then(function(response){
+            returnedAttendee = response.json()
+            found_atteendee = this.attendees.find(originalAttendee => originalAttendee.id === returnedAttendee.id)
+            attendee = returnedAttendee
+            found_atteendee.attendance_type = returnedAttendee.attendance_type
+          }.bind(this));
         }
     },
     created: function() {
@@ -81,31 +81,26 @@
         }.bind(this));
       }  
     }
+  }
   });
 </script>
 
 <template id="board-member-template">
-    <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedMember}" @click="selectMember">
-      <i class="fa fa-person" aria-hidden="true">
-        <!-- {{attendees.user.first_name}} 
-        {{attendees.meeting_attendee.user.first_name}} 
-        {{meeting.meeting_attendee.user.first_name}} {{meeting_attendee.user.last_name}} -->
-      </i>
-    </li>
+      <div class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedMember}" @click="selectMember"><i class="fa fa-person" aria-hidden="true">{{ attendee.user.first_name }}</i></div>
 </template>
 
 <script>
   Vue.component('board-member', {
     template: '#board-member-template',
-    props: ['agendaItem', 'attendees', 'toggleSelectedMember', 'selectedMembersList'],
+    props: ['agendaItem', 'attendees', 'toggleSelectedMember', 'selectedMembersList','attendee'],
     methods: {
       selectMember: function(){
-        if (this.selectedMembersList.includes(this.vote)) {
+        if (this.selectedMembersList.includes(this.attendee)) {
           this.toggleSelectedMember = false
-          this.selectedMembersList.pop(this.vote)
+          this.selectedMembersList.pop(this.attendee)
         } else {
           this.toggleSelectedMember = true
-          this.selectedMembersList.push(this.vote)
+          this.selectedMembersList.push(this.attendee)
         }
       }
     }
