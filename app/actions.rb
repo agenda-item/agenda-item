@@ -35,43 +35,31 @@ end
 ###################
 
 # step 1: user email (the get action is '/')
-post '/organizations/email' do
-  content_type :json
-  email = params[:email]
+get '/organizations/email' do
+  puts "test"
 
-  @organization = Organization.new(
-    email: email
-  )
-  if @organization.save
-    puts "this is your email: #{email}"
-    @organization.to_json
-    session[:organization_id] = @organization.id
-    redirect(to('/organizations/new'))
-  end
-end
-
-# step 2: org name and new user (org creator)
-get '/organizations/new' do
-  erb :signup
+  erb :signup, locals: {email: params[:email]}
 end
 
 post '/organizations/details' do 
   content_type :json
+  email = params[:email]
   name = params[:organization_name]
   first_name = params[:first_name]
   last_name = params[:last_name]
   password = params[:password]
 
-  @organization = current_organization
+  @organization = Organization.new(
+    email: email,
+    name: name
+  )
 
   @user = User.new(
-    email: current_organization.email,
+    email: @organization.email,
     first_name: first_name,
     last_name: last_name,
     password: password
     )
-
-  @organization.name = name
 
   if @organization.save && @user.save
     puts "this is your org name: #{name}"
