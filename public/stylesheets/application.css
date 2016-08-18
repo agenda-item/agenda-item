@@ -51,6 +51,10 @@ body {
   background: #BAC0BD;
 }
 
+.style-element {
+  box-shadow: 1px 1px 10px #666;
+}
+
 .style-element section {
   border: 1px dotted grey;
   border-radius: 50px;
@@ -65,7 +69,7 @@ body {
 
 #board-bg-img {
   /*background-color: #462035;*/
-  background:transparent url(https://static.pexels.com/photos/66957/pexels-photo-66957.jpeg)
+  background:transparent url(http://samansaadat.com/wp-content/uploads/2015/07/iStock_000058139590_Large.jpg)
   no-repeat center center;
   background-size: cover;
 }
