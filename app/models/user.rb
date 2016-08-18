@@ -1,4 +1,9 @@
 class User < ActiveRecord::Base
+
+  include BCrypt
+
+  attr_accessor :password, :password_confirmation
+
   self.inheritance_column = nil
 
   belongs_to :organization
@@ -30,8 +35,6 @@ class User < ActiveRecord::Base
 
   has_many :votes
 
-  has_secure_password
-
   validates :first_name,
     presence: true
 
@@ -42,5 +45,26 @@ class User < ActiveRecord::Base
     presence: true,
     uniqueness: true,
     :if => lambda { |user| user.type != "Board" }
+
+   
+   # code to get around has_secure_password when 
+   # user creates board members with no passwords
+
+  validates :password, length: (6..32), confirmation: true, if: :setting_password?
+
+  def password=(password)
+    @password = password
+    self.password_digest = Password.create(password)
+  end
+
+  def authenticate(password)
+    password.present? && password_digest.present? && Password.new(password_digest) == password
+  end
+
+  private
+
+    def setting_password?
+      password || password_confirmation
+    end
 
 end
