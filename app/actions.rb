@@ -10,6 +10,9 @@ helpers do
     @current_meeting ||= Meeting.find(session["meeting"]) if session["meeting"]
   end
 
+  def current_user
+    User.find_by(id: session[:user_id])
+  end
 end
 
 # Landing Page
@@ -23,6 +26,24 @@ end
 
 get '/login' do 
   erb :login
+end
+
+post '/login' do
+  email = params[:email]
+  password = params[:password]
+
+  #1. find user by username
+  user = User.find_by(email: email)
+  
+  #2. if that user exists and that user's password mathces the password input
+    if user.authenticate(password)
+      #login
+      session[:user_id] = user.id
+      redirect(to('/'))
+    else
+    @error_message = "Login failed."
+    erb(:login)
+    end
 end
 
 get '/logout' do
