@@ -51,6 +51,10 @@ body {
   background: #BAC0BD;
 }
 
+.is-fullheight {
+  min-height: 100vh;
+}
+
 .style-element {
   box-shadow: 1px 1px 10px #666;
 }
@@ -66,6 +70,8 @@ body {
 .style-element {
   border-radius: 20px;
 }
+
+
 
 #board-bg-img {
   /*background-color: #462035;*/
@@ -151,6 +157,10 @@ body {
 
 .ai-selection-arrows {
   display: inline-block;
+}
+
+.title.is-1 {
+  color: white;
 }
 
 .center-element {
