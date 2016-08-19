@@ -57,8 +57,6 @@ end
 
 # step 1: user email (the get action is '/')
 get '/organizations/email' do
-  puts "test"
-
   erb :signup, locals: {email: params[:email]}
 end
 
