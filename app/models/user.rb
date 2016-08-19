@@ -46,6 +46,10 @@ class User < ActiveRecord::Base
     uniqueness: true,
     :if => lambda { |user| user.type != "Board" }
 
+
+  def full_name
+    self.first_name + " " + self.last_name
+  end
    
    # code to get around has_secure_password when 
    # user creates board members with no passwords
