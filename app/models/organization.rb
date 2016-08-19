@@ -2,7 +2,7 @@ class Organization < ActiveRecord::Base
 
   has_many :users
 
-  validates :name,
+  validates :email,
     presence: true
 
 end
