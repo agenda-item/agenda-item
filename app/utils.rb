@@ -7,3 +7,8 @@ def is_valid_filename (filename)
   end
   valid
 end
+
+def can_second(user)
+  if @mover != user
+  end
+end

@@ -14,6 +14,7 @@
 @milly = User.create!(organization_id: @spwm.id,first_name: "Mildred", last_name: "Pennywise", email: "scorpio94@yahoo.ca", type: "attendee", org_title: "n/a", password: "password4", phone: "250-444-4444", phone_permission: false, mobile: "778-444-4444", address: "616 Cassiar Dr", mail_permission: false, meeting_email_permission: true, reminders_email_permission: false)
 
 # Users for Cat Herders
+<<<<<<< HEAD
 @calico = User.create!(organization_id: @choc.id, first_name: "Cal", last_name: "Ico", email: "cal_ico@email.com", type: "Board", org_title: "Chair", password: "meow1" , phone: "250-111-1111", phone_permission: true, mobile: "778-111-1111", address: "592 Hairball Ave", mail_permission: true, meeting_email_permission: true, reminders_email_permission: true)
 
 @tabby = User.create!(organization_id: @choc.id,first_name: "Tabitha", last_name: "Catz", email: "tabby_catz@email.com", type: "Board", org_title: "Secretary", password: "meow2", phone: "250-222-2222", phone_permission: false, mobile: "778-222-2222", address: "901 Catnip Dr", mail_permission: true, meeting_email_permission: true, reminders_email_permission: false)
@@ -21,6 +22,15 @@
 @siamese = User.create!(organization_id: @choc.id,first_name: "Sia", last_name: "Mees", email: "high_cost@cats.ca", type: "attendee", org_title: "n/a", password: "meow3", phone: "250-818-1818", phone_permission: false, mobile: "778-818-1818", address: "1001 Fleabath Rd", mail_permission: false, meeting_email_permission: false, reminders_email_permission: false)
 
 @catman = User.create!(organization_id: @choc.id,first_name: "Bruce", last_name: "Clayne", email: "catman@yahoo.ca", type: "attendee", org_title: "n/a", password: "meow4", phone: "250-688-8866", phone_permission: false, mobile: "778-553-3355", address: "1 Catcave Cres", mail_permission: false, meeting_email_permission: true, reminders_email_permission: false)
+=======
+@calico = User.create!(organization_id: @choc.id, first_name: "Cal", last_name: "Ico", email: "cal_ico@email.com", type: "Board", org_title: "Chair", password: "meowmeow1" , phone: "250-111-1111", phone_permission: true, mobile: "778-111-1111", address: "592 Hairball Ave", mail_permission: true, meeting_email_permission: true, reminders_email_permission: true)
+
+@tabby = User.create!(organization_id: @choc.id,first_name: "Tabitha", last_name: "Catz", email: "tabby_catz@email.com", type: "Board", org_title: "Secretary", password: "meowmeow2", phone: "250-222-2222", phone_permission: false, mobile: "778-222-2222", address: "901 Catnip Dr", mail_permission: true, meeting_email_permission: true, reminders_email_permission: false)
+
+@siamese = User.create!(organization_id: @choc.id,first_name: "Sia", last_name: "Mees", email: "high_cost@cats.ca", type: "attendee", org_title: "n/a", password: "meowmeow3", phone: "250-818-1818", phone_permission: false, mobile: "778-818-1818", address: "1001 Fleabath Rd", mail_permission: false, meeting_email_permission: false, reminders_email_permission: false)
+
+@catman = User.create!(organization_id: @choc.id,first_name: "Bruce", last_name: "Clayne", email: "catman@yahoo.ca", type: "attendee", org_title: "n/a", password: "meowmeow4", phone: "250-688-8866", phone_permission: false, mobile: "778-553-3355", address: "1 Catcave Cres", mail_permission: false, meeting_email_permission: true, reminders_email_permission: false)
+>>>>>>> 3ba5e14e004294d07da0ea2d745ff4eb22b7c040
 
 #getting org to recognize its owner
 @spwm.user_id = @sylvia.id
@@ -38,7 +48,11 @@
 
 # MeetingPermissions
 @meeting_permissions = MeetingPermission.create!(user_id: @bob.id, meeting_id: @agm1.id, meeting_permissions: "true")
+<<<<<<< HEAD
 @meeting_permissions = MeetingPermission.create!(user_id: @bob.id, meeting_id: @@agm.id, meeting_permissions: "true")
+=======
+@meeting_permissions = MeetingPermission.create!(user_id: @bob.id, meeting_id: @agm.id, meeting_permissions: "true")
+>>>>>>> 3ba5e14e004294d07da0ea2d745ff4eb22b7c040
 @meeting_permissions = MeetingPermission.create!(user_id: @calico.id, meeting_id: @agmew1.id, meeting_permissions: "true")
 @meeting_permissions = MeetingPermission.create!(user_id: @calico.id, meeting_id: @agmew2.id, meeting_permissions: "true")
 
@@ -50,10 +64,17 @@
 @attendee4 = MeetingAttendee.create!(meeting_id: @agm1.id, user_id: @milly.id, attendance_type: "present")
 
 # @agm
+<<<<<<< HEAD
 @attendee5 = MeetingAttendee.create!(meeting_id: @@agm.id, user_id: @bob.id, attendance_type: "present")
 @attendee6 = MeetingAttendee.create!(meeting_id: @@agm.id, user_id: @sylvia.id, attendance_type: "present")
 @attendee7 = MeetingAttendee.create!(meeting_id: @@agm.id, user_id: @jason.id, attendance_type: "present")
 @attendee8 = MeetingAttendee.create!(meeting_id: @@agm.id, user_id: @milly.id, attendance_type: "present")
+=======
+@attendee5 = MeetingAttendee.create!(meeting_id: @agm.id, user_id: @bob.id, attendance_type: "present")
+@attendee6 = MeetingAttendee.create!(meeting_id: @agm.id, user_id: @sylvia.id, attendance_type: "present")
+@attendee7 = MeetingAttendee.create!(meeting_id: @agm.id, user_id: @jason.id, attendance_type: "present")
+@attendee8 = MeetingAttendee.create!(meeting_id: @agm.id, user_id: @milly.id, attendance_type: "present")
+>>>>>>> 3ba5e14e004294d07da0ea2d745ff4eb22b7c040
 
 # agmew1
 @herder1 = MeetingAttendee.create!(meeting_id: @agmew1.id, user_id: @calico.id, attendance_type: "present")
