@@ -258,13 +258,13 @@
 # First Secretary Election
 
 # User:Bob
-@first_secretary_vote1 = Vote.create!(agenda_item_id: @election1_2.id, voting_user_id: @bob.id, vote_type: "In Favour")
+@first_secretary_vote1 = Vote.create!(agenda_item_id: @election2_1.id, voting_user_id: @bob.id, vote_type: "In Favour")
 # User:Sylvia
-@first_secretary_vote2 = Vote.create!(agenda_item_id: @election1_2.id, voting_user_id: @sylvia.id, vote_type: "In Favour")
+@first_secretary_vote2 = Vote.create!(agenda_item_id: @election2_1.id, voting_user_id: @sylvia.id, vote_type: "In Favour")
 # User:Jason
-@first_secretary_vote3 = Vote.create!(agenda_item_id: @election1_2.id, voting_user_id: @jason.id, vote_type: "In Favour")
+@first_secretary_vote3 = Vote.create!(agenda_item_id: @election2_1.id, voting_user_id: @jason.id, vote_type: "In Favour")
 # User:Milly
-@first_secretary_vote4 = Vote.create!(agenda_item_id: @election1_2.id, voting_user_id: @milly.id, vote_type: "In Favour")
+@first_secretary_vote4 = Vote.create!(agenda_item_id: @election2_1.id, voting_user_id: @milly.id, vote_type: "In Favour")
 
 #######################
 #  Votes SPWM - agm   #
