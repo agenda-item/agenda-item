@@ -14,23 +14,13 @@
 @milly = User.create!(organization_id: @spwm.id,first_name: "Mildred", last_name: "Pennywise", email: "scorpio94@yahoo.ca", type: "attendee", org_title: "n/a", password: "password4", phone: "250-444-4444", phone_permission: false, mobile: "778-444-4444", address: "616 Cassiar Dr", mail_permission: false, meeting_email_permission: true, reminders_email_permission: false)
 
 # Users for Cat Herders
-<<<<<<< HEAD
-@calico = User.create!(organization_id: @choc.id, first_name: "Cal", last_name: "Ico", email: "cal_ico@email.com", type: "Board", org_title: "Chair", password: "meow1" , phone: "250-111-1111", phone_permission: true, mobile: "778-111-1111", address: "592 Hairball Ave", mail_permission: true, meeting_email_permission: true, reminders_email_permission: true)
-
-@tabby = User.create!(organization_id: @choc.id,first_name: "Tabitha", last_name: "Catz", email: "tabby_catz@email.com", type: "Board", org_title: "Secretary", password: "meow2", phone: "250-222-2222", phone_permission: false, mobile: "778-222-2222", address: "901 Catnip Dr", mail_permission: true, meeting_email_permission: true, reminders_email_permission: false)
-
-@siamese = User.create!(organization_id: @choc.id,first_name: "Sia", last_name: "Mees", email: "high_cost@cats.ca", type: "attendee", org_title: "n/a", password: "meow3", phone: "250-818-1818", phone_permission: false, mobile: "778-818-1818", address: "1001 Fleabath Rd", mail_permission: false, meeting_email_permission: false, reminders_email_permission: false)
-
-@catman = User.create!(organization_id: @choc.id,first_name: "Bruce", last_name: "Clayne", email: "catman@yahoo.ca", type: "attendee", org_title: "n/a", password: "meow4", phone: "250-688-8866", phone_permission: false, mobile: "778-553-3355", address: "1 Catcave Cres", mail_permission: false, meeting_email_permission: true, reminders_email_permission: false)
-=======
-@calico = User.create!(organization_id: @choc.id, first_name: "Cal", last_name: "Ico", email: "cal_ico@email.com", type: "Board", org_title: "Chair", password: "meowmeow1" , phone: "250-111-1111", phone_permission: true, mobile: "778-111-1111", address: "592 Hairball Ave", mail_permission: true, meeting_email_permission: true, reminders_email_permission: true)
+@calico = User.create!(organization_id: @choc.id, first_name: "Cali", last_name: "Cocat", email: "calico@email.com", type: "Board", org_title: "Chair", password: "meowmeow1" , phone: "250-111-1111", phone_permission: true, mobile: "778-111-1111", address: "592 Hairball Ave", mail_permission: true, meeting_email_permission: true, reminders_email_permission: true)
 
 @tabby = User.create!(organization_id: @choc.id,first_name: "Tabitha", last_name: "Catz", email: "tabby_catz@email.com", type: "Board", org_title: "Secretary", password: "meowmeow2", phone: "250-222-2222", phone_permission: false, mobile: "778-222-2222", address: "901 Catnip Dr", mail_permission: true, meeting_email_permission: true, reminders_email_permission: false)
 
 @siamese = User.create!(organization_id: @choc.id,first_name: "Sia", last_name: "Mees", email: "high_cost@cats.ca", type: "attendee", org_title: "n/a", password: "meowmeow3", phone: "250-818-1818", phone_permission: false, mobile: "778-818-1818", address: "1001 Fleabath Rd", mail_permission: false, meeting_email_permission: false, reminders_email_permission: false)
 
 @catman = User.create!(organization_id: @choc.id,first_name: "Bruce", last_name: "Clayne", email: "catman@yahoo.ca", type: "attendee", org_title: "n/a", password: "meowmeow4", phone: "250-688-8866", phone_permission: false, mobile: "778-553-3355", address: "1 Catcave Cres", mail_permission: false, meeting_email_permission: true, reminders_email_permission: false)
->>>>>>> 3ba5e14e004294d07da0ea2d745ff4eb22b7c040
 
 #getting org to recognize its owner
 @spwm.user_id = @sylvia.id
@@ -48,11 +38,9 @@
 
 # MeetingPermissions
 @meeting_permissions = MeetingPermission.create!(user_id: @bob.id, meeting_id: @agm1.id, meeting_permissions: "true")
-<<<<<<< HEAD
-@meeting_permissions = MeetingPermission.create!(user_id: @bob.id, meeting_id: @@agm.id, meeting_permissions: "true")
-=======
+
 @meeting_permissions = MeetingPermission.create!(user_id: @bob.id, meeting_id: @agm.id, meeting_permissions: "true")
->>>>>>> 3ba5e14e004294d07da0ea2d745ff4eb22b7c040
+
 @meeting_permissions = MeetingPermission.create!(user_id: @calico.id, meeting_id: @agmew1.id, meeting_permissions: "true")
 @meeting_permissions = MeetingPermission.create!(user_id: @calico.id, meeting_id: @agmew2.id, meeting_permissions: "true")
 
@@ -64,12 +52,7 @@
 @attendee4 = MeetingAttendee.create!(meeting_id: @agm1.id, user_id: @milly.id, attendance_type: "present")
 
 # @agm
-<<<<<<< HEAD
-@attendee5 = MeetingAttendee.create!(meeting_id: @@agm.id, user_id: @bob.id, attendance_type: "present")
-@attendee6 = MeetingAttendee.create!(meeting_id: @@agm.id, user_id: @sylvia.id, attendance_type: "present")
-@attendee7 = MeetingAttendee.create!(meeting_id: @@agm.id, user_id: @jason.id, attendance_type: "present")
-@attendee8 = MeetingAttendee.create!(meeting_id: @@agm.id, user_id: @milly.id, attendance_type: "present")
-=======
+
 @attendee5 = MeetingAttendee.create!(meeting_id: @agm.id, user_id: @bob.id, attendance_type: "present")
 @attendee6 = MeetingAttendee.create!(meeting_id: @agm.id, user_id: @sylvia.id, attendance_type: "present")
 @attendee7 = MeetingAttendee.create!(meeting_id: @agm.id, user_id: @jason.id, attendance_type: "present")
@@ -90,17 +73,17 @@
 
 # Agenda Items (SPWM)
 # first meeting
-@business1 = AgendaItem.create!(tags: ["@agm", 2014, "mammoth", "icetown"], type: "Business", title: "approval of agenda", description: "Agenda was circulated prior to meeting, agenda was approved", discussion: "Agenda approved", mover_id: @bob.id, seconder_id: @sylvia.id, status: "passed", meeting_id: @agm1.id, position: 1, creator_id: @bob.id)
+@business1 = AgendaItem.create!(tags: ["@agm1", 2014, "mammoth", "icetown"], type: "Business", title: "approval of agenda", description: "Agenda was circulated prior to meeting, agenda was approved", discussion: "Agenda approved", mover_id: @bob.id, seconder_id: @sylvia.id, status: "passed", meeting_id: @agm1.id, position: 1, creator_id: @bob.id)
 
-@document1 = AgendaItem.create!(tags: ["@agm", 2014, "mammoth", "icetown"], type: "Document", title: "Official Pledge", description: "We decided to officially create a Mammoth pledge which should be recited before every meeting", discussion: "The pledge was presented and all present approved", file_path: "/pledge.pdf", mover_id: @jason.id, seconder_id: @milly.id, status: "passed", meeting_id: @agm1.id, position: 2, creator_id: @sylvia.id)
+@document1 = AgendaItem.create!(tags: ["@agm1", 2014, "mammoth", "icetown"], type: "Document", title: "Official Pledge", description: "We decided to officially create a Mammoth pledge which should be recited before every meeting", discussion: "The pledge was presented and all present approved", file_path: "/pledge.pdf", mover_id: @jason.id, seconder_id: @milly.id, status: "passed", meeting_id: @agm1.id, position: 2, creator_id: @sylvia.id)
 
-@action_item1 = AgendaItem.create!(tags: ["@agm", 2014, "mammoth", "icetown"], type: "Action Item", title: "Location", description: "Basement Location", discussion: "We decided that the basement of the community hall was a perfect location", mover_id: @sylvia.id, seconder_id: @milly.id,  status: "Active", meeting_id: @agm1.id, position: 3, creator_id: @bob.id)
+@action_item1 = AgendaItem.create!(tags: ["@agm1", 2014, "mammoth", "icetown"], type: "Action Item", title: "Location", description: "Basement Location", discussion: "We decided that the basement of the community hall was a perfect location", mover_id: @sylvia.id, seconder_id: @milly.id,  status: "Active", meeting_id: @agm1.id, position: 3, creator_id: @bob.id)
 
-@motion1 = AgendaItem.create!(tags: ["@agm", 2014, "mammoth", "icetown"], type: "Motion", title: "Keep Jason", description: "Decision to have Jason remain within Society", discussion: "Jason was overheard questioning whether mammoths are still alive. He agreed to never say such a thing again and provided a signed agreement", file_path: "/bad_jason.pdf", mover_id: @bob.id, seconder_id: @milly.id, status: "passed", meeting_id: @agm1.id, position: 4, creator_id: @sylvia.id)
+@motion1 = AgendaItem.create!(tags: ["@agm1", 2014, "mammoth", "icetown"], type: "Motion", title: "Keep Jason", description: "Decision to have Jason remain within Society", discussion: "Jason was overheard questioning whether mammoths are still alive. He agreed to never say such a thing again and provided a signed agreement", file_path: "/bad_jason.pdf", mover_id: @bob.id, seconder_id: @milly.id, status: "passed", meeting_id: @agm1.id, position: 4, creator_id: @sylvia.id)
 
-@election1_1 = AgendaItem.create!(tags: ["@agm", 2014, "mammoth", "icetown"], type: "Election", title: "Election of President 2014", description: "Board election for President.", discussion: "Vote held for President, all members approved, Bob Smith elected.", mover_id: @sylvia.id, seconder_id: @jason.id, status: "passed", meeting_id: @agm1.id, position: 5, creator_id: @milly.id)
+@election1_1 = AgendaItem.create!(tags: ["@agm1", 2014, "mammoth", "icetown"], type: "Election", title: "Election of President 2014", description: "Board election for President.", discussion: "Vote held for President, all members approved, Bob Smith elected.", mover_id: @sylvia.id, seconder_id: @jason.id, status: "passed", meeting_id: @agm1.id, position: 5, creator_id: @milly.id)
 
-@election2_1 = AgendaItem.create!(tags: ["@agm", 2014, "mammoth", "icetown"], type: "Election", title: "Election of Secretary 2014", description: "Board election for Secretary.", discussion: "Vote held for secretary, all members approved, Sylvia Doe elected", mover_id: @milly.id, seconder_id: @jason.id, status: "passed", meeting_id: @agm1.id, position: 6, creator_id: @bob.id)
+@election2_1 = AgendaItem.create!(tags: ["@agm1", 2014, "mammoth", "icetown"], type: "Election", title: "Election of Secretary 2014", description: "Board election for Secretary.", discussion: "Vote held for secretary, all members approved, Sylvia Doe elected", mover_id: @milly.id, seconder_id: @jason.id, status: "passed", meeting_id: @agm1.id, position: 6, creator_id: @bob.id)
 
 # second meeting
 @business = AgendaItem.create!(tags: ["@agm", 2014, "mammoth", "icetown"], type: "Business", title: "approval of agenda", description: "Agenda was circulated prior to meeting, agenda was approved", discussion: "Agenda approved", mover_id: @sylvia.id, seconder_id: @jason.id, status: "passed", meeting_id: @agm.id, position: 1, creator_id: @bob.id)
@@ -121,9 +104,9 @@
 
 @papers = AgendaItem.create!(tags: ["agmew1", 2014, "cat", "herder"], type: "Document", title: "Proof of Cat Ownership", description: "Everyone presented scanned files proving ownership of cats. Cal combined all four files and submitted the 53 pages as one document", discussion: "Everyone proved they own at least 7 cats. Cal owns 12, Tabitha owns 7, Sia owns 11, Bruce owns 23.", file_path: "/cats.pdf", mover_id: @catman.id, seconder_id: @siamese.id, status: "passed", meeting_id: @agmew1.id, position: 2, creator_id: @catman.id)
 
-@litterbox = AgendaItem.create!(tags: ["agmew1", 2014, "cat", "herder"], type: "Action Item", title: "Selection of disposal site", description: "Obtain permit for disposal of copious amouts of kitty litter", discussion: "Cal and Tabitha informed the others that they have found a farmer willing to take the litter but would charge $2 per pound dropped off. The current funds available ($230) will cover the first couple months.", mover_id: @calico.id, seconder_id: @tabby.id,  status: "Active", meeting_id: @agmew1.id, position: 3, creator_id: @calico.id)
+@litterbox = AgendaItem.create!(tags: ["agmew1", 2014, "cat", "herder"], type: "Action Item", title: "Selection of disposal site", description: "Obtain permit for disposal of copious amouts of kitty litter", discussion: "Cal and Tabitha informed the others that they have found a farmer willing to take the litter but would charge $2 per pound dropped off. The current funds available ($230) will cover the first couple months.", mover_id: @calico.id, seconder_id: @tabby.id,  status: "Active", meeting_id: @agmew1.id, position: 3, creator_id: @siamese.id)
 
-@herders = AgendaItem.create!(tags: ["agmew1", 2014, "cat", "herder"], type: "Motion", title: "Approval of official logo", description: "Cal presented a logo (attached) for the group", discussion: "Cal's logo is that of a cat, sleeping while another cat chases a catnip mouse in the background. Logo was voted upon and approved.", file_path: "/cats_rule.jpg", mover_id: @calico.id, seconder_id: @tabby.id, status: "passed", meeting_id: @agmew1.id, position: 4, creator_id: @calico.id)
+@herders = AgendaItem.create!(tags: ["agmew1", 2014, "cat", "herder"], type: "Motion", title: "Approval of official logo", description: "Cal presented a logo (attached) for the group", discussion: "Cal's logo is that of a cat, sleeping while another cat chases a catnip mouse in the background. Logo was voted upon and approved.", file_path: "/cats_rule.jpg", mover_id: @calico.id, seconder_id: @tabby.id, status: "passed", meeting_id: @agmew1.id, position: 4, creator_id: @catman.id)
 
 @elect1 = AgendaItem.create!(tags: ["agmew1", 2014, "cat", "herder"], type: "Election", title: "Election of President 2014", description: "Board election for President.", discussion: "Vote held for President, all members approved, Cal chosen as President.", mover_id: @catman.id, seconder_id: @siamese.id, status: "passed", meeting_id: @agmew1.id, position: 5, creator_id: @tabby.id)
 
@@ -134,21 +117,45 @@
 
 @papers2 = AgendaItem.create!(tags: ["agmew1", 2014, "cat", "herder"], type: "Document", title: "Proof of Cat Ownership", description: "Everyone presented new files proving ownership of previous cats and any new ones since the last meeting. Cal combined all four files and submitted the 71 pages as one document", discussion: "Everyone proved they own at least 7 cats. Cal owns 19, Tabitha owns 11, Sia owns 10, Bruce owns 21.", file_path: "/cats_new.pdf", mover_id: @catman.id, seconder_id: @siamese.id, status: "passed", meeting_id: @agmew2.id, position: 2, creator_id: @catman.id)
 
-@litterbox2 = AgendaItem.create!(tags: ["agmew1", 2014, "cat", "herder"], type: "Action Item", title: "Selection of new disposal site", description: "Obtain permit for disposal of copious amouts of kitty litter", discussion: "Cal and Tabitha informed the others that the farmer will no longer be able to handle the quantity of litter we've been bringing him. The decision has been made to find another location or perhaps multiple locations.", mover_id: @calico.id, seconder_id: @tabby.id,  status: "Active", meeting_id: @agmew2.id, position: 3, creator_id: @calico.id)
+@litterbox2 = AgendaItem.create!(tags: ["agmew1", 2014, "cat", "herder"], type: "Action Item", title: "Selection of new disposal site", description: "Obtain permit for disposal of copious amouts of kitty litter", discussion: "Cal and Tabitha informed the others that the farmer will no longer be able to handle the quantity of litter we've been bringing him. The decision has been made to find another location or perhaps multiple locations.", mover_id: @calico.id, seconder_id: @tabby.id,  status: "Active", meeting_id: @agmew2.id, position: 3, creator_id: @catman.id)
 
-@herders2 = AgendaItem.create!(tags: ["agmew1", 2014, "cat", "herder"], type: "Motion", title: "Approval of official logo", description: "Bruce proposed that we make his home our permanent location", discussion: "All agreed that Bruce's home would be a great fit as it allows for more cats. We did have to sign paperwork for his landlord, attached", file_path: "/cat_bylaw.jpg", mover_id: @calico.id, seconder_id: @tabby.id, status: "passed", meeting_id: @agmew2.id, position: 4, creator_id: @catman.id)
+@herders2 = AgendaItem.create!(tags: ["agmew1", 2014, "cat", "herder"], type: "Motion", title: "Approval of official logo", description: "Bruce proposed that we make his home our permanent location", discussion: "All agreed that Bruce's home would be a great fit as it allows for more cats. We did have to sign paperwork for his landlord, attached", file_path: "/cat_bylaw.jpg", mover_id: @calico.id, seconder_id: @tabby.id, status: "passed", meeting_id: @agmew2.id, position: 4, creator_id: @siamese.id)
 
 @elect1_2 = AgendaItem.create!(tags: ["agmew1", 2014, "cat", "herder"], type: "Election", title: "Election of President 2014", description: "Board election for President.", discussion: "Vote held for President, all members approved, Cal re-elected as President.", mover_id: @catman.id, seconder_id: @siamese.id, status: "passed", meeting_id: @agmew2.id, position: 5, creator_id: @tabby.id)
 
 @elect2_2 = AgendaItem.create!(tags: ["agmew1", 2014, "cat", "herder"], type: "Election", title: "Election of Secretary 2014", description: "Board election for Secretary.", discussion: "Vote held for secretary, all members approved, Tabitha re-elected", mover_id: @calico.id, seconder_id: @catman.id, status: "passed", meeting_id: @agmew2.id, position: 6, creator_id: @calico.id)
 
-# Responsible Users
-@resp_user1 = ResponsibleUser.create!(agenda_item_id: @business.id, user_id: @jason.id)
+# Responsible Users (SPWM)
+# agm1
+@resp_user1a = ResponsibleUser.create!(agenda_item_id: @business1.id, user_id: @bob.id)
+@resp_user2b = ResponsibleUser.create!(agenda_item_id: @document1.id, user_id: @sylvia.id)
+@resp_user3c = ResponsibleUser.create!(agenda_item_id: @action_item1.id, user_id: @bob.id)
+@resp_user4d = ResponsibleUser.create!(agenda_item_id: @motion1.id, user_id: @sylvia.id)
+@resp_user5e = ResponsibleUser.create!(agenda_item_id: @election1_1.id, user_id: @milly.id)
+@resp_user6f = ResponsibleUser.create!(agenda_item_id: @election2_1.id, user_id: @bob.id)
+# agm
+@resp_user1 = ResponsibleUser.create!(agenda_item_id: @business.id, user_id: @bob.id)
 @resp_user2 = ResponsibleUser.create!(agenda_item_id: @document.id, user_id: @sylvia.id)
-@resp_user3 = ResponsibleUser.create!(agenda_item_id: @action_item.id, user_id: @milly.id)
+@resp_user3 = ResponsibleUser.create!(agenda_item_id: @action_item.id, user_id: @bob.id)
 @resp_user4 = ResponsibleUser.create!(agenda_item_id: @motion.id, user_id: @sylvia.id)
-@resp_user5 = ResponsibleUser.create!(agenda_item_id: @election1.id, user_id: @jason.id)
-@resp_user6 = ResponsibleUser.create!(agenda_item_id: @election2.id, user_id: @jason.id)
+@resp_user5 = ResponsibleUser.create!(agenda_item_id: @election1.id, user_id: @milly.id)
+@resp_user6 = ResponsibleUser.create!(agenda_item_id: @election2.id, user_id: @bob.id)
+
+# Responsible Users (CHOC)
+# agmew1
+@resp_herder1a = ResponsibleUser.create!(agenda_item_id: @catnews.id, user_id: @calico.id)
+@resp_herder2b = ResponsibleUser.create!(agenda_item_id: @papers.id, user_id: @catman.id)
+@resp_herder3c = ResponsibleUser.create!(agenda_item_id: @litterbox.id, user_id: @siamese.id)
+@resp_herder4d = ResponsibleUser.create!(agenda_item_id: @herders.id, user_id: @catman.id)
+@resp_herder5e = ResponsibleUser.create!(agenda_item_id: @elect1.id, user_id: @tabby.id)
+@resp_herder6f = ResponsibleUser.create!(agenda_item_id: @elect2.id, user_id: @calico.id)
+# agmew2
+@resp_herder1 = ResponsibleUser.create!(agenda_item_id: @catnews2.id, user_id: @calico.id)
+@resp_herder2 = ResponsibleUser.create!(agenda_item_id: @papers2.id, user_id: @catman.id)
+@resp_herder3 = ResponsibleUser.create!(agenda_item_id: @litterbox2.id, user_id: @catman.id)
+@resp_herder4 = ResponsibleUser.create!(agenda_item_id: @herders2.id, user_id: @siamese.id)
+@resp_herder5 = ResponsibleUser.create!(agenda_item_id: @elect1_2.id, user_id: @tabby.id)
+@resp_herder6 = ResponsibleUser.create!(agenda_item_id: @elect2_2.id, user_id: @calico.id)
 
 # Votes
 
