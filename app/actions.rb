@@ -328,6 +328,7 @@ end
 
 # edit meeting
 get '/meetings/:id/edit' do |id|
+  puts current_meeting
   meeting = Meeting.find(id)
   session["meeting"] = meeting.id
   erb :edit_meeting
@@ -360,7 +361,7 @@ end
 # gets the current meeting from the helpers
 get '/api/current-meeting' do
   content_type :json
-  current_meeting.to_json
+  current_meeting.to_json(include: :chair)
 end
 
 # update meeting by id

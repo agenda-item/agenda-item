@@ -28,7 +28,7 @@
         </div>
         <div class="ai-responsible">
           <label class="label">Chair of Meeting</label>
-          <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{currentMeeting.chair_id}}</i></div>
+          <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{currentMeeting.chair.first_name}}</i></div>
           <br/>
           <chair-modal :current-meeting.sync="currentMeeting"></chair-modal>
         </div>
