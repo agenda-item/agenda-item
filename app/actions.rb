@@ -368,6 +368,7 @@ post '/api/meetings/:id' do |id|
   content_type :json
   results = {result: false}
   @meeting = Meeting.find(id)
+  @chair = User.find(params[:chair][:id].to_i)
 
   @meeting.update(
     title:  params[:title],
@@ -375,14 +376,14 @@ post '/api/meetings/:id' do |id|
     discussion: params[:discussion],
     meeting_date: params[:meeting_date],
     location: params[:location],
-    chair: params[:chair],
+    chair: @chair,
     adjournment_time: params[:adjournment_time],
     next_meeting_date: params[:next_meeting_date]
     )
 
   if @meeting.save
     results[:result] = true
-    # @agenda_item.to_json(include: { :votes => {:include =>:voting_user} })
+    @meeting.to_json(include: :chair)
   end
 end
 
@@ -392,7 +393,7 @@ get '/api/meetings/:id/delete' do
   @meeting = Meeting.find(params[:id])
   @meeting.destroy
   if @meeting.destroy
-    puts "meeting has been removed from existence! MWAAAHAHAHA"
+    puts "meeting has been deleted"
   end
 end
 
