@@ -41,7 +41,7 @@
 <script>
   Vue.component('attendees-modal', {
     template: '#attendees-modal-template',
-    props: ['agendaItem','attendees'],
+    props: ['agendaItem','attendees','currentMeeting'],
     data: function(){
       return {
         showModal: false,
@@ -58,17 +58,14 @@
       },
       logAttendees: function(attendance_type) {
         var selectedMembers = this.selectedMembersList
-        console.log(selectedMembers)
         for (i = 0; i < selectedMembers.length; i++) { 
           var attendee = selectedMembers[i]
-          var attendee_id = selectedMembers[i].id
-          var url = '/api/meetings/' + attendee_id + '/meeting-attendees'
+          var attendee_id = selectedMembers[i].user.id
+          var url = '/api/meetings/' + this.currentMeeting.id + '/meeting-attendees'
+          var setAttendance = attendance_type
 
-          this.$http.post(url, {'attendee': attendee, 'attendee_id': attendee_id,'attendance_type': attendance_type}, {emulateJSON:true}).then(function(response){
-            returnedAttendee = response.json()
-            found_atteendee = this.attendees.find(originalAttendee => originalAttendee.id === returnedAttendee.id)
-            attendee = returnedAttendee
-            found_atteendee.attendance_type = returnedAttendee.attendance_type
+          this.$http.post(url, {'attendee': attendee, 'attendee_id': attendee_id,'attendance_type': setAttendance}, {emulateJSON:true}).then(function(response){
+            attendee.attendance_type = setAttendance
           }.bind(this));
         }
       },
