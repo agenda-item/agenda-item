@@ -400,11 +400,6 @@ get '/api/meetings/:id/delete' do
   end
 end
 
-<<<<<<< HEAD
-get '/logout' do
-  redirect '/'
-end
-
 #####################
 # MEETING ATTENDEES #
 #####################
@@ -433,8 +428,6 @@ post '/api/meetings/:id/meeting-attendees' do |id|
   end
 end
 
-=======
->>>>>>> 3321ac00bcea3e1a7c47b58d64aae823aa7f7e1b
 ################
 # AGENDA ITEMS #
 ################
