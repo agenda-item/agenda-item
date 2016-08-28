@@ -11,7 +11,6 @@
   <!-- fort awesome -->
   <script src="https://use.fortawesome.com/ba6a5e39.js"></script>
 
-
   <!-- application.css -->
   <link rel="stylesheet" href="/stylesheets/application.css">
 
@@ -20,7 +19,6 @@
 
   <!-- application.js -->
   <script src="/javascript/application.js"></script>
-
 
   <!-- plugin to download pdf -->
   <script src="/javascript/xepOnline.jqPlugin.js"></script>
@@ -37,6 +35,12 @@
           </a>
         </div>
 
+          <% if current_user %>
+          <div class="nav-item login-info">
+            <%= current_user.first_name %>,
+            <%= current_user.organization.name %>
+          </div>
+
         <div class="nav-center">
           <a class="nav-item" href="/meetings" title= "Show All Meetings">
             <span class="icon">
@@ -49,14 +53,18 @@
               <i class="fa fa-add-to-photos"></i>
             </span>
           </a>
-           
-          <!-- logout doesn't currently work, will be implemented with Sessions in future. For now, will just redirect to '/' -->
-          <!-- <a class="nav-item" href="/logout" title="Logout">
-            <span class="icon">
-              <i class="fa fa-logout"></i>
-            </span>
-          </a> -->
-        </div>
+
+            <a class="nav-item" href="/logout"><span class="icon"><i class="fa fa-logout"></i></span></a>
+
+        </div> 
+          <% else %>
+          <div class="nav-item">
+            <button type="button" class="button-index"><a class="log-button" href="/login">Log In</a></button>
+          </div>
+         <% end %>           
+
+ 
+
       </div>
     </nav>
 

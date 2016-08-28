@@ -2,10 +2,17 @@ require_relative "utils"
 
 helpers do
 
+  def current_organization
+    Organization.find_by(id: session[:organization_id])
+  end
+
   def current_meeting
     @current_meeting ||= Meeting.find(session["meeting"]) if session["meeting"]
   end
 
+  def current_user
+    User.find_by(id: session[:user_id])
+  end
 end
 
 # Landing Page
@@ -13,8 +20,100 @@ get '/' do
   erb :index
 end
 
-get '/organizations/new' do
-  erb :signup
+#####################
+# LOG IN AND LOGOUT #
+#####################
+
+get '/login' do 
+  erb :login
+end
+
+post '/login' do
+  email = params[:email]
+  password = params[:password]
+
+  #1. find user by email
+  user = User.find_by(email: email)
+  
+  #2. if that user exists and that user's password matches the password input
+    if user && user.authenticate(password)
+      #login
+      session[:user_id] = user.id
+      redirect(to('/meetings'))
+    else
+    flash[:notice] = "Login failed. Please try again."
+    redirect '/login'
+    end
+end
+
+get '/logout' do
+  session.clear
+  redirect '/'
+end
+
+###################
+# SIGN UP PROCESS #
+###################
+
+# step 1: user email (the get action is '/')
+get '/organizations/email' do
+  erb :signup, locals: {email: params[:email]}
+end
+
+# step 2: user details and organization name
+post '/organizations/details' do 
+  content_type :json
+  email = params[:email]
+  name = params[:organization_name]
+  first_name = params[:first_name]
+  last_name = params[:last_name]
+  password = params[:password]
+
+  @organization = Organization.new(
+    email: email,
+    name: name
+  )
+
+  @user = User.new(
+    email: @organization.email,
+    first_name: first_name,
+    last_name: last_name,
+    password: password,
+    organization: @organization
+    )
+
+  if @organization.save && @user.save
+    session[:user_id] = @user.id
+    puts "this is your org name: #{name}"
+    puts "current user: #{first_name} #{last_name}"
+    @organization.to_json
+    @user.to_json
+    redirect(to('/users/new'))
+  end
+end
+
+
+#step 3: Board Members Sign Up page
+get '/users/new' do
+  erb :board_members
+end
+
+# create new board member (user)
+post '/users/new' do
+  first_name = params[:first_name]
+  last_name = params[:last_name]
+  board_position = params[:board_position]
+
+  @user = User.new(
+    first_name: first_name,
+    last_name: last_name,
+    type: board_position
+  )
+  if @user.save
+    puts "your new board member is: #{first_name} #{last_name}"
+    @user.to_json
+    redirect(to('/users/new'))
+  end  
 end
 
 # Style Guide
@@ -92,20 +191,6 @@ end
 #########
 # USERS #
 #########
-
-#Board Members Sign Up page
-get '/users/new' do
-  erb :board_members
-end
-
-# create new board member (user)
-post '/users/new' do
-  email = params[:email]
-  first_name = params[:first_name]
-  last_name = params[:last_name]
-  board_position = params[:board_position]
-  redirect(to('/users/new'))
-end
 
 # get all users
 get '/api/users' do
@@ -245,6 +330,7 @@ end
 
 # edit meeting
 get '/meetings/:id/edit' do |id|
+  puts current_meeting
   meeting = Meeting.find(id)
   session["meeting"] = meeting.id
   erb :edit_meeting
@@ -277,7 +363,7 @@ end
 # gets the current meeting from the helpers
 get '/api/current-meeting' do
   content_type :json
-  current_meeting.to_json
+  current_meeting.to_json(include: :chair)
 end
 
 # update meeting by id
@@ -285,6 +371,7 @@ post '/api/meetings/:id' do |id|
   content_type :json
   results = {result: false}
   @meeting = Meeting.find(id)
+  @chair = User.find(params[:chair][:id].to_i)
 
   @meeting.update(
     title:  params[:title],
@@ -292,14 +379,14 @@ post '/api/meetings/:id' do |id|
     discussion: params[:discussion],
     meeting_date: params[:meeting_date],
     location: params[:location],
-    chair: params[:chair],
+    chair: @chair,
     adjournment_time: params[:adjournment_time],
     next_meeting_date: params[:next_meeting_date]
     )
 
   if @meeting.save
     results[:result] = true
-    # @agenda_item.to_json(include: { :votes => {:include =>:voting_user} })
+    @meeting.to_json(include: :chair)
   end
 end
 
@@ -309,10 +396,11 @@ get '/api/meetings/:id/delete' do
   @meeting = Meeting.find(params[:id])
   @meeting.destroy
   if @meeting.destroy
-    puts "meeting has been removed from existence! MWAAAHAHAHA"
+    puts "meeting has been deleted"
   end
 end
 
+<<<<<<< HEAD
 get '/logout' do
   redirect '/'
 end
@@ -345,6 +433,8 @@ post '/api/meetings/:id/meeting-attendees' do |id|
   end
 end
 
+=======
+>>>>>>> 3321ac00bcea3e1a7c47b58d64aae823aa7f7e1b
 ################
 # AGENDA ITEMS #
 ################

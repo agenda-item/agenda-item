@@ -51,6 +51,10 @@ body {
   background: #BAC0BD;
 }
 
+.is-fullheight {
+  min-height: 100vh;
+}
+
 .style-element {
   box-shadow: 1px 1px 10px #666;
 }
@@ -66,6 +70,8 @@ body {
 .style-element {
   border-radius: 20px;
 }
+
+
 
 #board-bg-img {
   /*background-color: #462035;*/
@@ -153,6 +159,14 @@ body {
   display: inline-block;
 }
 
+.title.is-1 {
+  color: white;
+}
+
+.title.is-2 {
+  color: black;
+}
+
 .center-element {
   display: flex;
   text-align:center;
@@ -179,6 +193,10 @@ body {
   margin-top: 60px;
 }
 
+.login-form {
+  margin-top: 60px;
+}
+
 .h1 {
   padding-bottom: 20px;
 }
@@ -189,6 +207,12 @@ body {
 
 #signup-bg-img {
   background:transparent url(http://marketingland.com/wp-content/ml-loads/2014/09/tablet-calendar-coffee-desk-ss-1920-800x571.jpg)
+  no-repeat center center;
+  background-size: cover;
+}
+
+#login-bg-img {
+  background:transparent url(http://img.hrhwalls.com/images2/ki13j11c4ef.jpg)
   no-repeat center center;
   background-size: cover;
 }
@@ -238,7 +262,7 @@ body {
     color: blue;
 }
 
-a.button-index {
+.button-index {
   -moz-appearance: none;
   -webkit-appearance: none;
   -webkit-box-align: center;
@@ -292,6 +316,10 @@ a.button-index {
 
 .label {
   padding: 30px 0 3px 0;
+}
+
+.login-info {
+  padding: 12px;
 }
 
 p {
@@ -386,5 +414,9 @@ article.message:last-of-type > .message-header:before {
   background: #F4F8F3;
 }
 
+.log-button {
+  color: white !important;
+  text-decoration: none;
+}
 
 /*hello*/
