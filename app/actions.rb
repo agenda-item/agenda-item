@@ -32,17 +32,17 @@ post '/login' do
   email = params[:email]
   password = params[:password]
 
-  #1. find user by username
+  #1. find user by email
   user = User.find_by(email: email)
   
-  #2. if that user exists and that user's password mathces the password input
-    if user.authenticate(password)
+  #2. if that user exists and that user's password matches the password input
+    if user && user.authenticate(password)
       #login
       session[:user_id] = user.id
-      redirect(to('/'))
+      redirect(to('/meetings'))
     else
-    @error_message = "Login failed."
-    erb(:login)
+    flash[:notice] = "Login failed. Please try again."
+    redirect '/login'
     end
 end
 
@@ -60,6 +60,7 @@ get '/organizations/email' do
   erb :signup, locals: {email: params[:email]}
 end
 
+# step 2: user details and organization name
 post '/organizations/details' do 
   content_type :json
   email = params[:email]
@@ -82,6 +83,7 @@ post '/organizations/details' do
     )
 
   if @organization.save && @user.save
+    session[:user_id] = @user.id
     puts "this is your org name: #{name}"
     puts "current user: #{first_name} #{last_name}"
     @organization.to_json
