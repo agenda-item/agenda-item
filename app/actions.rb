@@ -310,7 +310,7 @@ end
 post '/api/meetings/new' do
   content_type :json
   meeting = Meeting.new(
-    organization_id: current_organization.id
+    organization: current_organization
     )
   meeting
 
@@ -325,7 +325,6 @@ end
 
 # edit meeting
 get '/meetings/:id/edit' do |id|
-  puts current_meeting
   meeting = Meeting.find(id)
   session["meeting"] = meeting.id
   erb :edit_meeting
@@ -344,7 +343,8 @@ end
 # get all meetings
 get '/api/meetings' do
   content_type :json
-  Meeting.all.to_json
+  meetings = Meeting.all.where(organization_id: current_organization.id)
+  meetings.all.to_json
 end
 
 # get meeting by id
@@ -420,8 +420,8 @@ post '/api/agenda-items/new' do
   @agenda_item = AgendaItem.new(
     type: params[:type],
     position: params[:position],
-    creator_id: 1,  #params[current_user.id]
-    meeting_id: 1  #params[current_meeting.id]
+    creator: current_user,
+    meeting: current_meeting
     )
   if @agenda_item.save
     puts "the type is #{type}"
@@ -467,8 +467,6 @@ post '/api/agenda-items/:id' do |id|
    due_date: params[:due_date]
    )
   end
-
- 
 
  if @agenda_item.save
    results[:result] = true
