@@ -318,7 +318,9 @@ post '/api/meetings/new' do
     session["meeting"] = meeting.id
     meeting.to_json
   else
-    "did not save meeting"
+    flash[:notice] = "Meeting failed to save. Please try again."
+  # is this the right route to redirect to?
+    redirect '/meetings'
   end
   
 end
