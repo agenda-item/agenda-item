@@ -41,8 +41,8 @@ post '/login' do
       session[:user_id] = user.id
       redirect(to('/meetings'))
     else
-    flash[:notice] = "Login failed. Please try again."
-    redirect '/login'
+      flash[:notice] = "Login failed. Please try again."
+      redirect '/login'
     end
 end
 
@@ -91,7 +91,6 @@ post '/organizations/details' do
     redirect(to('/users/new'))
   end
 end
-
 
 #step 3: Board Members Sign Up page
 get '/users/new' do
@@ -195,7 +194,8 @@ end
 # get all users
 get '/api/users' do
   content_type :json
-  User.all.to_json(include: :meetings)
+  users = User.all.where(organization_id: current_organization.id)
+  users.to_json(include: :meetings)
 end
 
 # get user by id
@@ -211,7 +211,8 @@ end
 # get all votes
 get '/api/votes' do
   content_type :json
-  Vote.all.to_json
+  votes = Vote.all.where(organization_id: current_organization.id)
+  votes.all.to_json
 end
 
 # get vote by id
@@ -225,6 +226,7 @@ get '/api/agenda-items/:id/votes' do |id|
   Vote.where(agenda_item_id: id).to_json(include: :voting_user)
 end
 
+# TODO this route pattern doesn't match the others, we should probably fix that at some point...
 post '/api/votes' do
   content_type :json
 
@@ -251,15 +253,6 @@ post '/api/meetings/:id/chair' do |id|
   @meeting.chair_id = params[:chair_id]
   User.find(params[:chair_id]).to_json
 end
-
-######################
-# DEVELOPMENT ROUTES #
-######################
-# to be deleted
-
-# get '/edit-meeting' do
-#   erb :edit_meeting
-# end
 
 #################
 # FILE UPLOADER #
@@ -316,7 +309,9 @@ end
 # create new meeting
 post '/api/meetings/new' do
   content_type :json
-  meeting = Meeting.new
+  meeting = Meeting.new(
+    organization_id: current_organization.id
+    )
   meeting
 
   if meeting.save
