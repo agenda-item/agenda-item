@@ -32,17 +32,17 @@ post '/login' do
   email = params[:email]
   password = params[:password]
 
-  #1. find user by username
+  #1. find user by email
   user = User.find_by(email: email)
   
-  #2. if that user exists and that user's password mathces the password input
-    if user.authenticate(password)
+  #2. if that user exists and that user's password matches the password input
+    if user && user.authenticate(password)
       #login
       session[:user_id] = user.id
-      redirect(to('/'))
+      redirect(to('/meetings'))
     else
-    @error_message = "Login failed."
-    erb(:login)
+    flash[:notice] = "Login failed. Please try again."
+    redirect '/login'
     end
 end
 
@@ -60,6 +60,7 @@ get '/organizations/email' do
   erb :signup, locals: {email: params[:email]}
 end
 
+# step 2: user details and organization name
 post '/organizations/details' do 
   content_type :json
   email = params[:email]
@@ -82,6 +83,7 @@ post '/organizations/details' do
     )
 
   if @organization.save && @user.save
+    session[:user_id] = @user.id
     puts "this is your org name: #{name}"
     puts "current user: #{first_name} #{last_name}"
     @organization.to_json
@@ -328,6 +330,7 @@ end
 
 # edit meeting
 get '/meetings/:id/edit' do |id|
+  puts current_meeting
   meeting = Meeting.find(id)
   session["meeting"] = meeting.id
   erb :edit_meeting
@@ -360,7 +363,7 @@ end
 # gets the current meeting from the helpers
 get '/api/current-meeting' do
   content_type :json
-  current_meeting.to_json
+  current_meeting.to_json(include: :chair)
 end
 
 # update meeting by id
@@ -368,6 +371,7 @@ post '/api/meetings/:id' do |id|
   content_type :json
   results = {result: false}
   @meeting = Meeting.find(id)
+  @chair = User.find(params[:chair][:id].to_i)
 
   @meeting.update(
     title:  params[:title],
@@ -375,14 +379,14 @@ post '/api/meetings/:id' do |id|
     discussion: params[:discussion],
     meeting_date: params[:meeting_date],
     location: params[:location],
-    chair: params[:chair],
+    chair: @chair,
     adjournment_time: params[:adjournment_time],
     next_meeting_date: params[:next_meeting_date]
     )
 
   if @meeting.save
     results[:result] = true
-    # @agenda_item.to_json(include: { :votes => {:include =>:voting_user} })
+    @meeting.to_json(include: :chair)
   end
 end
 
@@ -392,7 +396,7 @@ get '/api/meetings/:id/delete' do
   @meeting = Meeting.find(params[:id])
   @meeting.destroy
   if @meeting.destroy
-    puts "meeting has been removed from existence! MWAAAHAHAHA"
+    puts "meeting has been deleted"
   end
 end
 
