@@ -163,6 +163,10 @@ body {
   color: white;
 }
 
+.title.is-2 {
+  color: black;
+}
+
 .center-element {
   display: flex;
   text-align:center;
