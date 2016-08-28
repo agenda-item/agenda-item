@@ -323,7 +323,12 @@ end
 
 get '/api/meetings/:id/meeting-attendees' do |id|
   content_type :json
-  MeetingAttendee.where(meeting_id: id).to_json(include: :user)
+
+  if MeetingAttendee.where(meeting_id: id) != null then
+    #   MeetingAttendee.where(meeting_id: id).to_json(include: :user)
+  else
+    # 
+  end
 end
 
 post '/api/meetings/:id/meeting-attendees' do |id|
