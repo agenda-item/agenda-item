@@ -3,7 +3,7 @@ require_relative "utils"
 helpers do
 
   def current_organization
-    Organization.find_by(id: session[:organization_id])
+    @current_organization ||= Organization.find(session[:organization_id]) if session[:organization_id]
   end
 
   def current_meeting
@@ -11,7 +11,7 @@ helpers do
   end
 
   def current_user
-    User.find_by(id: session[:user_id])
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 end
 
@@ -39,10 +39,11 @@ post '/login' do
     if user && user.authenticate(password)
       #login
       session[:user_id] = user.id
+      session[:organization_id] = user.organization.id
       redirect(to('/meetings'))
     else
-    flash[:notice] = "Login failed. Please try again."
-    redirect '/login'
+      flash[:notice] = "Login failed. Please try again."
+      redirect '/login'
     end
 end
 
@@ -84,6 +85,7 @@ post '/organizations/details' do
 
   if @organization.save && @user.save
     session[:user_id] = @user.id
+    session[:organization_id] = @user.organization.id
     puts "this is your org name: #{name}"
     puts "current user: #{first_name} #{last_name}"
     @organization.to_json
@@ -91,7 +93,6 @@ post '/organizations/details' do
     redirect(to('/users/new'))
   end
 end
-
 
 #step 3: Board Members Sign Up page
 get '/users/new' do
@@ -195,7 +196,8 @@ end
 # get all users
 get '/api/users' do
   content_type :json
-  User.all.to_json(include: :meetings)
+  users = User.all.where(organization_id: current_organization.id)
+  users.to_json(include: :meetings)
 end
 
 # get user by id
@@ -211,7 +213,8 @@ end
 # get all votes
 get '/api/votes' do
   content_type :json
-  Vote.all.to_json
+  votes = Vote.all.where(organization_id: current_organization.id)
+  votes.all.to_json
 end
 
 # get vote by id
@@ -225,6 +228,7 @@ get '/api/agenda-items/:id/votes' do |id|
   Vote.where(agenda_item_id: id).to_json(include: :voting_user)
 end
 
+# TODO this route pattern doesn't match the others, we should probably fix that at some point...
 post '/api/votes' do
   content_type :json
 
@@ -251,15 +255,6 @@ post '/api/meetings/:id/chair' do |id|
   @meeting.chair_id = params[:chair_id]
   User.find(params[:chair_id]).to_json
 end
-
-######################
-# DEVELOPMENT ROUTES #
-######################
-# to be deleted
-
-# get '/edit-meeting' do
-#   erb :edit_meeting
-# end
 
 #################
 # FILE UPLOADER #
@@ -316,21 +311,24 @@ end
 # create new meeting
 post '/api/meetings/new' do
   content_type :json
-  meeting = Meeting.new
+  meeting = Meeting.new(
+    organization: current_organization
+    )
   meeting
 
   if meeting.save
     session["meeting"] = meeting.id
     meeting.to_json
   else
-    "did not save meeting"
+    flash[:notice] = "Meeting failed to save. Please try again."
+  # is this the right route to redirect to?
+    redirect '/meetings'
   end
   
 end
 
 # edit meeting
 get '/meetings/:id/edit' do |id|
-  puts current_meeting
   meeting = Meeting.find(id)
   session["meeting"] = meeting.id
   erb :edit_meeting
@@ -349,7 +347,9 @@ end
 # get all meetings
 get '/api/meetings' do
   content_type :json
-  Meeting.all.to_json
+  puts current_organization
+  meetings = Meeting.all.where(organization_id: current_organization.id)
+  meetings.all.to_json
 end
 
 # get meeting by id
@@ -453,8 +453,8 @@ post '/api/agenda-items/new' do
   @agenda_item = AgendaItem.new(
     type: params[:type],
     position: params[:position],
-    creator_id: 1,  #params[current_user.id]
-    meeting_id: 1  #params[current_meeting.id]
+    creator: current_user,
+    meeting: current_meeting
     )
   if @agenda_item.save
     puts "the type is #{type}"
@@ -500,8 +500,6 @@ post '/api/agenda-items/:id' do |id|
    due_date: params[:due_date]
    )
   end
-
- 
 
  if @agenda_item.save
    results[:result] = true
