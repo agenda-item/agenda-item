@@ -3,7 +3,7 @@ require_relative "utils"
 helpers do
 
   def current_organization
-    @current_organization  ||= Organization.find(session[:organization_id]) if 
+    @current_organization  ||= Organization.find(session[:organization_id]) if session[:organization_id]
   end
 
   def current_meeting
