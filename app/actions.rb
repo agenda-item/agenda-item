@@ -3,7 +3,7 @@ require_relative "utils"
 helpers do
 
   def current_organization
-    Organization.find_by(id: session[:organization_id])
+    @current_organization  ||= Organization.find(session[:organization_id]) if 
   end
 
   def current_meeting
@@ -11,7 +11,7 @@ helpers do
   end
 
   def current_user
-    User.find_by(id: session[:user_id])
+    @current_user || = User.find(session[:user_id]) if session[:user_id]
   end
 end
 
@@ -39,6 +39,7 @@ post '/login' do
     if user && user.authenticate(password)
       #login
       session[:user_id] = user.id
+      session[:organization_id] = user.organization.id
       redirect(to('/meetings'))
     else
       flash[:notice] = "Login failed. Please try again."
@@ -84,6 +85,7 @@ post '/organizations/details' do
 
   if @organization.save && @user.save
     session[:user_id] = @user.id
+    session[:organization_id] = @user.organization.id
     puts "this is your org name: #{name}"
     puts "current user: #{first_name} #{last_name}"
     @organization.to_json
@@ -194,7 +196,7 @@ end
 # get all users
 get '/api/users' do
   content_type :json
-  users = User.all.where(organization: current_organization)
+  users = User.all.where(organization_id: current_organization.id)
   users.to_json(include: :meetings)
 end
 
@@ -211,7 +213,7 @@ end
 # get all votes
 get '/api/votes' do
   content_type :json
-  votes = Vote.all.where(organization: current_organization)
+  votes = Vote.all.where(organization_id: current_organization.id)
   votes.all.to_json
 end
 
@@ -345,7 +347,8 @@ end
 # get all meetings
 get '/api/meetings' do
   content_type :json
-  meetings = Meeting.all.where(organization: current_organization)
+  puts current_organization
+  meetings = Meeting.all.where(organization_id: current_organization.id)
   meetings.all.to_json
 end
 
