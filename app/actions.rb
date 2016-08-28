@@ -194,7 +194,7 @@ end
 # get all users
 get '/api/users' do
   content_type :json
-  users = User.all.where(organization_id: current_organization.id)
+  users = User.all.where(organization: current_organization)
   users.to_json(include: :meetings)
 end
 
@@ -211,7 +211,7 @@ end
 # get all votes
 get '/api/votes' do
   content_type :json
-  votes = Vote.all.where(organization_id: current_organization.id)
+  votes = Vote.all.where(organization: current_organization)
   votes.all.to_json
 end
 
@@ -345,7 +345,7 @@ end
 # get all meetings
 get '/api/meetings' do
   content_type :json
-  meetings = Meeting.all.where(organization_id: current_organization.id)
+  meetings = Meeting.all.where(organization: current_organization)
   meetings.all.to_json
 end
 
