@@ -411,7 +411,7 @@ article.message:last-of-type > .message-header:before {
 }
 
 .log-button {
-  color: white;
+  color: white !important;
   text-decoration: none;
 }
 

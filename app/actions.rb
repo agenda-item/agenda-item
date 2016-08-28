@@ -60,6 +60,7 @@ get '/organizations/email' do
   erb :signup, locals: {email: params[:email]}
 end
 
+# step 2: user details and organization name
 post '/organizations/details' do 
   content_type :json
   email = params[:email]
@@ -82,6 +83,7 @@ post '/organizations/details' do
     )
 
   if @organization.save && @user.save
+    session[:user_id] = @user.id
     puts "this is your org name: #{name}"
     puts "current user: #{first_name} #{last_name}"
     @organization.to_json
