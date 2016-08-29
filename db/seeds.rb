@@ -200,39 +200,6 @@
 #  Votes SPWM - agm1  #
 #######################
 
-# First Agenda Approval
-
-# User:Bob
-@first_agenda_vote1 = Vote.create!(agenda_item_id: @business1.id, voting_user_id: @bob.id, vote_type: "In Favour")
-# User:Sylvia
-@first_agenda_vote2 = Vote.create!(agenda_item_id: @business1.id, voting_user_id: @sylvia.id, vote_type: "In Favour")
-# User:Jason
-@first_agenda_vote3 = Vote.create!(agenda_item_id: @business1.id, voting_user_id: @jason.id, vote_type: "In Favour")
-# User:Milly
-@first_agenda_vote4 = Vote.create!(agenda_item_id: @business1.id, voting_user_id: @milly.id, vote_type: "In Favour")
-
-# Pledge Approval
-
-# User:Bob
-@pledge_vote1 = Vote.create!(agenda_item_id: @document1.id, voting_user_id: @bob.id, vote_type: "In Favour")
-# User:Sylvia
-@pledge_vote2 = Vote.create!(agenda_item_id: @document1.id, voting_user_id: @sylvia.id, vote_type: "In Favour")
-# User:Jason
-@pledge_vote3 = Vote.create!(agenda_item_id: @document1.id, voting_user_id: @jason.id, vote_type: "In Favour")
-# User:Milly
-@pledge_vote4 = Vote.create!(agenda_item_id: @document1.id, voting_user_id: @milly.id, vote_type: "In Favour")
-
-# Basement Location Approval
-
-# User:Bob
-@location_vote1 = Vote.create!(agenda_item_id: @action_item1.id, voting_user_id: @bob.id, vote_type: "In Favour")
-# User:Sylvia
-@location_vote2 = Vote.create!(agenda_item_id: @action_item1.id, voting_user_id: @sylvia.id, vote_type: "In Favour")
-# User:Jason
-@location_vote3 = Vote.create!(agenda_item_id: @action_item1.id, voting_user_id: @jason.id, vote_type: "In Favour")
-# User:Milly
-@location_vote4 = Vote.create!(agenda_item_id: @action_item1.id, voting_user_id: @milly.id, vote_type: "In Favour")
-
 # Jason Allowed to Remain in Society
 
 # User:Bob
@@ -269,39 +236,6 @@
 #######################
 #  Votes SPWM - agm   #
 #######################
-
-#Previous Agenda Approval
-
-# User:Bob
-@prev_agenda_vote1 = Vote.create!(agenda_item_id: @business.id, voting_user_id: @bob.id, vote_type: "In Favour")
-# User:Sylvia
-@prev_agenda_vote2 = Vote.create!(agenda_item_id: @business.id, voting_user_id: @sylvia.id, vote_type: "In Favour")
-# User:Jason
-@prev_agenda_vote3 = Vote.create!(agenda_item_id: @business.id, voting_user_id: @jason.id, vote_type: "In Favour")
-# User:Milly
-@prev_agenda_vote4 = Vote.create!(agenda_item_id: @business.id, voting_user_id: @milly.id, vote_type: "In Favour")
-
-#Previous Meeting Approval
-
-# User:Bob
-@prev_minutes_vote1 = Vote.create!(agenda_item_id: @document.id, voting_user_id: @bob.id, vote_type: "In Favour")
-# User:Sylvia
-@prev_minutes_vote2 = Vote.create!(agenda_item_id: @document.id, voting_user_id: @sylvia.id, vote_type: "In Favour")
-# User:Jason
-@prev_minutes_vote3 = Vote.create!(agenda_item_id: @document.id, voting_user_id: @jason.id, vote_type: "In Favour")
-# User:Milly
-@prev_minutes_vote4 = Vote.create!(agenda_item_id: @document.id, voting_user_id: @milly.id, vote_type: "In Favour")
-
-# Search for New Location
-
-# User:Bob
-@new_location_vote1 = Vote.create!(agenda_item_id: @action_item.id, voting_user_id: @bob.id, vote_type: "In Favour")
-# User:Sylvia
-@new_location_vote2 = Vote.create!(agenda_item_id: @action_item.id, voting_user_id: @sylvia.id, vote_type: "In Favour")
-# User:Jason
-@new_location_vote3 = Vote.create!(agenda_item_id: @action_item.id, voting_user_id: @jason.id, vote_type: "Opposed")
-# User:Milly
-@new_location_vote4 = Vote.create!(agenda_item_id: @action_item.id, voting_user_id: @milly.id, vote_type: "In Favour")
 
 #Logo Approval
 
@@ -340,39 +274,6 @@
 #  Votes CHOC - agmew1  #
 #########################
 
-# Official Name
-
-# User:Cali
-@name_vote1 = Vote.create!(agenda_item_id: @catnews.id, voting_user_id: @calico.id, vote_type: "In Favour")
-# User:Tabitha
-@name_vote2 = Vote.create!(agenda_item_id: @catnews.id, voting_user_id: @tabby.id, vote_type: "In Favour")
-# User:Sia
-@name_vote3 = Vote.create!(agenda_item_id: @catnews.id, voting_user_id: @siamese.id, vote_type: "In Favour")
-# User:Bruce
-@name_vote4 = Vote.create!(agenda_item_id: @catnews.id, voting_user_id: @catman.id, vote_type: "Opposed")
-
-# First Proof of Cat Ownership
-
-# User:Cali
-@proof_vote1 = Vote.create!(agenda_item_id: @papers.id, voting_user_id: @calico.id, vote_type: "In Favour")
-# User:Tabitha
-@proof_vote2 = Vote.create!(agenda_item_id: @papers.id, voting_user_id: @tabby.id, vote_type: "In Favour")
-# User:Sia
-@proof_vote3 = Vote.create!(agenda_item_id: @papers.id, voting_user_id: @siamese.id, vote_type: "In Favour")
-# User:Bruce
-@proof_vote4 = Vote.create!(agenda_item_id: @papers.id, voting_user_id: @catman.id, vote_type: "In Favour")
-
-# Litter Disposal
-
-# User:Cali
-@litter_vote1 = Vote.create!(agenda_item_id: @litterbox.id, voting_user_id: @calico.id, vote_type: "In Favour")
-# User:Tabitha
-@litter_vote2 = Vote.create!(agenda_item_id: @litterbox.id, voting_user_id: @tabby.id, vote_type: "In Favour")
-# User:Sia
-@litter_vote3 = Vote.create!(agenda_item_id: @litterbox.id, voting_user_id: @siamese.id, vote_type: "In Favour")
-# User:Bruce
-@litter_vote4 = Vote.create!(agenda_item_id: @litterbox.id, voting_user_id: @catman.id, vote_type: "Opposed")
-
 # Approval of Cat Logo
 
 # User:Cali
@@ -409,39 +310,6 @@
 #########################
 #  Votes CHOC - agmew2  #
 #########################
-
-#New Motto
-
-# User:Cali
-@motto_vote1 = Vote.create!(agenda_item_id: @catnews2.id, voting_user_id: @calico.id, vote_type: "In Favour")
-# User:Tabitha
-@motto_vote2 = Vote.create!(agenda_item_id: @catnews2.id, voting_user_id: @tabby.id, vote_type: "In Favour")
-# User:Sia
-@motto_vote3 = Vote.create!(agenda_item_id: @catnews2.id, voting_user_id: @siamese.id, vote_type: "In Favour")
-# User:Bruce
-@motto_vote4 = Vote.create!(agenda_item_id: @catnews2.id, voting_user_id: @catman.id, vote_type: "In Favour")
-
-#New Proof of Cat Ownership
-
-# User:Cali
-@proof2_vote1 = Vote.create!(agenda_item_id: @papers2.id, voting_user_id: @calico.id, vote_type: "In Favour")
-# User:Tabitha
-@proof2_vote2 = Vote.create!(agenda_item_id: @papers2.id, voting_user_id: @tabby.id, vote_type: "In Favour")
-# User:Sia
-@proof2_vote3 = Vote.create!(agenda_item_id: @papers2.id, voting_user_id: @siamese.id, vote_type: "In Favour")
-# User:Bruce
-@proof2_vote4 = Vote.create!(agenda_item_id: @papers2.id, voting_user_id: @catman.id, vote_type: "In Favour")
-
-# Search for New Litter Location
-
-# User:Cali
-@new_litter_vote1 = Vote.create!(agenda_item_id: @litterbox2.id, voting_user_id: @calico.id, vote_type: "In Favour")
-# User:Tabitha
-@new_litter_vote2 = Vote.create!(agenda_item_id: @litterbox2.id, voting_user_id: @tabby.id, vote_type: "In Favour")
-# User:Sia
-@new_litter_vote3 = Vote.create!(agenda_item_id: @litterbox2.id, voting_user_id: @siamese.id, vote_type: "Opposed")
-# User:Bruce
-@new_litter_vote4 = Vote.create!(agenda_item_id: @litterbox2.id, voting_user_id: @catman.id, vote_type: "In Favour")
 
 #New Cathome (Meeting place)
 
