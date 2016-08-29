@@ -1,5 +1,5 @@
 <template id="attendees-modal-template">
-  <button class="button" @click.prevent="openModal">Log Votes</button>
+  <button class="button" @click.prevent="openModal">Log Attendees</button>
 
   <div class="modal" v-bind:class="{ 'is-active': showModal}">
   <div class="modal-background">
@@ -13,42 +13,20 @@
         <div class="modal-section">
           <div class="columns">
             <div class="column">
+              <button class="button" @click.prevent="logAttendees('Present')">Log Present Members</button>
               <div class="select-user">
                 <p>Present</p>
-                <ul v-for="attendee in attendees | filterBy 'present' in 'attendance_type'">
-                  <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ attendee.first_name }}</i></div>
-                  <present-member :agenda-item.sync="agendaItem" :attendee="attendee"></present-member>
+                <ul v-for="attendee in attendees | filterBy 'Present' in 'attendance_type'">
+                  <board-member :agenda-item.sync="agendaItem" :attendee="attendee" :toggle-selected-member="toggleSelectedMember" :selected-members-list.sync="selectedMembersList"></board-member>
                 </ul>
               </div>
             </div>
             <div class="column">
-              <button class="button" @click.prevent="moveOpposedToAbstained"><i class="fa fa-chevron-with-circle-left fa-lg"></i></button>
-              <button class="button" @click.prevent="moveAbstainedToOpposed"><i class="fa fa-chevron-with-circle-right fa-lg"></i></button>
-            </div>
-            <div class="column">
+              <button class="button" @click.prevent="logAttendees('Absent')">Log Absent Members</button>
               <div class="select-user">
-                <p>Opposed Voters</p>
-                <div v-if="agendaItem.votes.length === 0">
-                  <ul v-for="user in usersList">
-                    <users-list :agenda-item.sync="agendaItem" :user="user" :vote.sync="vote" :toggle-selected-voter="toggleSelectedVote"></users-list>
-                  </ul>
-                </div>
-                <!-- <div v-else> -->
-                  <ul v-for="vote in votes | filterBy 'Opposed' in 'vote_type'">
-                    <opposed-voter :agenda-item.sync="agendaItem" :user="user" :vote.sync="vote" :toggle-selected-voter="toggleSelectedVote" :opposed-votes-list.sync="opposedVotesList"></opposed-voter>
-                  </ul>
-                <!-- </div> -->
-              </div>
-            </div>
-            <div class="column">
-              <button class="button" @click.prevent="moveInFavourToOpposed"><i class="fa fa-chevron-with-circle-left fa-lg"></i></button>
-              <button class="button" @click.prevent="moveOpposedToInFavour"><i class="fa fa-chevron-with-circle-right fa-lg"></i></button>
-            </div>
-            <div class="column">
-              <div class="select-user">
-                <p>In Favour Voters</p>
-                <ul v-for="vote in votes | filterBy 'In Favour' in 'vote_type'">
-                  <in-favour-voter :agenda-item.sync="agendaItem" :user="user" :vote.sync="vote" :toggle-selected-voter="toggleSelectedVote" :in-favour-votes-list.sync="inFavourVotesList"></in-favour-voter>
+                <p>Absent</p>
+                <ul v-for="attendee in attendees | filterBy 'Absent' in 'attendance_type'">
+                  <board-member :agenda-item.sync="agendaItem" :attendee="attendee" :toggle-selected-member="toggleSelectedMember" :selected-members-list.sync="selectedMembersList"></board-member>
                 </ul>
               </div>
             </div>
@@ -63,140 +41,62 @@
 <script>
   Vue.component('attendees-modal', {
     template: '#attendees-modal-template',
-    props: ['agendaItem','votes','attendees'],
+    props: ['agendaItem','attendees','currentMeeting'],
     data: function(){
       return {
         showModal: false,
-        toggleSelectedVote: false,
-        usersList: [],
-        abstainedVotesList: [],
-        opposedVotesList: [],
-        inFavourVotesList: []
+        toggleSelectedMember: false,
+        selectedMembersList: []
       }
     },
     methods: {
       openModal: function() {
         this.showModal = true
-        console.log("clicking open")
       },
       closeModal: function() {
         this.showModal = false
-        console.log("clicking close")
       },
-      moveInFavourToOpposed: function() {
-          this.$http.post('/api/votes', {'votes': this.inFavourVotesList, 'vote_type': 'Opposed'}, {emulateJSON:true}).then(function(response){
-              for (vote of this.inFavourVotesList) {
-                vote.vote_type = 'Opposed'
-              }
-          }.bind(this));
-      },
-      moveOpposedToInFavour: function() {    
-          this.$http.post('/api/votes', {'votes': this.opposedVotesList, 'vote_type': 'In Favour'}, {emulateJSON:true}).then(function(response){
-              for (vote of this.opposedVotesList) {
-                vote.vote_type = 'In Favour'
-              }
-          }.bind(this));
-      },
-      moveOpposedToAbstained: function() {
-          this.$http.post('/api/votes', {'votes': this.opposedVotesList, 'vote_type': 'Abstain'}, {emulateJSON:true}).then(function(response){
-              for (vote of this.opposedVotesList) {
-                vote.vote_type = 'Abstain'
-              }
-          }.bind(this));
-      },
-      moveAbstainedToOpposed: function() {
-          this.$http.post('/api/votes', {'votes': this.abstainedVotesList, 'vote_type': 'Opposed'}, {emulateJSON:true}).then(function(response){
-              for (vote of this.abstainedVotesList) {
-                vote.vote_type = 'Opposed'
-              }
-          }.bind(this));
-    },
-    created: function() {
-      this.$http.get('/api/users').then(function(response){
-        console.log(response.json())
-        console.log("getting users list and logging its contents")
-        this.usersList= response.json()
-        console.log(this.usersList)
-      }.bind(this));
-    }
-  }
-});
+      logAttendees: function(attendance_type) {
+        var selectedMembers = this.selectedMembersList
+        var url = '/api/meetings/' + this.currentMeeting.id + '/meeting-attendees'
+        var setAttendance = attendance_type
+      
+        for (var i = 0; i < selectedMembers.length; i++) {
+          var attendee = selectedMembers[i]
+          var attendee_id = selectedMembers[i].id
 
+          this.$http.post(url, {'attendee_id': attendee_id, 'attendance_type': setAttendance}, {emulateJSON:true}).then(function(response){
+            returnedAttendee = response.json()
+            foundAttendee = this.attendees.find(originalAttendee => originalAttendee.id === returnedAttendee.id)
+            foundAttendee.attendance_type = setAttendance
+          }.bind(this));
+        }
+      },
+    }
+  });
 </script>
 
-<template id="opposed-voter-template">
-    <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedVote}" @click="selectOpposedVote"><i class="fa fa-person" aria-hidden="true">
-          {{user.first_name}} {{vote.voting_user.first_name}} {{user.last_name}} {{vote.voting_user.last_name}}
-        </i></li>
+<template id="board-member-template">
+      <div class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedMember}" @click="selectMember"><i class="fa fa-person" aria-hidden="true">{{ attendee.user.first_name }}</i></div>
 </template>
 
 <script>
-  Vue.component('opposed-voter', {
-    template: '#opposed-voter-template',
-    props: ['agendaItem','user','vote','toggleSelectedVote','opposedVotesList'],
+  Vue.component('board-member', {
+    template: '#board-member-template',
+    props: ['agendaItem', 'attendees', 'toggleSelectedMember', 'selectedMembersList','attendee'],
     methods: {
-      selectOpposedVote: function(){
-        if (this.opposedVotesList.includes(this.vote)) {
-          this.toggleSelectedVote = false
-          this.opposedVotesList.pop(this.vote)
+      selectMember: function(){
+        if (this.selectedMembersList.includes(this.attendee)) {
+          this.toggleSelectedMember = false
+          this.selectedMembersList.pop(this.attendee)
         } else {
-          this.toggleSelectedVote = true
-          this.opposedVotesList.push(this.vote)
+          this.toggleSelectedMember = true
+          this.selectedMembersList.push(this.attendee)
         }
       }
     }
   })
 </script>
 
-<template id="in-favour-voter-template">
-    <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedVote}" @click="selectInFavourVote">
-      <i class="fa fa-person" aria-hidden="true">
-        {{vote.voting_user.first_name}} {{vote.voting_user.last_name}}
-      </i>
-    </li>
-</template>
 
-<script>
-  Vue.component('in-favour-voter', {
-    template: '#in-favour-voter-template',
-    props: ['agendaItem','user','vote','toggleSelectedVote','inFavourVotesList'],
-    methods: {
-      selectInFavourVote: function(){
-        if (this.inFavourVotesList.includes(this.vote)) {
-          this.toggleSelectedVote = false
-          this.inFavourVotesList.pop(this.vote)
-        } else {
-          this.toggleSelectedVote = true
-          this.inFavourVotesList.push(this.vote)
-        }
-      }
-    }
-  })
-</script>
-
-<template id="abstained-voter-template">
-    <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedVote}" @click="selectOpposedVote">
-      <i class="fa fa-person" aria-hidden="true">
-        {{vote.voting_user.first_name}} {{vote.voting_user.last_name}}
-      </i>
-    </li>
-</template>
-
-<script>
-  Vue.component('abstained-voter', {
-    template: '#abstained-voter-template',
-    props: ['agendaItem','user','vote','toggleSelectedVote','abstainedVotesList'],
-    methods: {
-      selectOpposedVote: function(){
-        if (this.abstainedVotesList.includes(this.vote)) {
-          this.toggleSelectedVote = false
-          this.abstainedVotesList.pop(this.vote)
-        } else {
-          this.toggleSelectedVote = true
-          this.abstainedVotesList.push(this.vote)
-        }
-      }
-    }
-  })
-</script>
 

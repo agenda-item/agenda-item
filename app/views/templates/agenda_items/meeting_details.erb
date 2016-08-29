@@ -32,35 +32,26 @@
           <br/>
           <chair-modal :current-meeting.sync="currentMeeting"></chair-modal>
         </div>
-        <!-- <div class="ai-attendees">
-          <label class="label">Attendees</label>
-            <attendees-modal :attendees="attendees"></attendees-modal>
-            <article class="message">
-              <div class="message-header">
-                Present
-              </div>
-              <div v-for="attendee in attendees | filterBy 'Present' in 'attendance_type'">
-                <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ attendee.first_name }}</i></div>
-              </div>
-              <div class="message-body">
-                <div v-for="attendee in attendees | filterBy 'Present' in 'attendance_type'">
-                  <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ attendee.first_name }}</i></div>
-                </div>
-              </div>
-            </article>
-            <article class="message">
-              <div class="message-header">
-                Absent
-              </div>
-              <div class="message-body">
-                <div v-for="attendee in attendees | filterBy 'Absent' in 'attendance_type'">
-                  <div class="ai-user"><i class="fa fa-person" aria-hidden="true">{{ attendee.first_name }}</i></div>
-                </div>
-              </div>
-            </article>
+        <article class="message">
+          <div class="message-header">
+            Present
           </div>
-        </div> -->
-           <!-- TODO add call to order time stamp -->
+          <ul v-for="attendee in attendees | filterBy 'Present' in 'attendance_type'">
+            <li class="ai-user"><i class="fa fa-person fa-lg" aria-hidden="true">{{attendee.user.first_name}} {{attendee.user.last_name}}</i></li>
+          </ul>
+        </article>
+         <article class="message">
+          <div class="message-header">
+            Absent
+          </div>
+          <ul v-for="attendee in attendees | filterBy 'Absent' in 'attendance_type'">
+            <li class="ai-user"><i class="fa fa-person fa-lg" aria-hidden="true">{{attendee.user.first_name}} {{attendee.user.last_name}}</i></li>
+          </ul>
+        </article>
+        
+        
+        <attendees-modal :agenda-item.sync="agendaItem" :attendees.sync="attendees" :current-meeting="currentMeeting"></attendees-modal>
+        <!-- TODO add call to order time stamp -->
         <div class="ai-minutes">
           <label class="label">Discussion</label>
           <div class="control">
@@ -76,13 +67,7 @@
 <script>
   Vue.component('meeting-details', {
     template: "#meeting-details-template",
-    props: ['currentMeeting'],
-    computed: {
-      attendees: function() {
-        console.log(this.currentMeeting.meeting_attendees)
-        return this.currentMeeting.meeting_attendees
-      }
-    },
+    props: ['currentMeeting', 'attendees'],
     methods: {
     submitMeeting: function() {
         // update meeting
@@ -94,10 +79,8 @@
           // else {
           //   console.log("agenda item not updated");
           // }
-        }).error(function(error) {
-          console.log(error);
         }.bind(this));
       }
     }
-  })
+  });
 </script>

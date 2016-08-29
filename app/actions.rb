@@ -312,7 +312,7 @@ end
 post '/api/meetings/new' do
   content_type :json
   meeting = Meeting.new(
-    organization: current_organization
+    organization_id: current_organization.id
     )
   meeting
 
@@ -397,6 +397,48 @@ get '/api/meetings/:id/delete' do
   @meeting.destroy
   if @meeting.destroy
     puts "meeting has been deleted"
+  end
+end
+
+#####################
+# MEETING ATTENDEES #
+#####################
+
+get '/api/meetings/:id/meeting-attendees' do |id|
+  content_type :json
+  attendees = []
+  found_attendees = MeetingAttendee.where(meeting_id: id)
+
+  if found_attendees.length > 0 then
+    found_attendees.each do |attendee|
+      attendees.push(attendee) 
+    end
+    attendees.to_json(include: :user)
+  else
+    users = User.all.where(organization_id: current_organization.id)
+    users.each do |user|
+      @attendee = MeetingAttendee.new(
+        user_id: user.id,
+        attendance_type: 'Absent'
+        )
+      @attendee.save
+      attendees.push(@attendee)
+    end
+    attendees.to_json(include: :user)
+  end
+end
+
+post '/api/meetings/:id/meeting-attendees' do |id|
+  content_type :json
+
+  attendee = MeetingAttendee.find(params[:attendee_id].to_i)
+  attendee.attendance_type = params[:attendance_type]
+  
+  if attendee.save
+    puts "saved successfully"
+    attendee.to_json(include: :user)
+  else
+    puts "not saved"
   end
 end
 

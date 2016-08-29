@@ -41,7 +41,7 @@
     </div>
 
     <div class="column">
-      <div v-if="currentItemIndex === 'Meeting Details'" class="section ai-agenda-item"><meeting-details :current-meeting.sync="currentMeeting"></meeting-details></div>
+      <div v-if="currentItemIndex === 'Meeting Details'" class="section ai-agenda-item"><meeting-details :current-meeting.sync="currentMeeting" :attendees.sync="attendees"></meeting-details></div>
       <div v-if="currentItemIndex === 'Meeting Closing'" class="section ai-agenda-item"><meeting-closing :current-meeting.sync="currentMeeting"></meeting-closing></div>
       <div v-if="currentItemIndex >= 0" class="section ai-agenda-item">
         <div><!-- header interface  -->
@@ -53,7 +53,7 @@
           </a> -->
         </div>
         <!-- sets the current agenda item loaded into the side with the currentItemIndex of the agendaItems list stored on the root instance data -->
-        <agenda-item :agenda-item="agendaItems[currentItemIndex]" :votes.sync="votes"></agenda-item>
+        <agenda-item :agenda-item="agendaItems[currentItemIndex]" :votes.sync="votes" attendees.sync="attendees"></agenda-item>
       </div>
     </div>
 
@@ -87,7 +87,8 @@
           { type: 'Motion', icon: 'gavel'}
         ],
         responsibleUsers: [],
-        votes: []
+        votes: [],
+        attendees: []
       }
     },
     created: function() {
@@ -96,9 +97,18 @@
         this.agendaItems = response.json();
       }.bind(this));
 
+      // gets the current meeting and its attendees
       this.$http.get('/api/current-meeting').then(function(response){
-        console.log(response.json())
+        var attendeesList = this.attendees
         this.currentMeeting = response.json();
+
+        var currentMeeting = response.json();
+        var url = '/api/meetings/' + currentMeeting.id + '/meeting-attendees'
+        // get all the meeting attendees
+        this.$http.get(url).then(function(response){ 
+          this.attendees = response.json()
+          console.log(this.attendees)
+          }.bind(this));
       }.bind(this));
     },
     events: {

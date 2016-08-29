@@ -76,9 +76,8 @@
         this.showModal = false
       },
       logVotes: function(vote_type) {
-        console.log("original votes list", this.votes);
         var selectedVotes = this.selectedVotesList
-        for (i = 0; i < selectedVotes.length; i++) { 
+        for (var i = 0; i < selectedVotes.length; i++) { 
           var vote = selectedVotes[i]
           var vote_id = selectedVotes[i].id
 
@@ -87,10 +86,8 @@
             found_vote = this.votes.find(originalVote => originalVote.id === returnedVote.id)
             vote = returnedVote
             found_vote.vote_type = returnedVote.vote_type
-            console.log("updated votes list", this.votes);
           }.bind(this));
         }
-        
       }
     },
     created: function() {
