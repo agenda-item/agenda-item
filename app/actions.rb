@@ -312,7 +312,7 @@ end
 post '/api/meetings/new' do
   content_type :json
   meeting = Meeting.new(
-    organization: current_organization
+    organization_id: current_organization.id
     )
   meeting
 
@@ -406,11 +406,24 @@ end
 
 get '/api/meetings/:id/meeting-attendees' do |id|
   content_type :json
+  attendees = []
+  found_attendees = MeetingAttendee.where(meeting_id: id)
 
-  if MeetingAttendee.where(meeting_id: id) != null then
-    #   MeetingAttendee.where(meeting_id: id).to_json(include: :user)
+  if found_attendees.length > 0 then
+    @found_attendees.each do |attendee|
+      attendees.push(@found_attendee) 
+    end
+    attendees.to_json(include: :user)
   else
-    # 
+    users = User.all.where(organization_id: current_organization.id)
+    users.each do |user|
+      @attendee = MeetingAttendee.new(
+        user_id: user.id,
+        attendance_type: 'Absent'
+        )
+      attendees.push(@attendee) 
+    end
+    attendees.to_json(include: :user)
   end
 end
 

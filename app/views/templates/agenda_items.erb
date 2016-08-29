@@ -105,24 +105,10 @@
         var currentMeeting = response.json();
         var url = '/api/meetings/' + currentMeeting.id + '/meeting-attendees'
         // get all the meeting attendees
-        this.$http.get(url).then(function(response){     
-            if (response.json().length != 0) {
-              this.attendees = response.json()
-            } else {
-              // if the attendees list is empty populate it with the membership list, but everyone initially set as absent until logged
-              this.$http.get('/api/users').then(function(response){
-                users = response.json()
-                var reformattedArray = users.map(function(user){ 
-                  var returnedUser = {}
-                  returnedUser.user = user
-                  returnedUser.attendance_type = "Absent"
-                  attendeesList.push(returnedUser)
-                });
-              }.bind(this));
-            // replace the attendees list with the recently created list
-            this.attendees = attendeesList
-          } 
-        }.bind(this));
+        this.$http.get(url).then(function(response){ 
+          this.attendees = response.json()
+          console.log(this.attendees)
+          }.bind(this));
       }.bind(this));
     },
     events: {
