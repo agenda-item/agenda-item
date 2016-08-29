@@ -211,25 +211,34 @@ end
 #########
 
 # get all votes
-get '/api/votes' do
+get '/api/agenda-items/:id/votes' do
   content_type :json
-  votes = Vote.all.where(organization_id: current_organization.id)
-  votes.all.to_json
+  votes = []
+  found_votes = Vote.all.where(agenda_item_id: :id)
+
+  if found_votes.length > 0 then
+    found_votes.each do |vote|
+      votes.push(vote) 
+    end
+    votes.all.to_json(include: :voting_user)
+  else
+    attendees = MeetingAttendee.all.where(meeting_id: current_meeting.id)
+    attendees.each do |attendee|
+      if attendee.attendance_type = 'Present'
+        @vote = Vote.new(
+          agenda_item_id: [:id],
+          voting_user_id: attendee.user.id,
+          attendance_type: 'Opposed'
+          )
+        @vote.save
+        votes.push(@vote)
+      end
+      votes.all.to_json(include: :voting_user)
+    end   
+  end
 end
 
-# get vote by id
-get '/api/votes/:id' do |id|
-  content_type :json
-  Vote.find(id).to_json
-end
-
-get '/api/agenda-items/:id/votes' do |id|
-  content_type :json
-  Vote.where(agenda_item_id: id).to_json(include: :voting_user)
-end
-
-# TODO this route pattern doesn't match the others, we should probably fix that at some point...
-post '/api/votes' do
+post '/api/agenda-items/:id/votes' do
   content_type :json
 
   vote = Vote.find(params[:vote_id].to_i)

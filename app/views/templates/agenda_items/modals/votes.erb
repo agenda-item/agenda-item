@@ -77,14 +77,13 @@
       },
       logVotes: function(vote_type) {
         var selectedVotes = this.selectedVotesList
+        var url = '/api/agenda-items/' + this.agendaItem.id + '/meeting-attendees'
         for (var i = 0; i < selectedVotes.length; i++) { 
-          var vote = selectedVotes[i]
           var vote_id = selectedVotes[i].id
 
-          this.$http.post('/api/votes', {'vote': vote, 'vote_id': vote_id,'vote_type': vote_type}, {emulateJSON:true}).then(function(response){
+          this.$http.post(url, {'vote_id': vote_id,'vote_type': vote_type}, {emulateJSON:true}).then(function(response){
             returnedVote = response.json()
             found_vote = this.votes.find(originalVote => originalVote.id === returnedVote.id)
-            vote = returnedVote
             found_vote.vote_type = returnedVote.vote_type
           }.bind(this));
         }
