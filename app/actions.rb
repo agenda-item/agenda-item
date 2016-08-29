@@ -370,19 +370,22 @@ end
 post '/api/meetings/:id' do |id|
   content_type :json
   results = {result: false}
-  @meeting = Meeting.find(id)
-  @chair = User.find(params[:chair][:id].to_i)
 
-  @meeting.update(
-    title:  params[:title],
-    description: params[:description],
-    discussion: params[:discussion],
-    meeting_date: params[:meeting_date],
-    location: params[:location],
-    chair: @chair,
-    adjournment_time: params[:adjournment_time],
-    next_meeting_date: params[:next_meeting_date]
-    )
+  @meeting = Meeting.find(id)
+
+  # chair field is assigned an object that is found from user id
+  @chair = User.find(params[:chair][:id].to_i)
+  @meeting.chair = @chair if params[:chair]
+
+  @meeting.title = params[:title] if params[:title]
+  @meeting.description = params[:description] if params[:description]
+  @meeting.discussion = params[:discussion] if params[:discussion]
+  @meeting.meeting_date = params[:meeting_date] if params[:meeting_date]
+  @meeting.location = params[:location] if params[:location]
+  @meeting.adjournment_time = params[:adjournment_time] if params[:adjournment_time]
+  @meeting.next_meeting_date = params[:next_meeting_date] if params[:next_meeting_date]
+
+  @meeting.save
 
   if @meeting.save
     results[:result] = true
@@ -480,6 +483,7 @@ end
 post '/api/agenda-items/:id' do |id|
   content_type :json
   results = {result: false}
+
   @agenda_item = AgendaItem.find(id)
   if params[:creator]
     @creator = User.find(params[:creator][:id].to_i)
