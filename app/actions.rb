@@ -410,8 +410,8 @@ get '/api/meetings/:id/meeting-attendees' do |id|
   found_attendees = MeetingAttendee.where(meeting_id: id)
 
   if found_attendees.length > 0 then
-    @found_attendees.each do |attendee|
-      attendees.push(@found_attendee) 
+    found_attendees.each do |attendee|
+      attendees.push(attendee) 
     end
     attendees.to_json(include: :user)
   else
@@ -421,7 +421,8 @@ get '/api/meetings/:id/meeting-attendees' do |id|
         user_id: user.id,
         attendance_type: 'Absent'
         )
-      attendees.push(@attendee) 
+      @attendee.save
+      attendees.push(@attendee)
     end
     attendees.to_json(include: :user)
   end

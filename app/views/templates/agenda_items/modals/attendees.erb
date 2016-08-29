@@ -58,21 +58,17 @@
       },
       logAttendees: function(attendance_type) {
         var selectedMembers = this.selectedMembersList
-        console.log(selectedMembers)
-        for (i = 0; i < selectedMembers.length; i++) { 
-          console.log(i)
+        var url = '/api/meetings/' + this.currentMeeting.id + '/meeting-attendees'
+        var setAttendance = attendance_type
+      
+        for (var i = 0; i < selectedMembers.length; i++) {
           var attendee = selectedMembers[i]
-          console.log("currently selectMember id", attendee.id)
           var attendee_id = selectedMembers[i].id
-          var url = '/api/meetings/' + this.currentMeeting.id + '/meeting-attendees'
-          var setAttendance = attendance_type
 
-          this.$http.post(url, {'attendee': attendee, 'attendee_id': attendee_id,'attendance_type': setAttendance}, {emulateJSON:true}).then(function(response){
-            foundAttendee = this.attendees.find(originalAttendee => originalAttendee.id === attendee.id)
-            console.log("before setting attendance", foundAttendee.attendance_type)
+          this.$http.post(url, {'attendee_id': attendee_id, 'attendance_type': setAttendance}, {emulateJSON:true}).then(function(response){
+            returnedAttendee = response.json()
+            foundAttendee = this.attendees.find(originalAttendee => originalAttendee.id === returnedAttendee.id)
             foundAttendee.attendance_type = setAttendance
-            console.log("after setting attendance", foundAttendee.attendance_type)
-            console.log("attendees list", this.attendees)
           }.bind(this));
         }
       },
