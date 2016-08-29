@@ -7,6 +7,9 @@ gem 'activesupport'
 gem 'sinatra'
 gem 'sinatra-contrib'
 gem 'sinatra-activerecord'
+gem "activerecord", "~> 4.2.5"
+
+gem 'rack-flash3'
 
 gem 'puma'
 gem 'tux'

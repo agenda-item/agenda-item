@@ -1,8 +1,9 @@
 class Organization < ActiveRecord::Base
 
   has_many :users
+  has_many :meetings
 
-  validates :name,
+  validates :email,
     presence: true
 
 end

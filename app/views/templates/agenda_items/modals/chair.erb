@@ -65,7 +65,7 @@
 <script>
   Vue.component('chair', {
     template: '#chair-template',
-    props: ['currentMeeting', 'user', 'chair', 'toggleSelectedChair'],
+    props: ['currentMeeting', 'user', 'toggleSelectedChair'],
     methods: {
       setChair: function(){
         var url = '/api/meetings/' + this.currentMeeting.id
