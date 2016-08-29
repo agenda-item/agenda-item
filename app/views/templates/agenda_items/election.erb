@@ -20,31 +20,32 @@
       <br/>
       <seconder-modal :agenda-item.sync="agendaItem"></seconder-modal>
     </div>
-    <votes-modal :agenda-item.sync="agendaItem" :votes.sync="votes"></votes-modal>
+    <votes-modal :agenda-item.sync="agendaItem"></votes-modal>
     <div class="ai-vote">
       <div v-if="agendaItem.votes.length != 0">
         <div class="message-header">
           In Favour
         </div>
         <div class="message-body">
-          <div v-for="vote in votes | filterBy 'In Favour' in 'vote_type'">
-            <div class="ai-user"><i class="fa fa-checkbox-marked-circle-outline fa-lg" aria-hidden="true">{{ vote.voting_user.first_name }}</i></div>
+          <div v-for="vote in agendaItem.votes">
+            <div class="ai-user"><i class="fa fa-checkbox-marked-circle-outline fa-lg" aria-hidden="true">{{ vote.voting_user.first_name}} {{ vote.voting_user.last_name}}</i></div>
           </div>
         </div>
         <div class="message-header">
           Opposed
         </div>
         <div class="message-body">
-          <div v-for="vote in votes | filterBy 'Opposed' in 'vote_type'">
-              <div class="ai-user"><i class="fa fa-close-circle-outline fa-lg" aria-hidden="true">{{vote.voting_user.first_name}}</i></div>
+
+          <div v-for="vote in agendaItem.votes | filterBy 'Opposed' in 'vote_type'">
+              <div class="ai-user"><i class="fa fa-close-circle-outline fa-lg" aria-hidden="true">{{ vote.voting_user.first_name}} {{ vote.voting_user.last_name}}</i></div>
           </div>
         </div>
         <div class="message-header">
           Abstained
         </div>
         <div class="message-body">
-          <div v-for="vote in votes | filterBy 'Abstain' in 'vote_type'">
-              <div class="ai-user"><i class="fa fa-checkbox-blank-circle-outline fa-lg" aria-hidden="true">{{vote.voting_user.first_name}}</i></div>
+          <div v-for="vote in agendaItem.votes | filterBy 'Abstain' in 'vote_type'">
+              <div class="ai-user"><i class="fa fa-checkbox-blank-circle-outline fa-lg" aria-hidden="true">{{ vote.voting_user.first_name}} {{ vote.voting_user.last_name}}</i></div>
           </div>
         </div>
       </div>
@@ -56,16 +57,6 @@
 <script>
   Vue.component('election', {
     template: '#election-template',
-    props: ['agendaItem','votes'],
-    data: function() {
-      return {
-        votes: []
-      }
-    },
-    created: function() {
-      this.$http.get('/api/agenda-items/{{agendaItem.id}}/votes').then(function(response){
-        this.mover = response.json()
-      }.bind(this));
-    }
+    props: ['agendaItem']
   })
 </script>

@@ -220,7 +220,7 @@ get '/api/agenda-items/:id/votes' do
     found_votes.each do |vote|
       votes.push(vote) 
     end
-    votes.all.to_json(include: :voting_user)
+    votes.to_json(include: :voting_user)
   else
     attendees = MeetingAttendee.all.where(meeting_id: current_meeting.id)
     attendees.each do |attendee|
@@ -228,12 +228,12 @@ get '/api/agenda-items/:id/votes' do
         @vote = Vote.new(
           agenda_item_id: [:id],
           voting_user_id: attendee.user.id,
-          attendance_type: 'Opposed'
+          vote_type: 'Opposed'
           )
         @vote.save
         votes.push(@vote)
       end
-      votes.all.to_json(include: :voting_user)
+      votes.to_json(include: :voting_user)
     end   
   end
 end

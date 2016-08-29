@@ -16,8 +16,8 @@
               <button class="button" @click.prevent="logVotes('Abstained')">Log Abstaining Voter(s)</button>
               <div class="select-user">
                 <p>Abstained Voters</p>
-                <ul v-for="vote in votes | filterBy 'Abstain' in 'vote_type'">
-                  <voter :agenda-item.sync="agendaItem" :user="user" :vote.sync="vote" :toggle-selected-voter="toggleSelectedVote" :selected-votes-list.sync="selectedVotesList"></voter>
+                <ul v-for="vote in agendaItem.votes | filterBy 'Abstain' in 'vote_type'">
+                  <voter :agenda-item.sync="agendaItem" :toggle-selected-voter="toggleSelectedVote" :selected-votes-list.sync="selectedVotesList"></voter>
                 </ul>
               </div>
             </div>
@@ -25,14 +25,8 @@
               <button class="button" @click.prevent="logVotes('Opposed')">Log Opposing Voter(s)</button>
               <div class="select-user">
                 <p>Opposed Voters</p>
-                <div v-if="agendaItem.votes.length === 0">
-                  <ul v-for="user in usersList">
-                    <users-list :agenda-item.sync="agendaItem" :user="user" :vote.sync="vote" :toggle-selected-voter="toggleSelectedVote"></users-list>
-                  </ul>
-                </div>
-                <!-- <div v-else> -->
-                  <ul v-for="vote in votes | filterBy 'Opposed' in 'vote_type'">
-                    <voter :agenda-item.sync="agendaItem" :user="user" :vote.sync="vote" :toggle-selected-voter="toggleSelectedVote" :selected-votes-list.sync="selectedVotesList"></voter>
+                  <ul v-for="vote in agendaItem.votes | filterBy 'Opposed' in 'vote_type'">
+                    <voter :agenda-item.sync="agendaItem" :toggle-selected-voter="toggleSelectedVote" :selected-votes-list.sync="selectedVotesList"></voter>
                   </ul>
                 <!-- </div> -->
               </div>
@@ -41,8 +35,8 @@
               <button class="button" @click.prevent="logVotes('Abstained')">Log In Favour Voter(s)</button>
               <div class="select-user">
                 <p>In Favour Voters</p>
-                <ul v-for="vote in votes | filterBy 'In Favour' in 'vote_type'">
-                  <voter :agenda-item.sync="agendaItem" :user="user" :vote.sync="vote" :toggle-selected-voter="toggleSelectedVote" :selected-votes-list.sync="selectedVotesList"></voter>
+                <ul v-for="vote in agendaItem.votes | filterBy 'In Favour' in 'vote_type'">
+                  <voter :agenda-item.sync="agendaItem" :toggle-selected-voter="toggleSelectedVote" :selected-votes-list.sync="selectedVotesList"></voter>
                 </ul>
               </div>
             </div>
@@ -59,7 +53,7 @@
 <script>
   Vue.component('votes-modal', {
     template: '#votes-modal-template',
-    props: ['agendaItem','votes'],
+    props: ['agendaItem'],
     data: function(){
       return {
         showModal: false,
@@ -101,7 +95,7 @@
 <template id="voter-template">
     <li class="ai-user" v-bind:class="{ 'user-selected': toggleSelectedVote}" @click="selectVote">
       <i class="fa fa-person" aria-hidden="true">
-        {{user.first_name}} {{vote.voting_user.first_name}} {{user.last_name}} {{vote.voting_user.last_name}}
+        {{vote.voting_user.first_name}} {{vote.voting_user.last_name}}
       </i>
     </li>
 </template>
@@ -109,15 +103,15 @@
 <script>
   Vue.component('voter', {
     template: '#voter-template',
-    props: ['agendaItem', 'user', 'vote', 'toggleSelectedVote', 'selectedVotesList'],
+    props: ['agendaItem', 'toggleSelectedVote', 'selectedVotesList'],
     methods: {
       selectVote: function(){
-        if (this.selectedVotesList.includes(this.vote)) {
+        if (this.selectedVotesList.includes(this.agendaItem.vote)) {
           this.toggleSelectedVote = false
-          this.selectedVotesList.pop(this.vote)
+          this.selectedVotesList.pop(this.agendaItem.vote)
         } else {
           this.toggleSelectedVote = true
-          this.selectedVotesList.push(this.vote)
+          this.selectedVotesList.push(this.agendaItem.vote)
         }
       }
     }
