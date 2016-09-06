@@ -374,7 +374,7 @@ post '/api/meetings/:id' do |id|
   @meeting = Meeting.find(id)
 
   # chair field is assigned an object that is found from user id
-  @chair = User.find(params[:chair][:id].to_i)
+  @chair = User.find(params[:chair][:id].to_i) if params[:chair]
   @meeting.chair = @chair if params[:chair]
 
   @meeting.title = params[:title] if params[:title]
@@ -485,39 +485,26 @@ post '/api/agenda-items/:id' do |id|
   results = {result: false}
 
   @agenda_item = AgendaItem.find(id)
-  if params[:creator]
-    @creator = User.find(params[:creator][:id].to_i)
-    @agenda_item.update(
-   title:  params[:title],
-   description: params[:description],
-   status: params[:status],
-   discussion: params[:discussion],
-   due_date: params[:due_date],
-   creator: @creator
-   )
-  end
-  if params[:seconder]
-   @seconder = User.find(params[:seconder][:id].to_i)
-   @agenda_item.update(
-   title:  params[:title],
-   description: params[:description],
-   status: params[:status],
-   discussion: params[:discussion],
-   seconder: @seconder,
-   due_date: params[:due_date]
-   )
-  end
-  if params[:mover]
-    @mover = User.find(params[:mover][:id].to_i)
-    @agenda_item.update(
-   title:  params[:title],
-   description: params[:description],
-   status: params[:status],
-   discussion: params[:discussion],
-   mover: @mover,
-   due_date: params[:due_date]
-   )
-  end
+
+  # creator, mover and seconder fields are assigned 
+  # an object that is found from user id
+  @creator = User.find(params[:creator][:id].to_i) if params[:creator]
+  @agenda_item.creator = @creator if params[:creator]
+
+  @mover = User.find(params[:mover][:id].to_i) if params[:mover]
+  @agenda_item.mover = @mover if params[:mover]
+
+  @seconder = User.find(params[:seconder][:id].to_i) if params[:seconder]
+  @agenda_item.seconder = @seconder if params[:seconder]
+
+
+  @agenda_item.title = params[:title] if params[:title]
+  @agenda_item.description = params[:description] if params[:description]
+  @agenda_item.status = params[:status] if params[:status]
+  @agenda_item.discussion = params[:discussion] if params[:discussion]
+  @agenda_item.due_date = params[:due_date] if params[:due_date]
+
+  @agenda_item.save
 
  if @agenda_item.save
    results[:result] = true
