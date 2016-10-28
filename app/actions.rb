@@ -210,38 +210,10 @@ end
 # VOTES #
 #########
 
-# get all votes
-get '/api/agenda-items/:id/votes' do
-  content_type :json
-  votes = []
-  found_votes = Vote.all.where(agenda_item_id: :id)
-
-  if found_votes.length > 0 then
-    found_votes.each do |vote|
-      votes.push(vote) 
-    end
-    votes.to_json(include: :voting_user)
-  else
-    attendees = MeetingAttendee.all.where(meeting_id: current_meeting.id)
-    attendees.each do |attendee|
-      if attendee.attendance_type = 'Present'
-        @vote = Vote.new(
-          agenda_item_id: [:id],
-          voting_user_id: attendee.user.id,
-          vote_type: 'Opposed'
-          )
-        @vote.save
-        votes.push(@vote)
-      end
-      votes.to_json(include: :voting_user)
-    end   
-  end
-end
-
 post '/api/agenda-items/:id/votes' do
   content_type :json
 
-  vote = Vote.find(params[:vote_id].to_i)
+  vote = Vote.find(params[:id].to_i)
   vote.vote_type = params[:vote_type]
   
   if vote.save

@@ -71,14 +71,21 @@
       },
       logVotes: function(vote_type) {
         var selectedVotes = this.selectedVotesList
-        var url = '/api/agenda-items/' + this.agendaItem.id + '/meeting-attendees'
+        var url = '/api/agenda-items/' + this.agendaItem.id + '/votes'
         for (var i = 0; i < selectedVotes.length; i++) { 
           var vote_id = selectedVotes[i].id
 
           this.$http.post(url, {'vote_id': vote_id,'vote_type': vote_type}, {emulateJSON:true}).then(function(response){
             returnedVote = response.json()
-            found_vote = this.votes.find(originalVote => originalVote.id === returnedVote.id)
-            found_vote.vote_type = returnedVote.vote_type
+            agendaItemVotes = this.agendaItem.votes
+            // found_vote = agendaItemVotes.find(vote => vote.id === returnedVote.id)
+            console.log("returned vote out of check", returnedVote.id)
+            function checkVote(vote) {
+              console.log("current vote", vote.id)
+              console.log("returned vote", returnedVote.id)
+            }
+            agendaItemVotes.forEach(checkVote)
+            
           }.bind(this));
         }
       }
